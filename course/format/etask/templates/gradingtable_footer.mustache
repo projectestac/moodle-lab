@@ -44,7 +44,9 @@
         <span class="badge badge-success text-white p-2">{{passedlabel}}</span>
         <span class="badge badge-danger text-white p-2">{{failedlabel}}</span>
 
-        <a href="javascript:void(null)" class="d-inline-block dropdown-toggle font-weight-normal" data-toggle="etask-popover"
-           data-content="{{popover}}"><i class="icon fa fa-question-circle text-info fa-fw mr-0 ml-1"></i></a>
+        {{#popover}}
+            <a href="javascript:void(null)" class="d-inline-block dropdown-toggle font-weight-normal" data-toggle="etask-popover"
+               data-content="{{popover}}"><i class="icon fa fa-question-circle text-info fa-fw mr-0 ml-1"></i></a>
+        {{/popover}}
     </div>
 </div>

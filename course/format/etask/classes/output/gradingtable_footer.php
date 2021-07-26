@@ -56,6 +56,9 @@ class gradingtable_footer implements renderable, templatable {
     /** @var string */
     private $failedlabel;
 
+    /** @var bool */
+    private $showhelp;
+
     /**
      * Footer constructor.
      *
@@ -75,6 +78,7 @@ class gradingtable_footer implements renderable, templatable {
             $PAGE->course)->get_students_per_page(), $PAGE->url);
         $this->passedlabel = course_get_format($PAGE->course)->get_passed_label();
         $this->failedlabel = course_get_format($PAGE->course)->get_failed_label();
+        $this->showhelp = has_capability('moodle/course:update', $PAGE->context);
 
         // If more then one group, prepare groups select. This method contains only groups available by permissions.
         if (count($groups) > 1) {
@@ -104,7 +108,7 @@ class gradingtable_footer implements renderable, templatable {
         $data->pagingbar = $this->pagingbar;
         $data->passedlabel = $this->passedlabel;
         $data->failedlabel = $this->failedlabel;
-        $data->popover = $output->render(new gradingtable_help_popover());
+        $data->popover = $this->showhelp ? $output->render(new gradingtable_help_popover()) : null;
 
         return $data;
     }

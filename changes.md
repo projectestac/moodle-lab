@@ -1,3 +1,7 @@
+### 3.11.1+ (Build: 20210723)
+- Moodle core updated from upstream
+- Updated eTask to 2021071901
+
 ### 3.11+ (Build: 20210611)
 - Moodle core updated from upstream
 - Added course format "eTask" (https://moodle.org/plugins/format_etask)

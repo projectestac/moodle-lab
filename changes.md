@@ -1,3 +1,7 @@
+### 3.11.2+ (Build: 20210902)
+- Moodle core updated from upstream
+- Updated `mod/subcourse` to 10.1.0
+ 
 ### 3.11.1+ (Build: 20210723)
 - Moodle core updated from upstream
 - Updated eTask to 2021071901

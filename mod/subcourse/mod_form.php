@@ -47,7 +47,7 @@ class mod_subcourse_mod_form extends moodleform_mod {
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $mform->addElement('text', 'name', get_string('subcoursename', 'subcourse'), array('size' => '64'));
+        $mform->addElement('text', 'name', get_string('subcoursename', 'subcourse'), ['size' => '64']);
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -56,11 +56,7 @@ class mod_subcourse_mod_form extends moodleform_mod {
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
-        if ($CFG->branch >= 29) {
-            $this->standard_intro_elements();
-        } else {
-            $this->add_intro_editor();
-        }
+        $this->standard_intro_elements();
 
         $mform->addElement('header', 'section-refcourse', get_string('refcourse', 'subcourse'));
         $mform->setExpanded('section-refcourse');
@@ -80,7 +76,7 @@ class mod_subcourse_mod_form extends moodleform_mod {
                 $includenoref = true;
 
             } else {
-                $currentrefcoursename = $DB->get_field('course', 'fullname', array('id' => $currentrefcourseid), IGNORE_MISSING);
+                $currentrefcoursename = $DB->get_field('course', 'fullname', ['id' => $currentrefcourseid], IGNORE_MISSING);
             }
 
             if ($currentrefcoursename === false) {
@@ -109,11 +105,11 @@ class mod_subcourse_mod_form extends moodleform_mod {
             $includekeepref = true;
         }
 
-        $options = array(get_string('none'));
+        $options = [get_string('none')];
 
         if (empty($mycourses)) {
             if (empty($includekeepref)) {
-                $options = array(0 => get_string('nocoursesavailable', 'subcourse'));
+                $options = [0 => get_string('nocoursesavailable', 'subcourse')];
                 $mform->addElement('select', 'refcourse', get_string('refcourselabel', 'subcourse'), $options);
             } else {
                 $mform->addElement('hidden', 'refcourse', 0);
@@ -121,12 +117,8 @@ class mod_subcourse_mod_form extends moodleform_mod {
             }
 
         } else {
-            if ($CFG->branch >= 36) {
-                $catlist = core_course_category::make_categories_list('', 0, ' / ');
-            } else {
-                require_once($CFG->libdir.'/coursecatlib.php');
-                $catlist = coursecat::make_categories_list('', 0, ' / ');
-            }
+            $catlist = core_course_category::make_categories_list('', 0, ' / ');
+
             foreach ($mycourses as $mycourse) {
                 $courselabel = $catlist[$mycourse->category] . ' / ' . $mycourse->fullname.' ('.$mycourse->shortname.')';
                 $options[$mycourse->id] = $courselabel;

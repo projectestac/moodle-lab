@@ -398,8 +398,8 @@ function geogebra_get_js_from_geogebra($context, $geogebra) {
     }
 
     echo '<script type="text/javascript">
-    if (typeof ggbApplet == \'undefined\') {
-        ggbApplet = document.ggbApplet;
+    if (typeof ggbAppletInstance == \'undefined\') {
+        ggbAppletInstance = document.ggbApplet;
     }
     ' .$content . '</script>';
 }

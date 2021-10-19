@@ -68,10 +68,10 @@ geogebra_addEvent(window, 'load', function () {
 function init_ggb() {
     var applet = {};
     
-    if (typeof ggbApplet === 'undefined') {
+    if (typeof ggbAppletInstance === 'undefined') {
         applet = document.ggbApplet;
     } else {
-        applet = ggbApplet;
+        applet = ggbAppletInstance;
     }
 
     if (typeof applet === 'undefined') {

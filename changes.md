@@ -1,6 +1,7 @@
 ### 3.11.2+ (Build: 20210902)
 - Moodle core updated from upstream
 - Updated `mod/subcourse` to 10.1.0
+- Updated `mod/geogebra` to 3.6.3
  
 ### 3.11.1+ (Build: 20210723)
 - Moodle core updated from upstream

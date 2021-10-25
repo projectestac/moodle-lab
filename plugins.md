@@ -4,7 +4,7 @@
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
 |mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2021083100|2021/10/21|6d593d41a0dce5f784b6a220437788fa43357169|
 |mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2021102100|2021/10/21|6ac9a5490c06a20576d6e7400d0b99f6fd6b5134|
-|mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2020060544|2020/06/16|748dc52d7cc96c7a0a38d0869a1dc20401b8b14e|
+|mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2021091446|2021/10/25|2dd025ef0e2aaf5c503a0015a128cd7f0734b16c|
 |mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2021060100|2021/06/16|799aa8b9423e8201dbdb6c41bea40c8e7a12a450|
 |mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2020091100|2020/10/29|837d07959d390178246eb2bcf58c5b4afb27e670|
 |mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2021062300|2020/11/18|1db7bcce061a0ba1fbd5632b667366ccfd27d30b|

@@ -92,5 +92,17 @@ function xmldb_qtype_drawing_upgrade($oldversion) {
         }
         upgrade_plugin_savepoint(true, 2021022100, 'qtype', 'drawing');
     }
+    if ($oldversion < 2021081300) {
+        // Define field drawing_usage to control display of result table.
+        $table = new xmldb_table('qtype_drawing_annotations');
+        if (!$dbman->field_exists($table, 'attemptcount')) {
+            $field = new xmldb_field('attemptcount', XMLDB_TYPE_INTEGER, '3', null, null, false, null, 0);
+            $dbman->add_field($table, $field);
+            // Rest attempt count to attempt 1 just in case.
+            $DB->execute('update {qtype_drawing_annotations} set attemptcount = 1');
+        }
+
+        upgrade_plugin_savepoint(true, 2021081300, 'qtype', 'drawing');
+    }
     return true;
 }

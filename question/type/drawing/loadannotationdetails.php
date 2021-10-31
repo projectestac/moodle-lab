@@ -37,6 +37,7 @@ require_login();
 $id = required_param('id', PARAM_INT);
 $sesskey = required_param('sesskey', PARAM_RAW);
 $stid = required_param('stid', PARAM_INT);
+$attemptcount = optional_param('attemptcount', 1, PARAM_INT);
 
 $attemptid = required_param('attemptid', PARAM_RAW_TRIMMED);
 if (!confirm_sesskey()) {
@@ -59,7 +60,7 @@ if (!$fhd = $DB->get_record('qtype_drawing', array('questionid' => $id)) ) {
 }
 
 $result .= '<ul id="listofannotaions">';
-$fields = array('questionid' => $question->id, 'attemptid' => $attemptid, 'annotatedfor' => $stid);
+$fields = array('questionid' => $question->id, 'attemptid' => $attemptid, 'annotatedfor' => $stid, 'attemptcount' => $attemptcount);
 if ($annotations = $DB->get_records('qtype_drawing_annotations', $fields, 'timemodified DESC')) {
     foreach ($annotations as $teacherannotation) {
         $user = $DB->get_record('user', array('id' => $teacherannotation->annotatedby));

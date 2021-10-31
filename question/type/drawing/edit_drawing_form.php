@@ -181,6 +181,56 @@ class qtype_drawing_edit_form extends question_edit_form {
         $eraserhtmlparams = '';
         $this->editoroptions['changeformat'] = 1;
 
+        $mform->addElement('header', 'drawsetting', get_string('drawing_settings', 'qtype_drawing'));
+        $mform->setExpanded('drawsetting');
+
+        $drawingconfig = get_config('qtype_drawing');
+
+        $canvassizearray = array();
+        $canvassizearray[] = & $mform->createElement('text', 'backgroundwidth', get_string('backgroundwidth', 'qtype_drawing'),
+                        array('size' => 4, 'maxlength' => 5, 'id' => 'qtype_drawing_backgroundwidth'));
+        $canvassizearray[] = & $mform->createElement('static', '', '', 'px  &nbsp;  &nbsp;', 'px &nbsp; &nbsp;');
+        $canvassizearray[] = & $mform->createElement('text', 'backgroundheight', get_string('backgroundheight', 'qtype_drawing'),
+                        array('size' => 4, 'maxlength' => 5, 'id' => 'qtype_drawing_backgroundheight'));
+        $canvassizearray[] = & $mform->createElement('static', '', '', 'px  &nbsp;  &nbsp;', 'px &nbsp; &nbsp;');
+        $canvassizearray[] = & $mform->createElement('checkbox', 'preservear', get_string('preserveaspectratio', 'qtype_drawing'));
+
+
+        $mform->addGroup($canvassizearray, 'buttonarx', get_string('canvassize', 'qtype_drawing'), array(' '), false);
+        $mform->closeHeaderBefore('drawsetting');
+        $mform->setType('backgroundwidth', PARAM_INT);
+        $mform->setDefault('backgroundwidth', $drawingconfig->defaultcanvaswidth);
+        $mform->setType('backgroundheight', PARAM_INT);
+        $mform->setDefault('backgroundheight', $drawingconfig->defaultcanvasheight);
+        $mform->setType('preservear', PARAM_INT);
+        $mform->setDefault('preservear', 1);
+
+        if (isset($drawingconfig->allowteachertochosemode) && $drawingconfig->allowteachertochosemode == 1) {
+            $options = array(1 => get_string('basicmode', 'qtype_drawing'), 2 => get_string('advancedmode', 'qtype_drawing'));
+            $mform->addElement('select', 'drawingmode', get_string('drawingmode', 'qtype_drawing'), $options, array('onchange' => 'document.getElementById("id_alloweraser").checked = false;'));
+            $mform->addHelpButton('drawingmode', 'drawingmode', 'qtype_drawing');
+        } else {
+            $mform->addElement('hidden', 'drawingmode', 1);
+        }
+        if (isset($drawingconfig->enableeraser) && $drawingconfig->enableeraser == 1) {
+            $mform->addElement('checkbox', 'alloweraser', get_string('alloweraser', 'qtype_drawing'));
+            $mform->disabledIf('alloweraser', 'drawingmode', 'eq', 2);
+        } else {
+            $mform->addElement('hidden', 'alloweraser', 0);
+        }
+
+        $mform->setType('alloweraser', PARAM_INT);
+        $mform->setDefault('alloweraser', 0);
+        $mform->setType('drawingmode', PARAM_INT);
+        $mform->setDefault('drawingmode', 1);
+
+        $mform->addElement('html', '<div style="display:none">'); // Hide until version 2.
+        $mform->addElement('checkbox', 'allowstudentimage', get_string('allowstudentimage', 'qtype_drawing'), '&nbsp;');
+        $mform->addHelpButton('allowstudentimage', 'allowstudentimage', 'qtype_drawing');
+        $mform->setType('allowstudentimage', PARAM_INT);
+        $mform->setDefault('allowstudentimage', 0);
+        $mform->addElement('html', '</div>'); // Hide until version 2.
+
         $bgimagearray = qtype_drawing_renderer::get_image_for_files($usercontext->id, 'user', 'draft',
                                                                     file_get_submitted_draft_itemid('qtype_drawing_image_file'));
         if ($bgimagearray !== null) {
@@ -189,9 +239,9 @@ class qtype_drawing_edit_form extends question_edit_form {
                             array('id' => 'pre_existing_background_data'));
             $mform->setType('pre_existing_background_data', PARAM_RAW);
         } else {
-            if (array_key_exists('id', $this->question) === true) {
+            if (property_exists($this->question, 'id') === true) {
                 $question = $this->question;
-                if (array_key_exists('contextid', $question) === false || array_key_exists('answers', $question) === false) {
+                if (property_exists($question, 'contextid') === false || property_exists($question, 'answers') === false) {
                     $question = question_bank::load_question($question->id, false);
                 }
                 // Question already exists! We are in edit mode.
@@ -203,6 +253,9 @@ class qtype_drawing_edit_form extends question_edit_form {
                 // --------------------------------------------------------
 
                 $bgimagearray = qtype_drawing_renderer::get_image_for_question($question);
+                if($bgimagearray === null || !isset($bgimagearray)){
+                   $bgimagearray = array(null, null, null);
+                }
                 // This is the structure of the array:
                 // 0 image dataURL string.
                 // 1 width.
@@ -244,50 +297,7 @@ class qtype_drawing_edit_form extends question_edit_form {
 
         $mform->setExpanded('qtype_drawing_drawing_background_image');
 
-        $drawingconfig = get_config('qtype_drawing');
 
-        $canvassizearray = array();
-        $canvassizearray[] = & $mform->createElement('text', 'backgroundwidth', get_string('backgroundwidth', 'qtype_drawing'),
-                                                    array('size' => 4, 'maxlength' => 5, 'id' => 'qtype_drawing_backgroundwidth'));
-        $canvassizearray[] = & $mform->createElement('static', '', '', 'px  &nbsp;  &nbsp;', 'px &nbsp; &nbsp;');
-        $canvassizearray[] = & $mform->createElement('text', 'backgroundheight', get_string('backgroundheight', 'qtype_drawing'),
-                                                    array('size' => 4, 'maxlength' => 5, 'id' => 'qtype_drawing_backgroundheight'));
-        $canvassizearray[] = & $mform->createElement('static', '', '', 'px  &nbsp;  &nbsp;', 'px &nbsp; &nbsp;');
-        $canvassizearray[] = & $mform->createElement('checkbox', 'preservear', get_string('preserveaspectratio', 'qtype_drawing'));
-
-        $mform->addGroup($canvassizearray, 'buttonar', get_string('canvassize', 'qtype_drawing'), array(' '), false);
-        $mform->setType('backgroundwidth', PARAM_INT);
-        $mform->setDefault('backgroundwidth', $drawingconfig->defaultcanvaswidth);
-        $mform->setType('backgroundheight', PARAM_INT);
-        $mform->setDefault('backgroundheight', $drawingconfig->defaultcanvasheight);
-        $mform->setType('preservear', PARAM_INT);
-        $mform->setDefault('preservear', 1);
-
-        if (isset($drawingconfig->allowteachertochosemode) && $drawingconfig->allowteachertochosemode == 1) {
-            $options = array(1 => get_string('basicmode', 'qtype_drawing'), 2 => get_string('advancedmode', 'qtype_drawing'));
-            $mform->addElement('select', 'drawingmode', get_string('drawingmode', 'qtype_drawing'), $options, array('onchange' => 'document.getElementById("id_alloweraser").checked = false;'));
-            $mform->addHelpButton('drawingmode', 'drawingmode', 'qtype_drawing');
-        } else {
-            $mform->addElement('hidden', 'drawingmode', 1);
-        }
-        if (isset($drawingconfig->enableeraser) && $drawingconfig->enableeraser == 1) {
-            $mform->addElement('checkbox', 'alloweraser', get_string('alloweraser', 'qtype_drawing'));
-            $mform->disabledIf('alloweraser', 'drawingmode', 'eq', 2);
-        } else {
-            $mform->addElement('hidden', 'alloweraser', 0);
-        }
-
-        $mform->setType('alloweraser', PARAM_INT);
-        $mform->setDefault('alloweraser', 0);
-        $mform->setType('drawingmode', PARAM_INT);
-        $mform->setDefault('drawingmode', 1);
-
-        $mform->addElement('html', '<div style="display:none">'); // Hide until version 2.
-        $mform->addElement('checkbox', 'allowstudentimage', get_string('allowstudentimage', 'qtype_drawing'), '&nbsp;');
-        $mform->addHelpButton('allowstudentimage', 'allowstudentimage', 'qtype_drawing');
-        $mform->setType('allowstudentimage', PARAM_INT);
-        $mform->setDefault('allowstudentimage', 0);
-        $mform->addElement('html', '</div>'); // Hide until version 2.
     }
 
     public function js_call() {

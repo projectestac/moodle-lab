@@ -101,6 +101,10 @@ class restore_qtype_drawing_plugin extends restore_qtype_plugin {
             if (isset($data->annotatedby) && $data->annotatedby > 0) {
                 $data->annotatedby = $this->get_mappingid('user', $data->annotatedby);
             }
+            // Serve for old backups before annotation upgrade.
+            if (isset($data->attemptcount) && $data->attemptcount == 0) {
+                $data->attemptcount = 1;
+            }
 
             // Insert record.
             $newitemid = $DB->insert_record('qtype_drawing_annotations', $data);

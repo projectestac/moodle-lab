@@ -30,6 +30,7 @@
         <FIELD NAME="annotatedby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="annotatedfor" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="annotation" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="DataURI for the annotation."/>
+        <FIELD NAME="attemptcount" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false"/>
         <FIELD NAME="notes" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="notes for the annotation."/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>

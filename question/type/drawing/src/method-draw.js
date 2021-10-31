@@ -59,6 +59,7 @@
     Editor.viewgridtitle = qtype_drawing_str_viewgrid;
     Editor.savingready = 0;
     Editor.lastanswer = '';
+    Editor.forcesaving = 0;
 
     Editor.setConfig = function(opts) {
       $.extend(true, curConfig, opts);
@@ -1438,6 +1439,20 @@ var strokewid = selectedElement.getAttribute("stroke-width");
       var updateToolbar = function() {
         if (selectedElement != null) {
             $('#delete_panel').show();
+            if( fhd_display_mode == 1 && selectedElement.tagName == 'line'){
+                $('#force_remove_stroke_style').show();
+                // Reset dash if any.
+                var dash = selectedElement.getAttribute("stroke-dasharray") || "none";
+                if(dash == "null") dash = 'none';
+                $('option', '#stroke_style').removeAttr('selected');
+                $('#stroke_style option[value="'+ dash +'"]').attr("selected", "selected");
+                $('#stroke_style').val(dash);
+                $("#stroke_style_label").html($( "#stroke_style option:selected" ).text());
+
+            }
+            if( fhd_display_mode == 1 && selectedElement.tagName == 'path'){
+                $('#force_remove_stroke_style').hide();
+            }
           switch ( selectedElement.tagName ) {
           case 'use':
             $(".context_panel").hide();
@@ -1474,7 +1489,8 @@ var strokewid = selectedElement.getAttribute("stroke-width");
             //Editor.paintBox.stroke.update(false);
             $('#stroke_width').val(selectedElement.getAttribute("stroke-width") || 0);
             if(selectedElement.tagName != 'text'){
-              var dash = selectedElement.getAttribute("stroke-dasharray") || "none"
+              var dash = selectedElement.getAttribute("stroke-dasharray") || "none";
+              if(dash == 'null') dash = 'none';
               $('option', '#stroke_style').removeAttr('selected');
               $('#stroke_style option[value="'+ dash +'"]').attr("selected", "selected");
               $('#stroke_style').val(dash);
@@ -1764,10 +1780,7 @@ var strokewid = selectedElement.getAttribute("stroke-width");
 
 
           $('#tool_bucket').removeClass( 'disabled');
-          /*
-          if( fhd_display_mode != 1){
-              $('#multiselected_panel').show();
-          }*/
+
 
           $("#stroke_panel").show();
           $("#canvas_panel").show();
@@ -1928,7 +1941,7 @@ var strokewid = selectedElement.getAttribute("stroke-width");
 
       $('#stroke_style').change(function(){
         svgCanvas.setStrokeAttr('stroke-dasharray', $(this).val());
-        $("#stroke_style_label").html(this.options[this.selectedIndex].text)
+        $("#stroke_style_label").html(this.options[this.selectedIndex].text);
         operaRepaint();
       });
 
@@ -2367,6 +2380,16 @@ var strokewid = selectedElement.getAttribute("stroke-width");
             svgCanvas.setStrokeWidth(3.5);
           }
           $('#preset_sizes_panel_id').show();
+          if( fhd_display_mode == 1){
+              $('#force_remove_stroke_style').hide();
+              // Reset dash if any.
+              svgCanvas.setStrokeAttr('stroke-dasharray', 'none');
+            /*  var dash = 'none';
+              $('option', '#stroke_style').removeAttr('selected');
+              $('#stroke_style option[value="'+ dash +'"]').attr("selected", "selected");
+              $('#stroke_style').val(dash);
+              $("#stroke_style_label").html($( "#stroke_style option:selected" ).text());*/
+          }
         }
       };
 
@@ -2378,6 +2401,10 @@ var strokewid = selectedElement.getAttribute("stroke-width");
               svgCanvas.setStrokeWidth(3.5);
             }
           $('#preset_sizes_panel_id').show();
+          if( fhd_display_mode == 1){
+              $('#force_remove_stroke_style').show();
+          }
+
         }
       };
 
@@ -2467,7 +2494,7 @@ var strokewid = selectedElement.getAttribute("stroke-width");
       };
 
       var properlySourceSizeTextTextArea
-      var clickText = function(){
+       var clickText = function(){
         if (toolButtonClick('#tool_text')) {
           svgCanvas.setMode('text');
           $("#preset_sizes_panel_id").hide();
@@ -2601,6 +2628,7 @@ var strokewid = selectedElement.getAttribute("stroke-width");
       // Delete is a contextual tool that only appears in the ribbon if
       // an element has been selected
       var deleteSelected = function() {
+        Editor.forcesaving = 1;
         if (selectedElement != null || multiselected) {
           svgCanvas.deleteSelectedElements();
         }
@@ -3002,7 +3030,7 @@ var strokewid = selectedElement.getAttribute("stroke-width");
           $.ajax({
               url: 'loadannotationdetails.php',
               method: "GET",
-              data: { id: questionid, sesskey: sesskey, stid: stid, attemptid: attemptid},
+              data: { id: questionid, sesskey: sesskey, stid: stid, attemptid: attemptid, attemptcount: attemptcount},
               cache: false,
               success: function(array_annotations) {
                   if(array_annotations.works == 'OK'){
@@ -3018,41 +3046,13 @@ var strokewid = selectedElement.getAttribute("stroke-width");
           $.ajax({
               url: 'saveannotation.php',
               method: "POST",
-              data: { id: questionid, sesskey: sesskey, stid: stid, attemptid: attemptid, annotation: getCurrentDrawingSVG()},
+              data: { id: questionid, sesskey: sesskey, stid: stid, attemptid: attemptid, attemptcount: attemptcount, annotation: getCurrentDrawingSVG()},
               cache: false,
               success: function(str) {
                   if(str == 'OK'){
                       $.anottationalert(qtype_drawing_str_annotationsaved, str);
                       // Load last change.
                       methodDraw.updateAnnotationDetails();
-/*
-                      $.ajax({
-                          url: 'loadannotationdetails.php',
-                          method: "GET",
-                          data: { id: questionid, sesskey: sesskey, stid: stid, attemptid: attemptid},
-                          cache: false,
-                          success: function(array_annotations) {
-
-                              for (i in array_annotations.result) {
-                                  $('#teacherannotationdate_'+i).html(array_annotations.result[i]);
-
-                                }
-
-                              var sorting_array = array_annotations.order;
-                              // Do sorting based on last change!
-                              // get all li with data attribute
-                              var $li = $('li[data-block]');
-                              // sort them based on the index
-                              $li.sort(function(a, b) {
-                                return sorting_array.indexOf($(a).data('block')) - sorting_array.indexOf($(b).data('block'));
-                              })
-                              // update the order by appending back to it's parent
-                              .appendTo($li.parent());
-
-
-                          }
-                        });
-*/
 
                   } else {
                       $.anottationalert("ERROR: " + JSON.stringify(str), str);
@@ -3092,7 +3092,7 @@ var strokewid = selectedElement.getAttribute("stroke-width");
                 $.ajax({
                     url: 'getannotation.php',
                     method: "GET",
-                    data: { id: questionid, sesskey: sesskey, stid: stid, attemptid: attemptid, annotationid: $(this).data("annotationid"), type: $(this).data("type")},
+                    data: { id: questionid, sesskey: sesskey, stid: stid, attemptcount: attemptcount, attemptid: attemptid, annotationid: $(this).data("annotationid"), type: $(this).data("type")},
                     cache: false,
                     success: function(str) {
                         if(str.result == 'OK'){
@@ -3121,13 +3121,10 @@ var strokewid = selectedElement.getAttribute("stroke-width");
                  return;
             }
 
-          //  $('#dialog_content').html('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="baseSVGannotation" width="'+imgwidth+'" height="'+imgheight+'">' + originalbgimg + originalstdanswer + msg + '</svg>');
-
-
             $.ajax({
                 url: 'getannotation.php',
                 method: "GET",
-                data: { id: questionid, sesskey: sesskey, stid: stid, attemptid: attemptid, annotationid: $(this).data("annotationid"), type: $(this).data("type")},
+                data: { id: questionid, sesskey: sesskey, stid: stid, attemptcount: attemptcount, attemptid: attemptid, annotationid: $(this).data("annotationid"), type: $(this).data("type")},
                 cache: false,
                 success: function(str) {
                     if(str.result == 'OK'){
@@ -3219,10 +3216,6 @@ var strokewid = selectedElement.getAttribute("stroke-width");
         var sides = ['top', 'left', 'bottom', 'right'];
 
         elems.each(function() {
-//          console.log('go', scale);
-
-          // Handled in CSS
-          // this.style[ua_prefix + 'Transform'] = 'scale(' + scale + ')';
 
           var el = $(this);
 
@@ -4805,7 +4798,9 @@ var strokewid = selectedElement.getAttribute("stroke-width");
       });
     };
 
-
+    Editor.switchToTxt = function() {
+       clickText();
+    };
 
     Editor.SaveDrawingToMoodle = function() {
       Editor.ready(function() {Editor.numsaved++;
@@ -4824,16 +4819,10 @@ var strokewid = selectedElement.getAttribute("stroke-width");
            var text =  gpaths.selectAll("text").node();
            var ellipse = gpaths.selectAll("ellipse").node();
 
-           if((path && path != null) || (line && line != null) || (polygon && polygon != null) || (rect && rect != null) || (text && text != null) || (ellipse && ellipse != null)){
-               //CanvdrawingValue.split('<g id="paths">').pop().split('</g>')[0]; // returns 'two')
-               //  window.parent.$('#qtype_drawing_textarea_id_'+questionID).text(CanvdrawingValue);
-                   $('#qtype_drawing_textarea_id_'+attemptid+uniquefieldnameattemptid, window.parent.document).text(CanvdrawingValue);
-                    // Trigger moodle quiz autosave :-)
-                   //window.parent.$('#qtype_drawing_drawingevent_'+questionID).val(Math.random().toString(36).substring(7));
-                 //  if(Editor.savingready == 1){
-                     $('#qtype_drawing_drawingevent_'+attemptid+uniquefieldnameattemptid, window.parent.document).val(Math.random().toString(36).substring(7));
-                 //  }
-                   //  console.error("saved..", Editor.numsaved,CanvdrawingValue);
+           if(Editor.forcesaving == 1 || (path && path != null) || (line && line != null) || (polygon && polygon != null) || (rect && rect != null) || (text && text != null) || (ellipse && ellipse != null)){
+
+                    $('#qtype_drawing_textarea_id_'+attemptid+uniquefieldnameattemptid, window.parent.document).text(CanvdrawingValue);
+                    $('#qtype_drawing_drawingevent_'+attemptid+uniquefieldnameattemptid, window.parent.document).val(Math.random().toString(36).substring(7));
            }
 
 

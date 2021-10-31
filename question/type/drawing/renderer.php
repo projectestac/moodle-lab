@@ -86,7 +86,23 @@ class qtype_drawing_renderer extends qtype_renderer {
         $canvasinfo = $DB->get_record('qtype_drawing', array('questionid' => $question->id));
         $currentanswer = $qa->get_last_qt_var('answer');
         $attemptid = $qa->get_last_qt_var('uniqueuattemptid');
-
+        $moodleattempt = optional_param('attempt', null, PARAM_INT);
+        if(!$moodleattempt){
+            $raw = (array)$options->questionreviewlink;
+            $attributes = array();
+            foreach ($raw as $attr => $val) {
+                $attributes[preg_replace('('.$name.'|\*|)', '', $attr)] = $val;
+                if(is_array($val)){
+                    $moodleattempt = $val['attempt'];
+                }
+            }
+        }
+        if($attemptfullrecord = $DB->get_record('quiz_attempts', array('id' => $moodleattempt), 'id, attempt')) {
+            $attemptcount = $attemptfullrecord->attempt;
+        }
+        if(!$attemptfullrecord || !isset($attemptcount)) {
+            $attemptcount = 1;
+        }
         // Special and dirty case for the old version of the plugin when annotation was not added yet.
         if ($options->readonly && !$attemptid) {
             $attemptid = substr(md5($currentanswer), 0, 14).'XX';
@@ -103,6 +119,9 @@ class qtype_drawing_renderer extends qtype_renderer {
 
         $inputname = $qa->get_qt_field_name('answer');
         $background = self::get_image_for_question($question);
+        if($background === null || !isset($background)){
+            $background = array(null, null, null);
+        }
         $studentanswer = $qa->get_last_qt_var('answer');
         self::translate_to_js($this->page);
         $isannotator = 0;
@@ -115,8 +134,11 @@ class qtype_drawing_renderer extends qtype_renderer {
                             array($question->id, $background[1], $canvasinfo->backgroundwidth, $canvasinfo->backgroundheight, $background[0]));
         }
         $canvas = "<input type=\"hidden\"
-        name=\"$uniqueattemptinputname\" value = \"$attemptid\">
-        <div class=\"qtype_drawing_id_" . $question->id ."\"
+        name=\"$uniqueattemptinputname\" value = \"$attemptid\">";
+        $canvas .= "<input type=\"hidden\" class=\"qtype_drawing_input\" name=\"qtype_drawingsaving_status_" . $question->id . "\"
+        value=\"0\" id=\"id_qtype_drawingsaving_status_" . $question->id . "\">";
+
+        $canvas .= "<div class=\"qtype_drawing_id_" . $question->id ."\"
         data-canvas-instance-id=\"$canvasinstanceid\" id=\"qtype_drawing_attr_id_" . $question->id ."\">";
         if ($options->readonly) {
             $readonlycanvas = ' readonly-canvas';
@@ -192,7 +214,7 @@ class qtype_drawing_renderer extends qtype_renderer {
 
                                    // Display annotations to the student, if any.
                                    global $USER;
-                                   $fields = array('questionid' => $question->id, 'attemptid' => $attemptid, 'annotatedfor' => $USER->id);
+                                   $fields = array('questionid' => $question->id, 'attemptid' => $attemptid, 'annotatedfor' => $USER->id, 'attemptcount' => $attemptcount);
                                    if ($annotations = $DB->get_records('qtype_drawing_annotations', $fields)) {
                                        foreach ($annotations as $annotation) {
                                            $annotationstr .= $annotation->annotation;
@@ -270,7 +292,7 @@ class qtype_drawing_renderer extends qtype_renderer {
 
                 // Get all annotations, if any, plus student answer and background.
                 global $USER;
-                $fields = array('questionid' => $question->id, 'attemptid' => $attemptid, 'annotatedfor' => $originaluserid);
+                $fields = array('questionid' => $question->id, 'attemptid' => $attemptid, 'annotatedfor' => $originaluserid, 'attemptcount' => $attemptcount);
                 if ($annotations = $DB->get_records('qtype_drawing_annotations', $fields)) {
 
                     foreach ($annotations as $annotationdrawing) {
@@ -373,9 +395,9 @@ class qtype_drawing_renderer extends qtype_renderer {
                   	  Y.on("windowresize", resize);
 
                   	  });
-
+                  setTimeout(function(){ Y.one("#id_qtype_drawingsaving_status_'.$question->id.'").set("value",Math.random()); }, 3000);
                   function qtype_drawing_fullscreen_'.$attemptid.$uniquefieldnameattemptid.'() {
-
+                      setTimeout(function(){ Y.one("#id_qtype_drawingsaving_status_'.$question->id.'").set("value",Math.random()); }, 1000);
                       var doc = Y.one("body");
                       var drawing_iframeid = "#qtype_drawing_editor_'.$attemptid.$uniquefieldnameattemptid.'";
                       var drawing_toggle_btn = "#qtype_drawing_togglebutton_id_'.$attemptid.$uniquefieldnameattemptid.'";
@@ -406,12 +428,11 @@ class qtype_drawing_renderer extends qtype_renderer {
                               document.getElementById("quiz_timer_drawing_'.$attemptid.$uniquefieldnameattemptid.'");
 
                           if (quiz_timer_div && quiz_timer_div.innerHTML !== "") {
-                               drawing_fullsc_'.$attemptid.$uniquefieldnameattemptid.'.
-                                appendChild(document.getElementById("quiz-timer").cloneNode(true));
+
+                               drawing_fullsc_'.$attemptid.$uniquefieldnameattemptid.'.appendChild(document.getElementById("quiz-timer"));
+
                                Y.one("#quiz_timer_drawing_'.$attemptid.$uniquefieldnameattemptid.'").
                                 setStyle("display", "block");
-                               Y.one("#quiz_timer_drawing_'.$attemptid.$uniquefieldnameattemptid.'").
-                                setStyle("margin-top", "-1em");
                                var calculatedheight = doc.get("winHeight") -
                                    Y.one("#quiz_timer_drawing_'.$attemptid.$uniquefieldnameattemptid.'").
                                     get("clientHeight");
@@ -442,9 +463,7 @@ class qtype_drawing_renderer extends qtype_renderer {
                           set("height", viewportHeight +"px");
 
                           if (document.getElementById("quiz-timer")) {
-                               var drawing_fullsc_'.$attemptid.$uniquefieldnameattemptid.' =
-                                    document.getElementById("quiz_timer_drawing_'.$attemptid.$uniquefieldnameattemptid.'");
-                               drawing_fullsc_'.$attemptid.$uniquefieldnameattemptid.'.innerHTML = "";
+                               document.getElementById("quiz-timer-wrapper").appendChild(document.getElementById("quiz-timer"));
                                Y.one("#quiz_timer_drawing_'.$attemptid.$uniquefieldnameattemptid.'").setStyle("margin-top", "0em");
                                Y.one("#quiz_timer_drawing_'.$attemptid.$uniquefieldnameattemptid.'").setStyle("display", "none");
                           }
@@ -482,6 +501,7 @@ class qtype_drawing_renderer extends qtype_renderer {
           src="'.$CFG->wwwroot.'/question/type/drawing/drawingarea.php?id='.$question->id.
           '&attemptid='.$attemptid.'&stid='.$originaluserid.
           '&uniquefieldnameattemptid='.$uniquefieldnameattemptid.
+          '&attemptcount='.$attemptcount.
           '&readonly='.$options->readonly.'&sesskey='.sesskey().'"
           id="qtype_drawing_editor_'.$attemptid.$uniquefieldnameattemptid.'"
           onload="init_qtype_drawing_embed(\''.$attemptid.$uniquefieldnameattemptid.'\')" >

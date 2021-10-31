@@ -40,7 +40,7 @@ require_once(dirname(__FILE__) . '/renderer.php');
 class qtype_drawing extends question_type {
     public function extra_question_fields() {
         return array('qtype_drawing', 'drawingmode', 'backgrounduploaded',
-                     'backgroundwidth', 'backgroundheight', 'preservear', 'drawingoptions');
+                     'backgroundwidth', 'backgroundheight', 'preservear', 'drawingoptions', 'alloweraser');
     }
 
     public function questionid_column_name() {
@@ -91,6 +91,7 @@ class qtype_drawing extends question_type {
             $options->backgroundheight = $drawingconfig->defaultcanvasheight;
             $options->preservear = 1;
             $options->drawingoptions = '';
+            $options->alloweraser = 0;
             $options->id = $DB->insert_record('qtype_drawing', $options);
         }
         $options->drawingmode = $question->drawingmode;
@@ -104,6 +105,10 @@ class qtype_drawing extends question_type {
             $question->preservear = 0;
         }
         $options->preservear = $question->preservear;
+        if(!isset($question->alloweraser)){
+            $question->alloweraser = 0;
+        }
+        $options->alloweraser = $question->alloweraser;
 
         $DB->update_record('qtype_drawing', $options);
         $this->save_hints($question);
@@ -211,6 +216,9 @@ class qtype_drawing extends question_type {
 
         $expout .= "    <bgimage>\n";
         $bgimagearray = qtype_drawing_renderer::get_image_for_question($question);
+        if($bgimagearray === null || !isset($bgimagearray)){
+            $bgimagearray = array(null, null, null);
+        }
 
         $expout .= "        <filename>" . $bgimagearray[2] .  "</filename>\n";
         $expout .= "        <dataURL><![CDATA[" . $bgimagearray[1] . "]]></dataURL>\n";

@@ -1,8 +1,9 @@
 ### 3.11.3+ (Build: 20211019)
 - Moodle core updated from upstream
 - Updated `mod/choicegroup` to 1.33
-- Updated `mod\hotpot` to 2021091446
+- Updated `mod/hotpot` to 2021091446
 - Updated Wiris plugins
+- Updated `question/type/drawing` to 2021091000
 
 ### 3.11.2+ (Build: 20210902)
 - Moodle core updated from upstream

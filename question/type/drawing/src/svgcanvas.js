@@ -2813,6 +2813,7 @@ var getMouseTarget = this.getMouseTarget = function(evt) {
         started = true;
         break;
       case "textedit":
+
         start_x *= current_zoom;
         start_y *= current_zoom;
         textActions.mouseDown(evt, mouse_target, start_x, start_y);
@@ -3252,7 +3253,6 @@ var getMouseTarget = this.getMouseTarget = function(evt) {
 //          }
 
         textActions.mouseMove(mouse_x, mouse_y);
-
         break;
 
       case "rotate":
@@ -3570,6 +3570,7 @@ var getMouseTarget = this.getMouseTarget = function(evt) {
         keep = false;
         element = null;
         textActions.mouseUp(evt, mouse_x, mouse_y);
+
         break;
       case "rotate":
         keep = true;

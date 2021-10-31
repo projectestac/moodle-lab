@@ -1,6 +1,7 @@
 ### 3.11.3+ (Build: 20211019)
 - Moodle core updated from upstream
 - Updated `mod/choicegroup` to 1.33
+- Updated Wiris plugins
 
 ### 3.11.2+ (Build: 20210902)
 - Moodle core updated from upstream

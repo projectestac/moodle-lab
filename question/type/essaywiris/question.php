@@ -30,6 +30,8 @@ class qtype_essaywiris_question extends qtype_wq_question implements question_ma
     public $graderinfoformat;
     public $responsetemplate;
     public $responsetemplateformat;
+    public $maxbytes;
+    public $filetypeslist;
 
     public function join_all_text() {
         $text = parent::join_all_text();
@@ -48,10 +50,15 @@ class qtype_essaywiris_question extends qtype_wq_question implements question_ma
     }
 
     private function is_cas_replace_input() {
+        $wrap = com_wiris_system_CallWrapper::getInstance();
+        $wrap->start();
+
         //@codingStandardsIgnoreStart
         $keyshowcas = $this->wirisquestion->question->getProperty(com_wiris_quizzes_api_QuizzesConstants::$PROPERTY_SHOW_CAS);
         $valueshowcasreplaceinput = com_wiris_quizzes_api_QuizzesConstants::$PROPERTY_VALUE_SHOW_CAS_REPLACE;
         //@codingStandardsIgnoreEnd
+
+        $wrap->stop();
         $replace = ($keyshowcas == $valueshowcasreplaceinput);
         return $replace;
     }
@@ -59,8 +66,8 @@ class qtype_essaywiris_question extends qtype_wq_question implements question_ma
     public function is_complete_response(array $response) {
         $complete = parent::is_complete_response($response);
         if (!$complete && $this->is_cas_replace_input() && isset($response['_sqi'])) {
-            $builder = com_wiris_quizzes_api_QuizzesBuilder::getInstance();
-            $sqi = $builder->readQuestionInstance($response['_sqi']);
+            $builder = com_wiris_quizzes_api_Quizzes::getInstance();
+            $sqi = $builder->readQuestionInstance($response['_sqi'], $this->wirisquestion);
             //@codingStandardsIgnoreLine
             $studentcas = $sqi->instance->getLocalData(com_wiris_quizzes_api_QuizzesConstants::$PROPERTY_CAS_SESSION);
             // Note that the $studentcas is null if the student does not update
@@ -69,4 +76,10 @@ class qtype_essaywiris_question extends qtype_wq_question implements question_ma
         }
         return $complete;
     }
+
+    public function get_word_count_message_for_review(array $response): string {
+        return $this->base->get_word_count_message_for_review($response);
+    }
+
+
 }

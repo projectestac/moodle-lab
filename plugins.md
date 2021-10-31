@@ -17,24 +17,24 @@
 |block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|e7246fecfbd50e7d13ac93b38e1801508d82a108|
 |course format    |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|c5a15da6a15d159740d3664f24399e5023bc8aa6|
-|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2020090300|2020/09/07|07b99b3ed37fcebb6a5b0467250144b88a00ddc2|
+|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2021072200|2021/10/31|0aebd92c2cf2041ce847edf35d61e29835e8c46b|
 |atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072802|2020/06/16|eacc7d4069cefa59000053f773e0b5bb291b3cdb|
 |atto             |fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|ad87cd2a5bee9f087d5f3026043c9d62dcaaed97|
 |atto             |fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2015042701|2020/06/16|d6b5551a99c35e60f2a2887c181cb3c574c258b1|
-|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2020090300|2020/09/07|7efe89bf451467b1f1cb6c5cc17648c76275a457|
+|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2021072200|2020/10/31|d790907513aba4464d102f5bcaf48ab21eecb9da|
 |local            |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021600|2020/06/16|d8eb0e05d5deeef13a9c574fd5c5da8cecf81b06|
 |local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|06805f201af99b9f65df171331619c82fdb94f56|
 |local            |oauth               |https://github.com/projectestac/moodle-local_oauth              |2016021600|2020/06/16|b1c71e53e99e1708bb1dc728c7c31699e14ab01b|
 |local            |rcommon             |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|d709bbda0baf127ce56faf7269d2b2517d6a92fe|
 |question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|
-|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2020120900|2021/04/27|696f2f248afd2bac53a74c0d86f617ec7ef28117|
-|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2020120900|2021/04/27|7abaa0a4516ff4284d814606aa00d78a40c5e01e|
-|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2020120900|2021/04/27|9bd66a62c75cde590b4bd0093a7e90c83d6bd55a|
-|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2020120900|2021/04/27|5e8d1c577354e776e0f3bc3f3b31063248dcfc55|
-|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2020120900|2021/04/27|4592df03de5c144c7db5ecf814b0e739baa4860e|
-|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2020120900|2021/04/27|c4515387d44b73c65126891e3ee65a3711505d8f|
-|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2020120900|2021/04/27|32c1531917aa26ea035c4d16eca0417f83b838e3|
+|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2021091300|2021/10/31|367c5615c87b38bed3a4b91e46d617b336f1c0fc|
+|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2021091300|2021/10/31|50594eb24625a07133d34e0489d623c91c3d4955|
+|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2021091300|2021/10/31|39a9d751787c48e84e3912116e642108c351654e|
+|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2021091300|2021/10/31|22708841458ecf0876abbc55d50090f1be0662b2|
+|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2021091300|2021/10/31|31bb0a233a8bd62c31fad433e2b6ef7660747b04|
+|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2020109150|2021/10/31|1021ed679e814827bf6a145a3a74899e6abab29d|
+|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2021092800|2021/10/31|b33608c161d4e44a2b2d54170f8658d27fff6ada|
 |question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2021061303|2021/06/16|cda6bed05275783954cc9bf12f2ef36d942b9694|
 |report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|
 |theme            |xtec2020            |https://github.com/projectestac/moodle-theme_xtec2020           |2021011200|2021/01/12|beb87b0e58ca1faf4db9b38b38a6c9854ad391fc|

@@ -1,3 +1,7 @@
+### 3.11.4+ (Build: 20211210)
+- Moodle core updated from upstream
+- Updated `mod/geogebra` to 20211207
+
 ### 3.11.3+ (Build: 20211029)
 - Moodle core updated from upstream
 - Updated `mod/choicegroup` to 1.33

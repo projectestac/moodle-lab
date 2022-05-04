@@ -76,7 +76,6 @@ $string['numbersections'] = 'Number of sections';
 $string['cannotfinduploadedimage'] = 'Cannot find the uploaded original image.  Please report error details and the information contained in the php.log file to developer.  Refresh the page and upload a fresh copy of the image.';
 $string['cannotconvertuploadedimagetodisplayedimage'] = 'Cannot convert uploaded image to displayed image - {$a}.  Please report error details and the information contained in the php.log file to developer.';
 $string['cannotgetimagelock'] = 'Cannot get image lock.  Please report error details to developer.';
-$string['cannotgetimagesforcourse'] = 'Cannot get images for course.  Please report error details to developer.';
 $string['cannotgetsummarylock'] = 'Cannot get summary lock.  Please report error details to developer.';
 $string['formatnotsupported'] = 'Format is not supported at this server, please fix the system configuration to have the GD PHP extension installed - {$a}.';
 $string['functionfailed'] = 'Function failed on image - {$a}.';
@@ -158,6 +157,11 @@ $string['setcurrentselectedimagecontainercolour_help'] = 'Set the current select
 
 $string['setnewactivity'] = 'Show new activity notification image';
 $string['setnewactivity_help'] = "Show the new activity notification image when a new activity or resource are added to a section.";
+
+$string['singlepagesummaryimage'] = 'Show the grid image in the section summary on a single page.';
+$string['singlepagesummaryimage_help'] = "When the 'Course layout' is set to 'Show one section per page' then show the grid image for that section in the section summary when there is a summary in the position stated.";
+$string['defaultsinglepagesummaryimage'] = 'Show the grid image in the section summary on a single page.';
+$string['defaultsinglepagesummaryimage_desc'] = "When the 'Course layout' is set to 'Show one section per page' then show the grid image for that section in the section summary when there is a summary in the position stated.";
 
 $string['setfitsectioncontainertowindow'] = 'Fit the section popup to the window';
 $string['setfitsectioncontainertowindow_help'] = 'If enabled, the popup box with the contents of the section will fit to the size of the window and will scroll inside if necessary.  If disabled, the entire page will scroll instead.';
@@ -271,6 +275,10 @@ $string['resetnewactivity'] = 'New activity';
 $string['resetnewactivity_help'] = 'Resets the new activity notification image to follow the site default value.';
 $string['resetallnewactivity'] = 'New activities';
 $string['resetallnewactivity_help'] = 'Resets the new activity notification images to follow the site default value.';
+$string['resetsinglepagesummaryimage'] = 'Single page summary image';
+$string['resetsinglepagesummaryimage_help'] = 'Resets the single page summary image to follow the site default value.';
+$string['resetallsinglepagesummaryimage'] = 'Single page summary images';
+$string['resetallsinglepagesummaryimage_help'] = 'Resets the single page summary images to follow the site default value.';
 $string['resetfitpopup'] = 'Fit section popup to the window';
 $string['resetfitpopup_help'] = 'Resets the \'Fit section popup to the window\' to follow the site default value.';
 $string['resetallfitpopup'] = 'Fit section popups to the window';
@@ -306,6 +314,18 @@ $string['defaultgreyouthidden_desc'] = 'In Grid display show unavailable section
 
 $string['custommousepointers'] = 'Use custom mouse pointers';
 $string['custommousepointers_desc'] = 'In Grid use custom mouse pointers.';
+
+$string['information'] = 'Information';
+$string['informationsettings'] = 'Information settings';
+$string['informationsettingsdesc'] = 'Grid format information';
+$string['settings'] = 'Settings';
+$string['settingssettings'] = 'Settings settings';
+$string['settingssettingsdesc'] = 'Grid format settings';
+$string['versioninfo'] = 'Release {$a->release}, version {$a->version} on Moodle {$a->moodle}';
+$string['versionalpha'] = 'Alpha version - Almost certainly contains bugs.  This is a development version for developers \'only\'!  Don\'t even think of installing on a production server!';
+$string['versionbeta'] = 'Beta version - Likely to contain bugs.  Ready for testing by administrators on a test server only.';
+$string['versionrc'] = 'Release candidate version - May contain bugs.  Check completely on a test server before considering on a production server.';
+$string['versionstable'] = 'Stable version - Could contain bugs.  Check on a test server before installing on your production server.';
 
 // Privacy.
 $string['privacy:nop'] = 'The Grid format stores lots of settings that pertain to its configuration.  None of the settings are related to a specific user.  It is your responsibilty to ensure that no user data is entered in any of the free text fields.  Setting a setting will result in that action being logged within the core Moodle logging system against the user whom changed it, this is outside of the formats control, please see the core logging system for privacy compliance for this.  When uploading images, you should avoid uploading images with embedded location data (EXIF GPS) included or other such personal data.  It would be possible to extract any location / personal data from the images.  Please examine the code carefully to be sure that it complies with your interpretation of your privacy laws.  I am not a lawyer and my analysis is based on my interpretation.  If you have any doubt then remove the format forthwith.';

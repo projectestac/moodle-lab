@@ -2,6 +2,7 @@
 - Moodle core updated from upstream
 - Updated `mod/journal` to 2022041400
 - Updated `question/type/drawing` to 2021120400
+- Updated `course/format/grid` to 2021102702
 
 ### 3.11.4+ (Build: 20211210)
 - Moodle core updated from upstream

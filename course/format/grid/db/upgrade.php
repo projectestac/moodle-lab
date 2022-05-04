@@ -26,8 +26,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 function xmldb_format_grid_upgrade($oldversion = 0) {
     global $DB;
 
@@ -144,6 +142,28 @@ function xmldb_format_grid_upgrade($oldversion = 0) {
         set_config('defaultsetsection0ownpagenogridonesection', $value, 'format_grid');
 
         upgrade_plugin_savepoint(true, 2020111402, 'format', 'grid');
+    }
+
+    if ($oldversion < 2020111404) {
+        // Define field updatedisplayedimage to be added to format_grid_icon.
+        $table = new xmldb_table('format_grid_icon');
+        $field = new xmldb_field('updatedisplayedimage', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'displayedimageindex');
+
+        // Conditionally launch add field updatedisplayedimage.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        /* This is a new mechanism and thus we now use it for the previous two versions update of the images.
+           Clearly this has to happen now that the new field is in the DB.
+           Background was removed from images and transparent PNG's need regenerating. */
+        global $CFG;
+        require_once($CFG->dirroot.'/course/format/grid/lib.php'); // For format_grid.
+
+        format_grid::update_displayed_images_callback();
+
+        // Grid savepoint reached.
+        upgrade_plugin_savepoint(true, 2020111404, 'format', 'grid');
     }
 
     // Automatic 'Purge all caches'....

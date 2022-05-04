@@ -22,6 +22,8 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
+global $CFG;
+require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 
 /**
  * Test helper class for the drawing question type.
@@ -51,13 +53,14 @@ class qtype_drawing_test_helper extends question_test_helper {
         $q->generalfeedback = "Generalfeedback: Drawing a cell isn't to hard";
         $q->generalfeedbackformat = FORMAT_HTML;
         $q->defaultmark = 1;
+        $q->contextid = 1;
         $q->penalty = 0.3333333;
         $q->qtype = 'drawing';
         $q->length = '1';
         $q->hidden = '0';
         $q->createdby = '2';
         $q->modifiedby = '2';
-
+        $q->options = new stdClass();
         $q->options->questionid = 1;
         $q->options->drawingmode = 1;
         $q->options->allowstudentimage = 0;
@@ -97,13 +100,14 @@ class qtype_drawing_test_helper extends question_test_helper {
         $q->generalfeedback = "Generalfeedback: Writing a code isn't to hard";
         $q->generalfeedbackformat = FORMAT_HTML;
         $q->defaultmark = 1;
+        $q->contextid = 1;
         $q->penalty = 0.3333333;
         $q->qtype = 'drawing';
         $q->length = '1';
         $q->hidden = '0';
         $q->createdby = '2';
         $q->modifiedby = '2';
-
+        $q->options = new stdClass();
         $q->options->questionid = 1;
         $q->options->drawingmode = 1;
         $q->options->allowstudentimage = 0;

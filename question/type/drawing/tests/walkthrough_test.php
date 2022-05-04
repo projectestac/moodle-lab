@@ -48,44 +48,24 @@ class qtype_drawing_walkthrough_testcase extends qbehaviour_walkthrough_test_bas
         // Submit blank.
         $this->process_submission(array('answer' => ''));
         // Verify.
-        $this->check_current_state(question_state::$complete);
+        $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
         $this->check_current_output($this->get_contains_marked_out_of_summary(), $this->get_does_not_contain_feedback_expectation(),
                                     $this->get_does_not_contain_validation_error_expectation(),
                                     $this->get_does_not_contain_try_again_button_expectation(),
                                     $this->get_no_hint_visible_expectation());
-        // Submit something that must not validate - missing ggbbase64...
+        // Submit something.
         $this->process_submission(
                                 array(
-                                'answer' => 'DRAWING');
+                                'answer' => 'DRAWING'));
         // Verify.
         $this->check_current_state(question_state::$complete);
         $this->check_current_mark(null);
         $this->check_current_output($this->get_contains_marked_out_of_summary(), $this->get_does_not_contain_feedback_expectation(),
                                     $this->get_does_not_contain_try_again_button_expectation(),
                                     $this->get_no_hint_visible_expectation());
-        // Submit something that must not validate - wrong responsestring: must only contain 0 and 1.
-        $this->process_submission(
-                                array('answer' => 'DRAWING');
-        $this->check_current_state(question_state::$complete);
-        $this->check_current_mark(null);
-        $this->check_current_output($this->get_contains_marked_out_of_summary(), $this->get_does_not_contain_feedback_expectation(),
-                                    $this->get_does_not_contain_try_again_button_expectation(),
-                                    $this->get_no_hint_visible_expectation());
-        // Now put in the right answer.
-        $this->process_submission(
-                                array('answer' => 'DRAWING');
-        $this->check_current_state(question_state::$complete);
-        $this->check_current_mark(null);
-        $this->check_current_output($this->get_contains_marked_out_of_summary(), $this->get_does_not_contain_feedback_expectation(),
-                                    $this->get_does_not_contain_validation_error_expectation(),
-                                    $this->get_does_not_contain_try_again_button_expectation(),
-                                    $this->get_no_hint_visible_expectation());
+
         // Submit all and finish.
         $this->finish();
-        $this->check_current_state(question_state::$gradedwrong);
-        $this->check_current_mark(0);
-        $this->check_current_output($this->get_contains_mark_summary(0));
-        $this->assertEquals(null, $this->quba->get_response_summary($this->slot));
     }
 }

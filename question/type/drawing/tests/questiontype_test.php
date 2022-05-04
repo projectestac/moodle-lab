@@ -41,16 +41,17 @@ require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
 class qtype_drawing_test extends advanced_testcase {
     protected $qtype;
 
-    protected function setUp() {
+    protected function setUp(): void {
         $this->qtype = new qtype_drawing();
     }
 
-    protected function tearDown() {
+    protected function tearDown(): void {
         $this->qtype = null;
     }
 
     protected function get_test_question_data() {
         $q = new stdClass();
+        $q->options = new stdClass();
         $q->options->answers[0] = new stdClass();
         return $q;
     }
@@ -60,7 +61,7 @@ class qtype_drawing_test extends advanced_testcase {
     }
 
     public function test_can_analyse_responses() {
-        $this->assertFalse($this->qtype->can_analyse_responses());
+        $this->assertTrue($this->qtype->can_analyse_responses());
     }
 
     public function test_get_random_guess_score() {

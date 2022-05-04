@@ -107,7 +107,6 @@ methodDraw.addExtension("eraser", function(S) {
                 var pointsarr = m[iz].points;
                 var path_id = m[iz].id;
               //  res.push(pointsarr.slice());
-
                 original_paths.push(pointsarr.slice());
                  path_specs = {
                   stroke: m[iz].stroke,
@@ -124,8 +123,8 @@ methodDraw.addExtension("eraser", function(S) {
                   fillopacity: m[iz].fillopacity,
                   strokeopacity: m[iz].strokeopacity,
                 };
-                allpathspecs.push(path_specs);
 
+                allpathspecs.push(path_specs);
 
 
             }
@@ -245,6 +244,7 @@ if(d3.select(this).attr("id") != 'erase_line'){
         strokeopacity: d3.select(this).attr("stroke-opacity")
 
       };
+
       allpathspecs.push(path_specs);
 
   }

@@ -20,7 +20,6 @@ var linospecs = [];
 var original_drawing_paths = [];
 var very_original_drawing_paths = [];
 function erase(paths, erasePath, eraseRadius, allpathspecs) {
-   // console.error(allpathspecs);
     if(original_drawing_paths.length == 0){
         very_original_drawing_paths = paths;
     }
@@ -55,8 +54,6 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
         if (path.length===1) {
             if (!withinCircle(path[0][0], path[0][1], eX, eY, eraseRadius)) {
                 newPaths.push(path);
-                // console.error("fgin funny 1");
-                newPathsAttr.push(allpathspecs[whichindex]);
                 return;
             }
         }
@@ -96,7 +93,6 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
                     newPath = path.slice(last, i+1);
                     newPath.push(x);
                     newPaths.push(newPath);
-                    newPathsAttr.push(allpathspecs[whichindex]);
                 }
                 i++;
                 last = i;
@@ -119,8 +115,6 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
                     // we only want paths with length > 1
                     if (newPath.length > 1) {
                         newPaths.push(newPath);
-                        // console.error("fgin funny");
-                        newPathsAttr.push(allpathspecs[whichindex]);
                     }
 
                     // we will put the second intersection point into the current position
@@ -141,8 +135,6 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
             newPath = path.slice(last, path.length);
             if (newPath) {
                 newPaths.push(newPath);
-                // console.error("fgin funny s");
-                newPathsAttr.push(allpathspecs[whichindex]);
 
             }
         }
@@ -163,8 +155,6 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
             var p0_locationIndex = withinCapsule(path[0][0], path[0][1], e0[0], e0[1], e1[0], e1[1], eraseRadius);
             if (p0_locationIndex.indexOf(1) === -1) {
                 newPaths.push(path);
-                // console.error("fgin funny c1");
-                newPathsAttr.push(allpathspecs[whichindex]);
                 return;
             }
         }
@@ -205,8 +195,6 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
 
                     newPath.push(x);
                     newPaths.push(newPath);
-                    // console.error("fgin funny c2");
-                    newPathsAttr.push(allpathspecs[whichindex]);
 
                     i++;
                     last = i;
@@ -233,8 +221,6 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
                     // we only want paths with length > 1
                     if (newPath.length > 1) {
                         newPaths.push(newPath);
-                        // console.error("fgin funny c3");
-                        newPathsAttr.push(allpathspecs[whichindex]);
                     }
 
                     // we will put the second intersection point into the current position
@@ -257,14 +243,55 @@ function erase(paths, erasePath, eraseRadius, allpathspecs) {
             newPath = path.slice(last, path.length);
             if (newPath) {
                 newPaths.push(newPath);
-                // console.error("fgin funny c4");
-                newPathsAttr.push(allpathspecs[whichindex]);
             }
         }
 
     } // end capsuleErase
 
+    function checkarayswithoutheadortail(a,b, tolerance){
+        if(!tolerance) tolerance = 2;
+        if(b.length <= 3){
+            tolerance = 0;
+        }
+        var difference = a.filter(x => b.indexOf(x) === -1);
+        if(difference.length <= tolerance){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
+    function process_more_paths(paths,newPaths, p){
+        var totalprocessedpaths = 0;
+        for(m = 0; m < newPaths.length ;m++){
+            if(typeof paths[m] !== 'undefined'){
+                if(checkarayswithoutheadortail( paths[m], newPaths[m], 3) == false){
+                    allpathspecs.splice(m , 0, allpathspecs[m]);
+                    totalprocessedpaths++;
+                    if(totalprocessedpaths >= (newPaths.length - paths.length)){
+                        break;
+                    }
+                    m++;
+                  }
+            }
+        }
+    }
+
+    function process_less_paths(paths,newPaths, p){
+        var totalprocessedpaths = 0;
+        for(m = 0; m < newPaths.length ;m++){
+            if(typeof paths[m] !== 'undefined'){
+                if(checkarayswithoutheadortail(newPaths[m], paths[m], 1) == false ){
+                    allpathspecs.splice(m, 1);
+                    totalprocessedpaths++;
+                    if(totalprocessedpaths >= (paths.length - newPaths.length)){
+                        break;
+                    }
+                    m++;
+                }
+            }
+        }
+    }
 
     // main
 var newdatapaths = [];
@@ -272,32 +299,40 @@ var formedpathsspecs = [];
 var newspecsarranged = allpathspecs;
 
    erasePath = cleanPath(erasePath);
-  // var fndp;
     if (erasePath.length === 1) {
         for (var p=0; p<paths.length; p++) {
             pointErase(paths[p], p);
 
+            if(newPaths.length > paths.length){
+                process_more_paths(paths,newPaths, p);
+
+            }
         }
-        /*
-        console.error("found p: ",fndp);
-        var spc = allpathspecs[fndp-1];
-        allpathspecs.splice(fndp, 0, spc);
-        console.error(allpathspecs);
-*/
+
+        if(newPaths.length < paths.length){
+            process_less_paths(paths,newPaths, p);
+
+          }
+
+
+
         paths = newPaths;
-        allpathspecs = newPathsAttr;
-     //   console.error(newPathsAttr);
         var newdatapaths = paths;
     }
     else {
         for (var e=0; e<(erasePath.length-1); e++) {
             for (var p=0; p<(paths.length); p++) {
                 capsuleErase(paths[p], e, p);
+                if(newPaths.length > paths.length){
+                    process_more_paths(paths,newPaths, p);
+                }
+            }
+            if(newPaths.length < paths.length){
+                process_less_paths(paths,newPaths, p);
+
             }
 
             paths = newPaths;
-            allpathspecs = newPathsAttr;
-           // console.error("new", newPathsAttr);
 
             var newdatapaths = newPaths;
             newPaths = [];
@@ -307,7 +342,235 @@ var newspecsarranged = allpathspecs;
 
 
     return [paths, allpathspecs];
+    // diff between just two arrays:
+    function arrayDiff(a, b) {
+        return [
+            ...a.filter(x => b.indexOf(x) === -1),
+            ...b.filter(x => a.indexOf(x) === -1)
+        ];
+    }
 
+    function DrawingArraysEqual(a,b) {
+        /*
+            Array-aware equality checker:
+            Returns whether arguments a and b are == to each other;
+            however if they are equal-lengthed arrays, returns whether their
+            elements are pairwise == to each other recursively under this
+            definition.
+        */
+        if (a instanceof Array && b instanceof Array) {
+            if (a.length!=b.length)  // assert same length
+                return false;
+            for(var i=0; i<a.length; i++)  // assert each element equal
+                if (!DrawingArraysEqual(a[i],b[i]))
+                    return false;
+            return true;
+        } else {
+            return a==b;  // if not both arrays, should be the same
+        }
+    }
+
+    function xarray_compare(a1, a2) {
+     if(a1.length != a2.length) {
+      return false;
+     }
+     for(var i in a1) {
+      // Don't forget to check for arrays in our arrays.
+      if(a1[i] instanceof Array && a2[i] instanceof Array) {
+       if(!xarray_compare(a1[i], a2[i])) {
+        return false;
+       }
+      }
+      else if(a1[i] != a2[i]) {
+       return false;
+      }
+     }
+     return true;
+    }
+
+    function equalArray(a, b) {
+    return JSON.stringify(a) == JSON.stringify(b);
+}
+
+function stringifyPathEraseContains(a, b){
+    var tempa = a.slice();
+    var tempb = b.slice();
+    tempa.pop();
+    tempa.shift();
+    tempb.pop();
+    tempb.shift();
+    var cleanmaster = JSON.stringify(tempa);
+    var cleanslave = JSON.stringify(tempb);
+    cleanmaster = cleanmaster.slice(1,-1);
+    cleanslave = cleanslave.slice(1,-1);
+
+    return cleanmaster.includes(cleanslave);
+
+}
+  // See what lines got changed to reflect the changes in new lines.
+    var whatlineschanged = [];
+    var tempspecsline = [];
+
+// search for all changes that has happened when new paths are less than original.
+var howmanylost = 0;
+
+newdatapaths = paths;
+
+if(newdatapaths.length < original_drawing_paths.length){
+            var excludefromremoval = [];
+            for(var x=0; x<original_drawing_paths.length;x++){
+                for(var y=0; y<newdatapaths.length;y++){
+                    if(stringifyPathEraseContains(original_drawing_paths[x], newdatapaths[y])){
+                        excludefromremoval.push(x);
+                    }
+                }
+            }
+            var temp_original_drawing_paths = [];
+            var temp_paths_specs = [];
+            var updateallarrays = 0;
+            for(var x=0; x<excludefromremoval.length;x++){
+                var indx = excludefromremoval[x];
+                temp_original_drawing_paths.push(original_drawing_paths[indx]);
+                temp_paths_specs.push(allpathspecs[indx]);
+                updateallarrays = 1;
+            }
+
+            if(updateallarrays == 1){
+                original_drawing_paths = [];
+                allpathspecs = [];
+
+                original_drawing_paths = temp_original_drawing_paths;
+                allpathspecs = temp_paths_specs;
+            }
+
+
+} else {
+// What if new lines where created? create new specs for them (fill gaps in allpathspecs).
+//original_drawing_paths = newdatapaths;
+//var repeatedtrialpaths = newdatapaths;
+//Temp Compensate for the missing allpathspecs.
+for(var e=allpathspecs.length; e<(newdatapaths.length); e++) {
+        allpathspecs[e]='_SPECS_';
+}
+
+
+        for (var e=0; e<(original_drawing_paths.length); e++) {
+            if(typeof newdatapaths[e] !== 'undefined') {
+
+                if(!equalArray(original_drawing_paths[e], newdatapaths[e])){
+                    whatlineschanged.push(e);
+                }
+            }
+        }
+
+        for(var i=0; i < allpathspecs.length; i++){
+            if(allpathspecs[i] != '_SPECS_'){
+                continue;
+            }
+            allpathspecs[i] = allpathspecs[whatlineschanged[0]];
+            whatlineschanged.shift();
+        }
+
+        // mapping the right allpathspecs order.
+ ////////////////////////
+
+var brandnewspecs = [];
+for(var y=0; y<newdatapaths.length;y++){
+    for(var x=0; x<original_drawing_paths.length;x++){
+        if(stringifyPathEraseContains(original_drawing_paths[x], newdatapaths[y])){
+            brandnewspecs.push(allpathspecs[x]);
+            break;
+        }
+    }
+}
+
+
+original_drawing_paths = [];
+allpathspecs = [];
+
+return [newdatapaths, brandnewspecs];
+
+}
+
+
+
+    for (var e=0; e<(original_drawing_paths.length); e++) {
+        if(typeof newdatapaths[e] !== 'undefined') {
+            var tempnewindex = e;
+            if(!equalArray(original_drawing_paths[tempnewindex], newdatapaths[e])){
+                tempspecsline[e] = allpathspecs[e];
+                whatlineschanged.push(e);
+            }
+        }
+
+    }
+
+
+    for (var e=allpathspecs.length; e<(newdatapaths.length); e++) {
+        allpathspecs[e]='_SPECS_';
+    }
+    // loop specs.
+    for(var i=0; i < allpathspecs.length; i++){
+        // check if in array of old value that has changed, or not.
+
+        if(allpathspecs[i] != '_SPECS_'){
+            continue;
+        }
+
+        allpathspecs[i] = allpathspecs[whatlineschanged[0]];
+
+        whatlineschanged.shift();
+
+    }
+
+
+    // what if the path was fully removed, then it needs to be removed from specs too!.
+
+    if(newdatapaths.length < allpathspecs.length){
+
+        var howmanytorem = allpathspecs.length - newdatapaths.length;
+        for(var i=0; i < whatlineschanged.length; i++){
+            var whichv = whatlineschanged[i];
+            allpathspecs.splice(whichv, 1);
+        }
+    }
+
+    // round all coordinates
+    for (var r=0; r<(paths.length); r++) {
+        for (var rr=0; rr<paths[r].length; rr++) {
+            paths[r][rr][0] = Math.round(paths[r][rr][0]);
+            paths[r][rr][1] = Math.round(paths[r][rr][1]);
+        }
+    }
+
+    /*
+    * To get test case: uncomment this block and the block at the top of erase().
+    *
+    console.log( "erase path (cleaned):" );
+    logPath( erasePath, 1 );
+    console.log( "paths:" );
+    logPaths( paths );
+    */
+    //var time2 = date.getMilliseconds();
+    //var deltaT = time2 - time1;
+    //console.log(deltaT);
+
+    function compare( a, b ) {
+      if ( a.id < b.id ){
+        return -1;
+      }
+      if ( a.id > b.id ){
+        return 1;
+      }
+      return 0;
+    }
+allpathspecs.sort( compare );
+
+var combkres = [];
+combkres[0] = paths;
+combkres[1] = allpathspecs;
+
+    return combkres; //paths;
 } // end erase
 
 /* Helper functions:

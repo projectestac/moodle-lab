@@ -84,6 +84,11 @@ class qtype_drawing_renderer extends qtype_renderer {
         $canvasinstanceid = uniqid();
         $question = $qa->get_question();
         $canvasinfo = $DB->get_record('qtype_drawing', array('questionid' => $question->id));
+        if (!$canvasinfo) {
+            $canvasinfo = new stdClass();
+            $canvasinfo->backgroundwidth = 0;
+            $canvasinfo->backgroundheight = 0;
+        }
         $currentanswer = $qa->get_last_qt_var('answer');
         $attemptid = $qa->get_last_qt_var('uniqueuattemptid');
         $moodleattempt = optional_param('attempt', null, PARAM_INT);
@@ -125,7 +130,10 @@ class qtype_drawing_renderer extends qtype_renderer {
         $studentanswer = $qa->get_last_qt_var('answer');
         self::translate_to_js($this->page);
         $isannotator = 0;
-        if (has_capability('mod/quiz:grade', context::instance_by_id($question->contextid))) {
+        if (empty($question->contextid)) {
+            $question->contextid = 1;
+        }
+        if (has_capability('mod/quiz:grade', context::instance_by_id($question->contextid, IGNORE_MISSING))) {
             $isannotator = 1;
         }
 

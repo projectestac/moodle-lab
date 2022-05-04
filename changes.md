@@ -1,3 +1,7 @@
+### 3.11.6+ (Build: 20220429)
+- Moodle core updated from upstream
+- Updated `mod/journal` to 2022041400
+
 ### 3.11.4+ (Build: 20211210)
 - Moodle core updated from upstream
 - Updated `mod/geogebra` to 20211207

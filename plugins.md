@@ -28,13 +28,6 @@
 |local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|06805f201af99b9f65df171331619c82fdb94f56|
 |question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2021061303|2021/06/16|cda6bed05275783954cc9bf12f2ef36d942b9694|
 |report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|
-
-
-### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
-
-|Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
-|-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-
 |filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2022040800|2022/05/06|c55e39c8f093dfc384951fe512d4e9a46cdb7144|
 |atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2022040800|2022/05/06|7232af6797d2dd7163559ab12adc6e230b6a4736|
 |question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2022040800|2021/05/06|a35e185671b6bd4f03d05b1e4dff8a8d818aff96|
@@ -44,6 +37,12 @@
 |question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022040800|2022/05/06|9ed8444bb42ed387b404951ada35af7132924d6a|
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022040800|2022/05/06|32b8752062d2204ea6123b1aafab6e8c92b8479b|
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022040800|2022/05/06|4d26d027cc895d751db216ffeb6b95d067af589c|
+
+### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
+
+|Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
+|-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
+
 |theme            |xtec2020            |https://github.com/projectestac/moodle-theme_xtec2020           |2021011200|2021/01/12|beb87b0e58ca1faf4db9b38b38a6c9854ad391fc|
 
 ## Plugins added for testing purposes

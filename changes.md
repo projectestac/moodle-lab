@@ -20,4 +20,5 @@
 - Add Oauth
 - Add 'ordering' question type
 - Add 'coursequotas' report type
+- Add Wiris plugins
 

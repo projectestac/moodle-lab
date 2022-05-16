@@ -10,3 +10,4 @@
 - Add mod/journal
 - Add mod/questionnaire
 - Add mod/qv
+- Add Marsupial components

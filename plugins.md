@@ -19,6 +19,7 @@
 |local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|d709bbda0baf127ce56faf7269d2b2517d6a92fe|
 |course format    |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|c5a15da6a15d159740d3664f24399e5023bc8aa6|
 |course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|e7246fecfbd50e7d13ac93b38e1801508d82a108|
+|atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072802|2020/06/16|eacc7d4069cefa59000053f773e0b5bb291b3cdb|
 
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
@@ -27,7 +28,6 @@
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
 
 |filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2022040800|2022/05/06|c55e39c8f093dfc384951fe512d4e9a46cdb7144|
-|atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072802|2020/06/16|eacc7d4069cefa59000053f773e0b5bb291b3cdb|
 |atto             |fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|ad87cd2a5bee9f087d5f3026043c9d62dcaaed97|
 |atto             |fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2015042701|2020/06/16|d6b5551a99c35e60f2a2887c181cb3c574c258b1|
 |atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2022040800|2022/05/06|7232af6797d2dd7163559ab12adc6e230b6a4736|

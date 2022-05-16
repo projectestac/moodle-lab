@@ -14,3 +14,4 @@
 - Add block/completion_progress
 - Add Vicens Vives components
 - Add course format 'simple'
+- Add Atto plugin 'cloze editor' 

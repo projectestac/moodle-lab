@@ -13,3 +13,4 @@
 - Add Marsupial components
 - Add block/completion_progress
 - Add Vicens Vives components
+- Add course format 'simple'

@@ -12,11 +12,13 @@
 |mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2021/01/12|fa142b21a2ac6b8a6636d15548260912adc4535c|
 |block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090500|2020/06/16|c18e2da59601367ed473f500cac73d899d1c25da|
 |local            |rcommon             |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
+|block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2020033000|2020/06/16|42bbe9728708902b5edcd2203f8054b3a134edf8|
 |block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|7d5426b504f72055549d599b3595e6778d183f92|
 |block            |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|a5966e64dbf803af49ab1794f88b3e94f0bfc664|
 |local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|d709bbda0baf127ce56faf7269d2b2517d6a92fe|
 |course format    |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|c5a15da6a15d159740d3664f24399e5023bc8aa6|
+|course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|e7246fecfbd50e7d13ac93b38e1801508d82a108|
 
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
@@ -24,8 +26,6 @@
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
 
-|block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
-|course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|e7246fecfbd50e7d13ac93b38e1801508d82a108|
 |filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2022040800|2022/05/06|c55e39c8f093dfc384951fe512d4e9a46cdb7144|
 |atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072802|2020/06/16|eacc7d4069cefa59000053f773e0b5bb291b3cdb|
 |atto             |fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|ad87cd2a5bee9f087d5f3026043c9d62dcaaed97|

@@ -4,6 +4,7 @@
 - Updated `question/type/drawing` to 2021120400
 - Updated `course/format/grid` to 2021102702
 - Updated Wiris components to 2022040800
+- Moved 'vicensvives' block components to /blocks (not /mod!)
 
 ### 3.11.4+ (Build: 20211210)
 - Moodle core updated from upstream

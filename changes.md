@@ -18,4 +18,5 @@
 - Add Atto font plugins
 - Add Alexandria importer
 - Add Oauth
+- Add 'ordering' question type
 

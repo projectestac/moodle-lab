@@ -6,6 +6,7 @@
 |mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2021083100|2021/10/21|6d593d41a0dce5f784b6a220437788fa43357169|
 |mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2021120700|2021/12/12|b451c5d6f2b0eb16e5c99e15b17836a346ad26e6|
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2021091446|2021/10/25|2dd025ef0e2aaf5c503a0015a128cd7f0734b16c|
+|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|
 |mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2022041400|2021/05/04|917de14fb10d2a64b2750fb03eb217e509e6aeef|
 |mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2021062300|2020/11/18|1db7bcce061a0ba1fbd5632b667366ccfd27d30b|
 |mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|97620971e6171c7ad89d980072ce4263b1dc349b|
@@ -34,7 +35,6 @@
 |local            |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021600|2020/06/16|d8eb0e05d5deeef13a9c574fd5c5da8cecf81b06|
 |local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|06805f201af99b9f65df171331619c82fdb94f56|
 |local            |oauth               |https://github.com/projectestac/moodle-local_oauth              |2016021600|2020/06/16|b1c71e53e99e1708bb1dc728c7c31699e14ab01b|
-|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|
 |question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2022040800|2021/05/06|a35e185671b6bd4f03d05b1e4dff8a8d818aff96|
 |question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2022040800|2022/05/06|37a7b3fb2892c18e7b93fca262cdb8649cad1c11|
 |question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2022040800|2022/05/06|1d86aaa67e12e0f381d58529753b316e947e291b|

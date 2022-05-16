@@ -6,7 +6,7 @@
 - Add mod/JClic
 - Add mod/choicegroup
 - Add mod/geogebra
-- Add mod/hotpot
+- Add HotPotatoes plugins
 - Add mod/journal
 - Add mod/questionnaire
 - Add mod/qv

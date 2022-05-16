@@ -19,4 +19,5 @@
 - Add Alexandria importer
 - Add Oauth
 - Add 'ordering' question type
+- Add 'coursequotas' report type
 

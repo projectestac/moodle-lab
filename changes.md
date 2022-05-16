@@ -16,3 +16,4 @@
 - Add course format 'simple'
 - Add Atto plugin 'cloze editor' 
 - Add Atto font plugins
+- Add Alexandria importer

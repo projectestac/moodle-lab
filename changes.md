@@ -12,3 +12,4 @@
 - Add mod/qv
 - Add Marsupial components
 - Add block/completion_progress
+- Add Vicens Vives components

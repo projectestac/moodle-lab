@@ -7,3 +7,4 @@
 - Add mod/choicegroup
 - Add mod/geogebra
 - Add mod/hotpot
+- Add mod/journal

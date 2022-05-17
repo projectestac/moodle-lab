@@ -15,22 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * block_completion_progress data generator
+ * Compatibility shim for older PHPunit versions.
  *
  * @package    block_completion_progress
- * @category   test
- * @copyright  2018 Michael Aherne
+ * @copyright  2020 Jonathon Fowler <fowlerj@usq.edu.au>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace block_completion_progress\tests;
 
 /**
- * Completion progress block data generator class
+ * Compatibility shim for older PHPunit versions.
  *
  * @package    block_completion_progress
- * @category   test
- * @copyright  2018 Michael Aherne
+ * @copyright  2020 Jonathon Fowler <fowlerj@usq.edu.au>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_completion_progress_generator extends testing_block_generator {
-
+abstract class testcase_phpunit7 extends \advanced_testcase {
+// @codingStandardsIgnoreStart
+    /**
+     * See PHPUnit\Framework\TestCase::setUp().
+     */
+    protected function setUp() {
+        $this->set_up();
+    }
+// @codingStandardsIgnoreEnd
 }

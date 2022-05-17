@@ -1,6 +1,10 @@
 ### 4.0.1 (Build: 20220509)
 - Updated to Moodle 4.0.1
 
+### 4.0.1+ (Build: 20220512)
+- Updated Moodle core
+- Updated 'completion progress' block to 2022042000
+
 ### 4.0+ (Build: 20220429)
 - Initial checkout of Moodle 4.0.0
 - Add mod/JClic

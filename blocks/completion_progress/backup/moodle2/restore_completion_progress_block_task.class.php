@@ -14,10 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die;
+/**
+ * Restore task for the Completion Progress block
+ *
+ * @package    block_completion_progress
+ * @copyright  2016 Michael de Raadt
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 /**
- * Backup task for the Completion Progress block
+ * Restore task for the Completion Progress block
  *
  * @package    block_completion_progress
  * @copyright  2016 Michael de Raadt
@@ -27,8 +33,6 @@ class restore_completion_progress_block_task extends restore_block_task {
 
     /**
      * Translates the backed up configuration data for the target course modules.
-     *
-     * @global type $DB
      */
     public function after_restore() {
         global $DB;
@@ -42,10 +46,11 @@ class restore_completion_progress_block_task extends restore_block_task {
         if ($configdata = $DB->get_field('block_instances', 'configdata', array('id' => $id))) {
             $config = (array)unserialize(base64_decode($configdata));
             $newactivities = array();
-            if (isset($config['selectactivities'])) {
+            $newgroup = 0;
 
+            if (isset($config['selectactivities'])) {
                 // Translate the old config information to the target course values.
-                foreach ($config['selectactivities'] as $index => $value) {
+                foreach ($config['selectactivities'] as $value) {
                     $matches = array();
                     preg_match('/(.+)-(\d+)/', $value, $matches);
                     if (!empty($matches)) {
@@ -60,9 +65,28 @@ class restore_completion_progress_block_task extends restore_block_task {
                     }
                 }
             }
+            if (!empty($config['group'])) {
+                // Try and adapt the old group/grouping to the target course.
+                if (preg_match('/^(?P<type>group|grouping)-(?P<id>\d+)$/', $config['group'], $matches)) {
+                    $rec = restore_dbops::get_backup_ids_record($this->get_restoreid(), $matches['type'], $matches['id']);
+                    if (!$rec || !$rec->newitemid) {
+                        if ($DB->record_exists($matches['type'] . 's',
+                                ['id' => $matches['id'], 'courseid' => $courseid])) {
+                            $newgroup = $config['group'];
+                        }
+                    } else {
+                        $newgroup = $matches['type'] . '-' . $rec->newitemid;
+                    }
+                }
+                if ($newgroup === 0) {
+                    $this->get_logger()->process('Restored completion_progress block has a ' .
+                        'group/grouping setting that was not restored', backup::LOG_WARNING);
+                }
+            }
 
             // Save everything back to DB.
             $config['selectactivities'] = $newactivities;
+            $config['group'] = $newgroup;
             $configdata = base64_encode(serialize((object)$config));
             $DB->set_field('block_instances', 'configdata', $configdata, array('id' => $id));
         }
@@ -103,7 +127,7 @@ class restore_completion_progress_block_task extends restore_block_task {
      *
      * @return array An empty array
      */
-    static public function define_decode_contents() {
+    public static function define_decode_contents() {
         return array();
     }
 
@@ -112,7 +136,7 @@ class restore_completion_progress_block_task extends restore_block_task {
      *
      * @return array An empty array
      */
-    static public function define_decode_rules() {
+    public static function define_decode_rules() {
         return array();
     }
 }

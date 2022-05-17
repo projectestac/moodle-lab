@@ -14,7 +14,7 @@
 |block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090500|2020/06/16|c18e2da59601367ed473f500cac73d899d1c25da|
 |local            |rcommon             |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
-|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2020033000|2020/06/16|42bbe9728708902b5edcd2203f8054b3a134edf8|
+|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2022042000|2022/05/17|019a3cff1224bcc1a38b5da78f12b344bce3512a|
 |block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|7d5426b504f72055549d599b3595e6778d183f92|
 |block            |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|a5966e64dbf803af49ab1794f88b3e94f0bfc664|
 |local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|d709bbda0baf127ce56faf7269d2b2517d6a92fe|
@@ -38,12 +38,6 @@
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022040800|2022/05/06|32b8752062d2204ea6123b1aafab6e8c92b8479b|
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022040800|2022/05/06|4d26d027cc895d751db216ffeb6b95d067af589c|
 
-### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
-
-|Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
-|-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|theme            |xtec2020            |https://github.com/projectestac/moodle-theme_xtec2020           |2021011200|2021/01/12|beb87b0e58ca1faf4db9b38b38a6c9854ad391fc|
-
 ## Plugins added for testing purposes
 
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
@@ -56,3 +50,9 @@
 |course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2020110906|2021/04/19|0cf33411aebd585d07a65c164e9efec32e7a2d4d|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2021071901|2021/07/26|--- Baixat de Moodle plugins -----------|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
+
+### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
+
+|Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
+|-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
+|theme            |xtec2020            |https://github.com/projectestac/moodle-theme_xtec2020           |2021011200|2021/01/12|beb87b0e58ca1faf4db9b38b38a6c9854ad391fc|

@@ -1,6 +1,7 @@
 ### 3.11.7+ (Build: 20220512)
 - Updated Moodle from upstream
 - Updated 'completion progress' block to 2022042000
+- Updated 'topcoll' course format to 2021061205 (3.11.1.0)
 
 ### 3.11.6+ (Build: 20220429)
 - Moodle core updated from upstream

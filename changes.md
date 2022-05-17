@@ -22,4 +22,6 @@
 - Add 'coursequotas' report type
 - Add Wiris plugins
 - Add 'grid' course format
+- Add 'subcourse'
+- Add 'adaptivemultipart' question behaviour
 

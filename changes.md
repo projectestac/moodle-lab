@@ -24,4 +24,5 @@
 - Add 'grid' course format
 - Add 'subcourse'
 - Add 'adaptivemultipart' question behaviour
+- Add 'formulas' question type
 

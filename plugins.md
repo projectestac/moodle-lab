@@ -12,7 +12,7 @@
 |mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2021/01/12|fa142b21a2ac6b8a6636d15548260912adc4535c|
 |block            |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|a5966e64dbf803af49ab1794f88b3e94f0bfc664|
 |block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|7d5426b504f72055549d599b3595e6778d183f92|
-|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2020033000|2020/06/16|42bbe9728708902b5edcd2203f8054b3a134edf8|
+|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2022042000|2022/05/17|019a3cff1224bcc1a38b5da78f12b344bce3512a|
 |block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090500|2020/06/16|c18e2da59601367ed473f500cac73d899d1c25da|
 |block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|e7246fecfbd50e7d13ac93b38e1801508d82a108|

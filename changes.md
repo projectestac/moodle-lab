@@ -1,3 +1,7 @@
+### 3.11.7+ (Build: 20220512)
+- Updated Moodle from upstream
+- Updated 'completion progress' block to 2022042000
+
 ### 3.11.6+ (Build: 20220429)
 - Moodle core updated from upstream
 - Updated `mod/journal` to 2022041400

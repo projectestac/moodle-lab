@@ -25,4 +25,5 @@
 - Add 'subcourse'
 - Add 'adaptivemultipart' question behaviour
 - Add 'formulas' question type
+- Add 'drawing' question type
 

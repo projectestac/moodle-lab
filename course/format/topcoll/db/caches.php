@@ -23,19 +23,45 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    format_topcoll
+ * @category   cache
  * @version    See the value of '$plugin->version' in version.php.
- * @copyright  &copy; 2012-onwards G J Barnard in respect to modifications of standard topics format.
+ * @copyright  &copy; 2021-onwards G J Barnard.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @link       http://docs.moodle.org/en/Collapsed_Topics_course_format
  * @license    http://www.gnu.org/copyleft/gpl.html GNU Public License
  *
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-// Optional course format configuration file.
-
-// This file contains any specific configuration settings for the format.
-
-// The default blocks layout for this course format:...
-    $format['defaultblocks'] = ':search_forums,news_items,calendar_upcoming,recent_activity';
+$definitions = array(
+    // Caches student roles.
+    'activitystudentrolescache' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'staticacceleration' => true,
+        'staticaccelerationsize' => 2
+    ),
+    // Caches the number of 'students' who can access a given module on a given course.
+    'activitymodulecountcache' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'staticacceleration' => true
+    ),
+    // Caches the ids of the 'students' on a given course.
+    'activitystudentscache' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'staticacceleration' => true
+    ),
+    // Caches the ids of the new users on a given course.
+    'activityusercreatedcache' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'staticacceleration' => true
+    )
+);

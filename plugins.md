@@ -47,7 +47,7 @@
 |question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2020103000|2021/02/17|732600708931a371633ea7d40be2b1c7c80da5b0|
 |question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2020061900|2020/10/29|515b377c4cbe4c7de355647ea84250afcaa684a0|
 |question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2021120400|2022/05/04|2c9d8625afb178731086be4a00a6e5b7f695f70e|
-|course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2020110906|2021/04/19|0cf33411aebd585d07a65c164e9efec32e7a2d4d|
+|course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022041701|2022/05/17|6462808adfee21329c0dcaf29473744d37c9a05a|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022041901|2022/05/17|9f936f7ae461a2643b5ad9701adfd7a215734bd3|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
 

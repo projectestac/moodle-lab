@@ -5,6 +5,7 @@
 - Updated Moodle core
 - Updated 'completion progress' block to 2022042000
 - Updated 'etask' course format to 2022041901
+- Updated 'topcoll' course format to 2022041701
 
 ### 4.0+ (Build: 20220429)
 - Initial checkout of Moodle 4.0.0

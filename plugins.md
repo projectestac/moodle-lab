@@ -49,13 +49,13 @@
 
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
+|course format    |grid                |https://github.com/gjb2048/moodle-format_grid                   |2021102702|2022/05/04|46e85e620edc18016d5176b6868b8774d0e12c89|
 
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
 
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|course format    |grid                |https://github.com/gjb2048/moodle-format_grid                   |2021102702|2022/05/04|46e85e620edc18016d5176b6868b8774d0e12c89|
 |mod              |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2021021401|2021/09/10|f7fb12407e476272b107941eddda880f860db3e4|
 |question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2020103000|2021/02/17|732600708931a371633ea7d40be2b1c7c80da5b0|
 |question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2020061900|2020/10/29|515b377c4cbe4c7de355647ea84250afcaa684a0|

@@ -21,4 +21,5 @@
 - Add 'ordering' question type
 - Add 'coursequotas' report type
 - Add Wiris plugins
+- Add 'grid' course format
 

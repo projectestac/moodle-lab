@@ -18,15 +18,15 @@
  * Version details.
  *
  * @package   format_etask
- * @copyright 2020, Martin Drlik <martin.drlik@email.cz>
+ * @copyright 2022, Martin Drlik <martin.drlik@email.cz>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021071901;
-$plugin->requires  = 2019111200;
-$plugin->supported = [38, 311];
+$plugin->version   = 2022041901;
+$plugin->requires  = 2022041200;
+$plugin->supported = [400, 400];
 $plugin->component = 'format_etask';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.1';
+$plugin->release = '2.2';

@@ -18,12 +18,12 @@
  * Strings for component eTask topics course format.
  *
  * @package   format_etask
- * @copyright 2020, Martin Drlik <martin.drlik@email.cz>
+ * @copyright 2022, Martin Drlik <martin.drlik@email.cz>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 // Topics format strings.
-$string['addsections'] = 'Add topics';
+$string['addsections'] = 'Add topic';
 $string['currentsection'] = 'This topic';
 $string['editsection'] = 'Edit topic';
 $string['editsectionname'] = 'Edit topic name';
@@ -68,7 +68,6 @@ $string['registeredduedatemodules_help'] = 'Specifies in which module\'s databas
 $string['nostudentsfound'] = 'No students were found to grade.';
 $string['nogradeitemsfound'] = 'No grade items were found.';
 // Grading table footer strings.
-$string['legend'] = 'Legend';
 $string['gradeitemcompleted'] = 'Completed';
 $string['gradeitempassed'] = 'Passed';
 $string['gradeitemfailed'] = 'Failed';

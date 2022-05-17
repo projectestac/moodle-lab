@@ -24,8 +24,6 @@
 
 namespace format_etask\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use format_etask;
 use grade_item;
 use html_table;
@@ -51,9 +49,6 @@ class gradingtable implements renderable, templatable {
 
     /** @var string */
     private $footer;
-
-    /** @var string */
-    private $css;
 
     /**
      * Grading table constructor.
@@ -132,10 +127,6 @@ class gradingtable implements renderable, templatable {
         $this->table = $this->get_gradingtable($headcells, $rows);
         $this->footer = new gradingtable_footer($studentscountforview, course_get_format($COURSE->id)->get_groups(),
             course_get_format($COURSE)->get_current_group_id());
-        $this->css = 'border-bottom mb-3 pb-3';
-        if (course_get_format($COURSE)->get_placement() === format_etask::PLACEMENT_BELOW) {
-            $this->css = 'border-top mt-4 pt-4';
-        }
     }
 
     /**
@@ -149,7 +140,6 @@ class gradingtable implements renderable, templatable {
         $data = new stdClass();
         $data->table = html_writer::table($this->table);
         $data->footer = $output->render($this->footer);
-        $data->css = $this->css;
 
         return $data;
     }
@@ -232,14 +222,13 @@ class gradingtable implements renderable, templatable {
      * @return html_table_cell
      */
     private function get_gradeitem_body_cell(grade_item $gradeitem, stdClass $user, string $status): html_table_cell {
-        global $COURSE, $OUTPUT;
+        global $PAGE, $OUTPUT;
 
         $cell = new html_table_cell();
         $cell->text = $OUTPUT->render(new gradeitem_body($gradeitem, $user, $status));
         $cell->attributes = [
-            'class' => 'position-relative text-center text-nowrap p-2 '
-                . course_get_format($COURSE)->transform_status_to_css($status),
-            'title' => fullname($user) . ', ' . $gradeitem->itemname
+            'class' => 'position-relative text-center text-nowrap p-2',
+            'title' => course_get_format($PAGE->course)->transform_status_to_label($status),
         ];
 
         return $cell;
@@ -278,7 +267,7 @@ class gradingtable implements renderable, templatable {
      */
     private function get_gradingtable(array $headcells, array $rows): html_table {
         $table = new html_table();
-        $table->attributes = ['class' => 'grade-table table-hover table-striped table-condensed table-responsive mb-3 w-auto',
+        $table->attributes = ['class' => 'grade-table table-hover table-condensed table-responsive mb-3 w-auto',
             'table-layout' => 'fixed'];
         $table->head = $headcells;
         $table->data = $rows;

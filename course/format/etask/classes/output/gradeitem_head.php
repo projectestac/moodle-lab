@@ -24,8 +24,6 @@
 
 namespace format_etask\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use grade_item;
 use renderable;
 use renderer_base;

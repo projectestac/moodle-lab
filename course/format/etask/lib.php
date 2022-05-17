@@ -15,23 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file contains the main class for the eTask topics course format.
+ * This file contains main class for eTask topics course format.
  *
  * @package   format_etask
- * @copyright 2020, Martin Drlik <martin.drlik@email.cz>
+ * @copyright 2022, Martin Drlik <martin.drlik@email.cz>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot . '/course/format/topics/lib.php');
 
 use core\output\inplace_editable;
 
 /**
- * The main class for the eTask topics course format.
+ * Main class for the eTask topics course format.
  *
  * @package   format_etask
- * @copyright 2020, Martin Drlik <martin.drlik@email.cz>
+ * @copyright 2022, Martin Drlik <martin.drlik@email.cz>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_etask extends format_topics {
@@ -87,7 +88,7 @@ class format_etask extends format_topics {
     public function course_format_options($foreditform = false): array {
         static $courseformatoptions = false;
 
-        if (!$courseformatoptions) {
+        if ($courseformatoptions === false) {
             $courseconfig = get_config('moodlecourse');
             $courseformatoptions = [
                 'hiddensections' => [
@@ -616,19 +617,44 @@ class format_etask extends format_topics {
     public function transform_status_to_css(string $status): string {
         switch ($status) {
             case self::STATUS_COMPLETED:
-                $css = 'text-white bg-completed';
+                $css = 'badge badge-warning';
                 break;
             case self::STATUS_PASSED:
-                $css = 'text-white bg-passed';
+                $css = 'badge badge-success';
                 break;
             case self::STATUS_FAILED:
-                $css = 'text-white bg-failed';
+                $css = 'badge badge-danger';
                 break;
             default:
                 $css = '';
         }
 
         return $css;
+    }
+
+    /**
+     * Transform grade item status to the CSS attributes.
+     *
+     * @param string $status
+     *
+     * @return string
+     */
+    public function transform_status_to_label(string $status): string {
+        switch ($status) {
+            case self::STATUS_COMPLETED:
+                $label = get_string('gradeitemcompleted', 'format_etask');
+                break;
+            case self::STATUS_PASSED:
+                $label = $this->get_passed_label();
+                break;
+            case self::STATUS_FAILED:
+                $label = $this->get_failed_label();
+                break;
+            default:
+                $label = '';
+        }
+
+        return $label;
     }
 
     /**
@@ -639,7 +665,7 @@ class format_etask extends format_topics {
     public function get_gradable_students(): array {
         global $COURSE, $USER;
 
-        $students = get_enrolled_users(context_course::instance($COURSE->id), 'moodle/competency:coursecompetencygradable',
+        $students = get_enrolled_users(context_course::instance($COURSE->id), 'moodle/grade:view',
             $this->get_current_group_id(), 'u.*', null, 0, 0, true);
 
         if (isset($students[$USER->id]) && !$this->is_student_privacy()) {
@@ -714,9 +740,9 @@ class format_etask extends format_topics {
  * @param int $itemid
  * @param mixed $newvalue
  *
- * @return inplace_editable
+ * @return null|inplace_editable
  */
-function format_etask_inplace_editable($itemtype, $itemid, $newvalue): inplace_editable {
+function format_etask_inplace_editable($itemtype, $itemid, $newvalue): ?inplace_editable {
     global $DB, $CFG;
     require_once($CFG->dirroot . '/course/lib.php');
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
@@ -726,4 +752,6 @@ function format_etask_inplace_editable($itemtype, $itemid, $newvalue): inplace_e
 
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
+
+    return null;
 }

@@ -1,0 +1,27 @@
+/* The grading table popover. */
+body.format-etask .popover.etask-popover {
+    min-width: 380px;
+    max-width: 380px;
+}
+
+body.format-etask .popover.etask-popover .popover-body {
+    padding: 0;
+}
+
+/* Moodle to Bootstrap colors overrides. */
+body.format-etask .bg-passed,
+body.format-etask .badge-success,
+body.format-etask .progress-bar-passed .progress-bar.bar {
+    background-color: #28a745;
+}
+
+body.format-etask .bg-completed,
+body.format-etask .badge-warning,
+body.format-etask .progress-bar-completed .progress-bar.bar {
+    background-color: #ffc107;
+}
+
+body.format-etask td.bg-failed,
+body.format-etask .badge-danger {
+    background-color: #dc3545;
+}

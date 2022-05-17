@@ -27,4 +27,5 @@
 - Add 'formulas' question type
 - Add 'drawing' question type
 - Add 'topcoll' course format
+- Add 'etask' course format
 

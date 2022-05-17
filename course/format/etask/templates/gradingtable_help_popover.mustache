@@ -1,0 +1,65 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_etask/gradingtable_help_popover
+
+    This template renders the grading table help popover.
+
+    Example context (json):
+    {
+        "version": 2020080900,
+        "release": "2.1",
+        "displayname": "eTask topics format",
+        "pluginicon": "<img src=\"...\" alt=\"...\">",
+        "improveicon": "<img src=\"...\" alt=\"...\">"
+    }
+}}
+
+<div class="popover-container m-3 text-justify">
+    <div class="mb-3 text-black-50">
+        {{#str}}release, plugin{{/str}} {{release}} (version {{version}})
+    </div>
+
+    <div class="d-flex mt-3 align-items-start">
+        {{{pluginicon}}}
+        <div class="d-flex flex-column w-100">
+            <a href="https://moodle.org/plugins/format_etask" class="text-decoration-none d-block" target="_blank">
+                <h6 class="d-inline font-weight-bold">{{displayname}}</h6>
+            </a>
+
+            <div class="mt-3">
+                {{#str}}helpabout, format_etask{{/str}}
+            </div>
+
+            <div class="mt-3 position-relative">
+                <a href="https://moodle.org/plugins/format_etask" class="stretched-link" target="_blank">{{#str}}showmore, format_etask{{/str}}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top mr-n3 ml-n3 mt-3 pt-3">
+        <div class="d-flex align-items-start pl-3 pr-3">
+            {{{improveicon}}}
+            <div class="d-flex flex-column w-100">
+                <h6 class="d-inline font-weight-bold">{{#str}}helpimprovehead, format_etask{{/str}}</h6>
+                <div class="mt-2">
+                    {{#str}}helpimprovebody, format_etask{{/str}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

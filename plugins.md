@@ -50,4 +50,5 @@
 |question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2021120400|2022/05/04|2c9d8625afb178731086be4a00a6e5b7f695f70e|
 |course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2021061205|2022/05/17|46d4ef00f8190dff1e10a6e81c9614bf3e504fe9|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
+|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2021082600|2022/06/13|ea62b5383795ba994ea45a3939960158f4ec39a7|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2021071901|2021/07/26|--- Baixat de Moodle plugins -----------|

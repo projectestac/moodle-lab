@@ -1,5 +1,6 @@
 ### 4.0.1 (Build: 20220509)
 - Updated to Moodle 4.0.1
+- Add mod/attendance
 
 ### 4.0.1+ (Build: 20220512)
 - Updated Moodle core

@@ -9,6 +9,7 @@
 - Updated `question/type/truefalsewiris`
 - Updated `question/type/wq`
 - Updated `atto/wiris`
+- Updated `format/etask`
 
 ### 4.0.1+ (Build: 20220509)
 - Add mod/attendance

@@ -97,8 +97,9 @@ class course_category extends base {
             ->add_joins($this->get_joins())
             ->set_type(column::TYPE_TEXT)
             ->add_fields("{$tablealias}.name, {$tablealias}.id")
-            ->add_callback(static function(string $name, stdClass $category): string {
-                return core_course_category::get($category->id, MUST_EXIST, true)->get_formatted_name();
+            ->add_callback(static function(?string $name, stdClass $category): string {
+                return empty($category->id) ? '' :
+                    core_course_category::get($category->id, MUST_EXIST, true)->get_formatted_name();
             })
             ->set_is_sortable(true);
 
@@ -111,8 +112,9 @@ class course_category extends base {
             ->add_joins($this->get_joins())
             ->set_type(column::TYPE_TEXT)
             ->add_fields("{$tablealias}.name, {$tablealias}.id")
-            ->add_callback(static function(string $name, stdClass $category): string {
-                return core_course_category::get($category->id, MUST_EXIST, true)->get_nested_name(false);
+            ->add_callback(static function(?string $name, stdClass $category): string {
+                return empty($category->id) ? '' :
+                    core_course_category::get($category->id, MUST_EXIST, true)->get_nested_name(false);
             })
             ->set_disabled_aggregation(['groupconcat', 'groupconcatdistinct'])
             ->set_is_sortable(true);
@@ -141,9 +143,13 @@ class course_category extends base {
                  AND {$tablealiascontext}.contextlevel = " . CONTEXT_COURSECAT)
             ->set_type(column::TYPE_TEXT)
             ->add_fields("{$tablealias}.description, {$tablealias}.descriptionformat, {$tablealiascontext}.id AS contextid")
-            ->add_callback(static function(string $description, stdClass $category): string {
+            ->add_callback(static function(?string $description, stdClass $category): string {
                 global $CFG;
                 require_once("{$CFG->libdir}/filelib.php");
+
+                if ($description === null) {
+                    return '';
+                }
 
                 $description = file_rewrite_pluginfile_urls($description, 'pluginfile.php', $category->contextid, 'coursecat',
                     'description', null);

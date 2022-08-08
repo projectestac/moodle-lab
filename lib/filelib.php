@@ -4168,14 +4168,14 @@ class curl {
         $crlf = "\r\n";
         return preg_replace(
                 // HTTP version and status code (ignore value of code).
-                '~^HTTP/1\..*' . $crlf .
+                '~^HTTP/[1-9](\.[0-9])?.*' . $crlf .
                 // Header name: character between 33 and 126 decimal, except colon.
                 // Colon. Header value: any character except \r and \n. CRLF.
                 '(?:[\x21-\x39\x3b-\x7e]+:[^' . $crlf . ']+' . $crlf . ')*' .
                 // Headers are terminated by another CRLF (blank line).
                 $crlf .
                 // Second HTTP status code, this time must be 200.
-                '(HTTP/1.[01] 200 )~', '$1', $input);
+                '(HTTP/[1-9](\.[0-9])? 200)~', '$2', $input);
     }
 }
 
@@ -4561,6 +4561,37 @@ function file_pluginfile($relativepath, $forcedownload, $preview = null, $offlin
             \core\session\manager::write_close(); // Unlock session during file serving.
             send_stored_file($file, 0, 0, true, $sendfileoptions);
 
+        } else if ($filearea === 'event_description' and $context->contextlevel == CONTEXT_COURSECAT) {
+            if ($CFG->forcelogin) {
+                require_login();
+            }
+
+            // Get category, this will also validate access.
+            $category = core_course_category::get($context->instanceid);
+
+            // Get the event ID from the args array, load event.
+            $eventid = array_shift($args);
+            $event = $DB->get_record('event', [
+                'id' => (int) $eventid,
+                'eventtype' => 'category',
+                'categoryid' => $category->id,
+            ]);
+
+            if (!$event) {
+                send_file_not_found();
+            }
+
+            // Retrieve file from storage, and serve.
+            $filename = array_pop($args);
+            $filepath = $args ? '/' . implode('/', $args) .'/' : '/';
+            $file = $fs->get_file($context->id, $component, $filearea, $eventid, $filepath, $filename);
+            if (!$file || $file->is_directory()) {
+                send_file_not_found();
+            }
+
+            // Unlock session during file serving.
+            \core\session\manager::write_close();
+            send_stored_file($file, HOURSECS, 0, $forcedownload, $sendfileoptions);
         } else if ($filearea === 'event_description' and $context->contextlevel == CONTEXT_COURSE) {
 
             // Respect forcelogin and require login unless this is the site.... it probably

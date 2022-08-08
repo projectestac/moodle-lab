@@ -1,3 +1,6 @@
+### 3.11.8+ (Build: 20220805)
+- Updated Moodle from upstream
+
 ### 3.11.7+ (Build: 20220512)
 - Updated Moodle from upstream
 - Updated 'completion progress' block to 2022042000

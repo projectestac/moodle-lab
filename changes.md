@@ -1,6 +1,14 @@
 ### 4.0.1+ (Build: 20220805)
 - Updated Moodle core
 - Updated `mod/attendance`
+- Updated `question/type/essaywiris/`
+- Updated `question/type/matchwiris`
+- Updated `question/type/multianswerwiris`
+- Updated `question/type/multichoicewiris`
+- Updated `question/type/shortanswerwiris`
+- Updated `question/type/truefalsewiris`
+- Updated `question/type/wq`
+- Updated `atto/wiris`
 
 ### 4.0.1+ (Build: 20220509)
 - Add mod/attendance

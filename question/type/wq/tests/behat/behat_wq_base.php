@@ -51,6 +51,34 @@ class behat_wq_base extends behat_base {
     }
 
     /**
+     * Goes back in the Wiris Quizzes Studio interface.
+     *
+     * @When I go back in Wiris Quizzes Studio
+     */
+    public function i_go_back_in_wiris_quizzes_studio() {
+        $node = $this->get_text_selector_node(
+            'xpath_element',
+            "//*[@id='wrsUI_quizzesStudioBackButton']"
+        );
+        $this->ensure_node_is_visible($node);
+        $node->click();
+    }
+
+    /**
+     * Saves Wiris Quizzes Studio.
+     *
+     * @When I save Wiris Quizzes Studio
+     */
+    public function i_save_wiris_quizzes_studio() {
+        $node = $this->get_text_selector_node(
+            'xpath_element',
+            "//*[@id='wrsUI_quizzesStudioHomeSaveButton']"
+        );
+        $this->ensure_node_is_visible($node);
+        $node->click();
+    }
+
+    /**
      * Opens the n instance of Wiris Quizzes Studio when editing a question.
      *
      * @When I Open Wiris Quizzes Studio Instance :instance
@@ -71,7 +99,7 @@ class behat_wq_base extends behat_base {
      */
     public function i_should_have_a_readonly_input() {
         $session = $this->getSession();
-        $readonly = $session->getPage()->find('css', '.wrs_readOnly');
+        $readonly = $session->getPage()->find('css', '.wrsUI_readOnly');
         if (empty($readonly)) {
             throw new Exception('Readonly field not found.');
         }
@@ -81,9 +109,9 @@ class behat_wq_base extends behat_base {
      * @When I add the variable :varname with value :value
      */
     public function i_add_the_variable_with_value($varname, $value) {
-        $this->execute('behat_general::i_press_named_key', ['', 'left']);
+        $this->execute('behat_general::i_wait_seconds', 2);
         $this->execute('behat_general::i_type', $varname);
-        $this->execute('behat_general::i_press_named_key', ['', 'right']);
+        $this->execute('behat_general::i_type', " = ");
         $this->execute('behat_general::i_type', $value);
         $this->execute('behat_general::i_press_named_key', ['', 'enter']);
     }

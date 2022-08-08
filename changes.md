@@ -13,6 +13,7 @@
 - Updated `atto/wiris`
 - Added `format/remuiformat`
 - Added `mod/offlinequiz`
+- Added `format/tiles`
 
 ### 3.11.7+ (Build: 20220512)
 - Updated Moodle from upstream

@@ -14,25 +14,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace mod_questionnaire\question;
+
 /**
  * This file contains the parent class for radio question types.
  *
  * @author Mike Churchward
+ * @copyright 2016 onward Mike Churchward (mike.churchward@poetopensource.org)
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package questiontypes
+ * @package mod_questionnaire
  */
-
-namespace mod_questionnaire\question;
-use mod_questionnaire\question\choice\choice;
-
-defined('MOODLE_INTERNAL') || die();
-
 class radio extends question {
 
+    /**
+     * Each question type must define its response class.
+     * @return object The response object based off of questionnaire_response_base.
+     */
     protected function responseclass() {
         return '\\mod_questionnaire\\responsetype\\single';
     }
 
+    /**
+     * Short name for this question type - no spaces, etc..
+     * @return string
+     */
     public function helpname() {
         return 'radiobuttons';
     }
@@ -84,7 +89,7 @@ class radio extends question {
      *
      */
     protected function question_survey_display($response, $dependants=[], $blankquestionnaire=false) {
-        // Radio buttons
+        // Radio buttons.
         global $idcounter;  // To make sure all radio buttons have unique ids. // JR 20 NOV 2007.
 
         $otherempty = false;
@@ -135,7 +140,7 @@ class radio extends question {
                 $radio->oname = 'q'.$this->id.choice::id_other_choice_name($id);
                 $radio->oid = $htmlid.'-other';
                 if (isset($odata)) {
-                    $radio->ovalue = stripslashes($odata);
+                    $radio->ovalue = format_string(stripslashes($odata));
                 }
                 $radio->olabel = 'Text for '.format_text($othertext, FORMAT_HTML, ['noclean' => true]);
             }
@@ -229,6 +234,11 @@ class radio extends question {
         }
     }
 
+    /**
+     * Return the length form element.
+     * @param \MoodleQuickForm $mform
+     * @param string $helptext
+     */
     protected function form_length(\MoodleQuickForm $mform, $helptext = '') {
         $lengroup = [];
         $lengroup[] =& $mform->createElement('radio', 'length', '', get_string('vertical', 'questionnaire'), '0');
@@ -240,6 +250,11 @@ class radio extends question {
         return $mform;
     }
 
+    /**
+     * Return the precision form element.
+     * @param \MoodleQuickForm $mform
+     * @param string $helptext
+     */
     protected function form_precise(\MoodleQuickForm $mform, $helptext = '') {
         return question::form_precise_hidden($mform);
     }
@@ -254,11 +269,10 @@ class radio extends question {
     }
 
     /**
-     * @param $qnum
-     * @param $fieldkey
+     * Override and return false if not supporting mobile app.
+     * @param int $qnum
      * @param bool $autonum
      * @return \stdClass
-     * @throws \coding_exception
      */
     public function mobile_question_display($qnum, $autonum = false) {
         $mobiledata = parent::mobile_question_display($qnum, $autonum);
@@ -267,8 +281,8 @@ class radio extends question {
     }
 
     /**
-     * @param $mobiledata
-     * @return mixed
+     * Override and return false if not supporting mobile app.
+     * @return array
      */
     public function mobile_question_choices_display() {
         $choices = parent::mobile_question_choices_display();
@@ -282,7 +296,8 @@ class radio extends question {
     }
 
     /**
-     * @param $response
+     * Return the mobile response data.
+     * @param response $response
      * @return array
      */
     public function get_mobile_response_data($response) {

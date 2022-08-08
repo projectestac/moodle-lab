@@ -33,7 +33,7 @@ require_once($CFG->dirroot . '/mod/questionnaire/tests/generator_test.php');
 require_once($CFG->dirroot . '/mod/questionnaire/tests/questiontypes_test.php');
 
 /**
- * Unit tests for {@link questionnaire_responsetypes_testcase}.
+ * Unit tests for questionnaire_responsetypes_testcase.
  * @group mod_questionnaire
  */
 class mod_questionnaire_responsetypes_testcase extends advanced_testcase {
@@ -164,7 +164,7 @@ class mod_questionnaire_responsetypes_testcase extends advanced_testcase {
             }
         }
         $vals = ['q'.$question->id => $val,
-                 'q'.$question->id.\mod_questionnaire\question\choice\choice::id_other_choice_name($val) => 'Forty-four'];
+                 'q'.$question->id. \mod_questionnaire\question\choice::id_other_choice_name($val) => 'Forty-four'];
         $userid = 2;
         $response = $generator->create_question_response($questionnaire, $question, $vals, $userid);
 
@@ -213,7 +213,7 @@ class mod_questionnaire_responsetypes_testcase extends advanced_testcase {
                 $val[$cid] = $cid;
             } else if ($choice->content == '!other=Another number') {
                 $val[$cid] = $cid;
-                $val[\mod_questionnaire\question\choice\choice::id_other_choice_name($cid)] = 'Forty-four';
+                $val[\mod_questionnaire\question\choice::id_other_choice_name($cid)] = 'Forty-four';
                 $ocid = $cid;
             }
         }
@@ -285,6 +285,14 @@ class mod_questionnaire_responsetypes_testcase extends advanced_testcase {
 
     // General tests to call from specific tests above.
 
+    /**
+     * Create a test questionnaire.
+     *
+     * @param int $qtype
+     * @param array $questiondata
+     * @param null $choicedata
+     * @return questionnaire
+     */
     public function create_test_questionnaire($qtype, $questiondata = [], $choicedata = null) {
         $this->resetAfterTest();
 
@@ -299,11 +307,20 @@ class mod_questionnaire_responsetypes_testcase extends advanced_testcase {
         $questiondata['content'] = isset($questiondata['content']) ? $questiondata['content'] : 'Test content';
         $generator->create_question($questionnaire, $questiondata, $choicedata);
 
-        $questionnaire = new questionnaire($questionnaire->id, null, $course, $cm, true);
+        $questionnaire = new questionnaire( $course, $cm, $questionnaire->id, null, true);
 
         return $questionnaire;
     }
 
+    /**
+     * General assertions for responses.
+     *
+     * @param int $questionnaireid
+     * @param int $responseid
+     * @param int $userid
+     * @param int $attemptcount
+     * @param int $responsecount
+     */
     private function response_tests($questionnaireid, $responseid, $userid,
                                     $attemptcount = 1, $responsecount = 1) {
         global $DB;

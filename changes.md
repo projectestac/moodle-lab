@@ -10,6 +10,7 @@
 - Updated `question/type/wq`
 - Updated `atto/wiris`
 - Updated `format/etask`
+- Updated `mod/questionnaire`
 
 ### 4.0.1+ (Build: 20220509)
 - Add mod/attendance

@@ -14,30 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * This file contains the parent class for questionnaire question types.
- *
- * @author Mike Churchward
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package questiontypes
- */
-
 namespace mod_questionnaire\responsetype;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Class for single response types.
  *
  * @author Mike Churchward
- * @package responsetypes
+ * @copyright 2016 onward Mike Churchward (mike.churchward@poetopensource.org)
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package mod_questionnaire
  */
-
 class single extends responsetype {
     /**
-     * @return string
+     * Provide the necessary response data table name. Should probably always be used with late static binding 'static::' form
+     * rather than 'self::' form to allow for class extending.
+     *
+     * @return string response table name.
      */
-    static public function response_table() {
+    public static function response_table() {
         return 'questionnaire_resp_single';
     }
 
@@ -49,7 +43,7 @@ class single extends responsetype {
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      * @throws \coding_exception
      */
-    static public function answers_from_webform($responsedata, $question) {
+    public static function answers_from_webform($responsedata, $question) {
         $answers = [];
         if (isset($responsedata->{'q'.$question->id}) && isset($question->choices[$responsedata->{'q'.$question->id}])) {
             $record = new \stdClass();
@@ -59,7 +53,7 @@ class single extends responsetype {
             // If this choice is an "other" choice, look for the added input.
             if ($question->choices[$responsedata->{'q'.$question->id}]->is_other_choice()) {
                 $cname = 'q' . $question->id .
-                    \mod_questionnaire\question\choice\choice::id_other_choice_name($responsedata->{'q'.$question->id});
+                    \mod_questionnaire\question\choice::id_other_choice_name($responsedata->{'q'.$question->id});
                 $record->value = isset($responsedata->{$cname}) ? $responsedata->{$cname} : '';
             }
             $answers[$responsedata->{'q'.$question->id}] = answer\answer::create_from_data($record);
@@ -74,7 +68,7 @@ class single extends responsetype {
      * @param \mod_questionnaire\question\question $question
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      */
-    static public function answers_from_appdata($responsedata, $question) {
+    public static function answers_from_appdata($responsedata, $question) {
         $answers = [];
         $qname = 'q'.$question->id;
         if (isset($responsedata->{$qname}[0]) && !empty($responsedata->{$qname}[0])) {
@@ -84,7 +78,7 @@ class single extends responsetype {
             $record->choiceid = $responsedata->{$qname}[0];
             // If this choice is an "other" choice, look for the added input.
             if ($question->choices[$record->choiceid]->is_other_choice()) {
-                $cname = \mod_questionnaire\question\choice\choice::id_other_choice_name($record->choiceid);
+                $cname = \mod_questionnaire\question\choice::id_other_choice_name($record->choiceid);
                 $record->value =
                     isset($responsedata->{$qname}[$cname]) ? $responsedata->{$qname}[$cname] : '';
             } else {
@@ -96,10 +90,10 @@ class single extends responsetype {
     }
 
     /**
-     * @param \mod_questionnaire\responsetype\response\response|\stdClass $responsedata
-     * @return bool|int
-     * @throws \coding_exception
-     * @throws \dml_exception
+     * Insert a provided response to the question.
+     *
+     * @param object $responsedata All of the responsedata as an object.
+     * @return int|bool - on error the subtype should call set_error and return false.
      */
     public function insert_response($responsedata) {
         global $DB;
@@ -123,7 +117,7 @@ class single extends responsetype {
                         $record->response_id = $response->id;
                         $record->question_id = $this->question->id;
                         $record->choice_id = $answer->choiceid;
-                        $record->response = $answer->value;
+                        $record->response = clean_text($answer->value);
                         $DB->insert_record('questionnaire_response_other', $record);
                     }
                     // Record the choice selection.
@@ -139,11 +133,11 @@ class single extends responsetype {
     }
 
     /**
-     * @param bool $rids
-     * @param bool $anonymous
-     * @return array
-     * @throws \coding_exception
-     * @throws \dml_exception
+     * Provide the result information for the specified result records.
+     *
+     * @param int|array $rids - A single response id, or array.
+     * @param boolean $anonymous - Whether or not responses are anonymous.
+     * @return array - Array of data records.
      */
     public function get_results($rids=false, $anonymous=false) {
         global $DB;
@@ -254,7 +248,7 @@ class single extends responsetype {
                 if (strpos($idx, 'other') === 0) {
                     $answer = $row->response;
                     $ccontent = $row->content;
-                    $content = \mod_questionnaire\question\choice\choice::content_other_choice_display($ccontent);
+                    $content = \mod_questionnaire\question\choice::content_other_choice_display($ccontent);
                     $content .= ' ' . clean_text($answer);
                     $textidx = $content;
                     $counts[$textidx] = !empty($counts[$textidx]) ? ($counts[$textidx] + 1) : 1;
@@ -278,7 +272,7 @@ class single extends responsetype {
      * @param int $rid The response id.
      * @return array
      */
-    static public function response_select($rid) {
+    public static function response_select($rid) {
         global $DB;
 
         $values = [];
@@ -294,8 +288,8 @@ class single extends responsetype {
             $newrow['ccontent'] = $row->ccontent;
             $newrow['responses'] = [];
             $newrow['responses'][$row->cid] = $row->cid;
-            if (\mod_questionnaire\question\choice\choice::content_is_other_choice($row->ccontent)) {
-                $newrow['responses'][\mod_questionnaire\question\choice\choice::id_other_choice_name($row->cid)] = $row->response;
+            if (\mod_questionnaire\question\choice::content_is_other_choice($row->ccontent)) {
+                $newrow['responses'][\mod_questionnaire\question\choice::id_other_choice_name($row->cid)] = $row->response;
             }
             $values[$row->qid] = $newrow;
         }
@@ -311,7 +305,7 @@ class single extends responsetype {
      * @return array array answer
      * @throws \dml_exception
      */
-    static public function response_answers_by_question($rid) {
+    public static function response_answers_by_question($rid) {
         global $DB;
 
         $answers = [];
@@ -331,11 +325,13 @@ class single extends responsetype {
 
     /**
      * Return sql and params for getting responses in bulk.
-     * @author Guy Thomas
      * @param int|array $questionnaireids One id, or an array of ids.
      * @param bool|int $responseid
      * @param bool|int $userid
+     * @param bool|int $groupid
+     * @param int $showincompletes
      * @return array
+     * author Guy Thomas
      */
     public function get_bulk_sql($questionnaireids, $responseid = false, $userid = false, $groupid = false, $showincompletes = 0) {
         global $DB;

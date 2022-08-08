@@ -8,7 +8,7 @@
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2021091446|2021/10/25|2dd025ef0e2aaf5c503a0015a128cd7f0734b16c|
 |question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|
 |mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2022041400|2021/05/04|917de14fb10d2a64b2750fb03eb217e509e6aeef|
-|mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2021062300|2020/11/18|1db7bcce061a0ba1fbd5632b667366ccfd27d30b|
+|mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2021062301|2020/08/08|a6a32ade9c51429b9a36e0d11c309abdf0cc1202|
 |mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|97620971e6171c7ad89d980072ce4263b1dc349b|
 |mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2021/01/12|fa142b21a2ac6b8a6636d15548260912adc4535c|
 |block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090500|2020/06/16|c18e2da59601367ed473f500cac73d899d1c25da|

@@ -14,6 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * The main report page for a questionnaire.
+ *
+ * @package mod_questionnaire
+ * @copyright  2016 Mike Churchward (mike.churchward@poetgroup.org)
+ * @author     Mike Churchward
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ */
 require_once("../../config.php");
 require_once($CFG->dirroot.'/mod/questionnaire/questionnaire.class.php');
 
@@ -44,25 +53,25 @@ if ($instance === false) {
     if (!empty($SESSION->instance)) {
         $instance = $SESSION->instance;
     } else {
-        print_error('requiredparameter', 'questionnaire');
+        throw new \moodle_exception('requiredparameter', 'mod_questionnaire');
     }
 }
 $SESSION->instance = $instance;
 $usergraph = get_config('questionnaire', 'usergraph');
 
 if (! $questionnaire = $DB->get_record("questionnaire", array("id" => $instance))) {
-    print_error('incorrectquestionnaire', 'questionnaire');
+    throw new \moodle_exception('incorrectquestionnaire', 'mod_questionnaire');
 }
 if (! $course = $DB->get_record("course", array("id" => $questionnaire->course))) {
-    print_error('coursemisconf');
+    throw new \moodle_exception('coursemisconf', 'mod_questionnaire');
 }
 if (! $cm = get_coursemodule_from_instance("questionnaire", $questionnaire->id, $course->id)) {
-    print_error('invalidcoursemodule');
+    throw new \moodle_exception('invalidcoursemodule', 'mod_questionnaire');
 }
 
 require_course_login($course, true, $cm);
 
-$questionnaire = new questionnaire(0, $questionnaire, $course, $cm);
+$questionnaire = new questionnaire($course, $cm, 0, $questionnaire);
 
 // Add renderer and page objects to the questionnaire object for display use.
 $questionnaire->add_renderer($PAGE->get_renderer('mod_questionnaire'));
@@ -78,10 +87,9 @@ if ($outputtarget == 'pdf') {
 
 // If you can't view the questionnaire, or can't view a specified response, error out.
 $context = context_module::instance($cm->id);
-if (!$questionnaire->can_view_all_responses()) {
+if (!$questionnaire->can_view_all_responses() && !$individualresponse) {
     // Should never happen, unless called directly by a snoop...
-    print_error('nopermissions', 'moodle', $CFG->wwwroot.'/mod/questionnaire/view.php?id='.$cm->id,
-        get_string('viewallresponses', 'mod_questionnaire'));
+    throw new \moodle_exception('nopermissions', 'mod_questionnaire');
 }
 
 $questionnaire->canviewallgroups = has_capability('moodle/site:accessallgroups', $context);
@@ -205,13 +213,13 @@ switch ($action) {
         if (empty($questionnaire->survey)) {
             $id = $questionnaire->survey;
             notify ("questionnaire->survey = /$id/");
-            print_error('surveynotexists', 'questionnaire');
+            throw new \moodle_exception('surveynotexists', 'mod_questionnaire');
         } else if ($questionnaire->survey->courseid != $course->id) {
-            print_error('surveyowner', 'questionnaire');
+            throw new \moodle_exception('surveyowner', 'mod_questionnaire');
         } else if (!$rid || !is_numeric($rid)) {
-            print_error('invalidresponse', 'questionnaire');
+            throw new \moodle_exception('invalidresponse', 'mod_questionnaire');
         } else if (!($resp = $DB->get_record('questionnaire_response', array('id' => $rid)))) {
-            print_error('invalidresponserecord', 'questionnaire');
+            throw new \moodle_exception('invalidresponserecord', 'mod_questionnaire');
         }
 
         $ruser = false;
@@ -296,13 +304,13 @@ switch ($action) {
         require_capability('mod/questionnaire:deleteresponses', $context);
 
         if (empty($questionnaire->survey)) {
-            print_error('surveynotexists', 'questionnaire');
+            throw new \moodle_exception('surveynotexists', 'mod_questionnaire');
         } else if ($questionnaire->survey->courseid != $course->id) {
-            print_error('surveyowner', 'questionnaire');
+            throw new \moodle_exception('surveyowner', 'mod_questionnaire');
         } else if (!$rid || !is_numeric($rid)) {
-            print_error('invalidresponse', 'questionnaire');
+            throw new \moodle_exception('invalidresponse', 'mod_questionnaire');
         } else if (!($response = $DB->get_record('questionnaire_response', array('id' => $rid)))) {
-            print_error('invalidresponserecord', 'questionnaire');
+            throw new \moodle_exception('invalidresponserecord', 'mod_questionnaire');
         }
 
         if (questionnaire_delete_response($response, $questionnaire)) {
@@ -344,9 +352,9 @@ switch ($action) {
         require_capability('mod/questionnaire:deleteresponses', $context);
 
         if (empty($questionnaire->survey)) {
-            print_error('surveynotexists', 'questionnaire');
+            throw new \moodle_exception('surveynotexists', 'mod_questionnaire');
         } else if ($questionnaire->survey->courseid != $course->id) {
-            print_error('surveyowner', 'questionnaire');
+            throw new \moodle_exception('surveyowner', 'mod_questionnaire');
         }
 
         // Available group modes (0 = no groups; 1 = separate groups; 2 = visible groups).
@@ -490,7 +498,7 @@ switch ($action) {
         $emailroles = optional_param('emailroles', 0, PARAM_INT);
         $emailextra = optional_param('emailextra', '', PARAM_RAW);
 
-        $output = $questionnaire->generate_csv('', $user, $choicecodes, $choicetext, $currentgroupid, $showincompletes,
+        $output = $questionnaire->generate_csv($currentgroupid, '', $user, $choicecodes, $choicetext, $showincompletes,
             $rankaverages);
 
         $columns = $output[0];
@@ -532,7 +540,7 @@ switch ($action) {
         if (!$questionnaire->capabilities->readallresponses && !$questionnaire->capabilities->readallresponseanytime) {
             echo $questionnaire->renderer->header();
             // Should never happen, unless called directly by a snoop.
-            print_error('nopermissions', '', '', get_string('viewallresponses', 'questionnaire'));
+            throw new \moodle_exception('nopermissions', 'mod_questionnaire');
             // Finish the page.
             echo $questionnaire->renderer->footer($course);
             break;
@@ -682,9 +690,9 @@ switch ($action) {
     case 'vresp': // View by response.
     default:
         if (empty($questionnaire->survey)) {
-            print_error('surveynotexists', 'questionnaire');
+            throw new \moodle_exception('surveynotexists', 'mod_questionnaire');
         } else if ($questionnaire->survey->courseid != $course->id) {
-            print_error('surveyowner', 'questionnaire');
+            throw new \moodle_exception('surveyowner', 'mod_questionnaire');
         }
         $ruser = false;
         $noresponses = false;
@@ -819,6 +827,7 @@ switch ($action) {
 }
 
 /**
+ * Return a pdf object.
  * @return pdf
  */
 function questionnaire_report_start_pdf() {

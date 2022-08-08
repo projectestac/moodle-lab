@@ -397,6 +397,16 @@ class mod_attendance_structure {
     }
 
     /**
+     * Get url for import.
+     *
+     * @return moodle_url of import.php for attendance instance
+     */
+    public function url_import() : moodle_url {
+        $params = ['id' => $this->cm->id];
+        return new moodle_url('/mod/attendance/import.php', $params);
+    }
+
+    /**
      * Get url for export.
      *
      * @return moodle_url of export.php for attendance instance
@@ -891,6 +901,11 @@ class mod_attendance_structure {
         $tempusers = $DB->get_records('attendance_tempusers', array('courseid' => $this->course->id));
         foreach ($tempusers as $tempuser) {
             $users[$tempuser->studentid] = self::tempuser_to_user($tempuser);
+        }
+
+        // Add custom profile field data.
+        foreach ($users as $user) {
+            profile_load_data($user);
         }
 
         return $users;

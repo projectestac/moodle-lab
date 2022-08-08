@@ -1,8 +1,12 @@
-### 4.0.1 (Build: 20220509)
-- Updated to Moodle 4.0.1
+### 4.0.1+ (Build: 20220805)
+- Updated Moodle core
+- Updated `mod/attendance`
+
+### 4.0.1+ (Build: 20220509)
 - Add mod/attendance
 
 ### 4.0.1+ (Build: 20220512)
+- Updated to Moodle 4.0.1
 - Updated Moodle core
 - Updated 'completion progress' block to 2022042000
 - Updated 'etask' course format to 2022041901

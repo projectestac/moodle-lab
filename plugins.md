@@ -50,7 +50,7 @@
 |course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022041701|2022/05/17|6462808adfee21329c0dcaf29473744d37c9a05a|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022041901|2022/05/17|9f936f7ae461a2643b5ad9701adfd7a215734bd3|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
-|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022051300|2022/06/13|229de31d329b512cc0652c06ff18ee9ecff0e23c|
+|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022062700|2022/08/08|505fb5c75eda7528745d980e1fe0a26e172805d0|
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
 

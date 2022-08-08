@@ -1,0 +1,1 @@
+YUI.add("moodle-mod_offlinequiz-util-base",function(o,e){o.namespace("Moodle.mod_offlinequiz.util")},"@VERSION@");

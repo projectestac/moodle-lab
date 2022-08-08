@@ -52,6 +52,7 @@
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022072500|2022/08/08|d4c22ca1cd004e3bf622ec3dc16804d8b8fbe8c4|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
 |course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2022120500|2022/08/08|--- Baixat de Moodle plugins -----------|
+|mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2022080100|2022/08/08|d9a593c4b8f1cd10e12d7fbc4c750f9b0fe0184e|
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
 

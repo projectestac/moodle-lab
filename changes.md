@@ -12,6 +12,7 @@
 - Updated `format/etask`
 - Updated `mod/questionnaire`
 - Added `format/remuiformat`
+- Added `mod/offlinequiz`
 
 ### 4.0.1+ (Build: 20220509)
 - Add mod/attendance

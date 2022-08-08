@@ -2,6 +2,15 @@
 - Updated Moodle from upstream
 - Updated `mod/attendance`
 - Updated `mod/questionnaire`
+- Updated `question/type/essaywiris/`
+- Updated `question/type/matchwiris`
+- Updated `question/type/multianswerwiris`
+- Updated `question/type/multichoicewiris`
+- Updated `question/type/shortanswerwiris`
+- Updated `question/type/truefalsewiris`
+- Updated `question/type/wq`
+- Updated `filter/wiris`
+- Updated `atto/wiris`
 
 ### 3.11.7+ (Build: 20220512)
 - Updated Moodle from upstream

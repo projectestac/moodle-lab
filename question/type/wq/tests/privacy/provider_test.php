@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace qtype_wq\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -35,21 +37,16 @@ use core_privacy\local\metadata\collection;
 use core_privacy\local\request\deletion_criteria;
 use qtype_wq\privacy\provider;
 
-
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 
 /**
- * Wiris Quizzes Common question type privacy tests class.
- *
- * @package    qtype_wq
- * @copyright  2018 Jun Pataleta
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers \qtype_wq\privacy\provider
  */
-class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testcase {
-    /** @var stdClass The teacher object. */
+class provider_test extends \core_privacy\tests\provider_testcase {
+    /** @var \stdClass The teacher object. */
     protected $teacher;
 
-    /** @var stdClass The course object. */
+    /** @var \stdClass The course object. */
     protected $course;
 
 
@@ -86,7 +83,7 @@ class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testca
         $q->qtype = 'essaywiris';
         $q->createdby = $teacher->id;
         // Creating Wiris Question object.
-        $wq = new StdClass();
+        $wq = new \stdClass();
         $wq->question = $q->id;
         $wq->xml = 'xml';
         $DB->insert_record('qtype_wq', $wq);
@@ -143,12 +140,12 @@ class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testca
         $q->qtype = 'essaywiris';
         $q->createdby = $this->teacher->id;
         // Creating Wiris Question object.
-        $wq = new StdClass();
+        $wq = new \stdClass();
         $wq->question = $q->id;
         $wq->xml = 'xml';
         $DB->insert_record('qtype_wq', $wq);
         // Question is at system context level.
-        $systemcontext = context_system::instance();
+        $systemcontext = \context_system::instance();
 
         // Export all the data for the system context.
         $this->export_context_data_for_user($this->teacher->id, $systemcontext, 'qtype_wq');
@@ -187,7 +184,7 @@ class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testca
         $q->qtype = 'essaywiris';
         $q->createdby = $teacher->id;
         // Creating Wiris Question object.
-        $wq = new StdClass();
+        $wq = new \stdClass();
         $wq->question = $q->id;
         $wq->xml = 'xml';
         $DB->insert_record('qtype_wq', $wq);
@@ -197,7 +194,7 @@ class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testca
         $this->assertEquals(2, $count);
 
         // Delete data based on context.
-        $syscontext = context_system::instance();
+        $syscontext = \context_system::instance();
         provider::delete_data_for_all_users_in_context($syscontext);
 
         // After deletion, the Wiris Quizzes questiosn should have been deleted.
@@ -233,7 +230,7 @@ class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testca
         $q->qtype = 'essaywiris';
         $q->createdby = $anotherteacher->id;
         // Creating Wiris Question object.
-        $wq = new StdClass();
+        $wq = new \stdClass();
         $wq->question = $q->id;
         $wq->xml = 'xml';
         $DB->insert_record('qtype_wq', $wq);
@@ -254,7 +251,7 @@ class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testca
         $q->qtype = 'essaywiris';
         $q->createdby = $this->teacher->id;
         // Creating Wiris Question object.
-        $wq = new StdClass();
+        $wq = new \stdClass();
         $wq->question = $q->id;
         $wq->xml = 'xml';
         $DB->insert_record('qtype_wq', $wq);
@@ -263,7 +260,7 @@ class mod_qtype_wq_provider_testcase extends \core_privacy\tests\provider_testca
         $count = $DB->count_records('qtype_wq', []);
         $this->assertEquals(3, $count);
         $contextlist = new \core_privacy\local\request\approved_contextlist($this->teacher, 'qtype_wq',
-                                                                            [context_system::instance()->id]);
+                                                                            [\context_system::instance()->id]);
 
         provider::delete_data_for_user($contextlist);
 

@@ -1,0 +1,16 @@
+{
+    "moodle-mod_offlinequiz-offlinequizquestionbank": {
+        "requires": [
+            "base",
+            "event",
+            "node",
+            "io",
+            "io-form",
+            "yui-later",
+            "moodle-question-qbankmanager",
+            "moodle-question-chooser",
+            "moodle-question-searchform",
+            "moodle-core-notification"
+        ]
+    }
+}

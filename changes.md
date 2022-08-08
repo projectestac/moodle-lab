@@ -11,6 +11,7 @@
 - Updated `question/type/wq`
 - Updated `filter/wiris`
 - Updated `atto/wiris`
+- Added `format/remuiformat`
 
 ### 3.11.7+ (Build: 20220512)
 - Updated Moodle from upstream

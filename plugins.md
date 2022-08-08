@@ -52,3 +52,4 @@
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
 |mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2021082602|2022/06/29|58efd9bf26dc43d0351f533e139a88a6c85f3d38|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2021071901|2021/07/26|--- Baixat de Moodle plugins -----------|
+|course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2021090300|2022/08/08|03d72936eb4e8f64c50638590177712ed9cd3816|

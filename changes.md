@@ -13,6 +13,7 @@
 - Updated `mod/questionnaire`
 - Added `format/remuiformat`
 - Added `mod/offlinequiz`
+- Added `format/tiles`
 
 ### 4.0.1+ (Build: 20220509)
 - Add mod/attendance

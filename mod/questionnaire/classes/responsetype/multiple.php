@@ -14,32 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * This file contains the parent class for questionnaire question types.
- *
- * @author Mike Churchward
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package questiontypes
- */
-
 namespace mod_questionnaire\responsetype;
-defined('MOODLE_INTERNAL') || die();
-
-use mod_questionnaire\db\bulk_sql_config;
 
 /**
  * Class for multiple response types.
  *
  * @author Mike Churchward
- * @package responsetypes
+ * @copyright 2016 onward Mike Churchward (mike.churchward@poetopensource.org)
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package mod_questionnaire
  */
-
 class multiple extends single {
     /**
      * The only differences between multuple and single responses are the
      * response table and the insert logic.
      */
-    static public function response_table() {
+    public static function response_table() {
         return 'questionnaire_resp_multiple';
     }
 
@@ -51,7 +41,7 @@ class multiple extends single {
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      * @throws \coding_exception
      */
-    static public function answers_from_webform($responsedata, $question) {
+    public static function answers_from_webform($responsedata, $question) {
         $answers = [];
         if (isset($responsedata->{'q'.$question->id})) {
             foreach ($responsedata->{'q' . $question->id} as $cid => $cvalue) {
@@ -63,7 +53,7 @@ class multiple extends single {
                     $record->choiceid = $cid;
                     // If this choice is an "other" choice, look for the added input.
                     if ($question->choices[$cid]->is_other_choice()) {
-                        $cname = \mod_questionnaire\question\choice\choice::id_other_choice_name($cid);
+                        $cname = \mod_questionnaire\question\choice::id_other_choice_name($cid);
                         $record->value = isset($responsedata->{'q' . $question->id}[$cname]) ?
                             $responsedata->{'q' . $question->id}[$cname] : '';
                     }
@@ -81,7 +71,7 @@ class multiple extends single {
      * @param \mod_questionnaire\question\question $question
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      */
-    static public function answers_from_appdata($responsedata, $question) {
+    public static function answers_from_appdata($responsedata, $question) {
         // Need to override "single" class' implementation.
         $answers = [];
         $qname = 'q'.$question->id;
@@ -94,7 +84,7 @@ class multiple extends single {
                     $record->choiceid = $choiceid;
                     // If this choice is an "other" choice, look for the added input.
                     if (isset($question->choices[$choiceid]) && $question->choices[$choiceid]->is_other_choice()) {
-                        $cname = \mod_questionnaire\question\choice\choice::id_other_choice_name($choiceid);
+                        $cname = \mod_questionnaire\question\choice::id_other_choice_name($choiceid);
                         $record->value =
                             isset($responsedata->{$qname}[$cname]) ? $responsedata->{$qname}[$cname] : '';
                     } else {
@@ -114,7 +104,7 @@ class multiple extends single {
      * @param int $rid The response id.
      * @return array
      */
-    static public function response_select($rid) {
+    public static function response_select($rid) {
         global $DB;
 
         $values = [];
@@ -143,8 +133,8 @@ class multiple extends single {
                     $newrow['responses'] = [];
                 }
                 $newrow['responses'][$row->cid] = $row->cid;
-                if (\mod_questionnaire\question\choice\choice::content_is_other_choice($row->ccontent)) {
-                    $newrow['responses'][\mod_questionnaire\question\choice\choice::id_other_choice_name($row->cid)] =
+                if (\mod_questionnaire\question\choice::content_is_other_choice($row->ccontent)) {
+                    $newrow['responses'][\mod_questionnaire\question\choice::id_other_choice_name($row->cid)] =
                         $row->response;
                 }
             }
@@ -156,11 +146,13 @@ class multiple extends single {
 
     /**
      * Return sql and params for getting responses in bulk.
-     * @author Guy Thomas
      * @param int|array $questionnaireids One id, or an array of ids.
      * @param bool|int $responseid
      * @param bool|int $userid
+     * @param bool $groupid
+     * @param int $showincompletes
      * @return array
+     * author Guy Thomas
      */
     public function get_bulk_sql($questionnaireids, $responseid = false, $userid = false, $groupid = false, $showincompletes = 0) {
         global $DB;
@@ -208,8 +200,8 @@ class multiple extends single {
 
     /**
      * Return sql for getting responses in bulk.
-     * @author Guy Thomas
      * @return string
+     * author Guy Thomas
      */
     protected function bulk_sql() {
         global $DB;

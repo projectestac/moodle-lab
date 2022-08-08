@@ -14,16 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * This file contains the parent class for questionnaire question types.
- *
- * @author Mike Churchward
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package questiontypes
- */
-
 namespace mod_questionnaire\responsetype;
-defined('MOODLE_INTERNAL') || die();
 
 use Composer\Package\Package;
 use mod_questionnaire\db\bulk_sql_config;
@@ -32,14 +23,18 @@ use mod_questionnaire\db\bulk_sql_config;
  * Class for rank responses.
  *
  * @author Mike Churchward
- * @package responsetypes
+ * @copyright 2016 onward Mike Churchward (mike.churchward@poetopensource.org)
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package mod_questionnaire
  */
-
 class rank extends responsetype {
     /**
-     * @return string
+     * Provide the necessary response data table name. Should probably always be used with late static binding 'static::' form
+     * rather than 'self::' form to allow for class extending.
+     *
+     * @return string response table name.
      */
-    static public function response_table() {
+    public static function response_table() {
         return 'questionnaire_response_rank';
     }
 
@@ -51,7 +46,7 @@ class rank extends responsetype {
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      * @throws \coding_exception
      */
-    static public function answers_from_webform($responsedata, $question) {
+    public static function answers_from_webform($responsedata, $question) {
         $answers = [];
         foreach ($question->choices as $cid => $choice) {
             $other = isset($responsedata->{'q' . $question->id . '_' . $cid}) ?
@@ -82,7 +77,7 @@ class rank extends responsetype {
      * @param \mod_questionnaire\question\question $question
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      */
-    static public function answers_from_appdata($responsedata, $question) {
+    public static function answers_from_appdata($responsedata, $question) {
         $answers = [];
         if (isset($responsedata->{'q'.$question->id}) && !empty($responsedata->{'q'.$question->id})) {
             foreach ($responsedata->{'q' . $question->id} as $choiceid => $choicevalue) {
@@ -107,10 +102,10 @@ class rank extends responsetype {
     }
 
     /**
-     * @param \mod_questionnaire\responsetype\response\response|\stdClass $responsedata
-     * @return bool|int
-     * @throws \coding_exception
-     * @throws \dml_exception
+     * Insert a provided response to the question.
+     *
+     * @param object $responsedata All of the responsedata as an object.
+     * @return int|bool - on error the subtype should call set_error and return false.
      */
     public function insert_response($responsedata) {
         global $DB;
@@ -289,10 +284,12 @@ class rank extends responsetype {
     }
 
     /**
-     * @param bool $rids
-     * @param string $sort
-     * @param bool $anonymous
-     * @return string
+     * Provide the result information for the specified result records.
+     *
+     * @param int|array $rids - A single response id, or array.
+     * @param string $sort - Optional display sort.
+     * @param boolean $anonymous - Whether or not responses are anonymous.
+     * @return string - Display output.
      */
     public function display_results($rids=false, $sort='', $anonymous=false) {
         $output = '';
@@ -344,7 +341,7 @@ class rank extends responsetype {
      * @param int $rid The response id.
      * @return array
      */
-    static public function response_select($rid) {
+    public static function response_select($rid) {
         global $DB;
 
         $values = [];
@@ -411,7 +408,7 @@ class rank extends responsetype {
      * @return array array answer
      * @throws \dml_exception
      */
-    static public function response_answers_by_question($rid) {
+    public static function response_answers_by_question($rid) {
         global $DB;
 
         $answers = [];
@@ -435,10 +432,10 @@ class rank extends responsetype {
     }
 
     /**
-     * @param $sort
+     * Return a structure for averages.
+     * @param string $sort
      * @param string $stravgvalue
      * @return \stdClass
-     * @throws \coding_exception
      */
     private function mkresavg($sort, $stravgvalue='') {
         global $CFG;
@@ -739,12 +736,11 @@ class rank extends responsetype {
     }
 
     /**
-     * @param $rids
-     * @param $rows
-     * @param $sort
+     * Return a structure for counts.
+     * @param array $rids
+     * @param array $rows
+     * @param string $sort
      * @return \stdClass
-     * @throws \coding_exception
-     * @throws \dml_exception
      */
     private function mkrescount($rids, $rows, $sort) {
         // Display number of responses to Rate questions - see http://moodle.org/mod/forum/discuss.php?d=185106.
@@ -947,12 +943,12 @@ class rank extends responsetype {
     }
 
     /**
-     * Sorting functions for ascending and descending.
-     * @param $a
-     * @param $b
+     * Sorting function for ascending.
+     * @param \stdClass $a
+     * @param \stdClass $b
      * @return int
      */
-    static private function sortavgasc($a, $b) {
+    private static function sortavgasc($a, $b) {
         if (isset($a->avg) && isset($b->avg)) {
             if ( $a->avg < $b->avg ) {
                 return -1;
@@ -965,11 +961,12 @@ class rank extends responsetype {
     }
 
     /**
-     * @param $a
-     * @param $b
+     * Sorting function for descending.
+     * @param \stdClass $a
+     * @param \stdClass $b
      * @return int
      */
-    static private function sortavgdesc($a, $b) {
+    private static function sortavgdesc($a, $b) {
         if (isset($a->avg) && isset($b->avg)) {
             if ( $a->avg > $b->avg ) {
                 return -1;

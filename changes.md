@@ -1,5 +1,7 @@
 ### 3.11.8+ (Build: 20220805)
 - Updated Moodle from upstream
+- Updated `mod/attendance`
+- Updated `mod/questionnaire`
 
 ### 3.11.7+ (Build: 20220512)
 - Updated Moodle from upstream

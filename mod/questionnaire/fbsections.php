@@ -36,15 +36,15 @@ $action = optional_param('action', '', PARAM_ALPHA);
 $sectionid = optional_param('sectionid', 0, PARAM_INT);
 
 if (! $cm = get_coursemodule_from_id('questionnaire', $id)) {
-    print_error('invalidcoursemodule');
+    throw new \moodle_exception('invalidcoursemodule', 'mod_questionnaire');
 }
 
 if (! $course = $DB->get_record("course", ["id" => $cm->course])) {
-    print_error('coursemisconf');
+    throw new \moodle_exception('coursemisconf', 'mod_questionnaire');
 }
 
 if (! $questionnaire = $DB->get_record("questionnaire", ["id" => $cm->instance])) {
-    print_error('invalidcoursemodule');
+    throw new \moodle_exception('invalidcoursemodule', 'mod_questionnaire');
 }
 
 // Needed here for forced language courses.
@@ -58,11 +58,11 @@ if (!isset($SESSION->questionnaire)) {
     $SESSION->questionnaire = new stdClass();
 }
 
-$questionnaire = new questionnaire(0, $questionnaire, $course, $cm);
+$questionnaire = new questionnaire($course, $cm, 0, $questionnaire);
 
 if ($sectionid) {
     // Get the specified section by its id.
-    $feedbacksection = new mod_questionnaire\feedback\section(['id' => $sectionid], $questionnaire->questions);
+    $feedbacksection = new mod_questionnaire\feedback\section($questionnaire->questions, ['id' => $sectionid]);
 
 } else if (!$DB->count_records('questionnaire_fb_sections', ['surveyid' => $questionnaire->sid])) {
     // There are no sections currently, so create one.
@@ -75,8 +75,8 @@ if ($sectionid) {
 
 } else {
     // Get the specified section by section number.
-    $feedbacksection = new mod_questionnaire\feedback\section(['surveyid' => $questionnaire->survey->id, 'sectionnum' => $section],
-        $questionnaire->questions);
+    $feedbacksection = new mod_questionnaire\feedback\section($questionnaire->questions,
+        ['surveyid' => $questionnaire->survey->id, 'sectionnum' => $section]);
 }
 
 // Get all questions that are valid feedback questions.
@@ -94,7 +94,7 @@ $questionnaire->add_page(new \mod_questionnaire\output\feedbackpage());
 $SESSION->questionnaire->current_tab = 'feedback';
 
 if (!$questionnaire->capabilities->editquestions) {
-    print_error('nopermissions', 'error', '', 'mod:questionnaire:editquestions');
+    throw new \moodle_exception('nopermissions', 'mod_questionnaire');
 }
 
 // Handle confirmed actions that impact display immediately.

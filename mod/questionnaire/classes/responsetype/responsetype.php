@@ -14,28 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * This file contains the parent class for questionnaire response types.
- *
- * @author Mike Churchward
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package response
- */
-
 namespace mod_questionnaire\responsetype;
-defined('MOODLE_INTERNAL') || die();
+
 use \html_writer;
 use \html_table;
 
 use mod_questionnaire\db\bulk_sql_config;
 
 /**
- * Class for describing a response.
+ * This file contains the parent class for questionnaire response types.
  *
  * @author Mike Churchward
- * @package response
+ * @copyright 2016 onward Mike Churchward (mike.churchward@poetopensource.org)
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package mod_questionnaire
  */
-
 abstract class responsetype {
 
     // Class properties.
@@ -66,7 +59,7 @@ abstract class responsetype {
      *
      * @return string response table name.
      */
-    static public function response_table() {
+    public static function response_table() {
         return 'Must be implemented!';
     }
 
@@ -74,7 +67,7 @@ abstract class responsetype {
      * Return the known response tables. Should be replaced by a better management system eventually.
      * @return array
      */
-    static public function all_response_tables() {
+    public static function all_response_tables() {
         return ['questionnaire_response_bool', 'questionnaire_response_date', 'questionnaire_response_other',
             'questionnaire_response_rank', 'questionnaire_response_text', 'questionnaire_resp_multiple',
             'questionnaire_resp_single'];
@@ -87,7 +80,7 @@ abstract class responsetype {
      * @param \mod_questionnaire\question\question $question
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      */
-    abstract static public function answers_from_webform($responsedata, $question);
+    abstract public static function answers_from_webform($responsedata, $question);
 
     /**
      * Insert a provided response to the question.
@@ -118,7 +111,7 @@ abstract class responsetype {
 
     /**
      * If the choice id needs to be transformed into a different value, override this in the child class.
-     * @param $choiceid
+     * @param mixed $choiceid
      * @return mixed
      */
     public function transform_choiceid($choiceid) {
@@ -137,13 +130,12 @@ abstract class responsetype {
     /**
      * Gets the results tags for templates for questions with defined choices (single, multiple, boolean).
      *
-     * @param $weights
-     * @param $participants Number of questionnaire participants.
-     * @param $respondents Number of question respondents.
-     * @param $showtotals
+     * @param array $weights
+     * @param int $participants Number of questionnaire participants.
+     * @param int $respondents Number of question respondents.
+     * @param int $showtotals
      * @param string $sort
      * @return \stdClass
-     * @throws \coding_exception
      */
     public function get_results_tags($weights, $participants, $respondents, $showtotals = 1, $sort = '') {
         global $CFG;
@@ -251,7 +243,7 @@ abstract class responsetype {
      * @param int $rid The response id.
      * @return array
      */
-    static public function response_select($rid) {
+    public static function response_select($rid) {
         return [];
     }
 
@@ -262,7 +254,7 @@ abstract class responsetype {
      * @param int $rid The response id.
      * @return array array answer
      */
-    static public function response_answers_by_question($rid) {
+    public static function response_answers_by_question($rid) {
         return [];
     }
 
@@ -273,7 +265,7 @@ abstract class responsetype {
      * @param \mod_questionnaire\question\question $question
      * @return array \mod_questionnaire\responsetype\answer\answer An array of answer objects.
      */
-    static public function answers_from_appdata($responsedata, $question) {
+    public static function answers_from_appdata($responsedata, $question) {
         // In most cases this can be a direct call to answers_from_webform with the one modification below. Override when this will
         // not work.
         if (isset($responsedata->{'q'.$question->id}) && !empty($responsedata->{'q'.$question->id})) {
@@ -285,11 +277,15 @@ abstract class responsetype {
     /**
      * Return all the fields to be used for users in bulk questionnaire sql.
      *
-     * @author: Guy Thomas
      * @return string
+     * author: Guy Thomas
      */
     protected function user_fields_sql() {
-        $userfieldsarr = get_all_user_name_fields();
+        if (class_exists('\core_user\fields')) {
+            $userfieldsarr = \core_user\fields::get_name_fields();
+        } else {
+            $userfieldsarr = get_all_user_name_fields();
+        }
         $userfieldsarr = array_merge($userfieldsarr, ['username', 'department', 'institution']);
         $userfields = '';
         foreach ($userfieldsarr as $field) {
@@ -302,12 +298,13 @@ abstract class responsetype {
 
     /**
      * Return sql and params for getting responses in bulk.
-     * @author Guy Thomas
      * @param int|array $questionnaireids One id, or an array of ids.
      * @param bool|int $responseid
      * @param bool|int $userid
      * @param bool|int $groupid
+     * @param int $showincompletes
      * @return array
+     * author Guy Thomas
      */
     public function get_bulk_sql($questionnaireids, $responseid = false, $userid = false, $groupid = false, $showincompletes = 0) {
         global $DB;

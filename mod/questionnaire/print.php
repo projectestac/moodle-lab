@@ -14,6 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * The main page to print a questionnaire.
+ *
+ * @package mod_questionnaire
+ * @copyright  2016 Mike Churchward (mike.churchward@poetgroup.org)
+ * @author     Mike Churchward
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ */
 require_once("../../config.php");
 require_once($CFG->dirroot.'/mod/questionnaire/questionnaire.class.php');
 
@@ -25,19 +34,19 @@ $null = null;
 $referer = $CFG->wwwroot.'/mod/questionnaire/report.php';
 
 if (! $questionnaire = $DB->get_record("questionnaire", array("id" => $qid))) {
-    print_error('invalidcoursemodule');
+    throw new \moodle_exception('invalidcoursemodule', 'mod_questionnaire');
 }
 if (! $course = $DB->get_record("course", array("id" => $questionnaire->course))) {
-    print_error('coursemisconf');
+    throw new \moodle_exception('coursemisconf', 'mod_questionnaire');
 }
 if (! $cm = get_coursemodule_from_instance("questionnaire", $questionnaire->id, $course->id)) {
-    print_error('invalidcoursemodule');
+    throw new \moodle_exception('invalidcoursemodule', 'mod_questionnaire');
 }
 
 // Check login and get context.
 require_login($courseid);
 
-$questionnaire = new questionnaire(0, $questionnaire, $course, $cm);
+$questionnaire = new questionnaire($course, $cm, 0, $questionnaire);
 
 // Add renderer and page objects to the questionnaire object for display use.
 $questionnaire->add_renderer($PAGE->get_renderer('mod_questionnaire'));
@@ -50,7 +59,7 @@ if (!empty($rid)) {
 // If you can't view the questionnaire, or can't view a specified response, error out.
 if (!($questionnaire->capabilities->view && (($rid == 0) || $questionnaire->can_view_response($rid)))) {
     // Should never happen, unless called directly by a snoop...
-    print_error('nopermissions', 'moodle', $CFG->wwwroot.'/mod/questionnaire/view.php?id='.$cm->id);
+    throw new \moodle_exception('nopermissions', 'mod_questionnaire');
 }
 $blankquestionnaire = true;
 if ($rid != 0) {
@@ -66,6 +75,6 @@ $PAGE->set_title($questionnaire->survey->title);
 $PAGE->set_pagelayout('popup');
 echo $questionnaire->renderer->header();
 $questionnaire->page->add_to_page('closebutton', $questionnaire->renderer->close_window_button());
-$questionnaire->survey_print_render('', 'print', $courseid, $rid, $blankquestionnaire);
+$questionnaire->survey_print_render($courseid, '', 'print', $rid, $blankquestionnaire);
 echo $questionnaire->renderer->render($questionnaire->page);
 echo $questionnaire->renderer->footer();

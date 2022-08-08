@@ -1,4 +1,4 @@
-### 4.0.1+ (Build: 20220805)
+### 4.0.2+ (Build: 20220805)
 - Updated Moodle core
 - Updated `mod/attendance`
 - Updated `question/type/essaywiris/`
@@ -11,6 +11,7 @@
 - Updated `atto/wiris`
 - Updated `format/etask`
 - Updated `mod/questionnaire`
+- Added `format/remuiformat`
 
 ### 4.0.1+ (Build: 20220509)
 - Add mod/attendance

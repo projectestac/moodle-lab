@@ -37,6 +37,7 @@
 |question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022061500|2022/08/08|66f568966efe52a7dcb7e01d76f323944d077a67|
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022061500|2022/08/08|4e48c2f6f9335bdf8bb56a21b20653328ef99257|
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022072600|2022/08/08|9b531e4e6fe41127e27dfde796513c434947e269|
+|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022062700|2022/08/08|505fb5c75eda7528745d980e1fe0a26e172805d0|
 
 ## Plugins added for testing purposes
 
@@ -50,7 +51,7 @@
 |course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022041701|2022/05/17|6462808adfee21329c0dcaf29473744d37c9a05a|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022072500|2022/08/08|d4c22ca1cd004e3bf622ec3dc16804d8b8fbe8c4|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
-|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022062700|2022/08/08|505fb5c75eda7528745d980e1fe0a26e172805d0|
+|course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2022120500|2022/08/08|--- Baixat de Moodle plugins -----------|
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
 

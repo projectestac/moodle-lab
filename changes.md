@@ -1,5 +1,6 @@
 ### 3.11.9+ (Build: 20220826)
 - Updated Moodle from upstream
+- Added `mod/assign/submission/snap`
 
 ### 3.11.8+ (Build: 20220805)
 - Updated Moodle from upstream

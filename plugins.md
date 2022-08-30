@@ -54,6 +54,7 @@
 |course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2022120500|2022/08/08|--- Baixat de Moodle plugins -----------|
 |mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2022080100|2022/08/08|d9a593c4b8f1cd10e12d7fbc4c750f9b0fe0184e|
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2022070200|2022/08/08|--- Baixat de Moodle plugins -----------|
+|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022080500|2022/08/30|e7ec64119abd70a46975398021f9f687e7087ea8|
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
 

@@ -1,3 +1,7 @@
+### 3.11.10+ (Build: 20221007)
+- Updated Moodle from upstream
+- Updated `mod/hotpot`
+
 ### 3.11.9+ (Build: 20220826)
 - Updated Moodle from upstream
 - Added `mod/assign/submission/snap`

@@ -2,6 +2,7 @@
 - Updated Moodle core
 - Updated `mod/attendance`
 - Added `mod/assign/submission/snap`
+- Updated `mod/geogebra`
 
 ### 4.0.2+ (Build: 20220805)
 - Updated Moodle core

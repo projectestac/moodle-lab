@@ -38,6 +38,7 @@
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022061500|2022/08/08|4e48c2f6f9335bdf8bb56a21b20653328ef99257|
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022072600|2022/08/08|9b531e4e6fe41127e27dfde796513c434947e269|
 |mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022082900|2022/08/31|f618b994400418eaa67c1e62324ec8bf224f469d|
+|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022100600|2022/10/11|93d2e6e9b213b422868892d04ee793d0245bf0ac|
 
 ## Plugins added for testing purposes
 
@@ -54,7 +55,6 @@
 |course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2022120500|2022/08/08|--- Baixat de Moodle plugins -----------|
 |mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2022080100|2022/08/08|d9a593c4b8f1cd10e12d7fbc4c750f9b0fe0184e|
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2022070200|2022/08/08|--- Baixat de Moodle plugins -----------|
-|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022080500|2022/08/30|e7ec64119abd70a46975398021f9f687e7087ea8|
 
 ### Plugins in Moodle LAB 3.11 pending to be deployed to 4.0
 

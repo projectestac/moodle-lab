@@ -1,6 +1,7 @@
 ### 4.0.4+ (Build: 20221007) 
 - Updated Moodle core
 - Updated `mod/hotpot`
+- Updated `mod/assign/submission/snap`
 
 ### 4.0.3+ (Build: 20220826)
 - Updated Moodle core

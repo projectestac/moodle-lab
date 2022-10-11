@@ -201,9 +201,18 @@ class addsession extends moodleform {
         if (!empty($studentscanmark)) {
             $mform->addElement('checkbox', 'studentscanmark', '', get_string('studentscanmark', 'attendance'));
             $mform->addHelpButton('studentscanmark', 'studentscanmark', 'attendance');
+
+            $mform->addElement('duration', 'studentsearlyopentime', get_string('studentsearlyopentime', 'attendance'));
+            $mform->addHelpButton('studentsearlyopentime', 'studentsearlyopentime', 'attendance');
+            if (isset($pluginconfig->studentsearlyopentime)) {
+                $mform->setDefault('studentsearlyopentime', $pluginconfig->studentsearlyopentime);
+            }
+            $mform->hideif('studentsearlyopentime', 'studentscanmark', 'notchecked');
         } else {
             $mform->addElement('hidden', 'studentscanmark', '0');
             $mform->settype('studentscanmark', PARAM_INT);
+            $mform->addElement('hidden', 'studentsearlyopentime', '0');
+            $mform->settype('studentsearlyopentime', PARAM_INT);
         }
         if ($DB->record_exists('attendance_statuses', ['attendanceid' => $this->_customdata['att']->id, 'setunmarked' => 1])) {
             $options = attendance_get_automarkoptions();
@@ -300,6 +309,10 @@ class addsession extends moodleform {
         if (isset($pluginconfig->preventsharediptime)) {
             $mform->setDefault('preventsharediptime', $pluginconfig->preventsharediptime);
         }
+
+        $handler = \mod_attendance\customfield\session_handler::create();
+        $id = 0; // This is the initial add form, we don't have an id number yet.
+        $handler->instance_form_definition($mform, $id);
 
         $this->add_action_buttons(true, get_string('add', 'attendance'));
     }

@@ -15,18 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Manage custom fields for sessions.
  *
  * @package    mod_attendance
- * @copyright  2011 Artem Andreev <andreev.artem@gmail.com>
+ * @copyright  2022 Dan Marsden <dan@danmarsden.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2022083107;
-$plugin->requires = 2022031100; // Requires 4.0.
-$plugin->release = '4.0.10';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->cron     = 0;
-$plugin->component = 'mod_attendance';
-$plugin->supported = [400, 400];
+require_once('../../config.php');
+require_once($CFG->libdir.'/adminlib.php');
+
+admin_externalpage_setup('managemodules');
+
+$output = $PAGE->get_renderer('core_customfield');
+$handler = mod_attendance\customfield\session_handler::create();
+$outputpage = new \core_customfield\output\management($handler);
+
+echo $output->header(),
+     $output->heading(new lang_string('customfields', 'attendance')),
+     $output->render($outputpage),
+     $output->footer();

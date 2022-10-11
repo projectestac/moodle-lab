@@ -42,12 +42,13 @@ $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST)
 require_login($course, true, $cm);
 
 // If group mode is set, check if user can access this session.
-if (!empty($attforsession->groupid)) {
-    $allowedgroups = groups_get_activity_allowed_groups($cm);
-    if (!array_key_exists($attforsession->groupid, $allowedgroups)) {
-         $group = groups_get_group($attforsession->groupid);
-         throw new moodle_exception('cannottakethisgroup', 'attendance');
-    }
+if (!empty($attforsession->groupid) && !groups_is_member($attforsession->groupid, $USER->id)) {
+    throw new moodle_exception('cannottakethisgroup', 'attendance');
+}
+
+if ($DB->record_exists('attendance_log', ['sessionid' => $id, 'studentid' => $USER->id])) {
+    $url = new moodle_url('/mod/attendance/view.php', ['id' => $cm->id]);
+    throw new moodle_exception('attendance_already_submitted', 'mod_attendance', $url);
 }
 
 $qrpassflag = false;

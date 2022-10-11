@@ -39,6 +39,7 @@
 |question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2021061303|2021/06/16|cda6bed05275783954cc9bf12f2ef36d942b9694|
 |report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|
 |theme            |xtec2020            |https://github.com/projectestac/moodle-theme_xtec2020           |2021011200|2021/01/12|beb87b0e58ca1faf4db9b38b38a6c9854ad391fc|
+|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022100600|2022/10/11|93d2e6e9b213b422868892d04ee793d0245bf0ac|
 
 ## Plugins added for testing purposes
 
@@ -55,4 +56,3 @@
 |course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2021090300|2022/08/08|03d72936eb4e8f64c50638590177712ed9cd3816|
 |mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2022080100|2022/08/08|d9a593c4b8f1cd10e12d7fbc4c750f9b0fe0184e|
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2020080629|2022/08/08|--- Baixat de Moodle plugins -----------|
-|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022080500|2022/08/30|e7ec64119abd70a46975398021f9f687e7087ea8|

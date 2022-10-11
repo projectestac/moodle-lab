@@ -10,7 +10,7 @@
 |mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2021062301|2022/08/08|a6a32ade9c51429b9a36e0d11c309abdf0cc1202|
 |mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|97620971e6171c7ad89d980072ce4263b1dc349b|
 |mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2021/01/12|fa142b21a2ac6b8a6636d15548260912adc4535c|
-|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2021082602|2022/06/29|58efd9bf26dc43d0351f533e139a88a6c85f3d38|
+|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2021082609|2022/10/11|7a5bf450589368e9d9ee4db030df04ad50a24876|
 |block            |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|a5966e64dbf803af49ab1794f88b3e94f0bfc664|
 |block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|7d5426b504f72055549d599b3595e6778d183f92|
 |block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2022042000|2022/05/17|019a3cff1224bcc1a38b5da78f12b344bce3512a|

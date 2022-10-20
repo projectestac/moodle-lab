@@ -15,16 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Label module version info
+ * Editor interface for setting editor values.
  *
- * @package mod_label
- * @copyright  2003 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @package    behat
+ * @category   test
+ * @copyright  2022 Andrew Lyons <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace core_behat;
 
-$plugin->version   = 2021051701;       // The current module version (Date: YYYYMMDDXX).
-$plugin->requires  = 2021051100;    // Requires this Moodle version.
-$plugin->component = 'mod_label'; // Full name of the plugin (used for diagnostics)
-$plugin->cron      = 0;
+interface settable_editor {
+
+    /**
+     * Set the editor value.
+     *
+     * @param string $editorid The id of the editor within the page
+     * @param string $value The intended content of the editor
+     */
+    public function set_editor_value(string $editorid, string $value): void;
+}

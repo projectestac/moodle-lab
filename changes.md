@@ -1,3 +1,7 @@
+### 3.11.10+ (Build: 20221018)
+- Updated Moodle from upstream
+- Updated `mod/choicegroup`
+
 ### 3.11.10+ (Build: 20221007)
 - Updated Moodle from upstream
 - Updated `mod/hotpot`

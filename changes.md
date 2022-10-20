@@ -3,6 +3,7 @@
 - Updated `mod/choicegroup`
 - Updated `mod/journal`
 - Updated `question/type/wq`
+- Updated `question/behavior/adaptivemultipart`
 
 ### 4.0.4+ (Build: 20221007) 
 - Updated Moodle core

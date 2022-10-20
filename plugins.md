@@ -7,7 +7,7 @@
 |mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2022060900|2022/10/10|f58a23efddde11b99bf7a43e1a7cc4ea8059c7c9|
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|786e979b51ad8bee0500f2e067506e69826b4ecf|
 |question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|
-|mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2022041400|2021/05/04|917de14fb10d2a64b2750fb03eb217e509e6aeef|
+|mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2022091600|2022/10/20|9022504b2f3b1f009e2912df1ae7c9d0dc5c4ac6|
 |mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2021062301|2020/08/08|a6a32ade9c51429b9a36e0d11c309abdf0cc1202|
 |mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|97620971e6171c7ad89d980072ce4263b1dc349b|
 |mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2021/01/12|fa142b21a2ac6b8a6636d15548260912adc4535c|

@@ -1,6 +1,7 @@
 ### 4.0.4+ (Build: 20221018)
 - Updated Moodle core
 - Updated `mod/choicegroup`
+- Updated `mod/journal`
 
 ### 4.0.4+ (Build: 20221007) 
 - Updated Moodle core

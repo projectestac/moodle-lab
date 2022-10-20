@@ -4,6 +4,7 @@
 - Updated `mod/journal`
 - Updated `question/type/wq`
 - Updated `question/behavior/adaptivemultipart`
+- Added `filter/syntaxhighlighter`
 
 ### 4.0.4+ (Build: 20221007) 
 - Updated Moodle core

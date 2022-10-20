@@ -2,6 +2,7 @@
 - Updated Moodle core
 - Updated `mod/choicegroup`
 - Updated `mod/journal`
+- Updated `question/type/wq`
 
 ### 4.0.4+ (Build: 20221007) 
 - Updated Moodle core

@@ -36,7 +36,7 @@
 |question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2022061500|2022/08/08|30e26a8a0cb8b244323ef538af085d51497936c1|
 |question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022061500|2022/08/08|66f568966efe52a7dcb7e01d76f323944d077a67|
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022061500|2022/08/08|4e48c2f6f9335bdf8bb56a21b20653328ef99257|
-|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022072600|2022/08/08|9b531e4e6fe41127e27dfde796513c434947e269|
+|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022090700|2022/10/20|c9f126749826463488c5ba178ad82feeaae023a2|
 |mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022083107|2022/10/11|a6b7847eb41f8d76256606187f48881630571357|
 |assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022100600|2022/10/11|93d2e6e9b213b422868892d04ee793d0245bf0ac|
 

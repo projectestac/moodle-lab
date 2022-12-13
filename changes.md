@@ -1,3 +1,6 @@
+### 4.0.5+ (Build: 20221209)
+- Updated Moodle core
+
 ### 4.0.4+ (Build: 20221018)
 - Updated Moodle core
 - Updated `mod/choicegroup`

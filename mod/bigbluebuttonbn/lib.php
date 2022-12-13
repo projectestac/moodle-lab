@@ -170,7 +170,7 @@ function bigbluebuttonbn_delete_instance($id) {
     } catch (moodle_exception $e) {
         // Do not log any issue when testing.
         if (!(defined('PHPUNIT_TEST') && PHPUNIT_TEST) && !defined('BEHAT_SITE_RUNNING')) {
-            debugging($e->getMessage(), DEBUG_NORMAL, $e->getTrace());
+            debugging($e->getMessage(), DEBUG_DEVELOPER, $e->getTrace());
         }
     }
 
@@ -337,7 +337,14 @@ function bigbluebuttonbn_get_coursemodule_info($coursemodule) {
     global $DB;
 
     $dbparams = ['id' => $coursemodule->instance];
-    $fields = 'id, name, intro, introformat, completionattendance';
+    $customcompletionfields = custom_completion::get_defined_custom_rules();
+    $fieldsarray = array_merge([
+        'id',
+        'name',
+        'intro',
+        'introformat',
+    ], $customcompletionfields);
+    $fields = join(',', $fieldsarray);
     $bigbluebuttonbn = $DB->get_record('bigbluebuttonbn', $dbparams, $fields);
     if (!$bigbluebuttonbn) {
         return null;
@@ -350,7 +357,10 @@ function bigbluebuttonbn_get_coursemodule_info($coursemodule) {
     }
     // Populate the custom completion rules as key => value pairs, but only if the completion mode is 'automatic'.
     if ($coursemodule->completion == COMPLETION_TRACKING_AUTOMATIC) {
-        $info->customdata['customcompletionrules']['completionattendance'] = $bigbluebuttonbn->completionattendance;
+        foreach ($customcompletionfields as $completiontype) {
+            $info->customdata['customcompletionrules'][$completiontype] =
+                $bigbluebuttonbn->$completiontype ?? 0;
+        }
     }
 
     return $info;

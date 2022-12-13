@@ -1124,6 +1124,10 @@ tr.flagged-tag a {
     padding-top: 20px;
 }
 
+.activity.label.modtype_label .mod-indent {
+    float: none;
+}
+
 @include media-breakpoint-up(sm) {
     $mod-indent-size: 30px;
     /* Creates a series of .mod-indent-# rule declarations based on indent size and number of indent levels. */
@@ -2127,6 +2131,9 @@ dd:after {
                 width: 330px;
                 vertical-align: text-bottom;
                 margin-bottom: 0;
+                &[role="combobox"] {
+                    width: auto;
+                }
             }
         }
 
@@ -2711,7 +2718,6 @@ $picker-emojis-per-row: 7 !default;
             padding-bottom: $spacer / 3;
             display: inline-flex;
             overflow: hidden;
-            flex-grow: 1;
         }
         .breadcrumb-item a,
         .breadcrumb-item span {
@@ -2934,4 +2940,40 @@ body.dragging {
     font-size: 9px;
     width: 9px;
     border: 0;
+}
+
+.initialbargroups ul {
+    -webkit-margin-start: 0; /* stylelint-disable-line */
+    margin-right: -1px;
+}
+
+.page-item {
+    &:first-child {
+        .page-link {
+            .initialbargroups & {
+                @include border-left-radius(0);
+                @include border-right-radius(0);
+            }
+            .initialbargroups .pagination-lg:first-child & {
+                @include border-left-radius($pagination-border-radius-lg);
+            }
+            .initialbargroups .pagination-sm:first-child & {
+                @include border-left-radius($pagination-border-radius-sm);
+            }
+        }
+    }
+    &:last-child {
+        .page-link {
+            .initialbargroups & {
+                @include border-left-radius(0);
+                @include border-right-radius(0);
+            }
+            .initialbargroups .pagination-lg:last-child & {
+                @include border-right-radius($pagination-border-radius-lg);
+            }
+            .initialbargroups .pagination-sm:last-child & {
+                @include border-right-radius($pagination-border-radius-sm);
+            }
+        }
+    }
 }

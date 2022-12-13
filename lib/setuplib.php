@@ -646,6 +646,9 @@ function generate_uuid() {
  */
 function get_docs_url($path = null) {
     global $CFG;
+    if ($path === null) {
+        $path = '';
+    }
 
     // Absolute URLs are used unmodified.
     if (substr($path, 0, 7) === 'http://' || substr($path, 0, 8) === 'https://') {
@@ -1893,7 +1896,7 @@ function set_access_log_user() {
                 apache_note('MOODLEUSER', $logname);
             }
 
-            if ($logmethod == 'header') {
+            if ($logmethod == 'header' && !headers_sent()) {
                 header("X-MOODLEUSER: $logname");
             }
         }

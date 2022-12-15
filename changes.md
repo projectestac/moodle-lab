@@ -1,5 +1,6 @@
 ### 3.11.11+ (Build: 20221209)
 - Updated Moodle from upstream
+- Updated `mod/attendance`
 
 ### 3.11.10+ (Build: 20221018)
 - Updated Moodle from upstream

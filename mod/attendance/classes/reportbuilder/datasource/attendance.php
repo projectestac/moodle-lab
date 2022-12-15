@@ -69,18 +69,7 @@ class attendance extends datasource {
         $coursejoin = "JOIN {course} {$coursealias} ON {$coursealias}.id = {$attendancealias}.course";
         $this->add_entity($coursentity->add_join($coursejoin));
 
-        $this->add_columns_from_entity($attendanceentity->get_entity_name());
-        $this->add_filters_from_entity($attendanceentity->get_entity_name());
-        $this->add_conditions_from_entity($attendanceentity->get_entity_name());
-
-        $this->add_columns_from_entity($userentity->get_entity_name());
-        $this->add_filters_from_entity($userentity->get_entity_name());
-        $this->add_conditions_from_entity($userentity->get_entity_name());
-
-        $this->add_columns_from_entity($coursentity->get_entity_name());
-        $this->add_filters_from_entity($coursentity->get_entity_name());
-        $this->add_conditions_from_entity($coursentity->get_entity_name());
-
+        $this->add_all_from_entities();
     }
 
     /**

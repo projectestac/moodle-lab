@@ -1,0 +1,46 @@
+
+	MOD
+	===================
+	package    mod_msociograma
+	copyright  2017-2020 Marco Alarcón
+	licenses   Moodle-msociograma http://www.gnu.org/copyleft/gpl.html GNU GPL v3 o posterior
+	excepto los archivos de Cytoscape y los archivos de Char.js que tienen licencia MIT y pertenecen
+	a sus respectivos autores.
+			  
+			  Para saber más:
+				
+				Moodle: https://moodle.org
+				Cytoscape: https://js.cytoscape.org/
+				Chart.js:  https://www.chartjs.org/
+			
+				
+	Msociograma se basa en el sociograma CESC, diseñado por Collell, J. y Escudé, C.
+
+
+	Esta versión funciona en Moodle 3.x
+
+	El administrador y los usuarios del servidor Moodle donde está instalado y es usado este módulo,
+	aceptan las condiciones y limitaciones actuales del software y sus licencias, tanto parcial
+	como colectivamente. Si estas condiciones no son aceptadas,	el módulo debe ser desinstalado.
+
+
+	Limitaciones actuales
+	======================
+	Este software está en constante desarrollo, por lo que mejora día a día con los reportes
+	de los usuarios.
+
+	EL SOFTWARE SE PROPORCIONA "COMO ESTÁ", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, 
+	INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO 
+	PARTICULAR E INCUMPLIMIENTO. EN NINGÚN CASO LOS AUTORES O PROPIETARIOS DE LOS DERECHOS DE 
+	AUTOR SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES, YA SEA 
+	EN UNA ACCIÓN DE CONTRATO, AGRAVIO O CUALQUIER OTRO MOTIVO, DERIVADAS DE, FUERA DE O EN 
+	CONEXIÓN CON EL SOFTWARE O SU USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.
+
+
+	Instalación:
+	===================
+	Guarde el directorio msociograma en moodle/mod
+
+	Como administrador actualize los plug-in. El módulo creará las tablas de la base de datos
+	y agregará una nueva actividad de Moodle.
+	

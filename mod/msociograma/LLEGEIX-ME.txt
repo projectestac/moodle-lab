@@ -1,0 +1,45 @@
+
+	MOD
+	===================
+	package    mod_msociograma
+	copyright  2017-2019 Marco Alarcón
+	licenses   Moodle-msociograma http://www.gnu.org/copyleft/gpl.html GNU GPL v3 o posterior
+	excepte els arxius de Cytoscape i els arxius de Char.js que tenen llicència MIT i pertanyen
+	a qui els ha escrit.
+			  
+			  Para saber más:
+				
+				Moodle: https://moodle.org
+				Cytoscape: https://js.cytoscape.org/
+				Chart.js:  https://www.chartjs.org/
+			
+				
+	Msociograma es basa en el sociograma CESC, dissenyat per Collell, J. i Escudé, C.
+
+
+	Aquesta versió funciona en Moodle 3.x
+
+	L'administrador i els usuaris del servidor Moodle on està instal·lat i és usat aquest mòdul,
+	accepten les condicions i limitacions actuals del programari i les seves llicències, tant parcial
+	com col·lectivament. Si aquestes condicions no són acceptades, el mòdul ha de ser desinstal·lat
+
+
+	Limitacions actuals
+	======================
+	Aquest programari està en constant desenvolupament, de manera que millora dia a dia amb els 
+	informes dels usuaris.
+
+	EL PROGRAMARI ES PROPORCIONA "COM ESTÀ", SENSE GARANTIES DE CAP TIPUS, EXPRESSA O IMPLÍCITA,
+	INCLOENT PERÒ NO LIMITANT GARANTIES DE COMERCIALITZACIÓ, IDONEÏTAT PER A UN PROPÒSIT
+	PARTICULAR I INCOMPLIMENT. EN CAP CAS ELS AUTORS O PROPIETARIS DELS DRETS D'AUTOR SERAN 
+	RESPONSABLES DE CAP RECLAMACIÓ, DANYS O ALTRES RESPONSABILITATS, ESTIGUIA UNA ACCIÓ DE 
+	CONTRACTE, GREUGE O QUALSEVOL ALTRE MOTIU, DERIVADES DE, FORA DE O EN
+	CONNEXIÓ AMB EL PROGRAMARI O EL SEU ÚS O UN ALTRE TIPUS D'ACCIONS AL SOFTWARE.
+
+
+	Instal·lació:
+	===================
+	Deseu el directori msociograma a moodle/mod
+
+	Com a administrador actualitzi els plug-in. El mòdul crearà les taules de la base de dades
+	i afegirà una nova activitat de Moodle.

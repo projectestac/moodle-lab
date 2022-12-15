@@ -729,7 +729,7 @@ function xmldb_attendance_upgrade($oldversion=0) {
         // Attendance savepoint reached.
         upgrade_mod_savepoint(true, 2022083100, 'attendance');
     }
-    if ($oldversion < 2022083105) {
+    if ($oldversion < 2022090900) {
         if (!empty($CFG->dbfamily) && $CFG->dbfamily == 'postgres') {
             $sql = 'DELETE FROM {attendance_log}
             WHERE id NOT IN (SELECT max(id)
@@ -756,9 +756,8 @@ function xmldb_attendance_upgrade($oldversion=0) {
                         )";
             $DB->execute($sql);
         }
-
         // Attendance savepoint reached.
-        upgrade_mod_savepoint(true, 2022083105, 'attendance');
+        upgrade_mod_savepoint(true, 2022090900, 'attendance');
     }
 
     return $result;

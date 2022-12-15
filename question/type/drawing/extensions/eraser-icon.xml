@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="background-color:#2F2F2C">
+<!--
+  Sample icons file. This file looks like an SVG file with groups as its
+  children. Each group element has an ID that must match the ID of the button given
+  in the extension. The SVG inside the group makes up the actual icon, and
+  needs use a viewBox instead of width/height for it to scale properly.
+
+  Multiple icons can be included, each within their own group.
+-->
+  <g id="tool_eraser">
+
+
+
+
+<svg width="301" height="300" xmlns="http://www.w3.org/2000/svg">
+ <title>i24_photoedit_eraser</title>
+
+ <desc>Created with Sketch.</desc>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="300" width="300" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_1" fill-rule="evenodd" fill="none">
+   <g stroke="null" id="svg_2" fill-rule="nonzero" fill="#cccccc">
+    <path fill="none" id="svg_3" d="m185.93977,214.66791l88.97695,-96.37667c2.02642,-2.19495 2.02642,-5.75371 0,-7.94866l-73.38306,-79.48592c-2.02642,-2.19495 -5.31195,-2.19495 -7.33837,0l-88.97695,96.37667l80.72143,87.43458zm-14.67674,15.89718l-80.72143,-87.43444l-61.45829,66.56943c-2.02642,2.19495 -2.02642,5.75371 0,7.94866l45.40349,49.17944c0.97306,1.05399 2.29301,1.64611 3.66912,1.64611l55.95928,0c1.37624,0 2.69606,-0.59212 3.66912,-1.64611l33.47871,-36.26309zm-37.14783,60.39123l-55.95928,0c-6.88096,0 -13.48017,-2.96074 -18.34573,-8.23095l-45.40349,-49.17944c-10.13211,-10.97474 -10.13211,-28.76829 0,-39.74303l165.11198,-178.84342c10.13211,-10.97474 26.55948,-10.97474 36.69159,0l73.38306,79.48592c10.13211,10.97474 10.13211,28.76829 0,39.74303l-137.13241,148.53694c-4.86557,5.27021 -11.46477,8.23095 -18.34573,8.23095z"/>
+   </g>
+  </g>
+  <rect transform="rotate(-45.9444580078125 24.500015258789062,36.953125) " stroke="#2f2f2c" id="svg_4" height="199" width="328.99999" y="-62.54688" x="-139.99999" stroke-width="1.5" fill="#2f2f2c"/>
+  <rect transform="rotate(-45.9444580078125 292.49999999999994,272.95312499999994) " stroke="#2f2f2c" id="svg_5" height="199" width="328.99999" y="173.45313" x="128.00001" stroke-width="1.5" fill="#2f2f2c"/>
+  <rect transform="rotate(-45.9444580078125 364.5,-63.046874999999986) " stroke="#2f2f2c" id="svg_7" height="199" width="328.99999" y="-162.54688" x="200.00001" stroke-width="1.5" fill="#2f2f2c"/>
+  <rect transform="rotate(-45.9444580078125 -85.50000000000001,367.95312499999994) " stroke="#2f2f2c" id="svg_8" height="199" width="328.99999" y="268.45313" x="-249.99999" stroke-width="1.5" fill="#2f2f2c"/>
+  <rect id="svg_9" height="30" width="129" y="290.45313" x="42" stroke-width="1.5" stroke="#2f2f2c" fill="#2f2f2c"/>
+  <rect stroke="#2f2f2c" id="svg_10" height="110" width="38" y="166.45313" x="-33" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#2f2f2c"/>
+  <rect transform="rotate(38.15031051635742 -5.000000000000004,165.453125) " id="svg_11" height="78" width="60" y="126.45313" x="-35" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#2f2f2c" fill="#2f2f2c"/>
+  <rect id="svg_12" height="46" width="43" y="99.45313" x="300" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#2f2f2c" fill="#2f2f2c"/>
+  <rect id="svg_13" height="55" width="19" y="88.45313" x="298" stroke-width="10.5" stroke="#2f2f2c" fill="#2f2f2c"/>
+  <polyline stroke-linecap="round" id="svg_14" points="-50.7499795958074,43.22657332546974 -50.7499795958074,43.22657332546974 -50.7499795958074,43.22657332546974 " fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="none"/>
+  <path d="m199.25,2.72658c0,0 -0.5,0 -1,0c-0.5,0 -1.5,0 -2.5,0c-1,0 -2,0 -3,0c-0.5,0 -0.5,0 -1,0l0,0" id="svg_16" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="none"/>
+  <path d="m18.25001,176.22656c0,0 0,0 -0.5,0c0,0 0,0 0,0c0,0 -0.5,0 -0.5,0c-0.5,0 -1.01338,0.38512 -1.5,0.5c-1.08813,0.25687 -1.5,0.5 -2,1c0,0 -0.14645,0.14645 -0.5,0.5c-0.35355,0.35355 -0.7294,-0.15327 -1,0.5c-0.19134,0.46194 -0.30866,1.03806 -0.5,1.5c-0.2706,0.65327 -1,1 -1.5,1.5c0,0 -0.5,0.5 -1,1c0,0 -0.30866,0.53806 -0.5,1c-0.2706,0.65327 -0.80866,1.03806 -1,1.5c-0.2706,0.65327 -0.7294,0.34673 -1,1c-0.19134,0.46194 0.11488,1.01338 0,1.5c-0.25687,1.08812 -0.16875,1.655 -1,3c-0.37175,0.6015 -1,1 -1,1c0,0.5 -0.2294,0.34673 -0.5,1c-0.19134,0.46194 -0.5,1 -1,1.5c-0.5,0.5 -0.5,0.5 -0.5,0.5c0,0.5 0,0.5 0,0.5c0,0.5 0,0.5 0,1c0,0.5 0,1 0,1.5c0,0.5 0,1 -0.5,1.5c0,0 0,0.5 0,1c0,0 0,0.5 0,0.5c0,0 0,0 0,0.5c0,0 0,0 0,0c0,0.5 0,0.5 0,0.5c0,0 0,0 -0.5,0l0,0.5" id="svg_18" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="none"/>
+  <path d="m7.25001,236.22655c0,0 0,0 0,0c0,-0.5 -0.5,-0.5 -0.5,-1c0,0 -0.5,0 -0.5,-0.5c0,0 0.35355,-0.14645 0,-0.5c-0.35355,-0.35355 -0.5,-0.5 -0.5,-0.5c0,-0.5 0,-0.5 0,-0.5c0,0 0,-0.5 0,-0.5c0,0 0,0 0,-0.5c0,0 0,0 0,0c0,-0.5 0,-0.5 0,-0.5c0,-0.5 0,-0.5 0,-0.5c0,-0.5 -0.5,-0.5 -0.5,-0.5c0,0 0,0 0,-0.5c0,0 0,-0.5 0,-0.5c0,0 0,0 0,-0.5c0,0 0,0 -0.5,0c0,0 0,-0.5 0,-0.5c-0.5,0 -0.5,0 -0.5,0c0,0 -0.2294,0.15327 -0.5,-0.5c-0.19134,-0.46194 -0.5,-0.5 -0.5,-0.5c-0.5,-0.5 -0.5,-0.5 -0.5,-0.5c0,0 0,-0.5 -0.5,-0.5c0,0 0,0 0,-0.5c0,0 0,0 0,-0.5c0,0 -0.14645,-0.14645 -0.5,-0.5c-0.35354,-0.35355 0,-0.49998 0,-0.99998c0,-0.5 0,-1 0,-1c0,-0.5 0,-0.5 0,-1c0,-0.5 -0.5,-0.5 -0.5,-1c0,0 0,-0.5 0,-0.5c0,-0.5 -0.5,-0.5 -0.5,-0.5c0,-0.5 0,-1 0,-1c0,0 0,0 -0.5,-0.5c0,0 0,0 0,0c0,0 0,-0.5 0,-0.5c0,0 0,0 0,-0.5c0,0 0,-0.5 0,-0.5c0,-0.5 0,-0.5 0,-1c0,0 0,-0.5 0,-0.5c0,0 0,-0.5 0,-0.5c0,-0.5 0,-0.5 0,-0.5c0,0 0,-0.5 0,-0.5c0,-0.5 0,-0.5 0,-0.5c0,-0.5 0,-0.5 0,-1c0,0 0,0 0,-0.5c0,-0.5 0,-0.5 0,-1c0,0 0,0 0,-0.5c0,0 0,-0.5 0,-0.5c0,-0.5 0,-0.5 0,-1c0,0 0,-0.5 0,-0.5c0,-0.5 0,-1 0,-1.5c0,0 0,-0.5 0,-0.5c0,0 0,-0.5 0,-0.5c0,-0.5 0,-0.5 0,-1c0,0 0,-0.5 0,-0.5c0,-0.5 -0.35355,-0.64645 0,-1c0.35355,-0.35355 0.5,-0.5 0.5,-0.5c0.5,-0.5 0.5,-1 0.5,-1c0.5,0 0.5,-0.5 1,-1c0.5,-0.5 0.80866,-0.53806 1,-1c0.2706,-0.65327 0.30866,-1.03806 0.5,-1.5c0.2706,-0.65327 0.80866,-0.53806 1,-1c0.2706,-0.65327 0.5,-1 1,-1.5l0,0" id="svg_19" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_20" points="-51.24997954511376,225.72655482228885 -50.7499795958074,225.72655482228885 -50.7499795958074,225.72655482228885 " fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_21" points="-30.749981623553253,153.72656212217393 -30.749981623553253,153.72656212217393 " fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="none"/>
+  <path d="m203.75,6.22658c0,0 0,0 0,0c-0.5,-0.5 -0.5,-0.5 -0.5,-0.5c0,0 0,0 0,0l-0.5,-0.5" id="svg_22" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="none"/>
+  <rect stroke="#2f2f2c" transform="rotate(-136.89002990722656 192.4992218017578,122.95361328125004) " id="svg_23" height="129.28459" width="110.27148" y="58.31131" x="137.36348" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" fill="#2f2f2c"/>
+  <rect stroke="#2f2f2c" transform="rotate(-136.89002990722656 112.23940277099611,206.70744323730472) " id="svg_24" height="51.40666" width="107.88066" y="181.00411" x="58.29907" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" fill="#2f2f2c"/>
+  <rect stroke="#2f2f2c" transform="rotate(-136.89002990722656 67.42642211914064,225.37170410156253) " id="svg_25" height="36.58909" width="67.12474" y="207.07717" x="33.86405" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" fill="#2f2f2c"/>
+  <rect id="svg_26" height="40.99925" width="51.99904" y="222.45179" x="81.00128" fill-opacity="null" stroke-opacity="null" stroke-width="10.5" stroke="#2f2f2c" fill="#2f2f2c"/>
+ </g>
+</svg>
+
+
+  </g>
+</svg>
+

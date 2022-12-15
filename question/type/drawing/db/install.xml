@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="question/type/drawing/db" VERSION="20191005" COMMENT="XMLDB file for Moodle question/type/drawing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="qtype_drawing" COMMENT="Options for Hand Drawing qtype">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="drawingmode" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="1: Basic, 2: Advanced."/>
+        <FIELD NAME="allowstudentimage" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Allow students to upload images."/>
+        <FIELD NAME="alloweraser" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Allow students to use eraser."/>
+        <FIELD NAME="backgrounduploaded" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Is there a Background image?."/>
+        <FIELD NAME="backgroundwidth" TYPE="float" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Background image width."/>
+        <FIELD NAME="backgroundheight" TYPE="float" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Background image height."/>
+        <FIELD NAME="preservear" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Preserve aspect ratio"/>
+        <FIELD NAME="drawingoptions" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="DataURI for the background image."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="questionid"/>
+        <KEY NAME="questionid_idx" TYPE="foreign" FIELDS="questionid" REFTABLE="question" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="qtype_drawing_annotations" COMMENT="Teacher annotation for Hand Drawing qtype">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+        <FIELD NAME="attemptid" TYPE="char" LENGTH="16" NOTNULL="true" SEQUENCE="false"  COMMENT="Unique and never changes in restore."/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="annotatedby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="annotatedfor" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="annotation" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="DataURI for the annotation."/>
+        <FIELD NAME="attemptcount" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false"/>
+        <FIELD NAME="notes" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="notes for the annotation."/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="questionid_idx" UNIQUE="false" FIELDS="questionid" />
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

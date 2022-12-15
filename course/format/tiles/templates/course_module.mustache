@@ -1,0 +1,205 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+
+{{!
+    @template format_tiles/course_module
+
+    Tiles course module template.
+
+    The purpose of this template is to render a li activity element
+    representing a single course module.
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+        * cmid - course module id
+        * modname - course module name (type)
+        * modnameDisplay - module name to display to user on sub tile or course mod
+        * modtitle - title to display on this sub tile or course mod
+        * modtitle_inplaceeditable - in place editable version of the title
+        * modResourceType - resource type e.g. pdf,
+        * is_label - is this a label
+        * hasSpacersBefore - does this sub tile need spacer sub tiles before it?
+        * previouswaslabel - was the previous sub tile a label?
+        * useSubtiles - are we usign sub tiles here (or standard list form)?
+        * isEmbeddedResource - is this a resource whcih launces a modal when clicked?
+        * clickable - is this item clickable by user (or click disabled?)
+        * extraclasses - any extra classes
+        * editing - is the user editing?
+        * content - some activities have content e.g. labels and pages, to be displayed in modal
+        * modinstance - ID from the module table
+        * url - URL for the link to launch the module,
+        * description - Description entered on the course module edit page
+        * cmeditmenu - HTML for course module edit menu
+        * cmmove - move icon
+        * availabilityinfo - availability information to display to user about this cm
+        * completionInUseForCm - are we using completion for this cm?
+        * completionIsManual - is completion manual?
+        * completionstring - what to display when hover over the completion icon
+        * completionstate - is the item marked as complete
+        * completionstateInverse - invers of completionstate
+
+    Example context (json):
+    {
+        "cmid": 123456,
+        "modname": "label",
+        "modnameDisplay": "",
+        "modtitle": "",
+        "modtitle_inplaceeditable": "",
+        "modResourceType": "",
+        "is_label": 1,
+        "hasSpacersBefore": 0,
+        "previouswaslabel": 0,
+        "useSubtiles": 1,
+        "isEmbeddedResource": 0,
+        "clickable": 1,
+        "extraclasses": "",
+        "editing": 1,
+        "content": "This is a label",
+        "modinstance": "",
+        "url": "",
+        "description": "",
+        "cmeditmenu": "",
+        "cmmove": "",
+        "availabilityinfo": "",
+        "completionInUseForCm": 1,
+        "completionIsManual": 1,
+        "completionstring": "Click to toggle completion status",
+        "completionstate": 1,
+        "completionstateInverse": "0"
+    }
+}}
+
+{{! if this is a label (except first one in section) we need spacer activities before it so that the previous row of subtiles has correct flexbox width }}
+{{#hasSpacersBefore}}
+    {{^editing}}
+        <li class="subtile spacer" aria-hidden="true"></li>
+        <li class="subtile spacer" aria-hidden="true"></li>
+        <li class="subtile spacer" aria-hidden="true"></li>
+        <li class="subtile spacer" aria-hidden="true"></li>
+        <li class="subtile spacer" aria-hidden="true"></li>
+        <li class="subtile spacer" aria-hidden="true"></li>
+        <li class="subtile spacer" aria-hidden="true"></li>
+    {{/editing}}
+{{/hasSpacersBefore}}
+{{^useSubtiles}}
+    {{>format_tiles/local/content/section/cmitem}}
+{{/useSubtiles}}
+{{#useSubtiles}}
+    <li class="activity{{#useSubtiles}}{{^is_label}} subtile{{/is_label}}{{/useSubtiles}} {{#is_label}}fullwidth{{/is_label}} {{modname}} modtype_{{modname}} {{modResourceType}}{{^clickable}} unclickable {{/clickable}} position-relative {{extraclasses}}"
+        id="module-{{cmid}}" data-modtype="{{modname}}{{#modResourceType}}_{{{modResourceType}}}{{/modResourceType}}"
+        tabindex="3"
+        data-cmid="{{cmid}}"
+        data-modinstance="{{modinstance}}"
+        {{#clickable}}{{#pluginfileUrl}}data-url="{{{pluginfileUrl}}}"{{/pluginfileUrl}}{{#secondaryurl}}data-url-secondary="{{{secondaryurl}}}"{{/secondaryurl}}
+        data-title="{{modtitle}}"{{/clickable}}>
+        <div{{^is_label}} class="subtile_inner"{{/is_label}}>
+            <div class="{{^is_label}}activityinstance{{/is_label}}">
+                {{#is_label}}
+                    {{#clickable}}
+                    {{! clickable really means user is allowed to see content - }}
+                        <span class="label_content {{extraclasses}}"
+                              id="label_content_{{cmid}}">{{{content}}}</span>
+                    {{/clickable}}
+                    {{#availabilitymessage}}
+                        {{{availabilitymessage}}}
+                    {{/availabilitymessage}}
+                {{/is_label}}
+
+                {{^is_label}}
+                    <div class="activitytype">{{modnameDisplay}}</div>
+                    {{^editing}}
+                        <div class="instancename">
+                            {{#clickable}}
+                                {{#isEmbeddedResource}}
+                                    <h4 class="activityname">
+                                        <a {{#extraclasses}}class="{{extraclasses}}"{{/extraclasses}} href="{{{url}}}" data-title="{{modtitle}}"
+                                          data-action="launch-tiles-{{launchtype}}" {{#onclick}} onclick="{{onclick}}"{{/onclick}}>
+                                            {{{modtitle}}}
+                                        </a>
+                                    </h4>
+                                {{/isEmbeddedResource}}
+
+                                {{^isEmbeddedResource}}
+                                    <h4 class="activityname">
+                                        <a {{#extraclasses}}class="{{extraclasses}}"{{/extraclasses}}
+                                           data-action="launch-tiles-{{launchtype}}" {{#onclick}} onclick="{{onclick}}"{{/onclick}}
+                                                href="{{url}}">{{{modtitle}}}</a>
+                                    </h4>
+                                {{/isEmbeddedResource}}
+                            {{/clickable}}
+                            {{^clickable}}
+                                <h4 class="activityname">{{{modtitle}}}</h4>
+                            {{/clickable}}
+                        </div>
+                        {{#clickable}}<a class="clickable-region" href="{{url}}" data-action="launch-tiles-{{launchtype}}"
+                        {{#onclick}} onclick="{{onclick}}"{{/onclick}} href="{{url}}" data-action="launch-tiles-{{launchtype}}"
+                            {{#onclick}} onclick="{{onclick}}"{{/onclick}}></a>{{/clickable}}
+                    {{/editing}}
+
+                    {{#editing}}
+                        <div>
+                            {{#modtitle_inplaceeditable}}
+                                {{>format_tiles/inplace_editable}}
+                            {{/modtitle_inplaceeditable}}
+                            {{^modtitle_inplaceeditable}}
+                                {{{modtitle}}}
+                            {{/modtitle_inplaceeditable}}
+                        </div>
+                    {{/editing}}
+
+                    <div class="contentafterlink">
+                        {{#availabilitymessage}}
+                            {{#stealth}}{{{availabilitymessage}}}{{/stealth}}
+                            {{^stealth}}
+                                {{>format_tiles/availability_info}}
+                            {{/stealth}}
+                        {{/availabilitymessage}}
+                        {{^visible}}{{>format_tiles/availability_info}}{{/visible}}
+                    </div>
+                {{/is_label}}
+
+                {{#editing}}
+                    <span class="subtilecontrols">
+                        {{{cmmove}}}
+                    </span>
+                {{/editing}}
+            </div>
+        </div>
+
+        <span class="actions">
+             {{#editing}}
+                 {{#controlmenu}}
+                     <div class="activity-actions align-self-start">
+                         {{$ core_courseformat/local/content/cm/controlmenu }}
+                             {{> core_courseformat/local/content/cm/controlmenu }}
+                         {{/ core_courseformat/local/content/cm/controlmenu }}
+                     </div>
+                 {{/controlmenu}}
+             {{/editing}}
+            {{#completionInUseForCm}}
+                {{#completionenabled}}
+                    {{>format_tiles/completion_icon}}
+                {{/completionenabled}}
+            {{/completionInUseForCm}}
+        </span>
+    </li>
+{{/useSubtiles}}

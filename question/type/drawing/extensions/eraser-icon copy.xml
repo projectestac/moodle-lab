@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<!--
+  Sample icons file. This file looks like an SVG file with groups as its
+  children. Each group element has an ID that must match the ID of the button given
+  in the extension. The SVG inside the group makes up the actual icon, and
+  needs use a viewBox instead of width/height for it to scale properly.
+
+  Multiple icons can be included, each within their own group.
+-->
+  <g id="tool_eraser">
+    <svg width="102" height="102" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+     <g>
+      <title>Layer 1</title>
+
+
+      <svg width="102" height="102" xmlns="http://www.w3.org/2000/svg" clip-rule="evenodd">
+
+       <g>
+        <title>background</title>
+        <rect fill="none" id="canvas_background" height="104" width="104" y="-1" x="-1"/>
+       </g>
+       <g>
+        <title>Layer 1</title>
+        <path stroke="null" id="svg_1" d="m26.70433,93l-20.58117,-20.72841c-0.7475,-0.75341 -1.12317,-1.73864 -1.12317,-2.73159c0,-0.98909 0.37567,-1.97818 1.12317,-2.73159l57.22783,-57.67636c0.7475,-0.74955 1.72883,-1.13205 2.71017,-1.13205c0.9775,0 1.96267,0.3825 2.71017,1.13205l27.1055,27.3275c0.75133,0.75341 1.12317,1.7425 1.12317,2.73545c0,0.98909 -0.37183,1.97432 -1.12317,2.73159l-42.99467,43.34613l21.137,0l0,7.72727l-47.31483,0zm14.0185,-7.72727l-21.02967,-21.19591l-5.4395,5.46318l15.62467,15.73273l10.8445,0zm1.748,-44.1575l-17.35733,17.49454l21.689,21.86432l17.3535,-17.50227l-21.68517,-21.85659z"/>
+       </g>
+      </svg>
+
+      </g>
+    </svg>
+  </g>
+</svg>

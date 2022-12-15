@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>lib/PhpOffice</location>
+        <name>PHPOffice</name>
+        <version>0.17.0</version>
+        <license>LGPL</license>
+        <licenseversion>3</licenseversion>
+    </library>
+    <library>
+        <location>lib/jquery</location>
+        <name>jquery</name>
+        <version>1.4.3</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>jquery</location>
+        <name>jquery</name>
+        <version>1.7.2</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+
+</libraries>

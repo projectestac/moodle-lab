@@ -1,0 +1,45 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_etask/gradingtable_footer
+
+    This template renders the grading table footer.
+
+    Example context (json):
+    {
+        "select": "<form><select><option>...</option></select></form>",
+        "pagingbar": "<nav><ul><li>...</li></ul></nav>",
+        "popover": "<div class=\"...\">...</div>"
+    }
+}}
+
+<div class="d-flex justify-content-md-between justify-content-center flex-wrap pb-3">
+    <div class="mt-1 mr-2">
+        {{{select}}}
+    </div>
+
+    <div class="mr-2">
+        {{{pagingbar}}}
+    </div>
+
+    <div class="mt-2">
+        {{#popover}}
+            <a href="javascript:void(null)" class="d-inline-block dropdown-toggle font-weight-normal" data-toggle="etask-popover"
+               data-content="{{popover}}"><i class="icon fa fa-question-circle text-info fa-fw mr-0 ml-1"></i></a>
+        {{/popover}}
+    </div>
+</div>

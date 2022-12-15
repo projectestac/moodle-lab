@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>src/svgcanvas.js</location>
+        <name>SVG-Edit</name>
+        <version>5.1.0</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>src/d3.js</location>
+        <name>D3</name>
+        <version>v6</version>
+        <license>BSD 3-Clause "New" or "Revised" License</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>extensions/shapelib/</location>
+        <name>Raphaël</name>
+        <version>2.2.7</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>extensions</location>
+        <name>SVG Extensions</name>
+        <version>2020.08.02</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>icons</location>
+        <name>Jquery Icons</name>
+        <version>SVG Icon Loader 2.0</version>
+        <license>Apache 2 License</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>js/embedapi.js</location>
+        <name>Svg-Edit Embedapi</name>
+        <version>5.1.0</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>lib</location>
+        <name>canvg</name>
+        <version></version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>src</location>
+        <name>Varia JS extensions</name>
+        <version></version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>src/method-draw.js</location>
+        <name>methodDraw</name>
+        <version>2020.08.02</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>css/font-files/arvo-bold-webfont.woff</location>
+        <name>Arvo Bold by Anton Koovit</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>css/font-files/arvo-bolditalic-webfont.woff</location>
+        <name>Arvo Bold Italic by Anton Koovit</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>   
+    <library>
+        <location>css/font-files/arvo-regular-webfont.woff</location>
+        <name>Arvo Regular by Anton Koovit</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>css/font-files/arvo-italic-webfont.woff</location>
+        <name>Arvo Italic by Anton Koovit</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>  
+    <library>
+        <location>css/font-files/euphoriascript-regular-webfont.woff</location>
+        <name>Euphoria</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>  
+    <library>
+        <location>css/font-files/shadowsintolight-webfont.woff</location>
+        <name>Shadows Into Light</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>  
+    <library>
+        <location>css/font-files/simonetta-black-webfont.woff</location>
+        <name>Simonetta Black</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library> 
+        <location>css/font-files/simonetta-blackitalic-webfont.woff</location>
+        <name>Simonetta Black Italic</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library> 
+    <library>
+        <location>css/font-files/simonetta-italic-webfont.woff</location>
+        <name>Simonetta Italic</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>   
+    <library>
+        <location>css/font-files/simonetta-regular-webfont.woff</location>
+        <name>Simonetta Regular</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>   
+    <library>
+        <location>css/font-files/Junction-webfont.woff</location>
+        <name>Junction</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>css/font-files/League_Gothic-webfont.woff</location>
+        <name>League Gothic</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>css/font-files/fanwood-webfont.woff</location>
+        <name>Fanwood</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>  
+    <library>
+        <location>css/font-files/fanwood_italic-webfont.woff</location>
+        <name>Fanwood Italic</name>
+        <version></version>
+        <license>SIL Open Font License (OFL)</license>
+        <licenseversion></licenseversion>
+    </library>       
+</libraries>

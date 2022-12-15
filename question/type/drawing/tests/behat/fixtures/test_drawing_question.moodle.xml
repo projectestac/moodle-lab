@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 0  -->
+  <question type="category">
+    <category>
+        <text>$course$/top/Test Drawing Category</text>
+
+    </category>
+  </question>
+
+<!-- question: 3630  -->
+  <question type="drawing">
+    <name>
+      <text>DHF - NO Background</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[DHF - NO Background]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <drawingmode>1</drawingmode>
+    <backgrounduploaded>0</backgrounduploaded>
+    <preservear>1</preservear>
+    <backgroundwidth>580</backgroundwidth>
+    <backgroundheight>400</backgroundheight>
+    <drawingoptions></drawingoptions>
+    <bgimage>
+      <filename></filename>
+      <dataURL><![CDATA[]]></dataURL>
+    </bgimage>
+    </question>
+
+</quiz>

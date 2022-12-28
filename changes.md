@@ -1,6 +1,7 @@
 ### 3.11.11+ (Build: 20221222)
 - Updated Moodle from upstream
 - Updated `blocks/completion_progress`
+- Updated Wiris plugins
 
 ### 3.11.11+ (Build: 20221209)
 - Updated Moodle from upstream

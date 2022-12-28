@@ -1,3 +1,7 @@
+### 4.1+ (Build: 20221222)
+- Updated Moodle core
+- Updated `block/completion_progress`
+
 ### 4.1+ (Build: 20221209)
 - Updated to Moodle 4.1
 - Updated `mod/attendance`

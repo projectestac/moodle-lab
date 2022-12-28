@@ -28,15 +28,15 @@
 |local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|06805f201af99b9f65df171331619c82fdb94f56|
 |question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2021061303|2021/06/16|cda6bed05275783954cc9bf12f2ef36d942b9694|
 |report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|
-|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2022070100|2022/08/08|352da37c7e075122563e9d3bf2e37e76447b3fa9|
-|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2022070100|2022/08/08|409437bcada7acb899d9d22c895399572af12e8c|
-|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2022061500|2022/08/08|07cf661427856b9d52a4f3bdcf87e575a1a6c96c|
-|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2022061500|2022/08/08|5b9f943f3853c7e3407ddfb9b874005aee84a525|
-|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2022061500|2022/08/08|7aed793da4775d35530bb70e543ba480ee0feaba|
-|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2022061500|2022/08/08|30e26a8a0cb8b244323ef538af085d51497936c1|
-|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022061500|2022/08/08|66f568966efe52a7dcb7e01d76f323944d077a67|
-|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022061500|2022/08/08|4e48c2f6f9335bdf8bb56a21b20653328ef99257|
-|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022090700|2022/10/20|c9f126749826463488c5ba178ad82feeaae023a2|
+|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2022112300|2022/12/28|eef8fbd23ead62a2e003822786258865261d94ec|
+|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2022112300|2022/12/28|782f0b98b40fbd2950ab42668a98edd1adf9a9a6|
+|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2022120200|2022/12/28|5a08362ccd053681a0560bbf24995957ef6317d7|
+|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2022120200|2022/12/28|619b72821306a2fb4248b247efef551e08718dbe|
+|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2022120200|2022/12/28|130ad70a983fdc47eeec0173532d9dc8bcd3781e|
+|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2022120200|2022/12/28|27158b6b6413eccfd614f63bac0d794264e1d345|
+|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022120200|2022/12/28|f79e2f9d9287ead555aada1bf599edbf91ccc3c7|
+|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022120200|2022/12/28|89744eead7cef0ec8001f4d9fb7c31e25fec4cac|
+|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022120200|2022/12/28|97f5a1a08cacab2a5dd02b7694969b06056959cb|
 |mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022111700|2022/12/15|0cea991c02fd0063d4f30155596c0ff6db244d15)|
 |assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022100600|2022/10/11|93d2e6e9b213b422868892d04ee793d0245bf0ac|
 

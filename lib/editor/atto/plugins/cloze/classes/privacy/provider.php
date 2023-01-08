@@ -24,17 +24,15 @@
 
 namespace atto_cloze\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem for atto_cloze implementing null_provider.
  *
  * @copyright   2018 Daniel Thies <dethies@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider {
-
-    use \core_privacy\local\legacy_polyfill;
+class provider implements
+    // This plugin does not store any personal user data.
+    \core_privacy\local\metadata\null_provider {
 
     /**
      * Get the language string identifier with the component's language
@@ -42,7 +40,7 @@ class provider implements \core_privacy\local\metadata\null_provider {
      *
      * @return  string
      */
-    public static function _get_reason() {
+    public static function get_reason() : string {
         return 'privacy:metadata';
     }
 }

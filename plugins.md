@@ -18,7 +18,7 @@
 |block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|e7246fecfbd50e7d13ac93b38e1801508d82a108|
 |course format    |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|c5a15da6a15d159740d3664f24399e5023bc8aa6|
-|atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072802|2020/06/16|eacc7d4069cefa59000053f773e0b5bb291b3cdb|
+|atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072804|2023/01/08|543f62bdefa5fa9a987a52689b111122a6b18797|
 |atto             |fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|ad87cd2a5bee9f087d5f3026043c9d62dcaaed97|
 |atto             |fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2015042701|2020/06/16|d6b5551a99c35e60f2a2887c181cb3c574c258b1|
 |local            |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021600|2020/06/16|d8eb0e05d5deeef13a9c574fd5c5da8cecf81b06|

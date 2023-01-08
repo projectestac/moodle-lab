@@ -1,3 +1,6 @@
+### 4.1+ (Build: 20230105)
+- Updated Moodle core
+
 ### 4.1+ (Build: 20221222)
 - Updated Moodle core
 - Updated `block/completion_progress`

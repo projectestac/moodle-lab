@@ -1,3 +1,6 @@
+### 3.11.11+ (Build: 20230105)
+- Updated Moodle from upstream
+
 ### 3.11.11+ (Build: 20221222)
 - Updated Moodle from upstream
 - Updated `blocks/completion_progress`

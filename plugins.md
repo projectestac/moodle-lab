@@ -3,7 +3,7 @@
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
 |mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2022092200|2022/10/20|528f3b32bea1e47456f43578b5ed03c7fa370d01|
-|mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2021083100|2021/10/21|6d593d41a0dce5f784b6a220437788fa43357169|
+|mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2023010300|2023/01/08|af1d053673657165a0d1187d0d2656f6a8a6bf32|
 |mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2022060900|2022/10/10|f58a23efddde11b99bf7a43e1a7cc4ea8059c7c9|
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|786e979b51ad8bee0500f2e067506e69826b4ecf|
 |question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|

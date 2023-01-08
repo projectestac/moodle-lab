@@ -3,6 +3,7 @@
 - Update `mod/choicegroup`
 - Update `question/type/formulas`
 - Update `lib/editor/atto/pligins/cloze`
+- Update `course/format/etask`
 
 ### 4.1+ (Build: 20221222)
 - Updated Moodle core

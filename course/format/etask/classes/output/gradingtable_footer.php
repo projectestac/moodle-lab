@@ -24,8 +24,6 @@
 
 namespace format_etask\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use coding_exception;
 use moodle_exception;
 use moodle_url;
@@ -50,12 +48,6 @@ class gradingtable_footer implements renderable, templatable {
     /** @var string */
     private $pagingbar;
 
-    /** @var string */
-    private $passedlabel;
-
-    /** @var string */
-    private $failedlabel;
-
     /** @var bool */
     private $showhelp;
 
@@ -76,8 +68,6 @@ class gradingtable_footer implements renderable, templatable {
             $PAGE->course)->get_students_per_page());
         $this->pagingbar = $OUTPUT->paging_bar($studentscountforview, $currentpage, course_get_format(
             $PAGE->course)->get_students_per_page(), $PAGE->url);
-        $this->passedlabel = course_get_format($PAGE->course)->get_passed_label();
-        $this->failedlabel = course_get_format($PAGE->course)->get_failed_label();
         $this->showhelp = has_capability('moodle/course:update', $PAGE->context);
 
         // If more then one group, prepare groups select. This method contains only groups available by permissions.
@@ -106,8 +96,6 @@ class gradingtable_footer implements renderable, templatable {
         $data = new stdClass();
         $data->select = $this->select ? $output->box($output->render($this->select), 'mt-n3') : null;
         $data->pagingbar = $this->pagingbar;
-        $data->passedlabel = $this->passedlabel;
-        $data->failedlabel = $this->failedlabel;
         $data->popover = $this->showhelp ? $output->render(new gradingtable_help_popover()) : null;
 
         return $data;

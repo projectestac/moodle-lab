@@ -40,7 +40,7 @@
     }
 }}
 
-<div class="popover-container m-3 text-justify">
+<div class="block bg-white popover-container m-3 text-justify">
     <div class="mb-3 text-black-50">
         {{#str}}timemodified, format_etask, {{#userdate}} {{timemodified}}, {{#str}} strftimedaydate, core_langconfig {{/str}} {{/userdate}}{{/str}}
     </div>
@@ -68,10 +68,10 @@
                 {{/gradepass}}
 
                 {{#showprogressbars}}
-                    <div class="mt-3">
+                    <div class="block-cards mt-3">
                         <div class="progress-bar-completed pb-1">
                             <div class="progress bg-white border">
-                                <div class="progress-bar bar" role="progressbar" aria-valuenow="{{completed}}" style="width: {{completed}}%" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bar bg-warning" role="progressbar" aria-valuenow="{{completed}}" style="width: {{completed}}%" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
 
                             <div class="small">
@@ -84,7 +84,7 @@
 
                         <div class="progress-bar-passed">
                             <div class="progress bg-white border">
-                                <div class="progress-bar bar " role="progressbar" aria-valuenow="{{passed}}" style="width: {{passed}}%" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bar bg-success" role="progressbar" aria-valuenow="{{passed}}" style="width: {{passed}}%" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
 
                             <div class="small">

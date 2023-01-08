@@ -2,7 +2,7 @@
 
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2022092200|2022/10/20|528f3b32bea1e47456f43578b5ed03c7fa370d01|
+|mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2023010300|2023/01/08|af1d053673657165a0d1187d0d2656f6a8a6bf32|
 |mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2022060900|2022/10/10|f58a23efddde11b99bf7a43e1a7cc4ea8059c7c9|
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|2dd025ef0e2aaf5c503a0015a128cd7f0734b16c|
 |mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2021060100|2021/06/16|799aa8b9423e8201dbdb6c41bea40c8e7a12a450|
@@ -48,7 +48,7 @@
 |course format    |grid                |https://github.com/gjb2048/moodle-format_grid                   |2021102702|2022/05/04|46e85e620edc18016d5176b6868b8774d0e12c89|
 |mod              |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2021021401|2021/09/10|f7fb12407e476272b107941eddda880f860db3e4|
 |question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20|d4c26cfce425075ad91221ad740b1514baedd57b|
-|question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2020061900|2020/10/29|515b377c4cbe4c7de355647ea84250afcaa684a0|
+|question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2022112700|2023/01/08|42ddde996a528afce3fc6ed0aa49ee39842015fa|
 |question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2021120400|2022/05/04|2c9d8625afb178731086be4a00a6e5b7f695f70e|
 |course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2021061205|2022/05/17|46d4ef00f8190dff1e10a6e81c9614bf3e504fe9|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|

@@ -1,5 +1,7 @@
 ### 3.11.11+ (Build: 20230105)
 - Updated Moodle from upstream
+- Updated `mod/choicegroup`
+- Updated `question/type/formulas`
 
 ### 3.11.11+ (Build: 20221222)
 - Updated Moodle from upstream

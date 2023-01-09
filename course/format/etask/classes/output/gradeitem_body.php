@@ -24,6 +24,8 @@
 
 namespace format_etask\output;
 
+defined('MOODLE_INTERNAL') || die();
+
 use coding_exception;
 use format_etask;
 use grade_item;
@@ -51,7 +53,10 @@ class gradeitem_body implements renderable, templatable {
     private $url = null;
 
     /** @var string */
-    private $title;
+    private $fullname;
+
+    /** @var string */
+    private $itemname;
 
     /** @var string|null */
     private $css = null;
@@ -67,19 +72,19 @@ class gradeitem_body implements renderable, templatable {
      * @throws moodle_exception
      */
     public function __construct(grade_item $gradeitem, stdClass $user, string $status) {
-        global $COURSE, $PAGE;
+        global $PAGE;
 
         $usergrade = $gradeitem->get_grade($user->id);
 
         // If the grade item is completed, value is replaced by the completed icon as an <i> tag. Otherwise, it is formatted grade
         // value.
         $this->value = $status === format_etask::STATUS_COMPLETED
-            ? html_writer::tag('i', '', ['class' => 'fa fa-check', 'area-hidden' => 'true'])
+            ? html_writer::tag('i', '', ['class' => 'fa fa-check-square-o', 'area-hidden' => 'true'])
             : grade_format_gradevalue($usergrade->finalgrade, $gradeitem, true, null, null);
 
         // If the table cell has some status except 'none', text color is white.
         if ($status !== format_etask::STATUS_NONE) {
-            $this->css = course_get_format($COURSE)->transform_status_to_css($status);
+            $this->css = 'text-white';
         }
 
         // If the user can edit a grade, value is a link to the grade edit.
@@ -92,7 +97,8 @@ class gradeitem_body implements renderable, templatable {
                 'gpr_courseid' => $PAGE->course->id
             ]);
 
-            $this->title = course_get_format($PAGE->course)->transform_status_to_label($status);
+            $this->fullname = fullname($user);
+            $this->itemname = $gradeitem->itemname;
         }
     }
 
@@ -106,7 +112,8 @@ class gradeitem_body implements renderable, templatable {
     public function export_for_template(renderer_base $output): stdClass {
         $data = new stdClass();
         $data->url = $this->url;
-        $data->title = $this->title;
+        $data->fullname = $this->fullname;
+        $data->itemname = $this->itemname;
         $data->value = $this->value;
         $data->css = $this->css;
 

@@ -24,6 +24,8 @@
 
 namespace format_etask\output;
 
+defined('MOODLE_INTERNAL') || die();
+
 use core_plugin_manager;
 use renderable;
 use renderer_base;

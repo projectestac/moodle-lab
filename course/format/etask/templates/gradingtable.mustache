@@ -22,11 +22,12 @@
     Example context (json):
     {
         "table": "<table><thead><tr><td>...</td></tr></thead></table>",
-        "footer": "<div>...</div>"
+        "footer": "<div>...</div>",
+        "css": "border-bottom mb-3 pb-3"
     }
 }}
 
-<div class="etask-content">
+<div class="{{css}}">
     {{{table}}}
     {{{footer}}}
 </div>

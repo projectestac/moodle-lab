@@ -18,16 +18,18 @@
  * Upgrade scripts for eTask topics course format.
  *
  * @package   format_etask
- * @copyright 2022, Martin Drlik <martin.drlik@email.cz>
+ * @copyright 2020, Martin Drlik <martin.drlik@email.cz>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * Upgrade script for eTask topics course format.
  *
- * @param int|float $oldversion the version we are upgrading from
+ * @param int|float $oldversion
  *
- * @return bool result
+ * @return bool
  */
 function xmldb_format_etask_upgrade($oldversion) {
     // No upgrade steps.

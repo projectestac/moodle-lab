@@ -14,32 +14,35 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace format_etask\output;
-
-use format_topics\output\renderer as format_topics_renderer;
-use moodle_exception;
-use renderable;
-
 /**
- * Basic renderer for eTask topics course format.
+ * Renderer for outputting the eTask topics course format.
  *
  * @package   format_etask
- * @copyright 2022, Martin Drlik <martin.drlik@email.cz>
+ * @copyright 2020, Martin Drlik <martin.drlik@email.cz>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @since     Moodle 4.0
+ * @since     Moodle 3.7
  */
-class renderer extends format_topics_renderer {
-    /**
-     * Render widget.
-     *
-     * @param renderable $widget
-     *
-     * @return string
-     * @throws moodle_exception
-     */
-    public function render_content(renderable $widget): string {
-        $data = $widget->export_for_template($this);
 
-        return $this->render_from_template('format_etask/content', $data);
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . '/course/format/topics/renderer.php');
+
+use format_etask\output\gradingtable;
+
+/**
+ * Basic renderer for eTask topics format.
+ *
+ * @package   format_etask
+ * @copyright 2020, Martin Drlik <martin.drlik@email.cz>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class format_etask_renderer extends format_topics_renderer {
+
+    /**
+     * Print the grading table with all features.
+     *
+     * @return void
+     */
+    public function print_grading_table() {
+        echo $this->render(new gradingtable());
     }
 }

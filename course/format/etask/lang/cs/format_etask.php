@@ -68,6 +68,7 @@ $string['registeredduedatemodules_help'] = 'Určuje, v jakém databázovém poli
 $string['nostudentsfound'] = 'Nebyli nalezeni žádní studenti k hodnocení.';
 $string['nogradeitemsfound'] = 'Nebyly nalezeny žádné položky hodnocení.';
 // Grading table footer strings.
+$string['legend'] = 'Legenda';
 $string['gradeitemcompleted'] = 'Dokončeno';
 $string['gradeitempassed'] = 'Splněno';
 $string['gradeitemfailed'] = 'Nesplněno';

@@ -3,7 +3,6 @@
 - Updated `mod/choicegroup`
 - Updated `question/type/formulas`
 - Update `lib/editor/atto/plugins/cloze`
-- Update `course/format/etask`
 
 ### 3.11.11+ (Build: 20221222)
 - Updated Moodle from upstream

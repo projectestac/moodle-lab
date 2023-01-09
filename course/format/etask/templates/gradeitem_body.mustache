@@ -22,16 +22,17 @@
     Example context (json):
     {
         "url": "/grade/edit/tree/grade.php?...",
-        "title": "Passed",
+        "fullname": "John Doe",
+        "itemname": "Grade item name",
         "value": "B- (80 %)",
         "css": "text-white"
     }
 }}
 
 {{#url}}
-    <a href="{{{url}}}" class="d-block stretched-link {{css}}" title="{{title}}">{{{value}}}</a>
+    <a href="{{{url}}}" class="d-block stretched-link {{css}}" title="{{#str}}editgrade, grades{{/str}}: {{fullname}}, {{itemname}}">{{{value}}}</a>
 {{/url}}
 
 {{^url}}
-    <span class="d-block {{css}}">{{{value}}}</span>
+    {{{value}}}
 {{/url}}

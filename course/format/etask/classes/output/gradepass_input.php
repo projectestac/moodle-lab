@@ -24,6 +24,8 @@
 
 namespace format_etask\output;
 
+defined('MOODLE_INTERNAL') || die();
+
 
 use html_writer;
 use moodle_url;

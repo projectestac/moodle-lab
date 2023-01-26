@@ -2,7 +2,8 @@
 - Updated Moodle from upstream
 - Updated `mod/choicegroup`
 - Updated `question/type/formulas`
-- Update `lib/editor/atto/plugins/cloze`
+- Updated `lib/editor/atto/plugins/cloze`
+- Added `course/format/trail`
 
 ### 3.11.11+ (Build: 20221222)
 - Updated Moodle from upstream

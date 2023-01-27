@@ -1,6 +1,8 @@
 ### 4.1.1+ (Build: 20230126)
 - Updated Moodle core
 - Updated `mod/attendance`
+- Updated `question/type/wq`
+- Updated `question/type/multianswerwiris`
 
 ### 4.1+ (Build: 20230105)
 - Updated Moodle core

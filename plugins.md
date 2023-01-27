@@ -49,7 +49,7 @@
 |mod              |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2021021401|2021/09/10|f7fb12407e476272b107941eddda880f860db3e4|
 |question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20|d4c26cfce425075ad91221ad740b1514baedd57b|
 |question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2022112700|2023/01/08|42ddde996a528afce3fc6ed0aa49ee39842015fa|
-|question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2021120400|2022/05/04|2c9d8625afb178731086be4a00a6e5b7f695f70e|
+|question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2022112300|2023/01/27|8e9c7f95c13032e6d47fe0d332b63355a933a86d|
 |course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2021061205|2022/05/17|46d4ef00f8190dff1e10a6e81c9614bf3e504fe9|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2021071901|2021/07/26|--- Baixat de Moodle plugins -----------|

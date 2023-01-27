@@ -1774,6 +1774,7 @@ var strokewid = selectedElement.getAttribute("stroke-width");
 
 
           $('#delete_panel').show();
+          $('#canvas_panel').show();
         }
 
         if (multiselected) {
@@ -1957,16 +1958,19 @@ var strokewid = selectedElement.getAttribute("stroke-width");
         svgCanvas.setFontFamily(this.value);
       });
 
-
       $('#text').keyup(function(e){
          var sel = svgCanvas.getSelectedElems();
          svgCanvas.undoMgr.beginUndoableChange("text", sel);
 
+         $(this).val($(this).val().replace(/[~&]/g, '﹠'));
+         $(this).val($(this).val().replace(/[~\'\"]/g, '`'));
+         $(this).val($(this).val().replace(/[~<]/g, '〈'));
+         $(this).val($(this).val().replace(/[~>]/g, '〉'));
+         
         var txtval = this.value;
         txtval = txtval.replace(/<\/tspan>/ig,"\n");
         txtval = txtval.replace(/(<([^>]+)>)/ig, "");
         var newtextlines = txtval.split(/\n/);
-
          var updatedtxtval = '';
          var extrady ='';
          var textXlocation = sel[0].getAttribute('x');
@@ -1979,10 +1983,10 @@ var strokewid = selectedElement.getAttribute("stroke-width");
                  extrady = 'dy="1em"';
              }
              if(newtextlines[i] == ''){newtextlines[i] = " ";}
-          //   newtextlines[i] = newtextlines[i].replace('↲','');
               var cleanText = newtextlines[i].replace(/<\/?[^>]+(>|$)/g, "");
+
               updatedtxtval += '<tspan id="'+textid+'_tspan_'+i+'" x="'+textXlocation+'" '+extrady+'>' + cleanText + '</tspan>';
-           //  $("text").val(updatedtxtval);
+          
            }
 
             svgCanvas.selectorManager.requestSelector(sel[0]).resize();
@@ -4131,12 +4135,8 @@ var strokewid = selectedElement.getAttribute("stroke-width");
 
         $('#rulers').toggle(!!curConfig.showRulers);
         console.log("FHD Ready..");
-      //  console.error("Third try:  from textarea",$('#qtype_drawing_textarea_id_'+questionID, window.parent.document).val());
         Editor.savingready = 1;
 
-     //   svgCanvas.createLayer("Layer 2");
-    //    svgCanvas.setCurrentLayer("Layer 2");
-   //   svgCanvas.setCurrentLayerPosition("2"); console.log("new");
 
       });
 

@@ -3,6 +3,7 @@
 - Updated `mod/attendance`
 - Updated `question/type/wq`
 - Updated `question/type/multianswerwiris`
+- Updated `qtype/drawing`
   
 ### 3.11.11+ (Build: 20230105)
 - Updated Moodle from upstream

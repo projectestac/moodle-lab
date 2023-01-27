@@ -15,33 +15,34 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template format_grid/grid_admin_setting_markdown
+    @template format_grid/coursestyles
 
-    Admin setting markdown template.
+    Grid course styles template.
 
     Context variables required for this template:
-    * title - Setting title.
-    * name - Setting name.
-    * description - Setting description.
-    * markdown - Setting makrdown.
+    * height - Image height.
+    * width - Image width.
 
     Example context (json):
     {
-        "title": "Setting title",
-        "name": "Name",
-        "description": "Description goes here",
-        "markdown": "Markdown goes here"
+        "height": "240",
+        "width": "180"
     }
 }}
-{{!
-    Setting description.
-}}
-<div class="form-item row">
-    <div class="form-label col-12">
-        <h1>{{{title}}}</h1>
-        <p>{{{description}}}</p>
-    </div>
-    <div class="form-setting col-12">
-        <div>{{{markdown}}}</div>
-    </div>
-</div>
+{{#coursestyles}}
+<style type="text/css" media="screen">
+    /* <![CDATA[ */
+
+    /* -- Grid -- */
+    .format-grid .thegrid .grid-image,
+    .format-grid .thegrid .grid-generatedimage {
+        height: {{height}}px;
+    }
+
+    .format-grid .thegrid .grid-section {
+        width: {{width}}px;
+    }
+
+    /* ]]> */
+</style>
+{{/coursestyles}}

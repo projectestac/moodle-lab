@@ -6,7 +6,7 @@
 |mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2023010300|2023/01/08|af1d053673657165a0d1187d0d2656f6a8a6bf32|
 |mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2022060900|2022/10/10|f58a23efddde11b99bf7a43e1a7cc4ea8059c7c9|
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|786e979b51ad8bee0500f2e067506e69826b4ecf|
-|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|
+|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102625|2023/01/27|e85aad9d45c69e6fc0237dad99880a284ed450a3|
 |mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2022091600|2022/10/20|9022504b2f3b1f009e2912df1ae7c9d0dc5c4ac6|
 |mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2021062301|2020/08/08|a6a32ade9c51429b9a36e0d11c309abdf0cc1202|
 |mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|97620971e6171c7ad89d980072ce4263b1dc349b|
@@ -44,7 +44,7 @@
 
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|course format    |grid                |https://github.com/gjb2048/moodle-format_grid                   |2021102702|2022/05/04|46e85e620edc18016d5176b6868b8774d0e12c89|
+|course format    |grid                |https://github.com/gjb2048/moodle-format_grid                   |2022112601|2023/01/27|45829e2c616c745c1256c51f70268c4387dd41d3|
 |mod              |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2021021401|2021/09/10|f7fb12407e476272b107941eddda880f860db3e4|
 |question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20|d4c26cfce425075ad91221ad740b1514baedd57b|
 |question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2022112700|2023/01/08|42ddde996a528afce3fc6ed0aa49ee39842015fa|

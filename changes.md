@@ -1,6 +1,7 @@
 ### 3.11.12+ (Build: 20230126)
 - Updated Moodle from upstream
-
+- Updated `mod/attendance`
+  
 ### 3.11.11+ (Build: 20230105)
 - Updated Moodle from upstream
 - Updated `mod/choicegroup`

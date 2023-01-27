@@ -4021,11 +4021,11 @@ var textActions = canvas.textActions = function() {
    var originaltxt = evt.currentTarget.innerHTML;
    var temprx = originaltxt.replace(/<\/tspan>/ig,"\n");
    temprx = temprx.replace(/(<([^>]+)>)/ig, "");
-
-
+  
   $("textarea#text").val(temprx);
   evt.currentTarget.textContent = temprx;
   evt.currentTarget.innerHTML = originaltxt;
+  
 
   $( "#textedit_dialog" ).dialog({
     modal: true,
@@ -4137,7 +4137,7 @@ var textActions = canvas.textActions = function() {
       textActions.init();
 
       $(curtext).css('cursor', 'text');
-
+     
       if(!arguments.length) {
         setCursor();
       } else {
@@ -4206,7 +4206,6 @@ var textActions = canvas.textActions = function() {
       var len = str.length;
 
       var xform = curtext.getAttribute('transform');
-
 
       textbb = svgedit.utilities.getBBox(curtext);
 
@@ -8179,11 +8178,11 @@ this.notifyTextchange = function(val, e) {
 // Parameters:
 // val - String with the new text
 this.setTextContent = function(val, e) {
-
   changeSelectedAttribute("#text", val);
   textActions.init(val);
   textActions.setCursor();
 
+ 
   var newtextlines = val.split(/\n/);
    var updatedtxtval = '';
    var extrady ='';
@@ -8199,7 +8198,7 @@ this.setTextContent = function(val, e) {
         var cleanText = newtextlines[i].replace(/<\/?[^>]+(>|$)/g, "");
         updatedtxtval += '<tspan id="'+textid+'_tspan_'+i+'" x="'+textXlocation+'" '+extrady+'>' + cleanText + '</tspan>';
      }
-     selectedElements[0].innerHTML = updatedtxtval;
+   //  selectedElements[0].innerHTML = updatedtxtval;
 
 };
 

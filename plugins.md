@@ -37,7 +37,7 @@
 |question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022120200|2022/12/28|f79e2f9d9287ead555aada1bf599edbf91ccc3c7|
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022120200|2022/12/28|89744eead7cef0ec8001f4d9fb7c31e25fec4cac|
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022120200|2022/12/28|97f5a1a08cacab2a5dd02b7694969b06056959cb|
-|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2022111700|2022/12/15|0cea991c02fd0063d4f30155596c0ff6db244d15)|
+|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023012601|2023/01/27|9493a81b4c9a693fbdc96a9a113d07af42c870f3|
 |assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022100600|2022/10/11|93d2e6e9b213b422868892d04ee793d0245bf0ac|
 
 ## Plugins added for testing purposes

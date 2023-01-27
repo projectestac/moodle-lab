@@ -1,4 +1,4 @@
-@qtype @qtype_drawing
+@qtype @qtype_drawing @qtype_drawing_add
 Feature: Test creating an drawing question
   As a teacher
   In order to test my students
@@ -14,13 +14,14 @@ Feature: Test creating an drawing question
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage
-    And I navigate to "Question bank" node in "Course administration"
+
 
   Scenario: Create an drawing question with Response format set to 'HTML editor'
-    When I add a "drawing" question filling the form with:
-      | Question name            | drawing-001                      |
-      | Question text            | Draw a biology cell. |
-      | General feedback         | This is general feedback       |
+    When I log in as "teacher1"
+    And I am on "Course 1" course homepage
+    And I navigate to "Question bank" in current page administration
+    And I add a "drawing" question filling the form with:
+      | id_name             | drawing-001                    |
+      | id_questiontext     | Draw a biology cell.           |
+      | id_generalfeedback  | This is general feedback       |
     Then I should see "drawing-001"

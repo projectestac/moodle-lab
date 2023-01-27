@@ -4,6 +4,7 @@
 - Updated `question/type/wq`
 - Updated `question/type/multianswerwiris`
 - Updated `qtype/drawing`
+- Updated `question/format/hotpot`
   
 ### 3.11.11+ (Build: 20230105)
 - Updated Moodle from upstream

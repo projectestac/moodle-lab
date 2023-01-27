@@ -26,7 +26,7 @@
 |local            |oauth               |https://github.com/projectestac/moodle-local_oauth              |2016021600|2020/06/16|b1c71e53e99e1708bb1dc728c7c31699e14ab01b|
 |local            |rcommon             |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|d709bbda0baf127ce56faf7269d2b2517d6a92fe|
-|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2019111022|2020/06/16|1f257786c2929cc5373021bdbb3ad5f6f975adae|
+|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102625|2023/01/27|e85aad9d45c69e6fc0237dad99880a284ed450a3|
 |filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2022112300|2022/12/28|eef8fbd23ead62a2e003822786258865261d94ec|
 |atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2022112300|2022/12/28|782f0b98b40fbd2950ab42668a98edd1adf9a9a6|
 |question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2022120200|2022/12/28|5a08362ccd053681a0560bbf24995957ef6317d7|

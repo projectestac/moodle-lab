@@ -31,11 +31,11 @@
 |atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2022112300|2022/12/28|782f0b98b40fbd2950ab42668a98edd1adf9a9a6|
 |question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2022120200|2022/12/28|5a08362ccd053681a0560bbf24995957ef6317d7|
 |question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2022120200|2022/12/28|619b72821306a2fb4248b247efef551e08718dbe|
-|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2022120200|2022/12/28|130ad70a983fdc47eeec0173532d9dc8bcd3781e|
+|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2023011800|2023/01/27|a95fce70d4c24bdbaec7f39fd4606568d2439f49|
 |question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2022120200|2022/12/28|27158b6b6413eccfd614f63bac0d794264e1d345|
 |question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022120200|2022/12/28|f79e2f9d9287ead555aada1bf599edbf91ccc3c7|
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022120200|2022/12/28|89744eead7cef0ec8001f4d9fb7c31e25fec4cac|
-|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2022120200|2022/12/28|97f5a1a08cacab2a5dd02b7694969b06056959cb|
+|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023011800|2023/01/27|6d10790fe7d6fbe4a7c69c9273377efe352a86e5|
 |question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2021061303|2021/06/16|cda6bed05275783954cc9bf12f2ef36d942b9694|
 |report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|
 |theme            |xtec2020            |https://github.com/projectestac/moodle-theme_xtec2020           |2021011200|2021/01/12|beb87b0e58ca1faf4db9b38b38a6c9854ad391fc|

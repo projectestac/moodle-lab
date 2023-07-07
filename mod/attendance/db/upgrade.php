@@ -35,8 +35,6 @@ function xmldb_attendance_upgrade($oldversion=0) {
     global $DB, $CFG;
     $dbman = $DB->get_manager(); // Loads ddl manager and xmldb classes.
 
-    $result = true;
-
     if ($oldversion < 2014112000) {
         $table = new xmldb_table('attendance_sessions');
 
@@ -760,5 +758,53 @@ function xmldb_attendance_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2022090900, 'attendance');
     }
 
-    return $result;
+    if ($oldversion < 2023020100) {
+
+        // Define field studentavailability to be added to attendance_statuses.
+        $table = new xmldb_table('attendance_statuses');
+        $field = new xmldb_field('availablebeforesession', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'studentavailability');
+
+        // Conditionally launch add field studentavailability.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Attendance savepoint reached.
+        upgrade_mod_savepoint(true, 2023020100, 'attendance');
+    }
+
+    if ($oldversion < 2023020102) {
+
+        // Define field studentavailability to be added to attendance_statuses.
+        $table = new xmldb_table('attendance_sessions');
+        $field = new xmldb_field('allowupdatestatus', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'automarkcmid');
+
+        // Conditionally launch add field studentavailability.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Attendance savepoint reached.
+        upgrade_mod_savepoint(true, 2023020102, 'attendance');
+    }
+
+    if ($oldversion < 2023020106) {
+        // Update any records with null values and set to 0;
+        $sql = 'UPDATE {attendance_sessions} set allowupdatestatus = 0 WHERE allowupdatestatus is null';
+        $DB->execute($sql);
+
+        // Changing precision of field allowupdatestatus on table attendance_sessions to (1).
+        $table = new xmldb_table('attendance_sessions');
+        $field = new xmldb_field('allowupdatestatus', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'studentscanmark');
+
+        // Launch change of precision for field allowupdatestatus.
+        $dbman->change_field_precision($table, $field);
+        $dbman->change_field_default($table, $field);
+        $dbman->change_field_notnull($table, $field);
+
+        // Attendance savepoint reached.
+        upgrade_mod_savepoint(true, 2023020106, 'attendance');
+    }
+
+    return true;
 }

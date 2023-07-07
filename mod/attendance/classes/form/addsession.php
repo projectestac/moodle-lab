@@ -201,7 +201,9 @@ class addsession extends moodleform {
         if (!empty($studentscanmark)) {
             $mform->addElement('checkbox', 'studentscanmark', '', get_string('studentscanmark', 'attendance'));
             $mform->addHelpButton('studentscanmark', 'studentscanmark', 'attendance');
-
+            $mform->addElement('checkbox', 'allowupdatestatus', '', get_string('allowupdatestatus', 'attendance'));
+            $mform->addHelpButton('allowupdatestatus', 'allowupdatestatus', 'attendance');
+            $mform->hideif('allowupdatestatus', 'studentscanmark', 'notchecked');
             $mform->addElement('duration', 'studentsearlyopentime', get_string('studentsearlyopentime', 'attendance'));
             $mform->addHelpButton('studentsearlyopentime', 'studentsearlyopentime', 'attendance');
             if (isset($pluginconfig->studentsearlyopentime)) {
@@ -211,6 +213,8 @@ class addsession extends moodleform {
         } else {
             $mform->addElement('hidden', 'studentscanmark', '0');
             $mform->settype('studentscanmark', PARAM_INT);
+            $mform->addElement('hidden', 'allowupdatestatus', '0');
+            $mform->settype('allowupdatestatus', PARAM_INT);
             $mform->addElement('hidden', 'studentsearlyopentime', '0');
             $mform->settype('studentsearlyopentime', PARAM_INT);
         }
@@ -260,6 +264,9 @@ class addsession extends moodleform {
             }
             if (isset($pluginconfig->studentscanmark_default)) {
                 $mform->setDefault('studentscanmark', $pluginconfig->studentscanmark_default);
+            }
+            if (isset($pluginconfig->allowupdatestatus_default)) {
+                $mform->setDefault('allowupdatestatus', $pluginconfig->allowupdatestatus_default);
             }
             if (isset($pluginconfig->randompassword_default)) {
                 $mform->setDefault('randompassword', $pluginconfig->randompassword_default);

@@ -3,6 +3,7 @@
 - Updated `mod/attendance`
 - Updated `mod/choicegroup`
 - Updated `mod/questionnaire`
+- Added theme `xtecboost`
 
 ### 4.1.1+ (Build: 20230126)
 - Updated Moodle core

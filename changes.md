@@ -2,6 +2,7 @@
 - Updated Moodle core
 - Updated `mod/attendance`
 - Updated `mod/choicegroup`
+- Updated `mod/questionnaire`
 
 ### 4.1.1+ (Build: 20230126)
 - Updated Moodle core

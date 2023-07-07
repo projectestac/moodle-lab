@@ -17,20 +17,16 @@ Feature: Block region moving
     And the following "activities" exist:
       | activity | name             | course | template |
       | survey   | Test survey name | C1     | 4        |
-    And I log in as "admin"
-    And I am on "Course 1" course homepage with editing mode on
-    And I add a "Book" to section "1" and I fill the form with:
-      | Name | Test book name |
-      | Description | Test book description |
-    And I follow "Test book name"
-    And I set the following fields to these values:
-      | Chapter title | Book title |
-      | Content       | Book content test test |
-    And I press "Save changes"
-    And I log out
+      | book     | Test book name   | C1     |          |
+    And the following "mod_book > chapter" exists:
+      | book    | Test book name         |
+      | title   | Book title             |
+      | content | Book content test test |
+    And the following "blocks" exist:
+      | blockname | contextlevel | reference | pagetypepattern | defaultregion |
+      | comments  | Course       | C1        | course-view-*   | side-pre      |
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
-    And I add the "Comments" block
     And I configure the "Comments" block
     And I set the following fields to these values:
       | Display on page types | Any page |

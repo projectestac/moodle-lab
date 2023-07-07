@@ -782,6 +782,37 @@ function grade_get_plugin_info($courseid, $active_type, $active_plugin) {
 }
 
 /**
+ * Load a valid list of gradable users in a course.
+ *
+ * @param int $courseid The course ID.
+ * @param int|null $groupid The group ID (optional).
+ * @return array $users A list of enrolled gradable users.
+ */
+function get_gradable_users(int $courseid, ?int $groupid = null): array {
+    global $CFG;
+
+    $context = context_course::instance($courseid);
+    // Create a graded_users_iterator because it will properly check the groups etc.
+    $defaultgradeshowactiveenrol = !empty($CFG->grade_report_showonlyactiveenrol);
+    $onlyactiveenrol = get_user_preferences('grade_report_showonlyactiveenrol', $defaultgradeshowactiveenrol) ||
+        !has_capability('moodle/course:viewsuspendedusers', $context);
+
+    $course = get_course($courseid);
+    $gui = new graded_users_iterator($course, null, $groupid);
+    $gui->require_active_enrolment($onlyactiveenrol);
+    $gui->init();
+
+    // Flatten the users.
+    $users = [];
+    while ($user = $gui->next_user()) {
+        $users[$user->user->id] = $user->user;
+    }
+    $gui->close();
+
+    return $users;
+}
+
+/**
  * A simple class containing info about grade plugins.
  * Can be subclassed for special rules
  *
@@ -1222,10 +1253,9 @@ class grade_plugin_return {
      * Add return tracking params into url
      *
      * @param moodle_url $url A URL
-     *
-     * @return string $url with return tracking params
+     * @return moodle_url with return tracking params
      */
-    public function add_url_params(moodle_url $url) {
+    public function add_url_params(moodle_url $url): moodle_url {
         if (empty($this->type)) {
             return $url;
         }
@@ -1729,8 +1759,8 @@ class grade_structure {
 
         if ($menuitems) {
             $menu = new action_menu($menuitems);
-            $icon = $OUTPUT->pix_icon('i/dropdown', get_string('actions'));
-            $extraclasses = 'btn btn-icon icon-size-2 bg-secondary d-flex align-items-center justify-content-center';
+            $icon = $OUTPUT->pix_icon('i/moremenu', get_string('actions'));
+            $extraclasses = 'btn btn-link btn-icon icon-size-3 d-flex align-items-center justify-content-center';
             $menu->set_menu_trigger($icon, $extraclasses);
             $menu->set_menu_left();
 

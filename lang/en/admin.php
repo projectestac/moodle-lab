@@ -383,7 +383,7 @@ $string['configstripalltitletags'] = 'Uncheck this setting to allow HTML tags in
 $string['configsupportavailability'] = 'Determines who has access to contact site support from the footer.';
 $string['configsupportemail'] = 'If SMTP is configured on this site and a support page is not set, this email address will receive messages submitted through the support form. If sending fails, the email address will be displayed to logged-in users.';
 $string['configsupportname'] = 'The name of the person or other entity providing support via the support form or support page.';
-$string['configsupportpage'] = 'A link to this page will be provided for users to contact the site support. If the field is left blank then a link to a support form will be provided instead.';
+$string['configsupportpage'] = 'Enter the URL of a support page or leave empty to link to a contact form. The link is displayed in the site footer.';
 $string['configtempdatafoldercleanup'] = 'Remove temporary data files from the data folder that are older than the selected time.';
 $string['configthemedesignermode'] = 'Normally all theme images and style sheets are cached in browsers and on the server for a very long time, for performance. If you are designing themes or developing code then you probably want to turn this mode on so that you are not served cached versions.  Warning: this will make your site slower for all users!  Alternatively, you can also reset the theme caches manually from the Theme selection page.';
 $string['configthemelist'] = 'Leave this blank to allow any valid theme to be used.  If you want to shorten the theme menu, you can specify a comma-separated list of names here (Don\'t use spaces!).
@@ -606,7 +606,7 @@ $string['environmentrequireversion'] = 'version {$a->needed} is required and you
 $string['environmentsettingok'] = 'recommended setting detected';
 $string['environmentshouldfixsetting'] = 'PHP setting should be changed.';
 $string['environmentxmlerror'] = 'Error reading environment data ({$a->error_code})';
-$string['environmentmariadbwrongdbtype'] = 'Wrong <code>$CFG->dbtype</code>: you need to change it in your <code>config.php</code> file, from \'<code>mysql</code>\' to \'<code>mariadb</code>\'.';
+$string['environmentmariadbwrongdbtype'] = 'Wrong $CFG->dbtype. You need to change it in your config.php file from \'mysqli\' to \'mariadb\'.';
 $string['errordeletingconfig'] = 'An error occurred while deleting the configuration records for plugin \'{$a}\'.';
 $string['errorsetting'] = 'Could not save setting:';
 $string['errorwithsettings'] = 'Some settings were not changed due to an error.';
@@ -724,9 +724,8 @@ $string['ipblocker'] = 'IP blocker';
 $string['ipblockersyntax'] = 'Put every entry on one line. Valid entries are either full IP address (such as <b>192.168.10.1</b>) which matches a single host; or partial address (such as <b>192.168</b>) which matches any address starting with those numbers; or CIDR notation (such as <b>231.54.211.0/20</b>); or a range of IP addresses (such as <b>231.3.56.10-20</b>) where the range applies to the last part of the address. Text domain names (like \'example.com\') are not supported. Blank lines, and text following a "#" character are ignored.';
 $string['iplookup'] = 'IP address lookup';
 $string['iplookupgeoplugin'] = 'The <a href="https://www.geoplugin.com">geoPlugin</a> service is currently being used to look up geographical information. For more accurate results we recommend installing a local copy of the MaxMind GeoLite database.';
-$string['iplookupinfo'] = 'By default Moodle uses the free online NetGeo (The Internet Geographic Database) server to lookup location of IP addresses, unfortunately this database is not maintained anymore and may return <em>wildly incorrect</em> data.
-It is recommended to install local copy of free GeoLite2 City database from MaxMind.<br />
-IP address location is displayed on simple map or using Google Maps. Please note that you need to have a Google account and apply for free Google Maps API key to enable interactive maps.';
+$string['iplookupinfo'] = 'The free online NetGeo server is used to look up IP address locations. The database is not maintained any more though, and may return incorrect data. Installing a local copy of the free GeoLite2 City database from MaxMind is recommended.<br />
+If a Google Maps API V3 key is provided, IP address location is displayed using Google Maps. You need a Google account and to apply for a Google Maps API key. If no Google Maps API V3 key is provided, IP address location is displayed using OpenStreetMap.';
 $string['iplookupmaxmindnote'] = 'This product includes GeoLite2 data created by MaxMind, available from <a href="https://www.maxmind.com">https://www.maxmind.com</a>.';
 $string['iscustomadminwarnings'] = 'It has been detected that your site is using a custom admin directory. This feature is no longer supported and will be removed after Moodle 4.2.';
 $string['ishttpswarning'] = 'It has been detected that your site is not secured using HTTPS. It is strongly recommended to migrate your site to HTTPS for increased security and improved integration with other systems.';
@@ -1129,6 +1128,10 @@ $string['purgethemecache'] = 'Themes';
 $string['referrernone'] = 'Browser default';
 $string['referrerpolicy'] = 'Referrer policy';
 $string['referrerpolicydesc'] = 'Set the referrer policy header to be included with responses from your site.';
+$string['resetindentation_title'] = 'Reset indentation on course page?';
+$string['resetindentation_help'] = 'This will remove any indentation previously set for courses in {$a->format}.';
+$string['resetindentation'] = 'Reset indentation';
+$string['resetindentationsuccess'] = 'Indentation reset';
 $string['restorecourse'] = 'Restore course';
 $string['restorernewroleid'] = 'Restorers\' role in courses';
 $string['restorernewroleid_help'] = 'If the user does not already have the permission to manage the newly restored course, the user is automatically assigned this role and enrolled if necessary. Select "None" if you do not want restorers to be able to manage every restored course.';
@@ -1257,6 +1260,7 @@ $string['sitepolicyhandlerplugin'] = '{$a->name} ({$a->component})';
 $string['sitepolicyguest'] = 'Site policy URL for guests';
 $string['sitepolicyguest_help'] = 'The URL of the site policy that all guests must see and agree to before accessing the site. Note that this setting will only have an effect if the site policy handler is set to default (core).';
 $string['sitesectionhelp'] = 'If selected, a topic section will be displayed on the site home.';
+$string['sixtyfourbitsrequired'] = 'It has been detected that your site is not using a 64-bit PHP version. You are required to upgrade your system (operating system, PHP...) before installing this Moodle version.';
 $string['sixtyfourbitswarning'] = 'It has been detected that your site is not using a 64-bit PHP version. It is recommended that you upgrade your site to ensure future compatibility.';
 $string['slasharguments'] = 'Use slash arguments';
 $string['slashargumentswarning'] = 'It is recommended that the use of slash arguments is enabled. In future it will be required. For more details, see the documentation <a href="https://docs.moodle.org/en/admin/environment/slasharguments">Using slash arguments</a>.';
@@ -1296,7 +1300,7 @@ $string['supportemail'] = 'Support email';
 $string['supportemailsubject'] = 'Site support request - {$a}';
 $string['supportavailability'] = 'Support availability';
 $string['supportname'] = 'Support name';
-$string['supportpage'] = 'Support page';
+$string['supportpage'] = 'Contact site support link';
 $string['suspenduser'] = 'Suspend user account';
 $string['switchlang'] = 'Switch lang directory';
 $string['systempaths'] = 'System paths';
@@ -1444,6 +1448,7 @@ $string['unsupportedphpversion73'] = 'PHP version 7.3 and higher are not support
 $string['unsupportedphpversion74'] = 'PHP version 7.4 and higher are not supported.';
 $string['unsupportedphpversion80'] = 'PHP version 8.0 and higher are not supported.';
 $string['unsupportedphpversion81'] = 'PHP version 8.1 and higher are not supported.';
+$string['unsupportedphpversion82'] = 'PHP version 8.2 and higher are not supported.';
 $string['unsuspenduser'] = 'Activate user account';
 $string['updateaccounts'] = 'Update existing accounts';
 $string['updatecomponent'] = 'Update component';
@@ -1548,7 +1553,8 @@ $string['xmlrpcwebserviceenabled'] = 'It has been detected that the XML-RPC Web 
 $string['yuicomboloading'] = 'YUI combo loading';
 $string['ziprequired'] = 'The Zip PHP extension is now required by Moodle, info-ZIP binaries or PclZip library are not used anymore.';
 $string['manageqbanks'] = 'Manage question bank plugins';
-
+$string['modassignmentinuse'] = 'Your site is still using the Assignment 2.2 plugin. Before upgrading you must 1) backup any Assignment 2.2 activities that you want to keep and restore them as Assignment activities, and 2) delete all Assignment 2.2 data from the database.';
+$string['modassignmentsubpluginsexist'] = 'Assignment 2.2. subplugins may be present. The mod/assignment folder and all of its subplugins need to be removed before upgrading.';
 
 $string['caching'] = 'Caching';
 $string['cachesettings'] = 'Cache settings';

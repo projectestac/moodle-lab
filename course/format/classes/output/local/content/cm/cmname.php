@@ -102,15 +102,21 @@ class cmname implements named_templatable, renderable {
             return [];
         }
 
+        $iconurl = $mod->get_icon_url();
+        $iconclass = $iconurl->get_param('filtericon') ? '' : 'nofilter';
         $data = [
             'url' => $mod->url,
-            'icon' => $mod->get_icon_url(),
+            'icon' => $iconurl,
+            'iconclass' => $iconclass,
             'modname' => $mod->modname,
-            'pluginname' => get_string('pluginname', 'mod_' . $mod->modname),
             'textclasses' => $displayoptions['textclasses'] ?? '',
             'purpose' => plugin_supports('mod', $mod->modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER),
             'activityname' => $this->get_title_data($output),
         ];
+
+        if ($this->format->show_editor()) {
+            $data['pluginname'] = get_string('pluginname', 'mod_' . $mod->modname);
+        }
 
         return $data;
     }

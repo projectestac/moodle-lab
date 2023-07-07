@@ -449,15 +449,17 @@ class mod_wiki_external extends external_api {
             throw new moodle_exception('cannotviewpage', 'wiki');
         } else if ($subwiki->id != -1) {
 
-            // Set sort param.
             $options = $params['options'];
-            if (!empty($options['sortby'])) {
-                if ($options['sortdirection'] != 'ASC' && $options['sortdirection'] != 'DESC') {
-                    // Invalid sort direction. Use default.
-                    $options['sortdirection'] = 'ASC';
-                }
-                $sort = $options['sortby'] . ' ' . $options['sortdirection'];
-            }
+
+            // Set sort param.
+            $sort = get_safe_orderby([
+                'id' => 'id',
+                'title' => 'title',
+                'timecreated' => 'timecreated',
+                'timemodified' => 'timemodified',
+                'pageviews' => 'pageviews',
+                'default' => 'title',
+            ], $options['sortby'], $options['sortdirection'], false);
 
             $pages = wiki_get_page_list($subwiki->id, $sort);
             $caneditpages = wiki_user_can_edit($subwiki);
@@ -494,15 +496,7 @@ class mod_wiki_external extends external_api {
                     $retpage['contentformat'] = $contentformat;
                 } else {
                     // Return the size of the content.
-                    $retpage['contentsize'] = strlen($cachedcontent);
-                    // TODO: Remove this block of code once PHP 8.0 is the min version supported.
-                    // For PHP < 8.0, if strlen() was overloaded, calculate
-                    // the bytes using mb_strlen(..., '8bit').
-                    if (PHP_VERSION_ID < 80000) {
-                        if (function_exists('mb_strlen') && ((int)ini_get('mbstring.func_overload') & 2)) {
-                            $retpage['contentsize'] = mb_strlen($cachedcontent, '8bit');
-                        }
-                    }
+                    $retpage['contentsize'] = \core_text::strlen($cachedcontent);
                 }
 
                 $returnedpages[] = $retpage;

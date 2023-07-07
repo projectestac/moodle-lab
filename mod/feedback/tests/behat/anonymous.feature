@@ -41,17 +41,13 @@ Feature: Anonymous feedback
   Scenario: Guests can see anonymous feedback on front page but can not complete
     When I follow "Site feedback"
     Then I should not see "Answer the questions"
-    And I follow "Preview"
-    And I should see "Do you like our site?"
-    And I press "Continue"
+    And I should not see "Preview questions"
 
   Scenario: Complete anonymous feedback on the front page as an authenticated user
     And I log in as "user1"
     And I am on site homepage
     When I follow "Site feedback"
-    And I follow "Preview"
-    And I should see "Do you like our site?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I should see "Do you like our site?"
     And I set the following fields to these values:
@@ -62,17 +58,13 @@ Feature: Anonymous feedback
 
   @javascript
   Scenario: Complete anonymous feedback and view analysis on the front page as an authenticated user
-    And I log in as "admin"
-    And I set the following system permissions of "Authenticated user on site home" role:
-      | capability                   | permission |
-      | mod/feedback:viewanalysepage | Allow      |
-    And I log out
+    Given the following "role capability" exists:
+      | role                         | frontpage |
+      | mod/feedback:viewanalysepage | allow     |
     And I log in as "user1"
     And I am on site homepage
     When I follow "Site feedback"
-    And I follow "Preview"
-    And I should see "Do you like our site?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I should see "Do you like our site?"
     And I set the following fields to these values:
@@ -82,9 +74,7 @@ Feature: Anonymous feedback
     And I log in as "user2"
     And I am on site homepage
     And I follow "Site feedback"
-    And I follow "Preview"
-    And I should see "Do you like our site?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I set the following fields to these values:
       | No | 1 |
@@ -113,9 +103,7 @@ Feature: Anonymous feedback
     Given the following config values are set as admin:
       | feedback_allowfullanonymous | 1 |
     When I follow "Site feedback"
-    And I follow "Preview"
-    And I should see "Do you like our site?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I should see "Do you like our site?"
     And I set the following fields to these values:
@@ -128,15 +116,11 @@ Feature: Anonymous feedback
   Scenario: Complete fully anonymous feedback and view analyze on the front page as a guest
     Given the following config values are set as admin:
       | feedback_allowfullanonymous | 1 |
-    And I log in as "admin"
-    And I set the following system permissions of "Guest" role:
-      | capability                   | permission |
-      | mod/feedback:viewanalysepage | Allow      |
-    And I log out
+    And the following "role capability" exists:
+      | role                         | guest |
+      | mod/feedback:viewanalysepage | allow |
     When I follow "Site feedback"
-    And I follow "Preview"
-    And I should see "Do you like our site?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I should see "Do you like our site?"
     And I set the following fields to these values:
@@ -145,9 +129,7 @@ Feature: Anonymous feedback
     And I press "Continue"
     # Starting new feedback
     When I follow "Site feedback"
-    And I follow "Preview"
-    And I should see "Do you like our site?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I should see "Do you like our site?"
     And I set the following fields to these values:
@@ -184,9 +166,7 @@ Feature: Anonymous feedback
     And I log out
 
     And I am on the "Course feedback" "feedback activity" page logged in as user1
-    And I follow "Preview"
-    Then I should see "Do you like this course?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I should see "Do you like this course?"
     And I set the following fields to these values:
@@ -194,9 +174,7 @@ Feature: Anonymous feedback
     And I press "Submit your answers"
     And I log out
     And I am on the "Course feedback" "feedback activity" page logged in as user2
-    And I follow "Preview"
-    And I should see "Do you like this course?"
-    And I press "Continue"
+    And I should not see "Preview questions"
     And I follow "Answer the questions"
     And I should see "Do you like this course?"
     And I set the following fields to these values:

@@ -928,7 +928,7 @@ function file_remove_editor_orphaned_files($editor) {
     // Find those draft files included in the text, and generate their hashes.
     $context = context_user::instance($USER->id);
     $baseurl = $CFG->wwwroot . '/draftfile.php/' . $context->id . '/user/draft/' . $editor['itemid'] . '/';
-    $pattern = "/" . preg_quote($baseurl, '/') . "(.+?)[\?\"']/";
+    $pattern = "/" . preg_quote($baseurl, '/') . "(.+?)[\?\"'<>\s:\\\\]/";
     preg_match_all($pattern, $editor['text'], $matches);
     $usedfilehashes = [];
     foreach ($matches[1] as $matchedfilename) {
@@ -3215,7 +3215,14 @@ class curl {
                     $this->proxy_type = CURLPROXY_SOCKS5;
                 } else {
                     $this->proxy_type = CURLPROXY_HTTP;
-                    $this->setopt(array('httpproxytunnel'=>false));
+                    $this->setopt([
+                        'httpproxytunnel' => false,
+                    ]);
+                    if (defined('CURLOPT_SUPPRESS_CONNECT_HEADERS')) {
+                        $this->setopt([
+                            'suppress_connect_headers' => true,
+                        ]);
+                    }
                 }
                 $this->setopt(array('proxytype'=>$this->proxy_type));
             }

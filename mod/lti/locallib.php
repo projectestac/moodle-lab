@@ -126,7 +126,12 @@ function lti_get_jwt_message_type_mapping() {
  * @return array
  */
 function lti_get_jwt_claim_mapping() {
-    return array(
+    $mapping = [];
+    $services = lti_get_services();
+    foreach ($services as $service) {
+        $mapping = array_merge($mapping, $service->get_jwt_claim_mappings());
+    }
+    $mapping = array_merge($mapping, [
         'accept_copy_advice' => [
             'suffix' => 'dl',
             'group' => 'deep_linking_settings',
@@ -443,74 +448,9 @@ function lti_get_jwt_claim_mapping() {
             'group' => 'tool_platform',
             'claim' => 'url',
             'isarray' => false
-        ],
-        'custom_context_memberships_v2_url' => [
-            'suffix' => 'nrps',
-            'group' => 'namesroleservice',
-            'claim' => 'context_memberships_url',
-            'isarray' => false
-        ],
-        'custom_context_memberships_versions' => [
-            'suffix' => 'nrps',
-            'group' => 'namesroleservice',
-            'claim' => 'service_versions',
-            'isarray' => true
-        ],
-        'custom_gradebookservices_scope' => [
-            'suffix' => 'ags',
-            'group' => 'endpoint',
-            'claim' => 'scope',
-            'isarray' => true
-        ],
-        'custom_lineitems_url' => [
-            'suffix' => 'ags',
-            'group' => 'endpoint',
-            'claim' => 'lineitems',
-            'isarray' => false
-        ],
-        'custom_lineitem_url' => [
-            'suffix' => 'ags',
-            'group' => 'endpoint',
-            'claim' => 'lineitem',
-            'isarray' => false
-        ],
-        'custom_results_url' => [
-            'suffix' => 'ags',
-            'group' => 'endpoint',
-            'claim' => 'results',
-            'isarray' => false
-        ],
-        'custom_result_url' => [
-            'suffix' => 'ags',
-            'group' => 'endpoint',
-            'claim' => 'result',
-            'isarray' => false
-        ],
-        'custom_scores_url' => [
-            'suffix' => 'ags',
-            'group' => 'endpoint',
-            'claim' => 'scores',
-            'isarray' => false
-        ],
-        'custom_score_url' => [
-            'suffix' => 'ags',
-            'group' => 'endpoint',
-            'claim' => 'score',
-            'isarray' => false
-        ],
-        'lis_outcome_service_url' => [
-            'suffix' => 'bo',
-            'group' => 'basicoutcome',
-            'claim' => 'lis_outcome_service_url',
-            'isarray' => false
-        ],
-        'lis_result_sourcedid' => [
-            'suffix' => 'bo',
-            'group' => 'basicoutcome',
-            'claim' => 'lis_result_sourcedid',
-            'isarray' => false
-        ],
-    );
+        ]
+    ]);
+    return $mapping;
 }
 
 /**
@@ -1388,8 +1328,12 @@ function lti_verify_with_keyset($jwtparam, $keyseturl, $clientid) {
         $jwt = JWT::decode($jwtparam, $keys);
     } catch (Exception $e) {
         // Something went wrong, so attempt to update cached keyset and then try again.
-        $keyset = file_get_contents($keyseturl);
+        $keyset = download_file_content($keyseturl);
         $keysetarr = json_decode($keyset, true);
+
+        // Fix for firebase/php-jwt's dependency on the optional 'alg' property in the JWK.
+        $keysetarr = jwks_helper::fix_jwks_alg($keysetarr, $jwtparam);
+
         // JWK::parseKeySet uses RS256 algorithm by default.
         $keys = JWK::parseKeySet($keysetarr);
         $jwt = JWT::decode($jwtparam, $keys);
@@ -2443,7 +2387,15 @@ function lti_get_configured_types($courseid, $sectionreturn = 0) {
             $type->help     = clean_param($trimmeddescription, PARAM_NOTAGS);
             $type->helplink = get_string('modulename_shortcut_link', 'lti');
         }
-        $type->icon = html_writer::empty_tag('img', ['src' => get_tool_type_icon_url($ltitype), 'alt' => '', 'class' => 'icon']);
+
+        $iconurl = get_tool_type_icon_url($ltitype);
+        $iconclass = '';
+        if ($iconurl !== $OUTPUT->image_url('monologo', 'lti')->out()) {
+            // Do not filter the icon if it is not the default LTI activity icon.
+            $iconclass = 'nofilter';
+        }
+        $type->icon = html_writer::empty_tag('img', ['src' => $iconurl, 'alt' => '', 'class' => "icon $iconclass"]);
+
         $type->link = new moodle_url('/course/modedit.php', array('add' => 'lti', 'return' => 0, 'course' => $courseid,
             'sr' => $sectionreturn, 'typeid' => $ltitype->id));
         $types[] = $type;

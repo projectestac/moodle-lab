@@ -179,6 +179,7 @@ class moodlelib_test extends \advanced_testcase {
 
         // Invalid utf8 string.
         $this->assertSame('aš', fix_utf8('a'.chr(130).'š'), 'This fails with buggy iconv() when mbstring extenstion is not available as fallback.');
+        $this->assertSame('Hello ', fix_utf8('Hello ￿'));
     }
 
     public function test_optional_param() {
@@ -4003,6 +4004,7 @@ EOF;
             [2, "one\ftwo"],
             [1, "SO<sub>4</sub><sup>2-</sup>"],
             [6, '4+4=8 i.e. O(1) a,b,c,d I’m black&blue_really'],
+            [1, '<span>a</span><span>b</span>'],
         ];
     }
 

@@ -457,7 +457,7 @@ class cache implements cache_loader {
             }
         } else {
             // If there's no result, obviously it doesn't meet the required version.
-            if (!$result) {
+            if (!cache_helper::result_found($result)) {
                 return false;
             }
             if (!($result instanceof \core_cache\version_wrapper)) {
@@ -490,7 +490,7 @@ class cache implements cache_loader {
 
         if ($usesstaticacceleration) {
             $result = $this->static_acceleration_get($key);
-            if ($result && self::check_version($result, $requiredversion)) {
+            if (cache_helper::result_found($result) && self::check_version($result, $requiredversion)) {
                 if ($requiredversion === self::VERSION_NONE) {
                     return $result;
                 } else {
@@ -505,7 +505,7 @@ class cache implements cache_loader {
 
         // 3. Get it from the store. Obviously wasn't in the static acceleration array.
         $result = $this->store->get($parsedkey);
-        if ($result) {
+        if (cache_helper::result_found($result)) {
             // Check the result has at least the required version.
             try {
                 $validversion = self::check_version($result, $requiredversion);
@@ -535,7 +535,7 @@ class cache implements cache_loader {
                 $this->store->delete($parsedkey);
             }
         }
-        if ($result !== false) {
+        if (cache_helper::result_found($result)) {
             // Look to see if there's a TTL wrapper. It might be inside a version wrapper.
             if ($requiredversion !== self::VERSION_NONE) {
                 $ttlconsider = $result->data;
@@ -569,7 +569,7 @@ class cache implements cache_loader {
 
         // 4. Load if from the loader/datasource if we don't already have it.
         $setaftervalidation = false;
-        if ($result === false) {
+        if (!cache_helper::result_found($result)) {
             if ($this->perfdebug) {
                 cache_helper::record_cache_miss($this->store, $this->definition);
             }
@@ -595,13 +595,13 @@ class cache implements cache_loader {
                     }
                 }
             }
-            $setaftervalidation = ($result !== false);
+            $setaftervalidation = (cache_helper::result_found($result));
         } else if ($this->perfdebug) {
             $readbytes = $this->store->get_last_io_bytes();
             cache_helper::record_cache_hit($this->store, $this->definition, 1, $readbytes);
         }
         // 5. Validate strictness.
-        if ($strictness === MUST_EXIST && $result === false) {
+        if ($strictness === MUST_EXIST && !cache_helper::result_found($result)) {
             throw new coding_exception('Requested key did not exist in any cache stores and could not be loaded.');
         }
         // 6. Set it to the store if we got it from the loader/datasource. Only set to this direct
@@ -1359,7 +1359,7 @@ class cache implements cache_loader {
                 $result = $data;
             }
         }
-        if ($result !== false) {
+        if (cache_helper::result_found($result)) {
             if ($this->perfdebug) {
                 cache_helper::record_cache_hit(cache_store::STATIC_ACCEL, $this->definition);
             }
@@ -1679,7 +1679,7 @@ class cache_application extends cache implements cache_loader_with_locking {
         if ($this->get_loader() !== false) {
             $this->get_loader()->acquire_lock($key);
         }
-        $key = $this->parse_key($key);
+        $key = cache_helper::hash_key($key, $this->get_definition());
         $before = microtime(true);
         if ($this->nativelocking) {
             $lock = $this->get_store()->acquire_lock($key, $this->get_identifier());
@@ -1706,7 +1706,7 @@ class cache_application extends cache implements cache_loader_with_locking {
      *      someone else has the lock.
      */
     public function check_lock_state($key) {
-        $key = $this->parse_key($key);
+        $key = cache_helper::hash_key($key, $this->get_definition());
         if (!empty($this->locks[$key])) {
             return true; // Shortcut to save having to make a call to the cache store if the lock is held by this process.
         }
@@ -1726,7 +1726,7 @@ class cache_application extends cache implements cache_loader_with_locking {
      */
     public function release_lock($key) {
         $loaderkey = $key;
-        $key = $this->parse_key($key);
+        $key = cache_helper::hash_key($key, $this->get_definition());
         if ($this->nativelocking) {
             $released = $this->get_store()->release_lock($key, $this->get_identifier());
         } else {

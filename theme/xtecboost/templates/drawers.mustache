@@ -127,11 +127,15 @@
                     </div>
                 {{/hasblocks}}
             </div>
-            <div class="custom-header">
-                {{#logocentre}}
-                    <img src="{{{ logocentre }}}" class="logo mr-1" alt="Departament d'Educació">
-                {{/logocentre}}
-            </div>
+            {{#showheader}}
+                <div class="custom-header">
+                    <div class="image-wrapper">
+                    {{#logocentre}}
+                        <img src="{{{ logocentre }}}" class="logo mr-1" alt="Departament d'Educació">
+                    {{/logocentre}}
+                    </div>
+                </div>
+            {{/showheader}}
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">

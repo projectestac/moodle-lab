@@ -27,6 +27,13 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/behat/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
+// Added compatibility for PHP 7.4.
+if (!function_exists('str_contains')) {
+    function str_contains($haystack, $needle): bool {
+        return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+    }
+}
+
 global $CFG;
 
 // Add block button in editing mode.
@@ -88,18 +95,25 @@ $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settin
 $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
 $logocentre = get_config('theme_xtecboost', 'logo');
-if ($logocentre) {
-    $context = context_system::instance();
-    $fs = get_file_storage();
-    $files = $fs->get_area_files($context->id, 'theme_xtecboost', 'logo', 0, 'itemid, filepath, filename', false);
-    foreach ($files as $file) {
-        $logocentre = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
-            $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+
+// Home page
+if ($PAGE->pagetype === 'site-index') {
+    $showheader = true;
+    if ($logocentre) {
+        $context = context_system::instance();
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($context->id, 'theme_xtecboost', 'logo', 0, 'itemid, filepath, filename', false);
+        foreach ($files as $file) {
+            $logocentre = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(),
+                $file->get_filearea(), $file->get_itemid(), $file->get_filepath(), $file->get_filename());
+        }
+    } else {
+        $xtec_type = get_config('theme_xtecboost', 'xtec_type');
+        $png_image = 'top_' . $xtec_type . '_color.png';
+        $logocentre = $CFG->wwwroot . '/theme/xtecboost/pix/' . $png_image;
     }
 } else {
-    $xtec_type = get_config('theme_xtecboost', 'xtec_type');
-    $png_image = 'top_' . $xtec_type . '_color.png';
-    $logocentre = $CFG->wwwroot . '/theme/xtecboost/pix/' . $png_image;
+    $showheader = false;
 }
 
 $templatecontext = [
@@ -124,6 +138,7 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
     'logodepartamenteducacio' => $CFG->wwwroot . '/theme/xtecboost/pix/departament.png',
     'logocentre' => $logocentre,
+    'showheader' => $showheader,
 ];
 
 echo $OUTPUT->render_from_template('theme_xtecboost/drawers', $templatecontext);

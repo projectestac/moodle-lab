@@ -80,7 +80,18 @@ h4 {
 /* Custom header logo */
 .custom-header {
     text-align: right;
-    overflow: clip;
+    overflow: hidden;
+}
+
+.custom-header .image-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.custom-header .image-wrapper img {
+    height: 100%;
+    object-fit: cover;
 }
 
 /* Navigation */
@@ -181,8 +192,8 @@ nav.fixed-top.navbar {
     background: white;
 
     .card-title {
-        cursor: pointer;
-        color: $gray-800;
+        color: $maincolor;
+        display: block;
         font-weight: bold;
     }
 

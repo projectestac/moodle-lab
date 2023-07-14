@@ -21,12 +21,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 // General.
-$string['pluginname'] = 'Xtec Boots';
-$string['choosereadme'] = '<p>Theme Boost is an enhanced child theme of Boost </p>';
-$string['configtitle'] = 'Xtec Boost';
+$string['pluginname'] = 'XTEC Boost';
+$string['choosereadme'] = '<p>Theme designed by Àgora team from XTEC</p>';
+$string['configtitle'] = 'XTEC Boost';
 $string['generalsettings'] = 'General settings';
 
 $string['preset'] = 'Theme preset';
@@ -37,14 +35,12 @@ $string['disabled'] = 'Disabled';
 
 $string['course_settings'] = 'Course settings';
 $string['coursecontentmaxwidth'] = 'Course content maximum width';
-$string['coursecontentmaxwidthdesc'] = 'The maximum width of the course content area in pixels. Allowed values go from 500 to 1500. If there is no value or it is incorrect, the default value will be used instead (830).';
+$string['coursecontentmaxwidthdesc'] = 'The maximum width of the course content area in pixels. Allowed values go from 500 to 1500. If there is no value or it is incorrect, the default value will be used instead (1000).';
 
 $string['header_settings'] = 'Header settings';
 $string['logo'] = 'Image for the header';
 $string['logodesc'] = 'Recommended height: 93px';
 
-$string['region-side-pre'] = 'Right';
-$string['showhideblocks'] = 'Toggle blocks visibility';
 $string['region-side-pre'] = 'Right';
 $string['showhideblocks'] = 'Toggle blocks visibility';
 
@@ -136,3 +132,6 @@ $string['xtectypedesc1'] = 'Àgora/Eix';
 $string['xtectypedesc2'] = 'Àgora/EOI';
 $string['xtectypedesc3'] = 'Alexandria';
 $string['xtectypedesc4'] = 'Odissea';
+
+// Footer
+$string['installmobileapp'] = 'Install the mobile app';

@@ -17,28 +17,32 @@
 /**
  * Strings for component 'theme_xtecboost', language 'es'
  *
- * @package     theme_xtecboost
- * @category    admin
- * @copyright   2020 Pau Ferrer Ocaña <pau@moodle.com>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    theme_xtecboost
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['choosereadme'] = 'Tema dissenyat pel servei Àgora-Moodle de la XTEC';
+// General.
+$string['pluginname'] = 'XTEC Boost';
+$string['choosereadme'] = 'Tema diseñado por el equipo Àgora de la XTEC';
+$string['configtitle'] = 'XTEC Boost';
+$string['generalsettings'] = 'Parámetros generales';
 
-$string['configtitle'] = 'xtecboost';
+$string['preset'] = 'Configuración predefinida del tema';
+$string['preset_desc'] = 'Elige una configuración predefinida para cambiar drásticamente el aspecto del tema.';
+$string['presetfiles'] = 'Ficheros adicionales a la configuración predefinida';
+$string['presetfiles_desc'] = 'Los ficheros de configuraciones predefinidas pueden cambiar drásticamente la apariencia del tema. Mira las <a href="https://docs.moodle.org/dev/Boost_Presets">configuraciones predefinidas</a> para obtener información sobre como crear y compartir tus propias configuraciones predefinidas, y visita el <a href="https://archive.moodle.net/boost">repositorio de configuraciones predefinidas</a> para ver algunas creadas por otras personas.';
+$string['disabled'] = 'Desactivado';
+
+$string['course_settings'] = 'Parámetros de los cursos';
+$string['coursecontentmaxwidth'] = 'Anchura máxima del contenido de los cursos';
+$string['coursecontentmaxwidthdesc'] = 'Valor númerico para indicar la anchura máxima del contenido de los cursos en píxeles. Los valores permitidos van de 500 a 1500. Si no se especifica o si el valor no es correcto, se utilizará la anchura por defecto (1000).';
 
 $string['header_settings'] = 'Parámetros de la cabecera';
 $string['logo'] = 'Imagen de la cabecera';
 $string['logodesc'] = 'Altura recomendada: 93px';
 
-$string['disabled'] = 'Desactivado';
-
 $string['region-side-pre'] = 'Right';
 $string['showhideblocks'] = 'Mostrar/Ocultar bloques';
-
-$string['course_settings'] = 'Parámetros de los cursos';
-$string['coursecontentmaxwidth'] = 'Anchura máxima del contenido de los cursos';
-$string['coursecontentmaxwidthdesc'] = 'Valor númerico para indicar la anchura máxima del contenido de los cursos en píxeles. Los valores permitidos van de 500 a 1500. Si no se especifica o si el valor no es correcto, se utilizará la anchura por defecto (830).';
 
 $string['footer_settings'] = 'Parámetros del pie de página';
 $string['footnote'] = 'Nota a pie de página';
@@ -64,8 +68,8 @@ $string['maildesc'] = 'Si este campo no está vacío, muestra un icono enlazando
 $string['teldesc'] = 'Si este campo no está vacío, muestra un icono enlazando al teléfono escrito en el pie.';
 
 $string['color_settings'] = 'Parámetros de color';
-$string['colorset'] = 'Combinación de colores';
 $string['headerbg'] = 'Color de fondo de la cabecera';
+$string['colorset'] = 'Combinación de colores';
 $string['colorsetdesc'] = 'Elije la combinación de colores para usar en el tema. Se pueden modificar los predefinidos.';
 
 $string['custom'] = 'Personalizado'; //Personalitzat
@@ -105,9 +109,7 @@ $string['importcssdesc'] = 'Introduce una URL absoluta hacia el archivo CSS. Se 
 $string['customcss'] = 'CSS personalizado';
 $string['customcssdesc'] = 'Todas las reglas CSS que añada a esta área de texto se reflejarán en todas las páginas, lo que facilita la personalización de este tema.';
 
-$string['pluginname'] = 'XTECBOOST';
 $string['totop'] = 'Ir al principio';
-
 
 //Advices
 $string['advices'] = 'Avisos';
@@ -130,3 +132,6 @@ $string['xtectypedesc1'] = 'Àgora/Eix';
 $string['xtectypedesc2'] = 'Àgora/EOI';
 $string['xtectypedesc3'] = 'Alexandria';
 $string['xtectypedesc4'] = 'Odissea';
+
+// Footer
+$string['installmobileapp'] = 'Instala la aplicación móvil';

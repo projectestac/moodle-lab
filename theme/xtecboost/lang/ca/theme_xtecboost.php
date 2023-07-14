@@ -17,28 +17,32 @@
 /**
  * Strings for component 'theme_xtecboost', language 'ca'
  *
- * @package     theme_xtecboost
- * @category    admin
- * @copyright   2020 Pau Ferrer Ocaña <pau@moodle.com>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    theme_xtecboost
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['choosereadme'] = 'Tema dissenyat pel servei Àgora-Moodle de la XTEC';
+// General.
+$string['pluginname'] = 'XTEC Boost';
+$string['choosereadme'] = 'Tema dissenyat per l\'equip Àgora de la XTEC';
+$string['configtitle'] = 'XTEC Boost';
+$string['generalsettings'] = 'Paràmetres generals';
 
-$string['configtitle'] = 'xtecboost';
+$string['preset'] = 'Configuració predefinida del tema';
+$string['preset_desc'] = 'Trieu una configuració predefinida per canviar dràsticament l\'aspecte del tema.';
+$string['presetfiles'] = 'Fitxers addicionals a la configuració predefinida';
+$string['presetfiles_desc'] = 'Els fitxers de configuracions predefinides poden canviar dràsticament l\'aparença del tema. Vegeu les <a href="https://docs.moodle.org/dev/Boost_Presets">configuracions predefinides</a> per obtenir informació sobre com crear i compartir les vostres pròpies configuracions predefinides, i vegeu el <a href="https://archive.moodle.net/boost">repositori de configuracions predefinides</a> per veure\'n de creades per altra gent.';
+$string['disabled'] = 'Deshabilitat';
+
+$string['course_settings'] = 'Paràmetres dels cursos';
+$string['coursecontentmaxwidth'] = 'Amplada màxima del contingut dels cursos';
+$string['coursecontentmaxwidthdesc'] = 'Amplada màxima del contingut dels cursos en píxels. Els valors permesos van de 500 a 1500. Si no se n\'especifica o si el valor no és correcte, s\'utilitzarà l\'amplada per defecte (1000).';
 
 $string['header_settings'] = 'Paràmetres de la capçalera';
 $string['logo'] = 'Imatge de la capçalera';
 $string['logodesc'] = 'Alçada recomanada: 93px';
 
-$string['disabled'] = 'Desactivat';
-
 $string['region-side-pre'] = 'Dreta';
 $string['showhideblocks'] = 'Mostra/Amaga blocs';
-
-$string['course_settings'] = 'Paràmetres del curs';
-$string['coursecontentmaxwidth'] = 'Amplada màxima del contingut dels cursos';
-$string['coursecontentmaxwidthdesc'] = 'Amplada màxima del contingut dels cursos en píxels. Els valors permesos van de 500 a 1500. Si no s\'especifica o si el valor no és correcte, s\'utilitzarà l\'amplada per defecte (830).';
 
 $string['footer_settings'] = 'Paràmetres del peu de pàgina';
 $string['footnote'] = 'Nota a peu de pàgina';
@@ -105,8 +109,6 @@ $string['importcssdesc'] = 'Introduïu un URL absolut d\'un fitxer de fulls d\'e
 $string['customcss'] = 'Estils personalitzats';
 $string['customcssdesc'] = 'Les regles definides aquí seran les darreres que s\'aplicaran i, per tant, els seus valors haurien de prevaldre per sobre dels que puguin estar definits prèviament. Si no és així, reviseu la sintaxi o proveu a afegir <code>!important</code> a la regla.';
 
-$string['pluginname'] = 'XTECBOOST';
-
 $string['totop'] = 'Amunt';
 
 //Advices
@@ -130,3 +132,6 @@ $string['xtectypedesc1'] = 'Àgora/Eix';
 $string['xtectypedesc2'] = 'Àgora/EOI';
 $string['xtectypedesc3'] = 'Alexandria';
 $string['xtectypedesc4'] = 'Odissea';
+
+// Footer
+$string['installmobileapp'] = 'Instal·leu l\'aplicació mòbil';

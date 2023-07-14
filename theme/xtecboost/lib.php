@@ -127,10 +127,10 @@ function theme_xtecboost_get_pre_scss($theme): string {
         if ($coursecontentmaxwidth >= 500 && $coursecontentmaxwidth <= 1500) {
             $scss .= '$course-content-maxwidth: ' . $theme->settings->coursecontentmaxwidth . 'px !default;' . "\n";
         } else {
-            $scss .= '$course-content-maxwidth: 830px !default;' . "\n";
+            $scss .= '$course-content-maxwidth: 1000px !default;' . "\n";
         }
     } else {
-        $scss .= '$course-content-maxwidth: 830px !default;' . "\n";
+        $scss .= '$course-content-maxwidth: 1000px !default;' . "\n";
     }
 
     // Append pre-scss.

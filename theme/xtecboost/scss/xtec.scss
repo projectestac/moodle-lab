@@ -55,43 +55,33 @@ h4 {
 }
 
 /* Header */
-#page-header {
-    // min-height attribute moved to header first child (.row) to avoid fixed height
-    // min-height: 93px;
-    margin-top: 20px;
-    //background-image: url('[[pix:theme|top]]');
-    // Use absolute right margin instead of width percentage
-    // background-position: 98% center;
+#custom-header {
+    margin: 0 0 20px 0;
     background-position: center right 0;
     background-repeat: no-repeat;
     background-color: $headerbg;
 }
 
-/* Remove duplicated link to messages */
-#page-header a#message-user-button.btn {
-    display: none;
-}
-
-/* Top menu */
-.primary-navigation .navigation .nav-link {
-    height: 51px;
-}
-
 /* Custom header logo */
-.custom-header {
+#custom-header {
     text-align: right;
     overflow: hidden;
 }
 
-.custom-header .image-wrapper {
+#custom-header .image-wrapper {
     display: flex;
     justify-content: flex-end;
     height: 100%;
 }
 
-.custom-header .image-wrapper img {
+#custom-header .image-wrapper img {
     height: 100%;
     object-fit: cover;
+}
+
+/* Top menu */
+.primary-navigation .navigation .nav-link {
+    height: 51px;
 }
 
 /* Navigation */
@@ -637,15 +627,21 @@ td {
     border: none;
 }
 
-/* Custom menu */
-
+/* Drop down menu in secondary-navigation */
 .nav-item .dropdown-menu {
     ul {
         list-style: none;
     }
     li * {
-        padding-left: 0;
+        padding-left: 20px;
     }
+    li a {
+        color: $linkscolor;
+    }
+}
+
+.drawer-toggles .drawer-toggler .btn {
+    background-color: $maincolor;
 }
 
 /* 1051-2020-0043 */

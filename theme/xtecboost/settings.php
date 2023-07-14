@@ -27,7 +27,8 @@ if ($ADMIN->fulltree) {
 
     global $PAGE;
     $PAGE->requires->js('/theme/xtecboost/javascript/config.js');
-    $PAGE->requires->js_init_code('xtecboost_theme_onload({HEADERBG: "' . DEFAULT_HEADERBG . '", MAINCOLOR: "' . DEFAULT_MAINCOLOR . '", FONTCOLOR: "' . DEFAULT_FONTCOLOR . '", LINKSCOLOR: "' . DEFAULT_LINKSCOLOR . '"});');
+    $PAGE->requires->js_init_code('xtecboost_theme_onload({HEADERBG: "' . XTECBOOST_DEFAULT_HEADERBG . '", MAINCOLOR: "' .
+        XTECBOOST_DEFAULT_MAINCOLOR . '", FONTCOLOR: "' . XTECBOOST_DEFAULT_FONTCOLOR . '", LINKSCOLOR: "' . XTECBOOST_DEFAULT_LINKSCOLOR . '"});');
 
     $settings = new theme_boost_admin_settingspage_tabs('themesettingxtecboost', get_string('configtitle', 'theme_xtecboost'));
 
@@ -118,7 +119,7 @@ if ($ADMIN->fulltree) {
 
     $name = 'theme_xtecboost/headerbg';
     $title = get_string('headerbg', 'theme_xtecboost');
-    $default = DEFAULT_HEADERBG;
+    $default = XTECBOOST_DEFAULT_HEADERBG;
     $setting = new admin_setting_configcolourpicker($name, $title, '', $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -130,7 +131,7 @@ if ($ADMIN->fulltree) {
     $name = 'theme_xtecboost/coursecontentmaxwidth';
     $title = get_string('coursecontentmaxwidth', 'theme_xtecboost');
     $description = get_string('coursecontentmaxwidthdesc', 'theme_xtecboost');
-    $setting = new admin_setting_configtext($name, $title, $description, '830', PARAM_INT);
+    $setting = new admin_setting_configtext($name, $title, $description, '1000', PARAM_INT);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
@@ -263,14 +264,14 @@ if ($ADMIN->fulltree) {
 
     $name = 'theme_xtecboost/maincolor';
     $title = get_string('maincolor', 'theme_xtecboost');
-    $default = DEFAULT_MAINCOLOR;
+    $default = XTECBOOST_DEFAULT_MAINCOLOR;
     $setting = new admin_setting_configcolourpicker($name, $title, '', $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     $name = 'theme_xtecboost/fontcolor';
     $title = get_string('fontcolor', 'theme_xtecboost');
-    $default = DEFAULT_FONTCOLOR;
+    $default = XTECBOOST_DEFAULT_FONTCOLOR;
     $colorwarning = get_string('color_warning', 'theme_xtecboost', theme_xtecboost_get_YIQ(get_config('theme_xtecboost', 'fontcolor')));
     $setting = new admin_setting_configcolourpicker($name, $title, $colorwarning, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
@@ -278,7 +279,7 @@ if ($ADMIN->fulltree) {
 
     $name = 'theme_xtecboost/linkscolor';
     $title = get_string('linkscolor', 'theme_xtecboost');
-    $default = DEFAULT_LINKSCOLOR;
+    $default = XTECBOOST_DEFAULT_LINKSCOLOR;
     $colorwarning = get_string('color_warning', 'theme_xtecboost', theme_xtecboost_get_YIQ(get_config('theme_xtecboost', 'linkscolor')));
     $setting = new admin_setting_configcolourpicker($name, $title, $colorwarning, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');

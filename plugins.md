@@ -14,7 +14,7 @@
 |local            |rcommon             |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090500|2020/06/16|c18e2da59601367ed473f500cac73d899d1c25da|
 |block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
-|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2022112800|2022/12/28|6c255c99afb47b7f4d9b9d372a5551e81623cbea|
+|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2023063000|2023/07/18|--- Baixat de Moodle plugins -----------|
 |block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|7d5426b504f72055549d599b3595e6778d183f92|
 |block            |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|a5966e64dbf803af49ab1794f88b3e94f0bfc664|
 |local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|d709bbda0baf127ce56faf7269d2b2517d6a92fe|
@@ -38,7 +38,7 @@
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022120200|2022/12/28|89744eead7cef0ec8001f4d9fb7c31e25fec4cac|
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023011800|2023/01/27|6d10790fe7d6fbe4a7c69c9273377efe352a86e5|
 |mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020107|2023/07/07|b2a37f33989fcd77e5e949e192d016420fbc6aa3|
-|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2022100600|2022/10/11|93d2e6e9b213b422868892d04ee793d0245bf0ac|
+|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|--- Baixat de Moodle plugins -----------|
 |theme            |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023071400|2023/07/14|c444d58fb5649860ba06fdb34bc8638937f04bb9|
 
 ## Plugins added for testing purposes

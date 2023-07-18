@@ -43,14 +43,11 @@ if ($tab == 'tabofflinequizcontent') {
              WHERE ogq.id IS NULL
                AND og.offlinequizid = :id";
     $hasmissinggroupquestions = $DB->count_records_sql($sql, ['id' => $offlinequiz->id]);
-    $hasdocumentscreated = $offlinequiz->docscreated;
     if($hasmissinggroupquestions) {
         $newurl = $tabslist['tabeditgroupquestions']['url'];
-    } else if (!$hasdocumentscreated) {
-        $newurl = $tabslist['tabpreview']['url'];
     } else {
-        $newurl = $tabslist['tabdownloadquizforms']['url'];
-    }
+        $newurl = $tabslist['tabpreview']['url'];
+    } 
 } else if ($tab == 'tabresults') {
     $hasresults = $DB->record_exists('offlinequiz_results', ['offlinequizid' => $offlinequiz->id]);
     $needscorrections = $DB->record_exists('offlinequiz_scanned_pages', ['offlinequizid' => $offlinequiz->id, 'status' => 'error']);
@@ -92,6 +89,15 @@ if ($tab == 'tabofflinequizcontent') {
         $newurl = $tabslist['tabattendancesoverview']['url'];
     } else {
         $newurl = $tabslist['tabdownloadparticipantsforms']['url'];
+    }
+} else if ($tab == 'tabforms') {
+    if ($offlinequiz->docscreated) {
+        $newurl = new moodle_url('/mod/offlinequiz/createquiz.php', ['q' => $offlinequiz->id,
+                                                                     'mode' => 'createpdfs',
+                                                                     'tab' => 'forms']);
+    } else {
+        $newurl = new moodle_url('/mod/offlinequiz/createquiz.php', ['q' => $offlinequiz->id,
+                                                                     'tab' => 'forms']);
     }
 }
 redirect($newurl);

@@ -5,6 +5,7 @@
 - Updated `mod/questionnaire`
 - Added theme `xtecboost`
 - Added `mod/board`
+- Updated `mod/offlinequiz` 
 
 ### 4.1.1+ (Build: 20230126)
 - Updated Moodle core

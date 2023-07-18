@@ -111,7 +111,6 @@ function offlinequiz_add_instance($offlinequiz) {
         }
     }
 
-    // Try to store it in the database.
     try {
         if (!$offlinequiz->id = $DB->insert_record('offlinequiz', $offlinequiz)) {
             print_error('Could not create Offlinequiz object!');
@@ -143,10 +142,6 @@ function offlinequiz_update_instance($offlinequiz) {
     $offlinequiz->timemodified = time();
     $offlinequiz->id = $offlinequiz->instance;
 
-    // Remember the old values of the shuffle settings.
-    $shufflequestions = $DB->get_field('offlinequiz', 'shufflequestions', array('id' => $offlinequiz->id));
-    $shuffleanswers = $DB->get_field('offlinequiz', 'shuffleanswers', array('id' => $offlinequiz->id));
-
     // Process the options from the form.
     $result = offlinequiz_process_options($offlinequiz);
     if ($result && is_string($result)) {
@@ -167,7 +162,6 @@ function offlinequiz_update_instance($offlinequiz) {
                                                     $offlinequiz->pdfintro['text']);
         }
     }
-
     // Update the database.
     if (! $DB->update_record('offlinequiz', $offlinequiz)) {
         return false;  // Some error occurred.
@@ -654,6 +648,7 @@ function offlinequiz_process_options(&$offlinequiz) {
         $offlinequiz->optionflags |= QUESTION_ADAPTIVE;
     }
 
+
     // Settings that get combined to go into the review column.
     $review = 0;
     if (isset($offlinequiz->attemptclosed)) {
@@ -726,7 +721,7 @@ function offlinequiz_user_outline($course, $user, $mod, $offlinequiz) {
 
     if ($grade = $DB->get_record('offlinequiz_results', array('userid' => $user->id, 'offlinequizid' => $offlinequiz->id))) {
         if ((float) $grade->sumgrades) {
-            $return->info = get_string('grade') . ':&nbsp;' . round($grade->sumgrades, $offlinequiz->decimalpoints);
+            $return->info = get_string('grade', 'offlinequiz') . ':&nbsp;' . round($grade->sumgrades, $offlinequiz->decimalpoints);
         }
         $return->time = $grade->timemodified;
         return $return;
@@ -750,7 +745,7 @@ function offlinequiz_user_complete($course, $user, $mod, $offlinequiz) {
     if ($results = $DB->get_records('offlinequiz_results', array('userid' => $user->id, 'offlinequiz' => $offlinequiz->id))) {
         if ($offlinequiz->grade && $offlinequiz->sumgrades &&
                 $grade = $DB->get_record('offlinequiz_results', array('userid' => $user->id, 'offlinequiz' => $offlinequiz->id))) {
-            echo get_string('grade') . ': ' . round($grade->grade, $offlinequiz->decimalpoints) .
+            echo get_string('grade', 'offlinequiz') . ': ' . round($grade->grade, $offlinequiz->decimalpoints) .
                 '/' . $offlinequiz->grade . '<br />';
         }
         foreach ($results as $result) {
@@ -968,10 +963,6 @@ function offlinequiz_update_events($offlinequiz) {
     $userid    = 0;
     $timeopen  = $offlinequiz->timeopen;
     $timeclose = $offlinequiz->timeclose;
-
-    if ($offlinequiz->time) {
-        $timeopen = $offlinequiz->time;
-    }
 
     // Only add open/close events if they differ from the offlinequiz default.
     if (!empty($offlinequiz->coursemodule)) {
@@ -1329,7 +1320,7 @@ function offlinequiz_get_user_results($offlinequizid, $userid) {
  * @param navigation_node $offlinequiznode
  */
 function offlinequiz_extend_settings_navigation($settings, $offlinequiznode) {
-    global $PAGE, $CFG;
+    global $PAGE, $CFG, $DB;
 
     // Included here as we only ever want to include this file if we really need to.
     require_once($CFG->libdir . '/questionlib.php');
@@ -1379,22 +1370,25 @@ function offlinequiz_extend_settings_navigation($settings, $offlinequiznode) {
             $url,
             navigation_node::TYPE_SETTING, null, 'mod_offlinequiz_statistics',
             new pix_icon('i/report', ''));
+        $node->set_force_into_more_menu(true);
         $offlinequiznode->add_node($node, $beforekey);
         //Tab attendances
-        if($active == 'tabattendances') {
-            $url = $PAGE->url;
-        } else {
-            $url = new moodle_url('/mod/offlinequiz/navigate.php', ['id' => $PAGE->cm->id, 'tab' => 'tabattendances']);
+        $participantsusage = $DB->get_field('offlinequiz', 'participantsusage', ['id' => $PAGE->cm->instance]);
+        if($participantsusage) {
+            if($active == 'tabattendances') {
+                $url = $PAGE->url;
+            } else {
+                $url = new moodle_url('/mod/offlinequiz/navigate.php', ['id' => $PAGE->cm->id, 'tab' => 'tabattendances']);
+            }
+            $node = navigation_node::create(get_string('tabattendances', 'offlinequiz'),
+                    $url,
+                    navigation_node::TYPE_SETTING, null, 'mod_offlinequiz_participants',
+                    new pix_icon('i/group', ''));
+            if($active == 'tabattendances') {
+                $node->make_active();
+            }
+            $offlinequiznode->add_node($node, $beforekey);
         }
-        $node = navigation_node::create(get_string('tabattendances', 'offlinequiz'),
-                $url,
-                navigation_node::TYPE_SETTING, null, 'mod_offlinequiz_participants',
-                new pix_icon('i/group', ''));
-        if($active == 'tabattendances') {
-            $node->make_active();
-        }
-        $offlinequiznode->add_node($node, $beforekey);
-
 
     }
 

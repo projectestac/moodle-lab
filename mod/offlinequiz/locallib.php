@@ -165,19 +165,16 @@ function offlinequiz_get_tabs_object($offlinequiz, $cm) {
     $tabs = ['tabeditgroupquestions' =>
          ['tab' => 'tabofflinequizcontent',
           'url'  => new moodle_url('/mod/offlinequiz/edit.php', ['cmid' => $cm->id, 'gradetool' => 0])],
-     'tabeditgrades' =>
-         ['tab' => 'tabofflinequizcontent',
-          'url' => new moodle_url('/mod/offlinequiz/edit.php', ['cmid' => $cm->id, 'gradetool' => 1])],
      'tabpreview' =>
          ['tab' => 'tabofflinequizcontent',
-          'url' => new moodle_url('/mod/offlinequiz/createquiz.php', ['q' => $offlinequiz->id])],
-     'tabdownloadquizforms' =>
-         ['tab' => 'tabofflinequizcontent',
-          'url' => new moodle_url('/mod/offlinequiz/createquiz.php', ['q' => $offlinequiz->id, 'mode' => 'createpdfs'])],
-     'tabofflinequizupload' =>
-         ['tab' => 'tabresults',
-          'url' => new moodle_url('/mod/offlinequiz/report.php', ['q' => $offlinequiz->id, 'mode' => 'rimport'])],
-     'tabresultsoverview' =>
+          'url' => new moodle_url('/mod/offlinequiz/navigate.php', ['tab' => 'tabforms', 'id' => $cm->id])],
+      'tabofflinequizupload' =>
+        ['tab' => 'tabresults',
+            'url' => new moodle_url('/mod/offlinequiz/report.php', ['q' => $offlinequiz->id, 'mode' => 'rimport'])],
+        'tabofflinequizcorrect' =>
+        ['tab' => 'tabresults',
+            'url' => new moodle_url('/mod/offlinequiz/report.php', ['q' => $offlinequiz->id, 'mode' => 'correct'])],
+        'tabresultsoverview' =>
          ['tab' => 'tabresults',
           'url' => new moodle_url('/mod/offlinequiz/report.php', ['q' => $offlinequiz->id, 'mode' => 'overview'])],
      'tabregrade' =>
@@ -211,6 +208,10 @@ function offlinequiz_get_tabs_object($offlinequiz, $cm) {
          ['tab' => 'tabattendances',
           'url' => new moodle_url('/mod/offlinequiz/participants.php',
                      ['q' => $offlinequiz->id, 'mode' => 'upload'])],
+     'tabparticipantscorrect' =>
+         ['tab' => 'tabattendances',
+          'url' => new moodle_url('/mod/offlinequiz/participants.php',
+                     ['q' => $offlinequiz->id, 'mode' => 'correct'])],
      'tabattendancesoverview' =>
          ['tab' => 'tabattendances',
           'url' => new moodle_url('/mod/offlinequiz/participants.php',
@@ -653,7 +654,7 @@ function offlinequiz_repaginate_questions($offlinequizid, $offlinegroupid, $slot
  * @param boolean $shuffle Should the questions be reordered randomly?
  */
 function offlinequiz_shuffle_questions($questionids) {
-    srand((float)microtime() * 1000000); // For php < 4.2.
+    srand((int)microtime() * 1000000); // For php < 4.2.
     shuffle($questionids);
     return $questionids;
 }
@@ -1515,7 +1516,6 @@ function offlinequiz_question_preview_url($offlinequiz, $question) {
  */
 function offlinequiz_get_group_template_usage($offlinequiz, $group, $context) {
     global $CFG, $DB;
-
     if (!empty($group->templateusageid) && $group->templateusageid > 0) {
         $templateusage = question_engine::load_questions_usage_by_activity($group->templateusageid);
     } else {
@@ -1705,11 +1705,10 @@ function offlinequiz_print_question_preview($question, $choiceorder, $number, $c
 
         foreach ($choiceorder as $key => $answer) {
             $answertext = $question->options->answers[$answer]->answer;
-
             // Remove all HTML comments (typically from MS Office).
             $answertext = preg_replace("/<!--.*?--\s*>/ms", "", $answertext);
             // Remove all paragraph tags because they mess up the layout.
-            $answertext = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', $text);
+            $answertext = preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', $answertext);
             // Rewrite image URLs.
             $answertext = question_rewrite_question_preview_urls($answertext, $question->id,
             $question->contextid, 'question', 'answer', $question->options->answers[$answer]->id,

@@ -55,7 +55,7 @@
 |course format    |trail               |https://github.com/JotaDF/moodle-format_trail                   |2022070201|2023/01/26|aeee8cff724b61ea3353b2db7baa2bf756365091|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
 |course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2022120500|2022/08/08|--- Baixat de Moodle plugins -----------|
-|mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2022080100|2022/08/08|d9a593c4b8f1cd10e12d7fbc4c750f9b0fe0184e|
+|mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2023070701|2023/07/18|--- Baixat de Moodle plugins -----------|
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2022070200|2022/08/08|--- Baixat de Moodle plugins -----------|
 |filter           |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|92013a25fb5b59cf188412b6ef1b5a15736115cf|
 |mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040105|2023/07/18|3c4d47052aabf58bb21cd24ccbdcaa70e1488b66|

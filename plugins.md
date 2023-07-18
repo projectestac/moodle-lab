@@ -58,9 +58,4 @@
 |mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2022080100|2022/08/08|d9a593c4b8f1cd10e12d7fbc4c750f9b0fe0184e|
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2022070200|2022/08/08|--- Baixat de Moodle plugins -----------|
 |filter           |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|92013a25fb5b59cf188412b6ef1b5a15736115cf|
-
-### Plugins in Moodle LAB 3.11 pending to be deployed to 4.1
-
-|Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
-|-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|theme            |xtec2020            |https://github.com/projectestac/moodle-theme_xtec2020           |2021011200|2021/01/12|beb87b0e58ca1faf4db9b38b38a6c9854ad391fc|
+|mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040105|2023/07/18|3c4d47052aabf58bb21cd24ccbdcaa70e1488b66|

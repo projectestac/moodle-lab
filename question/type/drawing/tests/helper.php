@@ -38,6 +38,19 @@ class qtype_drawing_test_helper extends question_test_helper {
     }
 
     /**
+     * Makes an drawing question using plain text input.
+     * @return qtype_drawing_question
+     */
+    public function make_drawing_question_plain() {
+        $q = new qtype_drawing_question();
+        test_question_maker::initialise_a_question($q);
+
+        $q->qtype = question_bank::get_qtype('drawing');
+        $q->responseformat = 'plain';
+        return $q;
+    }
+
+    /**
      * Make the data what would be received from the editing form for an drawing
      * question.
      *

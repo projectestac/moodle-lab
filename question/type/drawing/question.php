@@ -36,6 +36,8 @@ require_once(dirname(__FILE__) . '/renderer.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_drawing_question extends question_graded_by_strategy implements question_response_answer_comparer {
+    /** @var string response format */
+    public string $responseformat;
 
     /** @var array of question_answer. */
     public $answers = array();

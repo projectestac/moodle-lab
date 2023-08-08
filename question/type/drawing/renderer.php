@@ -96,7 +96,6 @@ class qtype_drawing_renderer extends qtype_renderer {
             $raw = (array)$options->questionreviewlink;
             $attributes = array();
             foreach ($raw as $attr => $val) {
-                $attributes[preg_replace('('.$name.'|\*|)', '', $attr)] = $val;
                 if(is_array($val)){
                     $moodleattempt = $val['attempt'];
                 }

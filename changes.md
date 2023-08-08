@@ -1,3 +1,7 @@
+### 4.1.4+ (Build: 20230804)
+- Updated Moodle core
+- Updated Wiris plugins
+
 ### 4.1.4+ (Build: 20230707)
 - Updated Moodle core
 - Updated `mod/attendance`

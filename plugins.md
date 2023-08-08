@@ -28,15 +28,15 @@
 |local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|06805f201af99b9f65df171331619c82fdb94f56|
 |question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2021061303|2021/06/16|cda6bed05275783954cc9bf12f2ef36d942b9694|
 |report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|
-|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2022112300|2022/12/28|eef8fbd23ead62a2e003822786258865261d94ec|
-|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2022112300|2022/12/28|782f0b98b40fbd2950ab42668a98edd1adf9a9a6|
-|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2022120200|2022/12/28|5a08362ccd053681a0560bbf24995957ef6317d7|
-|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2022120200|2022/12/28|619b72821306a2fb4248b247efef551e08718dbe|
-|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2023011800|2023/01/27|a95fce70d4c24bdbaec7f39fd4606568d2439f49|
-|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2022120200|2022/12/28|27158b6b6413eccfd614f63bac0d794264e1d345|
-|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2022120200|2022/12/28|f79e2f9d9287ead555aada1bf599edbf91ccc3c7|
-|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2022120200|2022/12/28|89744eead7cef0ec8001f4d9fb7c31e25fec4cac|
-|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023011800|2023/01/27|6d10790fe7d6fbe4a7c69c9273377efe352a86e5|
+|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2023061200|2022/08/08|df3d44038c82866849ef6429d07d6ec13c8cbca4|
+|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2023061200|2022/08/08|f96029b028cfc6c555c8ad8fd660bf638c6720d2|
+|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2023050202|2023/08/08|ea6082a1e4e243ec9849bfd0b6e895e6a1a271e0|
+|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2023050202|2023/08/08|b0578f7fc6b94e0b67f55056ba3c5fb3b5154f1d|
+|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2023050202|2023/08/08|0fa1a5a294ff8774c93cd0b67f27c3b7f028db16|
+|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2023050202|2023/08/08|e8a938752cc8dc04ac27c3225debf539c98bbe01|
+|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2023050202|2022/08/08|24719b70c0b9685cb5b4fb17ee4e89311e6d093b|
+|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2023050202|2022/08/08|d870f927c8557e3a338941877999e3590e4b9bb6|
+|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023050202|2023/08/08|6e55ce5d088e6a90ef7f90c48dad24a7432b36c8|
 |mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020107|2023/07/07|b2a37f33989fcd77e5e949e192d016420fbc6aa3|
 |assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|--- Baixat de Moodle plugins -----------|
 |theme            |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023071400|2023/07/14|c444d58fb5649860ba06fdb34bc8638937f04bb9|

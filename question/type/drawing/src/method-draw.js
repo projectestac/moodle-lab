@@ -4818,8 +4818,9 @@ var strokewid = selectedElement.getAttribute("stroke-width");
            var rect =  gpaths.selectAll("rect").node();
            var text =  gpaths.selectAll("text").node();
            var ellipse = gpaths.selectAll("ellipse").node();
+           var polyline = gpaths.selectAll("polyline").node();
 
-           if(Editor.forcesaving == 1 || (path && path != null) || (line && line != null) || (polygon && polygon != null) || (rect && rect != null) || (text && text != null) || (ellipse && ellipse != null)){
+           if(Editor.forcesaving == 1 || (polyline && polyline != null) || (path && path != null) || (line && line != null) || (polygon && polygon != null) || (rect && rect != null) || (text && text != null) || (ellipse && ellipse != null)){
 
                     $('#qtype_drawing_textarea_id_'+attemptid+uniquefieldnameattemptid, window.parent.document).text(CanvdrawingValue);
                     $('#qtype_drawing_drawingevent_'+attemptid+uniquefieldnameattemptid, window.parent.document).val(Math.random().toString(36).substring(7));

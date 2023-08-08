@@ -8,6 +8,7 @@
 - Updated `mod/offlinequiz`
 - Updated `assign/submission`
 - Updated `block/completion_progress` 
+- Updated `question/type/drawing`
 
 ### 4.1.1+ (Build: 20230126)
 - Updated Moodle core

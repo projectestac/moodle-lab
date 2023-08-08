@@ -110,18 +110,18 @@ class qtype_drawing_edit_form extends question_edit_form {
                             $PAGE->get_renderer('qbank_editquestion')->render_question_info($questiondata));
         }
 
-        $mform->addElement('text', 'name', get_string('tasktitle', 'qtype_kprime'), array('size' => 50, 'maxlength' => 255));
+        $mform->addElement('text', 'name', get_string('tasktitle', 'qtype_drawing'), array('size' => 50, 'maxlength' => 255));
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
-        $mform->addElement('float', 'defaultmark', get_string('maxpoints', 'qtype_kprime'), array('size' => 7));
+        $mform->addElement('float', 'defaultmark', get_string('maxpoints', 'qtype_drawing'), array('size' => 7));
         $mform->setDefault('defaultmark', $this->get_default_value('defaultmark', 1));
         $mform->addRule('defaultmark', null, 'required', null, 'client');
 
-        $mform->addElement('editor', 'questiontext', get_string('stem', 'qtype_kprime'), array('rows' => 15), $this->editoroptions);
+        $mform->addElement('editor', 'questiontext', get_string('stem', 'qtype_drawing'), array('rows' => 15), $this->editoroptions);
         $mform->setType('questiontext', PARAM_RAW);
         $mform->addRule('questiontext', null, 'required', null, 'client');
-        $mform->setDefault('questiontext', array('text' => get_string('enterstemhere', 'qtype_kprime')));
+        $mform->setDefault('questiontext', array('text' => get_string('enterstemhere', 'qtype_drawing')));
 
         if (class_exists('qbank_editquestion\\editquestion_helper')) {
             $mform->addElement('select', 'status', get_string('status', 'qbank_editquestion'),

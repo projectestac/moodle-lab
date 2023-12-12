@@ -145,10 +145,19 @@ class renderer extends section_renderer {
         if ($section->section == 0) {
             return '';
         }
+        if (empty($this->tcsettings)) {
+            $this->tcsettings = $format->get_settings();
+        }
         $this->set_user_preferences();
 
-        $section->toggle = true;  // TODO.
-        $output = $this->topcoll_section($section, $format->get_course(), false);
+        $course = $format->get_course();
+        // If section no > sections then orphan = stealth.
+        if ($section->section > $course->numsections) {
+            $output = $this->stealth_section($section, $course);
+        } else {
+            $section->toggle = true; // TODO.
+            $output = $this->topcoll_section($section, $course, false);
+        }
 
         return $output;
     }
@@ -166,7 +175,7 @@ class renderer extends section_renderer {
      * @return string HTML to output.
      */
     protected function start_toggle_section_list() {
-        $classes = 'ctopics topics';
+        $classes = 'ctopics ctoggled topics';
         $attributes = array();
         if (($this->mobiletheme === true) || ($this->tablettheme === true)) {
             $classes .= ' ctportable';
@@ -409,7 +418,7 @@ class renderer extends section_renderer {
             'sectionid' => $section->id,
             'sectionno' => $section->section,
             'sectionreturn' => $sectionreturn,
-            'userisediting' => $this->userisediting
+            'editing' => $this->userisediting
         );
 
         if ($section->section != 0) {
@@ -428,7 +437,8 @@ class renderer extends section_renderer {
         if (($section->section != 0) && (!$onsectionpage)) {
             if ($this->tcsettings['layoutcolumnorientation'] == 3) { // Dynamic column layout.
                 $sectioncontext['columnclass'] = $this->get_column_class('D');
-            } else if ((!$this->userisediting) && ($this->tcsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
+            } else if ((!$this->userisediting) && ($this->tcsettings['layoutcolumnorientation'] == 2)) {
+                 // User is not editing and horizontal column layout.
                 if ($this->formatresponsive) {
                     $sectioncontext['columnwidth'] = $this->tccolumnwidth;
                 } else {
@@ -446,6 +456,7 @@ class renderer extends section_renderer {
             $sectioncontext['contentaria'] = true;
         }
         $sectioncontext['sectionavailability'] = $this->section_availability($section);
+        $sectioncontext['sectionvisibility'] = $this->add_section_visibility_data($sectioncontext, $section, $context, false);
 
         if (($onsectionpage == false) && ($section->section != 0)) {
             $sectioncontext['sectionpage'] = false;
@@ -486,9 +497,13 @@ class renderer extends section_renderer {
             $sectioncontext['heading'] = $this->section_heading($section, $title, $headingclass);
             $sectioncontext['summary'] = $this->format_summary_text($section);
         }
+
         if ($this->userisediting && has_capability('moodle/course:update', $context)) {
             $sectioncontext['usereditingicon'] = $this->output->pix_icon('t/edit', get_string('edit'));
-            $sectioncontext['usereditingurl'] = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
+            $sectioncontext['usereditingurl'] = new moodle_url(
+                '/course/editsection.php',
+                array('id' => $section->id, 'sr' => $sectionreturn)
+            );
         }
 
         if ($section->uservisible) {
@@ -499,6 +514,36 @@ class renderer extends section_renderer {
         }
 
         return $this->render_from_template('format_topcoll/section', $sectioncontext);
+    }
+
+    /**
+     * Add the section visibility information to the data structure.
+     *
+     * @param array $data context for the template
+     * @param section_info $section The section.
+     * @param context_course $coursecontext The course context.
+     * @param bool $isstealth If stealth section.
+     * @return bool If data
+     */
+    protected function add_section_visibility_data(array &$data, $section, $coursecontext, $isstealth): bool {
+        global $USER;
+        $result = false;
+        // Check if it is a stealth section (orphaned).
+        if ($isstealth) {
+            $data['isstealth'] = true;
+            $data['ishidden'] = true;
+            $result = true;
+        }
+        if (!$section->visible) {
+            $data['ishidden'] = true;
+            $data['notavailable'] = true;
+            if (has_capability('moodle/course:viewhiddensections', $coursecontext, $USER)) {
+                $data['hiddenfromstudents'] = true;
+                $data['notavailable'] = false;
+                $result = true;
+            }
+        }
+        return $result;
     }
 
     protected function section_heading($section, $title, $classes = '') {
@@ -566,6 +611,10 @@ class renderer extends section_renderer {
                 $stealthsectioncontext['columnclass'] = $this->get_column_class($this->tcsettings['layoutcolumns']);
             }
         }
+
+        $context = context_course::instance($course->id);
+        $stealthsectioncontext['sectionvisibility'] = $this->add_section_visibility_data(
+            $stealthsectioncontext, $section, $context, true);
 
         if ($this->courseformat->show_editor()) {
             $stealthsectioncontext['cmcontrols'] =
@@ -650,7 +699,7 @@ class renderer extends section_renderer {
         );
 
         $sectionzero = $modinfo->get_section_info(0);
-        if ($sectionzero->summary or !empty($modinfo->sections[0]) or $this->page->user_is_editing()) {
+        if ($sectionzero->summary || !empty($modinfo->sections[0]) || $this->page->user_is_editing()) {
             $singlesectioncontext['sectionzero'] = $this->topcoll_section($sectionzero, $course, true, $displaysection);
         }
 
@@ -692,7 +741,7 @@ class renderer extends section_renderer {
         // General section if non-empty.
         $thissection = $sections[0];
         unset($sections[0]);
-        if ($thissection->summary or ! empty($modinfo->sections[0]) or $this->userisediting) {
+        if ($thissection->summary || !empty($modinfo->sections[0]) || $this->userisediting) {
             $content .= $this->topcoll_section($thissection, $course, false);
         }
 
@@ -871,7 +920,7 @@ class renderer extends section_renderer {
             $canbreak = (
                 (!$this->userisediting) &&
                 ($this->tcsettings['layoutcolumns'] > 1) &&
-                ($this->tcsettings['layoutcolumnorientation'] != 3) // Dynamic columns
+                ($this->tcsettings['layoutcolumnorientation'] != 3) // Dynamic columns.
             );
             $columncount = 1;
             $breakpoint = 0;
@@ -908,7 +957,7 @@ class renderer extends section_renderer {
                     $toggledsections[] = $thissection->section;
                 }
 
-                // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
+                // Check for breaking up the structure with rows if more than one column and when we output all of the sections.
                 if ($canbreak === true) {
                     // Only break in non-mobile themes or using a responsive theme.
                     if ((!$this->formatresponsive) || ($this->mobiletheme === false)) {
@@ -963,12 +1012,12 @@ class renderer extends section_renderer {
         }
 
         $changenumsections = '';
-        if ($this->userisediting and has_capability('moodle/course:update', $context)) {
+        if ($this->userisediting && has_capability('moodle/course:update', $context)) {
             $changenumsections = $this->change_number_sections($course, 0);
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $thissection) {
                 $sectionno = $thissection->section;
-                if ($sectionno <= $coursenumsections or empty($modinfo->sections[$sectionno])) {
+                if ($sectionno <= $coursenumsections || empty($modinfo->sections[$sectionno])) {
                     // This is not stealth section or it is empty.
                     continue;
                 }
@@ -1091,7 +1140,11 @@ class renderer extends section_renderer {
         $topcollsidewidthlang = strcmp(substr($topcollsidewidth, 0, $topcollsidewidthdelim), current_language());
         $topcollsidewidthval = substr($topcollsidewidth, $topcollsidewidthdelim + 1);
         // Dynamically changing widths with language.
-        if ((!$this->userisediting) && (($this->mobiletheme == false) && ($this->tablettheme == false)) && ($topcollsidewidthlang == 0)) {
+        if ((!$this->userisediting) &&
+            (($this->mobiletheme == false) &&
+            ($this->tablettheme == false)) &&
+            ($topcollsidewidthlang == 0)
+            ) {
             $coursestylescontext['topcollsidewidthval'] = $topcollsidewidthval;
         } else if ($this->userisediting) {
             $coursestylescontext['topcollsidewidthval'] = '40px';
@@ -1108,10 +1161,22 @@ class renderer extends section_renderer {
         }
 
         // Site wide configuration Site Administration -> Plugins -> Course formats -> Collapsed Topics.
-        $coursestylescontext['tcborderradiustl'] = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiustl'), PARAM_TEXT);
-        $coursestylescontext['tcborderradiustr'] = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiustr'), PARAM_TEXT);
-        $coursestylescontext['tcborderradiusbr'] = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiusbr'), PARAM_TEXT);
-        $coursestylescontext['tcborderradiusbl'] = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiusbl'), PARAM_TEXT);
+        $coursestylescontext['tcborderradiustl'] = clean_param(
+            get_config('format_topcoll', 'defaulttoggleborderradiustl'),
+            PARAM_TEXT
+        );
+        $coursestylescontext['tcborderradiustr'] = clean_param(
+            get_config('format_topcoll', 'defaulttoggleborderradiustr'),
+            PARAM_TEXT
+        );
+        $coursestylescontext['tcborderradiusbr'] = clean_param(
+            get_config('format_topcoll', 'defaulttoggleborderradiusbr'),
+            PARAM_TEXT
+        );
+        $coursestylescontext['tcborderradiusbl'] = clean_param(
+            get_config('format_topcoll', 'defaulttoggleborderradiusbl'),
+            PARAM_TEXT
+        );
 
         return $this->render_from_template('format_topcoll/coursestyles', $coursestylescontext);
     }

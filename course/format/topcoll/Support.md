@@ -49,10 +49,10 @@ benefits.
 
 Required version of Moodle
 ==========================
-This version works with Moodle 4.0 version 2022041900.00 (Build: 20220419) and above within the MOODLE_400_STABLE branch until the
+This version works with Moodle 4.1 version 2022112800.00 (Build: 20221128) and above within the MOODLE_401_STABLE branch until the
 next release.
 
-Please ensure that your hardware and software complies with 'Requirements' in '[Installing Moodle](https://docs.moodle.org/400/en/Installing_Moodle)'.
+Please ensure that your hardware and software complies with 'Requirements' in '[Installing Moodle](https://docs.moodle.org/401/en/Installing_Moodle)'.
 
 Reporting issues
 ================
@@ -77,6 +77,7 @@ Developed and maintained by
 ===========================
 G J Barnard MSc. BSc(Hons)(Sndw). MBCS. CEng. CITP. PGCE.
 
-- Moodle profile | [Moodle.org](http://moodle.org/user/profile.php?id=442195)
-- @gjbarnard | [Twitter](https://twitter.com/gjbarnard).
-- Web profile | [About.me](http://about.me/gjbarnard)
+- Moodle profile | [Moodle.org](https://moodle.org/user/profile.php?id=442195)
+- @gjbarnard     | [Twitter](https://twitter.com/gjbarnard)
+- Web profile    | [About.me](https://about.me/gjbarnard)
+- Website        | [Website](https://gjbarnard.co.uk)

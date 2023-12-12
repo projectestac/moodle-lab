@@ -30,38 +30,11 @@ use format_tiles\tile_photo;
 /**
  * Base class to render a course section.
  *
- * @package   core_courseformat
- * @copyright 2020 Ferran Recio <ferran@moodle.com>
+ * @package   format_tiles
+ * @copyright 2022 David Watson
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class section extends section_base {
-
-    /**
-     * Add the section editor attributes to the data structure.
-     *
-     * @param \stdClass $data the current cm data reference
-     * @param \renderer_base $output typically, the renderer that's calling this function
-     * @return bool if the cm has name data
-     */
-    protected function add_editor_data(\stdClass &$data, \renderer_base $output): bool {
-        if (!$this->format->show_editor()) {
-            return false;
-        }
-
-        $course = $this->format->get_course();
-        if (empty($this->hidecontrols)) {
-            $controlmenu = new $this->controlmenuclass($this->format, $this->section);
-            $data->controlmenu = $controlmenu->export_for_template($output);
-        }
-        if (!$this->isstealth) {
-            $data->cmcontrols = $output->course_section_add_cm_control(
-                $course,
-                $this->section->section,
-                $this->format->get_section_number()
-            );
-        }
-        return true;
-    }
 
     /**
      * Export this data so it can be used as the context for a mustache template.
@@ -73,7 +46,7 @@ class section extends section_base {
         global $DB;
         $data = parent::export_for_template($output);
 
-        //todo class to handle this
+        // TODO class to handle this.
         $data->hasphoto = 0;
         // If photo tile backgrounds are allowed by site admin, prepare the image for this section.
         if (get_config('format_tiles', 'allowphototiles')) {
@@ -93,7 +66,9 @@ class section extends section_base {
         }
         // TODO OPTIMISE THIS.
         if (!$data->hasphoto) {
-            $data->tileicon = $DB->get_field('course_format_options', 'value', ['format' => 'tiles', 'sectionid' => $this->section->id, 'name' => 'tileicon']);
+            $data->tileicon = $DB->get_field(
+                'course_format_options', 'value', ['format' => 'tiles', 'sectionid' => $this->section->id, 'name' => 'tileicon']
+            );
             if (!$data->tileicon) {
                 $formatoptions = $this->format->get_format_options();
                 $data->tileicon = $formatoptions['defaulttileicon'];
@@ -110,32 +85,5 @@ class section extends section_base {
             $data->collapsemenu = true;
         }
         return $data;
-    }
-
-    /**
-     * Add the section header to the data structure.
-     *
-     * @param \stdClass $data the current cm data reference
-     * @param \renderer_base $output typically, the renderer that's calling this function
-     * @return bool if the cm has name data
-     */
-    protected function add_header_data(\stdClass &$data, \renderer_base $output): bool {
-        if (!empty($this->hidetitle)) {
-            return false;
-        }
-
-        $section = $this->section;
-        $format = $this->format;
-        $header = new $this->headerclass($format, $section);
-
-        $headerdata = $header->export_for_template($output);
-
-        // When a section is displayed alone the title goes over the section, not inside it.
-        if ($section->section != 0 && $section->section == $format->get_section_number()) {
-            $data->singleheader = $headerdata;
-        } else {
-            $data->header = $headerdata;
-        }
-        return true;
     }
 }

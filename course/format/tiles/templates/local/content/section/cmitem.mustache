@@ -45,10 +45,11 @@
     data-id="{{id}}"
     data-cmid="{{cmid}}"
     data-modinstance="{{modinstance}}"
-    data-modtype="{{modname}}"
+    data-modtype="{{modname}}{{#modResourceType}}_{{{modResourceType}}}{{/modResourceType}}"
     {{#pluginfileUrl}}data-url="{{{pluginfileUrl}}}"{{/pluginfileUrl}}
     {{#secondaryurl}}data-url-secondary="{{{secondaryurl}}}"{{/secondaryurl}}
-    data-title="{{{modtitle}}}"
+    data-title="{{{activityname}}}"
+    {{#hascompletion}}data-completion-state="{{completionstate}}"{{/hascompletion}}
 >
 {{#cmformat}}
     {{$ format_tiles/local/content/cm}}

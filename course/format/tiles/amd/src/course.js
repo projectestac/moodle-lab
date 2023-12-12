@@ -58,6 +58,8 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             TILE_CLICKABLE: ".tile-clickable",
             TILES: "ul.tiles",
             ACTIVITY: ".activity",
+            ACTIVITY_NAME: ".activityname",
+            INSTANCE_NAME: ".instancename",
             SPACER: ".spacer",
             SECTION_MOVEABLE: ".moveablesection",
             SECTION_ID: "#section-",
@@ -71,10 +73,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             LAUNCH_STANDARD: '[data-action="launch-tiles-standard"]',
             MANUAL_COMPLETION: '[data-action="toggle-manual-completion"]',
             TOOLTIP: "[data-toggle=tooltip]",
-            HEADER_BAR: ["header.navbar", "nav.fixed-top.navbar", "#essentialnavbar.moodle-has-zindex", "#navwrap",
-                "nav.navbar-fixed-top", "#adaptable-page-header-wrapper"],
-            // We try several different selectors for header bar as it varies between theme.
-            // (Boost based, clean based, essential etc).
             MATHJAX_EQUATION: ".filter_mathjaxloader_equation"
         };
         var ClassNames = {
@@ -103,6 +101,8 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             TAB: 9,
             RETURN: 13
         };
+
+        const OVERLAY_ID = 'format_tiles_overlay';
 
         /**
          * If we have embedded video in section, stop it.
@@ -156,7 +156,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             overlay.fadeOut(300);
         };
 
-        const overlay = $('#overlay');
+        const overlay = $('#' + OVERLAY_ID);
 
         /**
          * Used where the user clicks the window overlay but we want the active click to be behind the
@@ -166,7 +166,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
          */
         var clickItemBehind = function (e) {
             var clickedItem = $(e.currentTarget);
-            if (clickedItem.attr("id") === "overlay") {
+            if (clickedItem.attr("id") === OVERLAY_ID) {
                 // We need to know what is behind the modal, so hide it for an instant to find out.
                 clickedItem.hide();
                 var BottomElement = $(document.elementFromPoint(e.clientX, e.clientY));
@@ -188,9 +188,10 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
          * Set the HTML for a course section to the correct div in the page
          * @param {Object} contentArea the jquery object for the content area
          * @param {String} content the HTML
+         * @param {String} js Any additional JS for the new HTML.
          * @returns {boolean} success
          */
-        var setCourseContentHTML = function (contentArea, content) {
+        var setCourseContentHTML = function (contentArea, content, js) {
             if (content) {
                 contentArea.html(content);
                 $(Selector.TILE_LOADING_ICON).fadeOut(300, function () {
@@ -232,7 +233,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                                 setTimeout(function () {
                                     // Allow very short delay so we dont skip forward on the basis of our last key press.
                                     contentArea.find(Selector.SECTION_TITLE).focus();
-                                    // page.animate({scrollTop: contentArea.offset().top - HEADER_BAR_HEIGHT}, "slow");
                                     contentArea.find(Selector.SECTION_BUTTONS).css("top", "");
                                 }, 200);
                             }
@@ -273,6 +273,25 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         videoJS.setUp();
                     });
                 }
+
+                // Some modules e.g. mod_unilabel need JS initialising when added to the page.
+                if (js && js.length) {
+                    contentArea.append(js);
+                }
+
+                setTimeout(() => {
+                    // If subtile title is long, it overlaps background image.
+                    // Check heights to see if any subtile backgrounds need dimming.
+                    // Allow short delay for content to be added first.
+                    const MAX_HEIGHT = 110;
+                    contentArea.find(
+                        Selector.ACTIVITY_NAME).each((i, el) => {
+                        el = $(el);
+                        if (el.height() > MAX_HEIGHT) {
+                            el.closest(Selector.INSTANCE_NAME).addClass('opaque-bg');
+                        }
+                    });
+                }, 100);
 
                 applyMathJax(contentArea);
                 return true;
@@ -352,11 +371,11 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                     if (enableCompletion) {
                         // Some iframes may load content set to mark as complete on view.
                         // So maybe need to update tile completion info. E.g. applies with H5P filter.
-                        require(["format_tiles/completion"], function (completion) {
-                            setTimeout(() => {
-                                completion.updateTileInformation();
-                            }, 1000);
-                        });
+                        setTimeout(() => {
+                            $(document).trigger('format-tiles-completion-changed', {
+                                section: tileId
+                            });
+                        }, 1000);
                     }
                 }
             };
@@ -472,7 +491,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             } else {
                 // It looks like we may not have a connection so we can't launch notifications.
                 // We can warn the user like this instead.
-                setCourseContentHTML(contentArea, "<p>" + stringStore.noconnectionerror + "</p>");
+                setCourseContentHTML(contentArea, "<p>" + stringStore.noconnectionerror + "</p>", '');
                 setTimeout(function () {
                     expandSection(contentArea, sectionNum);
                 }, 500);
@@ -555,13 +574,13 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
 
                 // Still contact the server in case content has changed (e.g. restrictions now satisfied).
                 getSectionContentFromServer(courseId, dataSection).done(function (response) {
-                    setCourseContentHTML(relatedContentArea, $(response.html).html());
+                    setCourseContentHTML(relatedContentArea, $(response.html).html(), response.js);
                 });
             } else {
                 relatedContentArea.html(loadingIconHtml);
                 // Get from server.
                 getSectionContentFromServer(courseId, dataSection).done(function (response) {
-                    setCourseContentHTML(relatedContentArea, $(response.html).html());
+                    setCourseContentHTML(relatedContentArea, $(response.html).html(), response.js);
                     expandSection(relatedContentArea, dataSection);
                 }).fail(function (failResult) {
                     failedLoadSectionNotify(dataSection, failResult, relatedContentArea);
@@ -651,18 +670,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                             } else {
                                 populateAndExpandSection(courseId, thisTile, dataSection);
                             }
-                            // Silently set the *next* section's content to if it exists and if user is not on mobile.
-                            // short delay as more important to get current section content first (above).
-                            var nextSecIfExists = $(Selector.SECTION_ID + (dataSection + 1));
-                            const usingH5pFilter = $('.filters-config[data-filter="h5p"]').length === 1;
-                            if (!isMobile && !usingH5pFilter && nextSecIfExists.length && dataSection > 0) {
-                                getSectionContentFromServer(courseId, dataSection + 1).done(function(response) {
-                                    setCourseContentHTML(
-                                        nextSecIfExists,
-                                        $(response.html).html()
-                                    );
-                                });
-                            }
                         });
 
                         overlay.on(Event.CLICK, function(e) {
@@ -689,13 +696,14 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                                 // First assume that we are going to resize, but we have checks to make below.
                                 var resizeRequired = true;
 
-                                // If we have a Moodle media player div in the section in fullscreen, ignore this resize event.
+                                // If we have an iframe in the section in fullscreen, ignore this resize event.
                                 // It was probably caused when user pressed the full screen button.
+                                // This could be a Moodle media player div, or a YouTube embed or other.
                                 var openContentSection = $(".moveablesection:visible");
                                 if (openContentSection.length !== 0) {
-                                    var mediaPlayers = openContentSection.find(".mediaplugin iframe");
-                                    if (mediaPlayers.length !== 0) {
-                                        mediaPlayers.each(function (index, player) {
+                                    var iframes = openContentSection.find("iframe");
+                                    if (iframes.length !== 0) {
+                                        iframes.each(function (index, player) {
                                             player = $(player);
                                             if (player.outerWidth() > openContentSection.outerWidth()) {
                                                 // Video is present and playing full screen so don't react to resize event.
@@ -731,13 +739,14 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         }).toArray();
                         // Need to include sec zero as may have completion tracked items.
                         allSectionNums.push(0);
+                        const isSingleSectionPage = $('ul#single_section_tiles').length > 0;
                         const requests = ajax.call([
                             {
                                 methodname: "format_tiles_get_single_section_page_html",
                                 args: {
                                     courseid: courseId,
                                     sectionid: data.section,
-                                    setjsusedsession: true
+                                    setjsusedsession: !isSingleSectionPage
                                 }
                             },
                             {
@@ -750,7 +759,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         ]);
                         requests[0]
                             .done((response) => {
-                                setCourseContentHTML($(Selector.SECTION_ID + data.section), $(response.html).html());
+                                setCourseContentHTML($(Selector.SECTION_ID + data.section), $(response.html).html(), response.js);
                             })
                             .catch(err => {
                                 require(["core/log"], function(log) {
@@ -774,11 +783,18 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                     });
 
                     if (enableCompletion) {
-                        // We use pageContent for listener here, as competion button is replaced by core JS when it's clicked.
-                        pageContent.on(Event.CLICK, Selector.MANUAL_COMPLETION, function() {
+                        // We use pageContent for listener here, as completion button is replaced by core JS when it's clicked.
+                        // We wait half a second to enable the completion change to be registered first.
+                        pageContent.on(Event.CLICK, Selector.MANUAL_COMPLETION, function(e) {
+                            const currentTarget = $(e.currentTarget);
+                            const sectionNum = currentTarget.closest(Selector.SECTION_MAIN).attr("data-section");
+                            const cmid = currentTarget.attr("data-cmid");
                             require(["format_tiles/completion"], function (completion) {
                                 setTimeout(() => {
-                                    completion.triggerCompletionChangedEvent();
+                                    completion.triggerCompletionChangedEvent(
+                                        sectionNum ? parseInt(sectionNum) : 0,
+                                        cmid ? parseInt(cmid) : 0
+                                    );
                                 }, 500);
                             });
                         });
@@ -830,12 +846,11 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         {key: "sectionerrortitle", component: "format_tiles"},
                         {key: "sectionerrorstring", component: "format_tiles"},
                         {key: "refresh"},
-                        {key: "cancel"},
+                        {key: "cancel", component: "moodle"},
                         {key: "noconnectionerror", component: "format_tiles"},
                         {key: "show"},
                         {key: "hide"},
-                        {key: "other", component: "format_tiles"},
-                        {key: "blockedpopuptitle", component: "format_tiles"}
+                        {key: "other", component: "format_tiles"}
                     ];
                     str.get_strings(stringKeys).done(function (s) {
                         s.forEach(function(str, index) {
@@ -872,12 +887,8 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                                         cmid: cm.attr("data-cmid")
                                     }
                                 }])[0].done(function () {
-                                    // Because we intercepted the normal event for the click, process auto completion.
-                                    require(["format_tiles/completion"], function (completion) {
-                                        completion.markAsAutoCompleteInUI(courseId, cm);
-                                    });
+                                    window.location = url;
                                 });
-                                window.location = url;
                             }
                         });
                     } else {
@@ -896,21 +907,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
 
                         // Move focus to the first tile in the course (not sec zero contents if present).
                         // $("ul.tiles .tile").first().focus();
-                    }
-
-                    const mathJaxConfigDiv = $('.filters-config[data-filter="mathjaxloader"]');
-                    if (mathJaxConfigDiv.length) {
-                        if (typeof window.MathJax === 'undefined') {
-                            // If mathjax is in use and undefined, we try to initialise it.
-                            const script = $('<script/>');
-                            script.attr('src', mathJaxConfigDiv.attr('data-url'))
-                                .attr('type', 'text/javascript')
-                                .html(mathJaxConfigDiv.attr('data-config'));
-                            $('head').append(script);
-                            setTimeout(() => {
-                                applyMathJax($('#multi_section_tiles'));
-                            }, 2000);
-                        }
                     }
                 });
             }

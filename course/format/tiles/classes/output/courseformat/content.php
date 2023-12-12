@@ -43,33 +43,55 @@ class content extends content_base {
      * @return \stdClass data context for a mustache template
      */
     public function export_for_template(\renderer_base $output) {
-        global $PAGE;
+        global $PAGE, $DB;
         $isediting = $PAGE->user_is_editing();
 
         $data = parent::export_for_template($output);
         $data->editoradvice = [];
 
         $courseformatoptions = $this->format->get_format_options();
-        // TODO for now this class is only used if the user is editing but we check anyway as one day it will be used when not editing.
-        if ($isediting && get_config('format_tiles', 'allowsubtilesview')
-            && isset($courseformatoptions['courseusesubtiles']) && $courseformatoptions['courseusesubtiles']) {
-            // TODO for now (Beta version) we warn editor about sub tiles only appearing in non-edit view.
-            $data->editoradvice[] = [
-                'text' => get_string('editoradvicesubtiles', 'format_tiles', self::get_tiles_plugin_release()),
-                'icon' => 'info-circle', 'class' => 'secondary'
-            ];
-        }
-        return $data;
-    }
 
-    /**
-     * Export sections array data.
-     *
-     * @param \renderer_base $output typically, the renderer that's calling this function
-     * @return array data context for a mustache template
-     */
-    protected function export_sections(\renderer_base $output): array {
-        return parent::export_sections($output);
+        // TODO for now this class is only used if user is editing but check anyway as one day it will be used when not editing.
+        if ($isediting) {
+            $course = $this->format->get_course();
+
+            if (get_config('format_tiles', 'allowsubtilesview')
+            && isset($courseformatoptions['courseusesubtiles']) && $courseformatoptions['courseusesubtiles']) {
+                // TODO for now (Beta version) we warn editor about sub tiles only appearing in non-edit view.
+                $messgage = get_string('editoradvicesubtiles', 'format_tiles');
+                if (has_capability('moodle/site:config', \context_system::instance())) {
+                    $messgage .= ' (' . get_string('version', 'format_tiles', self::get_tiles_plugin_release()) . ')';
+                }
+                $data->editoradvice[] = [
+                    'text' => $messgage,
+                    'icon' => 'info-circle', 'class' => 'secondary'
+                ];
+            }
+            // If completion tracking is on but nothing to track at activity level, display help to teacher.
+            $warneditorcompletion = $course->enablecompletion
+                && $DB->record_exists('course_modules', ['course' => $course->id, 'visible' => 1])
+                && !$DB->record_exists_sql(
+                "SELECT id FROM {course_modules} WHERE course = ? AND visible = 1 AND completion != 0",
+                [$course->id]
+            );
+
+            if ($warneditorcompletion) {
+                $bulklink = \html_writer::link(
+                  new \moodle_url('/course/bulkcompletion.php', array('id' => $course->id)),
+                  get_string('completionwarning_changeinbulk', 'format_tiles')
+                );
+                $helplink = \html_writer::link(
+                    get_docs_url('Activity_completion_settings#Changing_activity_completion_settings_in_bulk'),
+                    $output->pix_icon('help', '', 'core')
+                );
+                $data->editoradvice[] = [
+                    'text' => get_string('completionwarning', 'format_tiles') . ' '  . $bulklink . ' ' . $helplink,
+                    'icon' => 'exclamation-triangle', 'class' => 'warning'
+                ];
+            }
+        }
+
+        return $data;
     }
 
     /**

@@ -24,10 +24,6 @@
 
 namespace format_tiles\output\courseformat\content\section;
 
-use core_courseformat\base as course_format;
-use core_courseformat\output\local\content\section\header as header_base;
-use format_tiles\tile_photo;
-
 /**
  * Class to render a section header inside a Tiles course format.
  *
@@ -41,16 +37,14 @@ class header extends \core_courseformat\output\local\content\section\header {
      * Export this data so it can be used as the context for a mustache template.
      *
      * @param \renderer_base $output typically, the renderer that's calling this function
-     * @return array data context for a mustache template
+     * @return object data context for a mustache template
      */
-    public function export_for_template(\renderer_base $output): \stdClass
-    {
+    public function export_for_template(\renderer_base $output): \stdClass {
 
-        global $DB;
         // TODO optimise this.
         $format = $this->format;
         $course = $format->get_course();
-//        $formatoptions = $format->get_format_options();
+
         $section = $this->section;
         $data = (object)[
             'num' => $section->section,
@@ -59,7 +53,7 @@ class header extends \core_courseformat\output\local\content\section\header {
         ];
 
         $data->title = $format->get_section_name($this->section);
-//        $data->name = $data->title;
+
         $data->editing = $format->show_editor();
         $coursedisplay = $format->get_course_display();
         $data->headerdisplaymultipage = false;

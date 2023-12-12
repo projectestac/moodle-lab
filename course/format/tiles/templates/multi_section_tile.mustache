@@ -46,8 +46,8 @@
         "restricted": 0
         }
 }}
-<li class="tile{{#hidden}} tile-hidden{{/hidden}}{{#restricted}} tile-restricted{{/restricted}}{{#isactive}} current{{/isactive}}{{#userclickable}} tile-clickable{{/userclickable}} {{extraclasses}}"
-    id="tile-{{tileid}}" data-section="{{tileid}}" data-true-sectionid="{{secid}}" tabindex="2" aria-role="button"{{#hastilephoto}}{{{phototileinlinestyle}}}{{/hastilephoto}}>
+<li class="tile{{#hidden}} tile-hidden{{/hidden}}{{#restricted}} tile-restricted{{/restricted}}{{#isactive}} current{{/isactive}}{{#userclickable}} tile-clickable{{/userclickable}}{{#progress.isComplete}} is-complete{{/progress.isComplete}} {{extraclasses}}"
+    id="tile-{{tileid}}" data-section="{{tileid}}" data-true-sectionid="{{secid}}" tabindex="2" {{#hastilephoto}}{{{phototileinlinestyle}}}{{/hastilephoto}}>
     {{^hastilephoto}}<div class="tile-bg"></div>{{/hastilephoto}}
     <a class="tile-link"{{#userclickable}} href="{{{config.wwwroot}}}/course/view.php?id={{courseid}}&section={{tileid}}"{{/userclickable}}
        data-section="{{tileid}}" id="sectionlink-{{tileid}}">
@@ -62,6 +62,7 @@
                     {{>format_tiles/tileicon}}
                 </div>
                 <div class="tiletopright pull-right" id="tiletopright-{{tileid}}" aria-hidden="true">
+                    {{>format_tiles/progress_spacer}}
                     {{#progress}}{{^hidden}}
                         {{> format_tiles/progress}}
                     {{/hidden}}{{/progress}}
@@ -71,9 +72,9 @@
                 {{^ismobile}}{{#activity_summary}}{{#usetooltips}}
                     data-toggle="tooltip" data-html="true" data-original-title="{{activity_summary}}"
                 {{/usetooltips}}{{/activity_summary}}{{/ismobile}}>
-                <span class="tile-textinner{{titleclass}}" id="tileTextin-{{tileid}}">
+                <div class="tile-textinner{{titleclass}}" id="tileTextin-{{tileid}}">
                   {{#title}}<h3>{{{title}}}</h3>{{/title}}
-                </span>
+                </div>
                 {{#availabilitymessage}}
                     {{>format_tiles/availability_info}}
                 {{/availabilitymessage}}
@@ -86,19 +87,17 @@
             {{#availabilitymessage}}
                 {{>format_tiles/availability_info}}
             {{/availabilitymessage}}
-                {{#showprogresssphototiles}}
-                    {{#progress}}
-                        {{> format_tiles/progress}}
-                    {{/progress}}
-                {{/showprogresssphototiles}}
-
+            {{#restricted}}
+                {{>format_tiles/availability_info}}
+            {{/restricted}}
             <div id="tileText-{{tileid}}"
                  {{#activity_summary}}{{^ismobile}}{{#usetooltips}}
                     data-original-title="{{activity_summary}}" data-toggle="tooltip" data-html="true"
                  {{/usetooltips}}{{/ismobile}}{{/activity_summary}}>
-            <span class="photo-tile-text {{titleclass}}" id="tileTextin-{{tileid}}">
+            <div class="photo-tile-text {{titleclass}}" id="tileTextin-{{tileid}}">
+                {{>format_tiles/progress_spacer}}
                 {{#title}}<h3>{{{title}}}</h3>{{/title}}
-            </span>
+            </div>
                 <div class="tile-text"
                     {{#activity_summary}}{{^ismobile}}{{#usetooltips}}
                         data-original-title="{{activity_summary}}" data-toggle="tooltip" data-html="true"
@@ -107,10 +106,16 @@
                 {{! This ensures that the bottom section of the tile shows the activity summary on hover, too}}
                 </div>
             </div>
+            {{#showprogressphototiles}}
+                {{#progress}}
+                    {{> format_tiles/progress}}
+                {{/progress}}
+            {{/showprogressphototiles}}
         {{/hastilephoto}}
     </a>
-    {{#usingjsnav}}
+    {{>format_tiles/progress_all_complete}}
+    {{#jsnavadminallowed}}{{#userenabledjsnav}}
         {{! This is added as empty for now - JS will populate and de-populate as necessary and add image to it using template.}}
         <span class="tile-loading-icon" id="loading-icon-{{tileid}}" style="display: none;"></span>
-    {{/usingjsnav}}
+    {{/userenabledjsnav}}{{/jsnavadminallowed}}
 </li>

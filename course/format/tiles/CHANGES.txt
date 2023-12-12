@@ -308,11 +308,60 @@ Other
 - Fix JS error on course edit form
 - Minor style/layout adjustments for modals, stealth activities and Lambda theme
 
-4.0.0.1 BETA (2022070100) (For testing only not suitable for production use)
-============================================================================
+4.0.0.1 BETA (2022070100)
+=========================
 - Changes for compatibility with Moodle 4.0
 - Remove label conversion
 
-4.0.0.2 BETA (2022070200) (For testing only not suitable for production use)
-============================================================================
+4.0.0.3 BETA (2022080800)
+=========================
+- Improve completion buttons/indicators
+- Fix some modal launch issues (e.g. issue 94 duplicate launches)
+- Reinstate disable JS nav option and single section page
+- Update main screen completion indicators when new window activity launches
+- Fix full screen embedded video (issue 87)
+- Use $mod->has_custom_cmlist_item() if Tiles should display a course module inline like label (issue 97)
+- Avoid PHP8 error on section edit
 - Minor theme compatibility fixes
+
+4.0.0.5 BETA (2022091501)
+=========================
+- Fix empty activities caused by core change MDL-74800 (Core commit #68b3f1, core version 4.0.2+ (Build: 20220805)).
+- Update format.js to follow current core version.
+- Typos and comments.
+
+4.0.0.7 BETA (2022091503)
+=========================
+- Fix issue with format_tiles\output\courseformat\content\sectionnavigation constructor.
+- Remove MOODLE_INTERNAL where no longer required.
+
+4.0.0.8 BETA (2022091700)
+=========================
+- Remove unnecessary override of core_courseformat\output\local\content\sectionselector (constructor mismatch).
+
+4.0.0.9 RC (2023013000)
+=======================
+- Fix manual completion button ("Mark as done") on labels in non-subtiles mode (issue 128)
+- Reinstate tile highlight feature (issue 140)
+- Fix JS loading for no view page course modules (e.g. mod_unilabel) (issue 123)
+- Avoid issue with missing grid format table (issue 141)
+- Improve handling of URL params in embedded YouTube and Vimeo URLs (issue 28 and 143)
+
+4.1.0.0 (2023021300)
+====================
+- Fix issue 133 (non-JS navigation bug) and improve non JS nav
+- Fix issue 136 (overlay clash with mod_offlinequiz)
+- Fix issue with section re-opening when user has disabled browser storage
+- Change release to "stable"
+- More comments
+
+4.1.0.1 (2023022800)
+====================
+- Fix issue 144 Activity icons not centered in tiles format
+- Fix issue 148 completion warning
+- Fix issue 138 blocked pop up warning
+- Fix issue 134 avoid URL activity pop up warning when set to display "open"
+
+4.1.0.2 (2023030500)
+====================
+- Fix issue 145 Return to current tile after editing

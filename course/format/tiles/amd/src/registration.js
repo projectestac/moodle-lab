@@ -46,7 +46,7 @@ define(["jquery", "core/notification", "core/config", "core/str"], function ($, 
                                 {key: "registeredthanks", component: "format_tiles"},
                                 {key: "registerclicktocomplete", component: "format_tiles"},
                                 {key: "ok", component: "format_tiles"},
-                                {key: "cancel"},
+                                {key: "cancel", component: "moodle"},
                             ];
                             str.get_strings(stringKeys).done(function (s) {
                                 Notification.confirm(

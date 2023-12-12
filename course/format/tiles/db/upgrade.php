@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Upgrade script for format_tiles
  * Copied in part from the script for format "Topics"
@@ -154,7 +152,7 @@ function xmldb_format_tiles_upgrade($oldversion) {
             $filerecord['filepath'],
             $filerecord['filename']
         );
-        if ($existingfile == false) {
+        if (!$existingfile) {
             $fs->create_file_from_pathname($filerecord, $path . $filerecord['filename']);
         }
 

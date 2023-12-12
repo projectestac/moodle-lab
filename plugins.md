@@ -52,7 +52,7 @@
 |question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2023/12/12|--- Baixat de Moodle plugins -----------|
 |course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022112602|2023/12/12|--- Baixat de Moodle plugins -----------|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022113000|2023/01/08|36e5799341819cefdf6978ba9f74a3f9d1a11fcb|
-|course format    |trail               |https://github.com/JotaDF/moodle-format_trail                   |2022070201|2023/01/26|aeee8cff724b61ea3353b2db7baa2bf756365091|
+|course format    |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12|--- Baixat de Moodle plugins -----------|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
 |course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2023101700|2023/12/12|--- Baixat de Moodle plugins -----------|
 |mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2023070702|2023/12/12|--- Baixat de Moodle plugins -----------|

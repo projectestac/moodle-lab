@@ -1,3 +1,19 @@
+### 4.1.7 (Build: 20231211)
+- Updated Moodle core
+- Updated Wiris plugins
+- Updated `mod/choicegroup`
+- Updated `mod/journal`
+- Updated `mod/offlinequiz`
+- Updated `qtype/drawing`
+- Updated `qtype/formulas`
+- Updated `qtype/ordering`
+- Updated `atto/fontsize`
+- Updated `course/format/grid`
+- Updated `course/format/remuiformat`
+- Updated `course/format/tiles`
+- Updated `course/format/topcoll`
+- Updated `course/format/trail`
+
 ### 4.1.4+ (Build: 20230804)
 - Updated Moodle core
 - Updated Wiris plugins

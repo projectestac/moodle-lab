@@ -32,8 +32,7 @@ require_once($CFG->dirroot . '/course/lib.php');
  * @copyright  2018 David Watson {@link http://evolutioncode.uk}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_tiles_testcase extends advanced_testcase
-{
+class format_tiles_testcase extends advanced_testcase {
 
     /**
      * The format options to use when setting up a course in tiles format.

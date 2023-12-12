@@ -103,7 +103,7 @@
                 }
             }
         ],
-        "format": "topics",
+        "format": "tiles",
         "title": "Course title example",
             "hasnavigation": true,
             "sectionnavigation": {
@@ -190,9 +190,9 @@
             {{/sectionnavigation}}
             <ul class="{{format}}">
                 {{#singlesection}}
-                    {{$ core_courseformat/local/content/section }}
-                        {{> core_courseformat/local/content/section }}
-                    {{/ core_courseformat/local/content/section }}
+                    {{$ format_tiles/local/content/section }}
+                        {{> format_tiles/local/content/section }}
+                    {{/ format_tiles/local/content/section }}
                 {{/singlesection}}
             </ul>
             {{#sectionselector}}
@@ -202,11 +202,6 @@
             {{/sectionselector}}
         </div>
     {{/hasnavigation}}
-    {{#numsections}}
-        {{$ core_courseformat/local/content/addsection}}
-            {{> core_courseformat/local/content/addsection}}
-        {{/ core_courseformat/local/content/addsection}}
-    {{/numsections}}
 </div>
 {{#js}}
     require(['core_courseformat/local/content'], function(component) {

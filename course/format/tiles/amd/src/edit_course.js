@@ -170,6 +170,16 @@ define(
                                 sectionMain.find(Selector.SECTION).find(Selector.ACTIVITY).slideUp(300).remove();
                             }
                         });
+
+                    const anchor = window.location.hash;
+                    if (anchor) {
+                        const section = anchor.replace('#section-', '', anchor);
+                        const courseContent = $('#coursecontentcollapse' + section);
+                        if (courseContent && !courseContent.hasClass('show')) {
+                            courseContent.addClass('show');
+                            $('#collapssesection' + section).removeClass('collapsed').attr('aria-expanded', true);
+                        }
+                    }
                 });
             }
         };

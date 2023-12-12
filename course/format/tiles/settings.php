@@ -320,7 +320,7 @@ if ($ADMIN->fulltree) {
     $name = 'format_tiles/assumedatastoreconsent';
     $title = get_string('assumedatastoreconsent', 'format_tiles');
     $description = get_string('assumedatastoreconsent_desc', 'format_tiles');
-    $default = 0;
+    $default = 1;
     $page->add(new admin_setting_configcheckbox($name, $title, $description, $default));
 
     $settingscategory->add($page);

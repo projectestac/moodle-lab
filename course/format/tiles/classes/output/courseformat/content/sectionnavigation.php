@@ -28,7 +28,7 @@ use core_courseformat\base as course_format;
 use core_courseformat\output\local\content\sectionnavigation as sectionnavigation_base;
 
 /**
- * Class to render a sectionnavigation inside a Tiles course format.
+ * Class to render a course add section navigation inside a Tiles format course.
  *
  * @package   format_tiles
  * @copyright 2022 David Watson
@@ -37,10 +37,11 @@ use core_courseformat\output\local\content\sectionnavigation as sectionnavigatio
 class sectionnavigation extends sectionnavigation_base {
 
     /**
+     * Constructor.
      * @param course_format $format
-     * @param sectionnavigation_base $navigation
+     * @param int $sectionno
      */
-    public function __construct(course_format $format, \core_courseformat\output\local\content\sectionnavigation $navigation) {
-        parent::__construct($format, $navigation);
+    public function __construct(course_format $format, int $sectionno) {
+        parent::__construct($format, $sectionno);
     }
 }

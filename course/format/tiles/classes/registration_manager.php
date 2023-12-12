@@ -24,8 +24,6 @@
 
 namespace format_tiles;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class registration_manager
  * @package format_tiles

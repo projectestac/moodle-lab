@@ -37,6 +37,7 @@ use core_courseformat\output\local\content\addsection as addsection_base;
 class addsection extends addsection_base {
 
     /**
+     * Constructor.
      * @param course_format $format
      */
     public function __construct(course_format $format) {

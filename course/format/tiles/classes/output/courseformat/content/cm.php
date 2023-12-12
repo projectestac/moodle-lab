@@ -37,6 +37,7 @@ use core_courseformat\output\local\content\cm as core_cm;
 class cm extends core_cm {
 
     /**
+     * Constructor.
      * @param course_format $format
      * @param \section_info $section
      * @param \cm_info $mod

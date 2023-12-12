@@ -128,8 +128,8 @@ class registration_form extends moodleform {
     public function validation($data, $files) {
         $errors = [];
         if (
-            array_key_exists('emailpref', $data) and $data['emailpref'] == "1"
-            && array_key_exists('contactemail', $data) and trim($data['contactemail']) == ''
+            array_key_exists('emailpref', $data) && $data['emailpref'] == "1"
+            && array_key_exists('contactemail', $data) && trim($data['contactemail']) == ''
         ) {
             $errors['contactemail'] = get_string('registermissingemail', 'format_tiles');
         }

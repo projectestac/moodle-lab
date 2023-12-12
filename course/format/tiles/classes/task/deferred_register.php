@@ -25,9 +25,6 @@
 namespace format_tiles\task;
 
 use format_tiles\registration_manager;
-use moodle_exception;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Class deferred_register

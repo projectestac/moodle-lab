@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Which course modules is the site administrator allowing to be displayed in a modal?
  * @return array the permitted modules including resource types e.g. page, pdf, HTML
@@ -68,8 +66,7 @@ function format_tiles_width_template_data($courseid) {
             $SESSION->format_tiles_skip_width_check = 1;
             return array('hidetilesinitially' => 0);
         } else if ($PAGE->user_is_editing()
-            || !get_config('format_tiles', 'usejavascriptnav')
-            || get_user_preferences('format_tiles_stopjsnav', 0)) {
+            || !get_config('format_tiles', 'usejavascriptnav')) {
             // Here we may don't tiles initially or restrict screen width.
                 return array('hidetilesinitially' => 0);
         } else {

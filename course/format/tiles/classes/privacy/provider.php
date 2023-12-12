@@ -49,9 +49,6 @@
 namespace format_tiles\privacy;
 
 use core_privacy\local\metadata\collection;
-use \core_privacy\local\request\writer;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Privacy Subsystem implementation for format_tiles

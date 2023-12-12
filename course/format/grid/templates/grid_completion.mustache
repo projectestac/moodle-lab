@@ -15,33 +15,21 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template format_grid/grid_admin_setting_information
+    @template format_grid/grid_completion
+
+    Single page summary image.
 
     Context variables required for this template:
-    * versioninfo - Version information.
-    * maturity - Maturity information.
-    * maturityalert - Alert level.
-    * versioncheck - Version check information.
+    * percentagecolour - The colour indicator, low (< 11), medium (between 11 and 89) or high (> 89).
+    * percentagequarter - The colour border quarter indicator, 0 (< 1), 1 (between 1 and 25), 2 (between 26 and 50), 3 (between 51 and 75) or 4 (> 75).
 
     Example context (json):
     {
-        "versioninfo": "Release 3.11.1.0, version 2021102700 on Moodle 3.11.4+ (Build: 20220111)",
-        "maturity": "Maturity info",
-        "maturityalert": "info",
-        "versioncheck": "Not supported on this version of Moodle"
+        "percentagecolour": "medium",
+        "percentagequarter": 2,
+        "percentagevalue": 42
     }
 }}
-{{#maturity}}
-<div class="alert alert-{{maturityalert}} mb-3">
-<h3>{{{versioninfo}}}</h3>
-{{{maturity}}}
+<div class="grid-completion grid-completion-colour-{{percentagecolour}} grid-completion-percentagequarter-{{percentagequarter}}">
+    <span class="grid-percentage grid-percentagevalue-{{percentagevalue}}" title="{{percentagevalue}}%">{{percentagevalue}}%</span>
 </div>
-{{/maturity}}
-{{^maturity}}
-<h3>{{versioninfo}}</h3>
-{{/maturity}}
-{{#versioncheck}}
-<div class="alert alert-warning mb-3">
-{{{versioncheck}}}
-</div>
-{{/versioncheck}}

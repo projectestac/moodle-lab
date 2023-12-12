@@ -128,7 +128,6 @@
             "selector": "<select><option>Section 4</option></select>"
         },
         "sectionreturn": 1,
-        "coursesettings": "https://mymoodle/course/edit.php?id=4",
         "singlesection": {
             "num": 1,
             "id": 35,
@@ -162,9 +161,12 @@
 <div id="{{uniqid}}-course-format">
     <h2 class="accesshide">{{{title}}}</h2>
     {{#hasnavigation}}
-    <a href="{{{maincoursepage}}}"><p class="text-right">{{#str}}maincoursepage{{/str}}</p></a>
+    <p class="text-right"><a href="{{{maincoursepage}}}">{{#str}}maincoursepage{{/str}}</a></p>
     {{/hasnavigation}}
     {{{completionhelp}}}
+    {{#hasheaderimages}}
+        {{> format_grid/coursestyles }}
+    {{/hasheaderimages}}
     <ul class="{{format}}" data-for="course_sectionlist">
         {{#initialsection}}
             {{$ core_courseformat/local/content/section }}
@@ -173,7 +175,7 @@
         {{/initialsection}}
         {{#sections}}
             {{$ core_courseformat/local/content/section }}
-                {{> core_courseformat/local/content/section }}
+                {{> format_grid/local/content/section }}
             {{/ core_courseformat/local/content/section }}
         {{/sections}}
     </ul>
@@ -185,7 +187,7 @@
     <div class="single-section">
         {{#sectionnavigation}}
             {{$ core_courseformat/local/content/sectionnavigation }}
-                {{> core_courseformat/local/content/sectionnavigation }}
+                {{> format_grid/local/content/sectionnavigation }}
             {{/ core_courseformat/local/content/sectionnavigation }}
         {{/sectionnavigation}}
         <ul class="{{format}}">
@@ -197,7 +199,7 @@
         </ul>
         {{#sectionselector}}
             {{$ core_courseformat/local/content/sectionselector }}
-                {{> core_courseformat/local/content/sectionselector }}
+                {{> format_grid/local/content/sectionselector }}
             {{/ core_courseformat/local/content/sectionselector }}
         {{/sectionselector}}
     </div>
@@ -207,12 +209,9 @@
             {{> core_courseformat/local/content/addsection}}
         {{/ core_courseformat/local/content/addsection}}
     {{/numsections}}
-    {{#coursesettings}}
-        <a class="d-block text-right" href="{{{coursesettings}}}">{{#str}}sectionchangecoursesettings, format_grid{{/str}}</a>
-    {{/coursesettings}}
 </div>
 {{#js}}
-require(['core_courseformat/local/content'], function(component) {
+require(['format_grid/local/content'], function(component) {
     component.init('{{uniqid}}-course-format', {}, {{sectionreturn}});
 });
 {{/js}}

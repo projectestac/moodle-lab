@@ -150,6 +150,8 @@ class functions_test extends \advanced_testcase {
             array(gcd(0, 0), 0),
             array(gcd(13, 13), 13),
             array(gcd(1, 0), 1),
+            array(gcd(10, 0), 10),
+            array(gcd(0, 10), 10),
             array(gcd(3, 2), 1),
             array(gcd(6, 3), 3),
             array(gcd(12, 9), 3),
@@ -532,6 +534,68 @@ class functions_test extends \advanced_testcase {
     }
 
     /**
+     * binomialpdf() test.
+     */
+    public function test_binomialpdf() {
+        // Test if function is accepted and parsed.
+        $qv = new variables;
+        $errmsg = null;
+        try {
+            $v = $qv->vstack_create();
+            $qv->evaluate_assignments($v, 'a=binomialpdf(1, 1, 1);');
+        } catch (Exception $e) {
+            $errmsg = $e->getMessage();
+        }
+        $this->assertNull($errmsg);
+
+        // Test if function works correctly.
+        $testcases = [
+            [binomialpdf(1, 0, 1), 0],
+            [binomialpdf(1, 0, 0), 1],
+            [binomialpdf(1, 1, 1), 1],
+            [binomialpdf(1, 1, 0), 0],
+            [binomialpdf(3, 0.5, 0), 0.125],
+            [binomialpdf(3, 0.5, 1), 0.375],
+            [binomialpdf(3, 0.5, 2), 0.375],
+            [binomialpdf(3, 0.5, 3), 0.125],
+        ];
+        foreach ($testcases as $case) {
+            $this->assertEqualsWithDelta($case[1], $case[0], 1e-6);
+        }
+    }
+
+    /**
+     * binomialcdf() test.
+     */
+    public function test_binomialcdf() {
+        // Test if function is accepted and parsed.
+        $qv = new variables;
+        $errmsg = null;
+        try {
+            $v = $qv->vstack_create();
+            $qv->evaluate_assignments($v, 'a=binomialcdf(1, 1, 1);');
+        } catch (Exception $e) {
+            $errmsg = $e->getMessage();
+        }
+        $this->assertNull($errmsg);
+
+        // Test if function works correctly.
+        $testcases = [
+            [binomialcdf(1, 0, 1), 1],
+            [binomialcdf(1, 0, 0), 1],
+            [binomialcdf(1, 1, 1), 1],
+            [binomialcdf(1, 1, 0), 0],
+            [binomialcdf(3, 0.5, 0), 0.125],
+            [binomialcdf(3, 0.5, 1), 0.5],
+            [binomialcdf(3, 0.5, 2), 0.875],
+            [binomialcdf(3, 0.5, 3), 1],
+        ];
+        foreach ($testcases as $case) {
+            $this->assertEqualsWithDelta($case[1], $case[0], 1e-6);
+        }
+    }
+
+    /**
      * Test number conversion functions decbin(), decoct(), octdec() and bindec()
      */
     public function test_number_conversions() {
@@ -859,6 +923,8 @@ class functions_test extends \advanced_testcase {
             array(false, 'a=len();'),
             array(false, 'a=len(1);'),
             array(true, 'a=map("+", [1, 2], [3, 4]);'),
+            array(true, 'a=map("sigfig", [2.123, 3.568], 3);'),
+            array(true, 'a=map("stdnormcdf", [2, 1]);'),
             array(true, 'a=map("abs", [-1, -2]);'),
             array(false, 'a=map("+", [1, 2]);'), // Binary operator needs two lists.
             array(false, 'a=map("abs", [-1, -2], [3, 4]);'),
@@ -1060,5 +1126,30 @@ class functions_test extends \advanced_testcase {
         $this->assertEquals(get_config('qtype_formulas')->version, $result->all['a']->value);
     }
 
+    public function test_fmod() {
+        $testcases = array(
+            array(fmod(35, 20), 15),
+            array(fmod(-35, 20), 5),
+            array(fmod(35, -20), -5),
+            array(fmod(-35, -20), -15),
+            array(fmod(12, 3), 0),
+            array(fmod(5, 8), 5),
+            array(fmod(5.7, 1.3), 0.5),
+            array(fmod(0, 7.9), 0),
+            array(fmod(2, 0.4), 0)
+        );
+        foreach ($testcases as $case) {
+            $this->assertEquals($case[1], $case[0]);
+        }
+        $qv = new variables();
+        $errmsg = null;
+        try {
+            $v = $qv->vstack_create();
+            $qv->evaluate_assignments($v, 'a=fmod(4, 0);');
+        } catch (Exception $e) {
+            $errmsg = $e->getMessage();
+        }
+        $this->assertEquals('1: ' . get_string('error_eval_numerical', 'qtype_formulas'), $errmsg);
+    }
 
 }

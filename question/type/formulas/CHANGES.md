@@ -1,5 +1,54 @@
 # Changelog
 
+### 5.3.2 (2023-11-17)
+- bugfix: also improve robustness against risky grading variables
+- internal: additional tests
+
+### 5.3.1 (2023-11-16)
+- bugfix: make sure risky grading criterion cannot break question
+- bugfix: make sure grading does not lead to invalid question state
+- revert workaround from 5.2.2 (TinyMCE too small), as bug was fixed upstream
+- internal: improvements to some tests
+- internal: update GitHub actions
+
+### 5.3.0 (2023-10-09)
+- assure compatibility with Moodle 4.3 and PHP 8.2
+- enhancement: different feedback for unique / non-unique correct answer
+- enhancement: allow M (mega) prefix for unit Newton
+- bugfix: remove wrongful warning triangle when using fact() in answer
+- bugfix: nice formatting of preview for exponentiation, e.g. 4**3
+- internal: update GitHub actions (moodle-plugin-ci v4, PHP 8.2, Moodle 4.3)
+- internal: change mobile behat tests to work with updated labels in the app
+- internal: add separate workflow for mobile behat (only PHP <8.2) with moodle-plugin-ci v3
+
+### 5.2.2 (2023-08-09)
+- bugfix: wrong sort order for negative numbers in sort()
+- bugfix: some input fields in edit form too small with TinyMCE in Moodle 4.2+
+- internal: fix in legacy code (indirect modification of overloaded property)
+- internal: changes to behat tests for compatibility with 4.3
+
+### 5.2.1 (2023-04-22)
+- assure compatibility with Moodle 4.2
+- internal: changes for compatibility with PHP 8.1
+- internal: add PHP 8.1 to CI test matrix
+- internal: added tests for units
+
+### 5.2.0 (2023-03-17)
+- new functions: binomialpdf() and binomialcdf()
+- bugfix: gcd() now gives correct result even if one argument is 0
+- internal: removed deprecated notify()
+
+### 5.1.2 (2023-02-15)
+- bugfix: internal functions (e.g. sigfig) working with map() again
+
+### 5.1.1 (2023-01-30)
+- bugfix: fmod() now works like in other scientific calculators
+- bugfix: sort() now uses natural sorting and does not lose values anymore
+- bugfix: instantiation check could fail in certain cases
+- internal: some cleanup, update of package.json
+
+Please note: future releases will no longer support Internet Explorer.
+
 ### 5.1.0 (2022-11-23)
 - added support for Moodle 4.1
 - new functions for number conversion (decimal <-> octal/binary)

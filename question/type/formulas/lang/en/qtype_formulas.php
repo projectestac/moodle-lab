@@ -118,6 +118,8 @@ $string['vars1'] = 'Local variables';
 $string['vars1_help'] = 'You can define variables here in the same way as global variables are defined at the question level. Variables defined here can be used in the part\'s answer or feedback
 and their scope of visibility is limited to the part.';
 $string['answer'] = 'Answer*';
+$string['answernotunique'] = 'There are other correct answers.';
+$string['answernotunique_help'] = 'If this option is checked, the student will see "One correct answer is: ..." instead of "The correct answer is: ..." when reviewing their attempt.';
 $string['answercombinedunitmulti'] = 'Answer and unit for part {$a->part}';
 $string['answercombinedunitsingle'] = 'Answer and unit';
 $string['answercoordinatemulti'] = 'Answer field {$a->numanswer} for part {$a->part}';
@@ -241,9 +243,12 @@ $string['error_algebraic_var'] = 'Syntax error of defining algebraic variable.';
 $string['error_func_param'] = 'Wrong number or wrong type of parameters for the function {$a}()';
 $string['error_subexpression_empty'] = 'A subexpression is empty.';
 $string['error_eval_numerical'] = 'Some expressions cannot be evaluated numerically.';
+$string['error_question_damaged'] = 'Error: Question is damaged, number of text fragments and number of question parts are not equal.';
+$string['error_grading_error'] = 'Grading error! Probably result of incorrect import file or database corruption.';
 
 // The language strings for the renderer.
 $string['correctansweris'] = 'One possible correct answer is: {$a}';
+$string['uniquecorrectansweris'] = 'The correct answer is: {$a}';
 
 // String that were "borrowed" from quiz and are now in calculated plugin.
 $string['illegalformulasyntax'] = 'Illegal formula syntax starting with \'{$a}\'';

@@ -1247,7 +1247,7 @@ class file_storage {
             $tmpfile = tempnam($this->tempdir, 'newfromurl');
             $content = download_file_content($url, $headers, $postdata, $fullresponse, $timeout, $connecttimeout, $skipcertverify, $tmpfile, $calctimeout);
             if ($content === false) {
-                throw new file_exception('storedfileproblem', 'Can not fetch file form URL');
+                throw new file_exception('storedfileproblem', 'Cannot fetch file from URL');
             }
             try {
                 $newfile = $this->create_file_from_pathname($filerecord, $tmpfile);
@@ -1261,7 +1261,7 @@ class file_storage {
         } else {
             $content = download_file_content($url, $headers, $postdata, $fullresponse, $timeout, $connecttimeout, $skipcertverify, NULL, $calctimeout);
             if ($content === false) {
-                throw new file_exception('storedfileproblem', 'Can not fetch file form URL');
+                throw new file_exception('storedfileproblem', 'Cannot fetch file from URL');
             }
             return $this->create_file_from_string($filerecord, $content);
         }
@@ -1957,7 +1957,7 @@ class file_storage {
         if ($decoded === false) {
             throw new file_reference_exception(null, $str, null, null, 'Invalid base64 format');
         }
-        $params = @unserialize($decoded); // hide E_NOTICE
+        $params = unserialize_array($decoded);
         if ($params === false) {
             throw new file_reference_exception(null, $decoded, null, null, 'Not an unserializeable value');
         }

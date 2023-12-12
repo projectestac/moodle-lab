@@ -6,8 +6,31 @@
             .section {
                 .side {
                     margin: 0;
+
                     &.left {
-                        padding: 0.5rem 0!important;
+                        // padding: 0.5rem 0!important;
+                        align-items: center;
+
+                        // gap: 4px;
+                        @media (max-width:1200px) {
+                            flex-direction: column;
+                            align-items: start;
+                        }
+
+                        .section-handle {
+                            position: absolute;
+                            top: 5px;
+                            left: 5px;
+                        }
+                    }
+
+                    &.right {
+                        @media (max-width:$screen-900) {
+                            width: 100%;
+                        }
+
+                        gap: $gap-8;
+                        justify-content: space-between;
                     }
                 }
                 .sectionname {
@@ -28,12 +51,26 @@
                 width: 100%;
             }
         }
+
+        &.one-section-format {
+            .one-section-format-details-page-wrapper {
+                .course-section-header {
+                    flex-direction: row;
+                }
+            }
+        }
     }
 }
 
 .modtype_label {
     .contentwithoutlink {
+        max-height: 100%;
         padding: 0px;
+    }
+    .activity-badges{
+        .badge{
+            white-space: nowrap !important;
+        }
     }
 }
 
@@ -41,8 +78,34 @@
     .remui-format-list {
         .sections {
             .section {
-                .right.side {
-                    margin-top: 0;
+                .side {
+                    &.left {
+                        // padding: 0.5rem 0!important;
+                        align-items: center;
+                        gap: $gap-4;
+                        // .sectionname {
+                        //     order: 2;
+                        // }
+
+                        // .sectionbadges {
+                        //     order: 3;
+                        // }
+                        @media (max-width:$screen-900) {
+                            flex-direction: column;
+                            align-items: flex-start;
+
+                        }
+                    }
+
+                    &.right {
+                        margin-top: 0;
+                        gap: $gap-24;
+
+                        @media (max-width:$screen-900) {
+                            width: 100%;
+
+                        }
+                    }
                 }
                 .sectionname {
                     .panel-title {
@@ -70,181 +133,82 @@
 }
 
 // Styling for list format
+// #list-container {
+//     margin-top: 48px;
+// }
+
 .remui-format-list {
-    // General section
-    #section-0 {
-        background-color: transparent !important;
-        // Show and hide activity in general section.
-        &.showhideactivity {
-            .general-section-activities .activity {
-                @media (min-width: 992px) {
-                    &:nth-child(n+4) {
-                        display: none;
-                    }
-                }
-                // Small screens, laptops
-                @media (min-width: 768px) and (max-width: 991px) {
-                    &:nth-child(n+4) {
-                        display: none;
-                    }
-                }
-                // iPads, Tablets
-                @media (max-width: 767px) {
-                    &:nth-child(n+3) {
-                        display: none;
-                    }
-                }
-            }
-        }
-        .general-section-activities {
-            padding: 0;
-            margin-left: 0;
-            margin-right: 0;
-            .activity {
-                width: 33%;
-                // box-shadow: 0 0 8px #ddd;
-                .editing_move {
-                    width: 15px;
-                    height: 15px;
-                    padding: 0.2rem;
-                    top: -1.0rem;
-                    .fa-arrows:before {
-                        font-size: 17px;
-                    }
-                }
-                // Show 4 activities in row
-                @media (min-width: 992px) {
-                    width: 33%;
-                }
-                // Small screens, laptops
-                // Show 3 activities in row
-                @media (min-width: 768px) and (max-width: 991px) {
-                    width: 33%;
-                }
-                // iPads, Tablets
-                // Show 2 activities in row
-                @media (max-width: 767px) {
-                    width: 50%;
-                }
-                padding: 1rem 0 0 0;
-                // Remove padding of mod indent
-                &>div,
-                .mod-indent-outer,
-                .mod-indent {
-                    padding: 0 !important;
-                }
-                .mod-indent {
-                    width: 0 !important;
-                }
-                // Styling for general section activity card
-                .activityinstance {
-                    min-width: auto;
-                    min-height: auto;
-                    padding: 1rem !important;
-                    &>a {
-                        padding-left: 0;
-                        text-indent: 0;
-                    }
-                    .iconlarge.activityicon {
-                        width: 75px;
-                        height: 75px;
-                    }
-                }
-                // Removeing absolute postion of activity actions
-                .actions {
-                    position: inherit !important;
-                    padding: 5px 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    .filler {
-                        display: none;
-                    }
-                }
-            }
-            .instancename {
-                display: block;
-            }
-        }
-        .section-title {
-            color: white;
-            a {
-                color: white;
-            }
-        }
-        .teacher-label {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-right: 0.5rem;
-        }
-        .course-cover-image {
-            min-height: 200px;
-            height: auto;
-            -webkit-background-size: cover;
-            background-size: cover;
-            background-position: center;
-        }
-        &>.content {
-            padding: 10px 0;
-        }
-        .summary {
-            min-height: 6.5rem;
-        }
-        // Teacher carousel
-        .carousel-inner {
-            width: 155px;
-            a:hover {
-                text-decoration: none;
-                .userinitials {
-                    background-color: #fff;
-                }
-            }
-        }
-        .carousel-control-next,
-        .carousel-control-prev {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            line-height: 35px;
-            color: #fff;
-            text-align: center;
-        }
-        .carousel-control-next {
-            right: 0;
-        }
-        .carousel-control.left,
-        .carousel-control.right,
-        .carousel-control-prev,
-        .carousel-control-next {
-            opacity: 1 !important;
-            min-width: 25px !important;
-        }
-        #teachers-carousel {
-            max-width: 175px;
-            height: 35px;
-            margin-bottom: 0.5rem;
-        }
-        .text-white {
-            @for $i from 1 through 6 {
-                .h#{$i},
-                h#{$i} {
-                    color: white;
-                }
-            }
-        }
+    .summary,.course-section-summary-wrapper{
+        @include frmt-font-styling(16px,24px,400);
+        color: $paragraph-color;
     }
     .sections {
         list-style: none;
-        .section {
-            &:not(#section-0) {
-                background: white;
+        display: flex;
+        flex-direction: column;
+        gap: $gap-24;
+
+       & .section {
+            // padding: 24px;
+
+            .side {
+                &.left {
+                    @media (max-width:$sm-screen-bp) {
+                        gap: $gap-24;
+                    }
+                }
+
+                &.right {}
             }
+
+            &:not(#section-0) {
+                background: $white;
+                // overflow: hidden;
+                border-radius: $border-radius-8;
+                border: $border-height solid $light-border;
+            }
+
+            .content {
+
+                .panel-title,
+                h3 a {
+                    margin: 0px;
+                    color: $heading-color;
+                    @include frmt-font-styling(24px, 32px, 700);
+                }
+                .course-section-summary-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $gap-8;
+                    padding: $pad-24;
+                    & .no-overflow {
+                        @include frmt-font-styling(14px, 22px, 400);
+                        color: $paragraph-color;
+                    }
+                }
+            }
+
+            .course-section-header {
+                justify-content: space-between;
+                align-items: center;
+                gap: $gap-24;
+
+                @media (max-width:$screen-900) {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .sectionheading {
+                    color: $heading-color;
+                    @include frmt-font-styling(24px, 32px, 700);
+                }
+            }
+
             &.main {
-                background: transparent;
-                border: 0;
-                box-shadow: none;
-                padding: 0;
+                // background: transparent;
+                // border: 0;
+                // box-shadow: none;
+                // padding: 0;
             }
             // Highliging current section
             .highlight {
@@ -311,33 +275,39 @@
                     width: 560px;
                 }
             }
+
+            .right.side {
+                width: max-content;
+                .wdm-add-new-section {
+                    white-space: nowrap
+                }
+            }
+
+            .section_action_menu.ml-auto {
+                margin: unset !important;
+            }
         }
     }
     // Styling for main course page where all sections are listed.
     &.all-section-format {
         ul.sections {
             li.section {
-                // Apply box shadow to section except general section
-                &:not(#section-0) {
-                    &>div {
-                        box-shadow: 0 0 8px 0 #ddd;
-                    }
-                }
                 // Custom section content toggle icon.
                 .toggle-icon {
-                    margin: 0 1rem 0 0;
                     cursor: pointer;
                     transform: rotate(-90deg);
                     border: 0 !important;
                     background: transparent !important;
                     box-shadow: none !important;
                     outline: 0 !important;
+
                     &::before {
                         display: flex;
                         transition: all 0.5s ease;
                         font-size: 1.2rem;
                     }
                 }
+
                 // Rotating toggle icon when section is collapsed
                 &.collapsed {
                     .toggle-icon {
@@ -346,44 +316,131 @@
                         }
                     }
                 }
+
+                .content {
+                    ul.section {
+                        border: unset !important;
+                        border-radius: unset !important;
+                        border-top: $border-height solid $light-border !important;
+                        .activity {
+                            padding: 0px;
+                            .activitytitle {
+                                gap: $gap-24;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+
+    // common activity changes in list view
+    .activities-list,
+    .card-footer {
+        padding: unset;
+        ul.section {
+            padding: $pad-24 !important;
+            li:not(:last-child) {
+                margin-bottom: $margin-16;
+            }
+            .activity{
+                .activitytitle {
+                    gap: $gap-24;
+                    @media (max-width:$sm-screen-bp) {
+                        flex-direction: column;
+                    }
+                }
+                .activity-info.mt-1 {
+                    @media (max-width:$tb-screenp-bp) {
+                        margin-top: $margin-24 !important;
+                    }
+                }
+                .description{
+                    .availabilityinfo{
+                        margin: unset;
+                        margin-top: $margin-8;
+                    }
+                }
+            }
+        }
+    }
+
     // Styling for section when single section is opened.
     &.one-section-format {
         &.all-section {
             .sections {
                 .section:not(#section-0) {
-                    &>div {
-                        box-shadow: 0 0 8px 0 #ddd;
-                    }
                     ul.section {
                         display: none;
+                    }
+
+                    & .content {
+                        display: flex;
+                        flex-direction: column;
+                        gap: $gap-16;
+                        padding: $pad-24;
+
+                        // .course-section-header{
+                        //     padding: $pad-24;
+                        // }
                     }
                 }
             }
         }
+
+        .one-section-format-details-page-wrapper {
+            .section {
+                .course-section-summary-wrapper{
+                    padding: $pad-24;
+                }
+                .content {
+                    // padding-top: 24px;
+                }
+            }
+        }
+
         // Single section activity list styling.
         .activities-list {
-            border: none;
-            -webkit-box-shadow: 0 0 8px #ddd;
-            box-shadow: 0 0 8px #ddd;
-            background-color: #fff;
-            padding: 15px;
             ul.section {
                 margin: 0;
+                border: unset !important;
+                border-radius: unset !important;
+                border-top: $border-height solid $light-border !important;
                 .activity {
-                    clear: both;
-                    padding: 8px 0 !important;
-                    border-bottom: 1px solid #f3f3f3;
+                    padding: 0px !important;
                     &:last-child {
                         border-bottom: 0 !important;
                     }
                 }
             }
             .section-modchooser {
-                padding-top: 10px;
+                // padding-top: 10px;
+                margin: 0px;
+                &.mb-3{
+                    margin-bottom: 0px !important;
+                }
             }
+        }
+        .section_availability.course-description-item{
+            padding:0px  0px $pad-24 0px;
+        }
+    }
+    .section_availability.course-description-item{
+        padding:0px  $pad-24 $pad-24 $pad-24 ;
+        color: $paragraph-color;
+        @include frmt-font-styling(12px,15px,400);
+        .availabilityinfo{
+            background-color: $small-ui-bg;
+            border-radius: $border-radius-4;
+            padding: $pad-8;
+            .description-inner{
+                ul li{
+                    margin-top: 4px;
+                }
+            }
+        }
+        strong{
+            @include frmt-font-styling(12px,15px,600);
         }
     }
 }

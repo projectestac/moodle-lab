@@ -50,52 +50,66 @@
 }}
 
 {{#addsection}}
-<li id="{{divid}}" class=" col-lg-4 col-md-6 col-sm-6 section main clearfix">
+<div id="{{divid}}" class=" col-lg-4 col-md-6 col-sm-6 section main clearfix">
     <div class="single-card d-flex align-items-center">
         {{#numsections}}
-        <a href="{{{addurl}}}" class="{{addurlclass}}">{{{addicon}}} {{{straddsection}}}</a>
+            <a href="{{{addurl}}}" class="{{addurlclass}}">{{{addicon}}} {{{straddsection}}}</a>
 
-        {{#strremovesection}}
-        <a href="{{{removeurl}}}" class="{{removeurlclass}}">{{{removeicon}}} {{{strremovesection}}}</a>
-        {{/strremovesection}}
+            {{#strremovesection}}
+            <a href="{{{removeurl}}}" class="{{removeurlclass}}">{{{removeicon}}} {{{strremovesection}}}</a>
+            {{/strremovesection}}
         {{/numsections}}
 
         {{^numsections}}
-        <a href="{{{url}}}" data-add-sections="{{{straddsections}}}">{{{icon}}} {{{straddsections}}}</a>
+            <a href="{{{url}}}" data-add-sections="{{{straddsections}}}">{{{icon}}} {{{straddsections}}}</a>
         {{/numsections}}
     </div>
-</li>
+</div>
 {{/addsection}}
 
 {{^addsection}}
-<li id="section-{{{index}}}" class="section main clearfix" aria-labelledby="section-{{{index}}} .content .sectionname"
-    data-sectionid="{{id}}" data-sectionreturnid="{{sectionreturnid}}" data-for="section" data-number="{{num}}">
+<li id="section-{{{index}}}" class="section main clearfix"
+    aria-labelledby="section-{{{index}}} .content .sectionname"
+    data-sectionid="{{id}}"
+    data-sectionreturnid="{{sectionreturnid}}"
+    data-for="section"
+    data-number="{{num}}">
     <div class="single-card d-flex flex-column justify-content-between {{{remuinewthemecolor}}} {{#sectionfirstimage}}sectionfirstimage{{/sectionfirstimage}}"
         {{#sectionfirstimage}}style="background: linear-gradient({{remuidefaultsectionoverlay}}),url({{sectionfirstimage}});
                 background-repeat: no-repeat;
-                background-size: cover;" {{/sectionfirstimage}}>
+                background-size: cover;"{{/sectionfirstimage}}>
         {{#highlighted}}
-        <div class="highlight text-primary"></div>
+            <div class="highlight text-primary"></div>
         {{/highlighted}}
-        <div class="content {{#sectionfirstimage}}frmt-pt-50{{/sectionfirstimage}}">
-            <div class="summary d-none"></div>
+        <div class="editing-actions d-flex  justify-content-between align-items-center">
+            <div class="left side mt-0">
+                {{{ leftside }}}
+            </div>
+            <div class='right side mt-0 d-flex flex-gap-8'>
+                {{{ addnewsection }}}
+                {{{ optionmenu }}}
+            </div>
+        </div>
+        <div class="content h-100">
+            <div class="summary d-none">
+            </div>
             {{#addnewsection}}
-            <h2 class="sectionname m-0 text-clamp text-clamp-3" style="-webkit-box-orient: vertical;">{{{ title }}}</h2>
+                <h2 class="sectionname m-0 d-inline bg-transparent text-clamp text-clamp-3" style="-webkit-box-orient: vertical;">{{{ title }}}
+                    <div data-region="sectionbadges" class="sectionbadges d-inline mt-2">
+                        {{> core_courseformat/local/content/section/badges }}
+                    </div>
+                </h2>
             {{/addnewsection}}
             {{^addnewsection}}
-            <div class="section-header d-inline">
-                {{^hidden}}
-                <a href="{{{ singlepageurl }}}" class="align-middle">
-                    {{/hidden}}
-                    <h2 class="sectionname m-0 d-inline bg-transparent text-clamp text-clamp-3" style="-webkit-box-orient: vertical;">{{{ title }}}</h2>
-
+                <div class="section-header d-inline">
                     {{^hidden}}
-                </a>
-                {{/hidden}}
-                <div data-region="sectionbadges" class="sectionbadges d-inline mt-2">
-                    {{> core_courseformat/local/content/section/badges }}
+                        <a href="{{{ singlepageurl }}}" class="align-middle">
+                    {{/hidden}}
+                        <h2 class="sectionname m-0 d-inline bg-transparent text-clamp text-clamp-3" style="-webkit-box-orient: vertical;">{{{ title }}}</h2>
+                    {{^hidden}}
+                        </a>
+                    {{/hidden}}
                 </div>
-            </div>
             {{/addnewsection}}
             {{#summary }}
             <div class="wdm-section-summary {{#hidden}}summary-muted{{/hidden}}">
@@ -104,12 +118,13 @@
             {{/summary }}
             <div class="section-activities-summary">
                 {{#activityinfo}}
-                <span class="item {{#hidden}}text-muted{{/hidden}}">{{ . }}</span>
+                    <span class="item {{#hidden}}text-muted{{/hidden}}">{{ . }}</span>
                 {{/activityinfo}}
             </div>
+            <ul class="section">
+            </ul>
             {{#editsectionurl}}
-            <a class="text-muted" href="{{ editsectionurl }}"><span><i class="fa fa-cog font-size-20 "
-                        aria-hidden="true"></i></span></a>
+                <a class="text-muted" href="{{ editsectionurl }}"><span><i class="fa fa-cog font-size-20" aria-hidden="true"></i></span></a>
             {{/editsectionurl}}
             {{#hiddenmessage}}
                 {{{hiddenmessage}}}
@@ -124,7 +139,7 @@
                     role="progressbar">
                 </div>
             </div>
-            <div class=" progress-text w-100">
+            <div class="text-right progress-text  w-100">
                 {{! progress }}
                 <span>{{#progressinfo}}{{{percentage}}}{{/progressinfo}}{{^progressinfo}}0{{/progressinfo}}% {{#str}} Complete, format_remuiformat {{/str}}
                 </span>

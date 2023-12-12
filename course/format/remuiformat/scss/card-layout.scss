@@ -10,6 +10,10 @@
                 }
             }
         }
+       &.all-section-format .section .single-card{
+            padding: 24px;
+        }
+
         &.single-section-format {
             .activity-cards {
                 .actions {
@@ -22,10 +26,30 @@
                 }
             }
             .activity {
+                &.label {
+                    grid-column: 1/-1;
+                }
                 .title {
                     margin-bottom: 30px;
                 }
             }
+        }
+
+        .dark {
+            .action-menu-trigger {
+                .btn.btn-icon:hover,
+                .btn.btn-icon:focus {
+                    background-color: transparent ;
+                    box-shadow: none ;
+                }
+                .text-muted .fa-cog,.dropdown-toggle .icon {
+                    color: $white;
+                }
+            }
+            .text-muted .fa-cog {
+                color: $white;
+            }
+
         }
     }
 }
@@ -136,19 +160,46 @@
 }
 
 .remui-format-card {
-    margin-top: 20px;
+    // margin-top: 20px;
     .availabilityinfo {
         &.isrestricted {
-            font-size: 90%;
-            padding: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            margin: 5px 0!important
+            // font-size: 90%;
+            // padding: 10px;
+            // background: #e0e0e0;
+            // border-radius: 5px;
+            // margin: 5px 0 !important
+            margin: 0px;
+            margin-top: $margin-8;
+            padding: $pad-8;
+            border-radius: $border-radius-8;
+            background-color: $small-ui-bg;
+            i{
+                color: $paragraph-color;
+                @include frmt-font-styling(14px,22px,600);
+            }
+            strong{
+                color: $heading-color;
+                @include frmt-font-styling(14px,22px,600);
+            }
         }
     }
     &.all-section-format {
-        .sections {
+        .sections:not(.generalsection-container.sections) {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax($card-min-width-1, 1fr));
+            gap: $gap-24;
+            @media (min-width:1440px) {
+                grid-template-columns: repeat(auto-fill, minmax($card-min-width-2, $card-min-width-2));
+            }
+            // margin-top: 48px;
             .section:not(#section-0) {
+                // flex: 1 1 calc(25% - 24px);
+                // max-width: 314px;
+                border: unset;
+                border-radius: $border-radius-8;
+                &:hover{
+                    box-shadow: $card-box-shadow;
+                }
                 .content .yui3-dd-drop {
                     display: none;
                 }
@@ -163,36 +214,18 @@
         }
         @media (min-width: 768px) {
             .general-section-activities .activity {
-                flex: 0 0 33.33%;
-                width: 33.33%;
                 &>div {
                     width: 100%;
                 }
             }
-            .showhideactivity .general-section-activities .activity:nth-child(n+4) {
-                display: none !important;
-            }
         }
-        // Small screens, laptops
-        @media (max-width: 767px) {
-            .general-section-activities .activity {
-                flex: 0 0 50%;
-                width: 50%;
-                ;
-                &>div {
-                    width: 100%;
-                }
-            }
-            .showhideactivity .general-section-activities .activity:nth-child(n+3) {
-                display: none !important;
-            }
-        }
-        #changenumsections {
+        #changenumsections.section {
+            flex: unset !important;
+            padding: unset !important;
             min-height: 340px;
+            max-width: unset !important;
         }
         .section {
-            margin-bottom: 1.75rem;
-            padding: 0 1rem;
             .sectionbadges {
                 [data-type="highlighted"] {
                     display: none;
@@ -214,25 +247,41 @@
             .right.side {
                 display: flex;
                 margin-left: auto;
+                margin: 0px;
             }
             // Hide right side spacer.
             .right.side .icon.spacer {
                 display: none;
             }
-            .sectionname {
-                font-size: 1.5rem;
+
+            .sectionname,
+            .sectionname a {
+                color: $heading-color;
+                @include frmt-font-styling(24px, 32px, 700);
             }
-            .single-card,
-            .general-section {
-                box-shadow: 0 0 8px #ddd;
-                border-radius: 2px;
-                background-color: white;
-                position: relative;
-                padding: 1rem;
+
+            .single-card {
+                background-color: $white;
+                // position: relative;
+                border: $border-height solid $light-border;
+                border-radius: inherit;
+                padding: $pad-24;
+                gap: $gap-32;
+
+                .content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $gap-16;
+                    .section-activities-summary{
+                        .item{
+                            font-size: 0.8rem;
+                        }
+                    }
+                }
             }
             // Styling for section cards
             .single-card {
-                min-height: 340px;
+                min-height: $section-card-min-height;
                 height: 100%;
                 width: 100%;
                 // Dark theme
@@ -242,18 +291,45 @@
                     .sectionname *,
                     .wdm-section-summary *,
                     .section-activities-summary {
-                        color: #e4e4e4 !important;
+                        color: $white !important;
+                    }
+                    .sectionname{
+                        .ignoredirty,.ignoredirty.form-control,.editinstructions{
+                            color:$heading-color !important;
+                        }
+
+                        .badge{
+                            color: $heading-color ;
+                        }
+                        .badge-primary{
+                            color: white;
+                        }
+                    }
+                    .left.side{
+                        .section-handle .icon{
+                            color: $white;
+                        }
+                    }
+                    .progress-bar-warpper{
+                        .progress-text{
+                            color: $white;
+                        }
+                    }
+                    .right.side{
+                        .wdm-add-new-section{
+                            color: $white;
+                        }
                     }
                 }
                 // Light theme
                 &.light {
-                    .left.side,
-                    .sectionname,
-                    .sectionname *,
-                    .wdm-section-summary *,
-                    .section-activities-summary {
-                        color: #101010 !important;
-                    }
+                    // .left.side,
+                    // .sectionname,
+                    // .sectionname *,
+                    // .wdm-section-summary *
+                    // {
+                    //      color: #101010 !important;
+                    // }
                 }
                 &:hover .progress-text {
                     visibility: visible;
@@ -266,27 +342,19 @@
             }
             // Placing section action container.
             .section-action-container {
-                justify-content: space-between;
+                justify-content: flex-end;
                 flex-wrap: wrap;
-                margin: 0 -15px;
+                // margin: 0 -15px;
+
                 .progress-text {
-                    width: 92%;
-                    min-height: 18px;
-                    margin: 0 auto;
                     align-self: center;
-                    font-size: 14px;
-                    font-weight: 500;
-                    visibility: hidden;
+                    color: $paragraph-color;
+                    @include frmt-font-styling(12px, 15px, 600);
+
                     @media (min-width: 480px) and (max-width: 767px) {
                         padding: 5px 0 0 13px !important;
                     }
                 }
-            }
-            .card-bottom {
-                position: absolute;
-                bottom: 0.5rem;
-                left: 1rem;
-                right: 1rem;
             }
             // Section activities summary container.
             .section-activities-summary {
@@ -295,110 +363,36 @@
                 padding: 0;
                 display: flex;
                 flex-wrap: wrap;
+                gap: $gap-4;
                 width: 100%;
+                color: $paragraph-color;
+                @include frmt-font-styling(14px, 22px, 600);
+
                 .item {
                     float: left;
-                    text-align: center;
-                    padding: 3px 5px;
                     text-decoration: none;
                     font-size: 0.9rem;
                 }
             }
+
             .wdm-section-summary {
                 .no-overflow {
                     margin: 0;
                     width: 100%;
-                }
-            }
-        }
-        // Styling for general section.
-        #section-0 {
-            background: transparent !important;
-            margin-bottom: 2rem;
-            .coursedetails .details {
-                background-color: #f1f4f5;
-                padding: 15px;
-                margin: 0;
-                .col-12 {
-                    padding: 0;
-                }
-            }
-            .section-details {
-                @media (min-width: 681px) {
-                    display: flex;
-                    .generaldetails {
-                        order: 1;
-                    }
-                    .coursedetails {
-                        order: 2;
+                    color: $paragraph-color;
+                    @include frmt-font-styling(14px, 22px, 400);
+
+                    p {
+                        margin: 0px;
                     }
                 }
-                .generaldetails {
-                    position: relative;
-                    padding: 0 1rem 1rem 0;
-                }
-                .coursedetails {
-                    position: relative;
-                    padding: 0 0 1rem 1rem;
-                }
-                @media (max-width: 680px) {
-                    .generaldetails {
-                        width: 100%;
-                    }
-                    .coursedetails {
-                        width: 100%;
-                    }
-                }
-                @media (min-width: 681px) and (max-width: 768px) {
-                    .generaldetails,
-                    .coursedetails {
-                        width: 50%;
-                    }
-                }
-                @media (min-width: 769px) {
-                    .generaldetails {
-                        width: 66.66%;
-                    }
-                    .coursedetails {
-                        width: 33.33%;
-                    }
-                }
-            }
-            .general-section-activities {
-                margin: 1rem -0.5rem;
-                .activity {
-                    padding: 0.5rem;
-                    &>div {
-                        text-align: center;
-                        padding: 1.2rem !important;
-                        box-shadow: 0 0 8px #ddd;
-                        .mod-indent-outer {
-                            padding: 0;
-                        }
-                    }
-                }
-            }
-            .general-section {
-                padding: 1rem;
-                background: white;
-            }
-            .coursemainimage {
-                width: 100%;
-                background-position: center;
-                background-size: cover;
-            }
-        }
-        #section-0 {
-            .coursemainimagediv,
-            .coursemainimage {
-                height: 140px;
             }
         }
     }
     // Styling for single section page
     &.single-section-format {
         .content {
-            margin: 0 -0.5rem;
+            // margin: 0 -0.5rem;
         }
         .section.main {
             background: transparent;
@@ -407,35 +401,104 @@
         }
         .sections {
             width: 100%;
-            .section.hide {
-                display: none !important;
+
+            .section {
+                display: flex;
+                flex-direction: column;
+                gap: $gap-16;
+
+                .section-details {
+                    padding-bottom: 20px;
+                    border-bottom: 1px solid #D5DDEA;
+                    div.no-overflow{
+                        @include frmt-font-styling(14px,22px,400);
+                        color: $paragraph-color;
+                        img{
+                            border-radius: $border-radius-8;
+                        }
+                    }
+                    .general-single-card {
+                        align-items: center;
+                        justify-content: space-between;
+                        gap:$gap-16;
+                        @media (max-width:$screen-900) {
+                            // flex-direction: column;
+                            align-items: unset;
+                            // gap: $gap-24;
+                        }
+                        @media (max-width:$sm-screen-bp) {
+                            flex-direction: column;
+                            gap: $gap-32;
+                        }
+                        .header-progresbar-wrapper{
+                            gap: $gap-40;
+                            @media (max-width:$screen-900) {
+                                gap: $gap-24;
+                            }
+                            @media (max-width:$tb-screenp-bp) {
+                                flex-direction: column;
+                                gap:$gap-16
+                            }
+                            .section-title {
+                                gap: $gap-8;
+                                color: $heading-color;
+                                @include frmt-font-styling(24px, 32px, 700);
+                            }
+                            .progress-bar-warpper{
+                                @media (max-width:$sm-screen-bp){
+                                    justify-content: center;
+                                    flex-direction: row;
+                                    flex-wrap: nowrap;
+                                    align-items: center;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.hide {
+                    display: none !important;
+                }
             }
         }
-        .general-single-card {
-            box-shadow: 0 0 8px #ddd;
-            border-radius: 2px;
-            background-color: white;
-        }
+
         // Section activities cards.
-        .activity-cards {
-            display: flex;
-            flex-wrap: wrap;
+        .activity-cards,
+        .activity-cards.section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax($card-min-width-1, 1fr));
+            @media (min-width:1200px) {
+                grid-template-columns: repeat(auto-fill, minmax($card-min-width-2, 1fr));
+            }
+            gap: $gap-24;
             padding: 0 !important;
             width: 100%;
             margin: 0;
             position: relative;
+
+            @media (max-width:425px) {
+                grid-template-columns: repeat(auto-fill, minmax($card-min-width-1, 1fr));
+            }
+
             .activity {
-                .sectionbadges .badge {
-                    margin: auto;
+                padding: $pad-8;
+                display: flex;
+                transition: all 0.5s ease;
+                padding: 0px;
+                min-height: $section-card-min-height;
+                &:hover{
+                    box-shadow: $card-box-shadow;
                 }
                 .activitytitle {
-                    margin: auto;
-                    .media-body .text-uppercase.small {
-                        display: none;
-                    }
-                    .activityiconcontainer {
-                        align-self: center !important;
-                        margin: 0 !important;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: $gap-16;
+                    .media-body {
+                        .text-font-small.small {
+                            color: $paragraph-color;
+                            @include frmt-font-styling(16px, 24px, 400);
+                        }
                     }
                 }
                 .cm_action_menu {
@@ -443,9 +506,7 @@
                     top: 0 !important;
                     right: 0 !important;
                 }
-                padding: 0.5rem;
-                display: flex;
-                transition: all 0.5s ease;
+
                 .autocompletion img {
                     width: 18px;
                     height: 18px;
@@ -454,45 +515,53 @@
                     background: transparent !important;
                 }
                 .single-card {
-                    min-height: 255px;
+                    min-height: $single-card-min-height;
+                    .single-card-child-wrapper{
+                        gap: $gap-8;
+                    }
                 }
                 .editing_move {
                     position: relative;
-                    float: left;
+                    // float: left;
+                    width: fit-content;
+                    top: -15px;
+                    left: -15px;
                 }
                 &>div {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    gap: $gap-16;
                     width: 100%;
-                    box-shadow: 0 0 8px #ddd;
-                    border-radius: 2px;
+                    border-radius: $border-radius-8;
                     background-color: white;
+                    border: 1px solid $light-border;
                     position: relative;
-                    padding: 1rem !important;
+                    padding: $pad-24;
                 }
+
                 .activity-content {
-                    padding: 0.8rem 0 1.5rem 0;
+                    // padding: 0.8rem 0 1.5rem 0;
                     width: 100%;
                     overflow: auto;
+                    color: $paragraph-color;
+                    @include frmt-font-styling(16px,24px,400);
                     .contentwithoutlink {
                         padding: 0;
                     }
                 }
-                // Show activity in row.
-                &.row-activity {
-                    flex: 0 0 100%;
-                    width: 100%;
-                }
-                // Show activity as column.
-                @media (max-width: 767px) {
-                    flex: 0 0 100%;
-                    width: 100%;
-                }
-                @media (min-width: 768px) and (max-width: 1200px) {
-                    flex: 0 0 50%;
-                    width: 50%;
-                }
-                @media (min-width: 1201px) {
-                    flex: 0 0 33.33%;
-                    width: 33.33%;
+
+                .completion-container{
+                    margin: 0px !important;
+                    padding: 0px !important;
+                    .automatic-completion-conditions{
+                        display: flex;
+                        flex-direction: column;
+                        gap: $gap-8;
+                        .badge{
+                            width: fit-content;
+                        }
+                    }
                 }
                 .wdm-mod-name {
                     margin-bottom: 0.5rem;
@@ -500,27 +569,28 @@
                 }
                 // Activity title in editing mode.
                 .title {
-                    a {
-                        color: #37474f;
-                        width: 100%;
-                    }
+                    // a {
+                    //     color: #37474f;
+                    //     width: 100%;
+                    // }
                     &.nosummary {
                         &>a,
                         div {
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
-                            align-items: center;
-                            align-self: center !important;
-                            color: #37474f;
+                            gap: $gap-16;
                             text-decoration: none;
-                            text-align: center;
+                            .media-body{
+                                gap: $gap-4;
+                            }
                         }
                     }
                     .inplaceeditable {
                         display: block;
                         width: 100%;
-                        text-align: center;
+                        text-align: start;
+
                         .activityicon {
                             display: block;
                             margin: 20px auto;
@@ -529,8 +599,7 @@
                 }
                 // Toggle row column button styling
                 .toggle-row-column {
-                    border: 1px solid #e4eaec;
-                    margin-right: 5px;
+                    border: $border-height solid #e4eaec;
                     img.icon {
                         margin: 0;
                     }
@@ -552,10 +621,11 @@
                 }
                 // Placing conpletion marker.
                 .completion-container.manual-completion {
-                    position: absolute;
-                    bottom: 1rem;
-                    padding: 0;
-                    right: 1rem;
+                    width: 100%;
+                    .completion-info .btn,[data-region="completion-info"] .btn{
+                        width: 100%;
+                    }
+
                     .filler {
                         display: none;
                     }
@@ -566,6 +636,24 @@
                         .editing_moveright,
                         .editing_moveleft {
                             display: none;
+                        }
+                    }
+                }
+                &.modtype_label{
+                    grid-column: 1/-1 !important;
+                    .single-card{
+                        background-color: transparent;
+
+                        .toggle-row-column{
+                            display: none;
+                        }
+                        .completion-info,
+                        [data-region="completion-info"] {
+                            display: flex;
+                            justify-content: flex-end;
+                            .btn{
+                                width: fit-content;
+                            }
                         }
                     }
                 }
@@ -580,4 +668,79 @@
             text-decoration: none;
         }
     }
+}
+
+// Show More Less Handle
+&:not(.limitedwidth) {
+    .remui-format-card.all-section-format {
+        .showhideactivity .general-section-activities  {
+            .activity:nth-child(n+5) {
+                display: none !important;
+            }
+            @media only screen and (max-width: 1439px) {
+
+                .activity:nth-child(n+5) {
+                    display: none !important;
+                }
+            }
+            @media only screen and (max-width: 1199px) {
+                .activity:nth-child(n+4) {
+                    display: none !important;
+                }
+            }
+
+        }
+    }
+}
+&.limitedwidth {
+    .remui-format-card.all-section-format {
+        & .sections{
+            @media (min-width:1440px) {
+                grid-template-columns: repeat(auto-fill, minmax($card-min-width-1,1fr)) !important;
+            }
+        }
+        .general-section-activities{
+            @media (min-width:1440px) {
+                grid-template-columns: repeat(auto-fill, minmax($card-min-width-1,1fr)) !important;
+            }
+        }
+        .showhideactivity .general-section-activities  {
+		.activity:nth-child(n+4) {
+		    display: none !important;
+		}
+        }
+    }
+    .activity-cards,
+    .activity-cards.section {
+        grid-template-columns: repeat(auto-fill, minmax($card-min-width-1, 1fr)) !important;
+    }
+}
+
+.remui-format-card.all-section-format {
+    .showhideactivity .general-section-activities  {
+        @media only screen and (max-width: 1023px) {
+            .activity:nth-child(n+3) {
+                display: none !important;
+            }
+        }
+        @media only screen and (max-width: 767px) {
+            .activity:nth-child(n+3) {
+                display: none !important;
+            }
+        }
+        @media only screen and (max-width: 550px) {
+            .activity:nth-child(n+2) {
+                display: none !important;
+            }
+        }
+    }
+}
+
+.frmt-pt-50{
+    padding-top: 50%;
+}
+.section.main:not(.course-section) .activity .availabilityinfo,
+.section.main:not(.course-section) .activity .contentafterlink {
+    margin-top: 0px;
+    margin-left: 0px;
 }

@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,27 +14,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for format_remuiformat.
+ * Enhancements to all components for easy course accessibility.
  *
- * @copyright Copyright (c) 2016 WisdmLabs. (http://www.wisdmlabs.com)
- * @package    format_remuiformat
+ * @module     format/remuiformat
+ * @copyright  WisdmLabs
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace format_remuiformat\privacy;
 
-/**
- * Privacy Subsystem for format_remuiformat implementing null_provider.
- *
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class provider implements \core_privacy\local\metadata\null_provider {
+
+define(['jquery'], function($) {
     /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
+     * Init method
      *
-     * @return  string
      */
-    public static function get_reason() : string {
-        return 'privacy:metadata';
+    function init() {
+        // eslint-disable-next-line no-console
+        $(document).ready(function() {
+            var headercontent = $(".rmuiformate-header-wrapper").html();
+            $('#page #page-header').replaceWith(headercontent);
+            // $('.rmuiformate-header-wrapper').removeClass("d-none");
+        });
     }
-}
+    // Must return the init function.
+    return {
+        init: init
+    };
+});

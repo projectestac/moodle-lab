@@ -75,7 +75,7 @@ $type = 'list';
 
 if ($section) {
     // List Format -> One Section Page : render_list_one_section -> list_one_section.
-    if ($course->remuicourseformat && $course->coursedisplay) {
+    if ($course->remuicourseformat) {
         $renderer->render_list_one_section(
             new \format_remuiformat\output\format_remuiformat_list_one_section($course, $displaysection, $baserenderer)
         );
@@ -114,5 +114,9 @@ if ($course->remuicourseformat && $course->coursedisplay && !$section) {
         );
     }
 }
+$PAGE->requires->strings_for_js([
+    'showless',
+    'showmore'
+], 'format_remuiformat');
 // Include course format js module.
 $PAGE->requires->js('/course/format/remuiformat/format_' . $type . '.js');

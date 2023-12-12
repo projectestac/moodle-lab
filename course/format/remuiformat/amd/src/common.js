@@ -31,6 +31,8 @@ define(['jquery'], function($) {
         SHOW: 'show',
         TOGGLE_HIGHLIGHT: '.section_action_menu .dropdown-item.editing_highlight',
         TOGGLE_SHOWHIDE: '.section_action_menu .dropdown-item.editing_showhide',
+        BUTTON_HIDE: '.cm_action_menu .dropdown-menu .editing_hide',
+        BUTTON_SHOW: '.cm_action_menu .dropdown-menu .editing_show',
         DELETE: '.section_action_menu .dropdown-item[data-action="deleteSection"]'
     };
 
@@ -50,7 +52,7 @@ define(['jquery'], function($) {
             return 2;
         } else {
             if (width >= 768) {
-                return 3;
+                return 4;
             }
             if (width >= 481) {
                 return 2;
@@ -71,7 +73,10 @@ define(['jquery'], function($) {
             $(SELECTORS.FIRST_SECTION).addClass(SELECTORS.ACTIVITY_TOGGLE_CLASS);
         }
     }
-
+    /**
+     * Init method
+     *
+     */
     function init() {
 
         $('#page-course-view-remuiformat .section-modchooser-link').addClass("btn btn-primary");
@@ -81,14 +86,20 @@ define(['jquery'], function($) {
             adjustGeneralSectionActivities();
         });
 
+        if ($(".general-section-activities li:last").css('display') == 'none') {
+            $(".showactivitywrapper").show();
+        } else {
+            $(".showactivitywrapper").hide();
+        }
+
         $(SELECTORS.ACTIVITY_TOGGLE).on('click', function() {
 
             if ($(this).hasClass(SELECTORS.SHOW)) {
-                $(this).html('<i class="fa fa-angle-up" aria-hidden="true"></i>');
-                $(this).toggleClass(SELECTORS.SHOW); //Remove show class
+                $(this).html(M.util.get_string('showless', 'format_remuiformat'));
+                $(this).toggleClass(SELECTORS.SHOW); // Remove show class
             } else {
-                $(this).html('<i class="fa fa-angle-down" aria-hidden="true"></i>');
-                $(this).toggleClass(SELECTORS.SHOW); //Add show class
+                $(this).html(M.util.get_string('showmore', 'format_remuiformat'));
+                $(this).toggleClass(SELECTORS.SHOW); // Add show class
                 $("html, body").animate({
                     scrollTop: $(SELECTORS.FIRST_SECTION + ' .activity:first-child').offset().top - 66
                 }, "slow");
@@ -97,7 +108,10 @@ define(['jquery'], function($) {
         });
 
         // Handling highlight and show hide dropdown.
-        $('body').on('click', `${SELECTORS.TOGGLE_HIGHLIGHT}, ${SELECTORS.TOGGLE_SHOWHIDE}`, function() {
+        $('body').on('click', `${SELECTORS.TOGGLE_HIGHLIGHT},
+                               ${SELECTORS.TOGGLE_SHOWHIDE},
+                               ${SELECTORS.BUTTON_HIDE},
+                               ${SELECTORS.BUTTON_SHOW}`, function() {
             location.reload();
         });
 
@@ -106,6 +120,33 @@ define(['jquery'], function($) {
             event.preventDefault();
             window.location.href = $(this).attr('href');
             return true;
+        });
+
+
+        // ... + Show full summary label show conditionally.
+        var summaryheight = $('.read-more-target').height();
+        var browservendor = window.navigator.vendor;
+        var webkitboxorient = "vertical";
+        if (browservendor.indexOf('Apple') != -1) {
+            webkitboxorient = "horizontal";
+        }
+
+        if (summaryheight > 100) {
+            $('.generalsectioninfo').find('#readmorebtn').removeClass('d-none');
+            $('.read-more-target .no-overflow').addClass('text-clamp text-clamp-3').css("-webkit-box-orient", webkitboxorient);
+            $('.read-more-target').addClass('text-clamp text-clamp-3').css("-webkit-box-orient", webkitboxorient);
+        }
+        $('#readmorebtn').on('click', function() {
+            $('.read-more-target .no-overflow').removeClass('text-clamp text-clamp-3');
+            $('.read-more-target').removeClass('text-clamp text-clamp-3');
+            $('.generalsectioninfo').find('#readmorebtn').addClass('d-none');
+            $('.generalsectioninfo').find('#readlessbtn').removeClass('d-none');
+        });
+        $('#readlessbtn').on('click', function () {
+            $('.read-more-target .no-overflow').addClass('text-clamp text-clamp-3').css("-webkit-box-orient", webkitboxorient);
+            $('.read-more-target').addClass('text-clamp text-clamp-3').css("-webkit-box-orient", webkitboxorient);
+            $('.generalsectioninfo').find('#readmorebtn').removeClass('d-none');
+            $('.generalsectioninfo').find('#readlessbtn').addClass('d-none');
         });
 
     }

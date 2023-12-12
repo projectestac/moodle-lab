@@ -44,10 +44,14 @@ if ($ADMIN->fulltree) {
         format_text(get_string('informationsettingsdesc', 'format_grid'), FORMAT_MARKDOWN)));
 
     // Information.
-    $page->add(new admin_setting_information('format_grid/formatinformation', '', '', 400));
+    $page->add(new admin_setting_information('format_grid/formatinformation', '', '', 401));
 
     // Support.md.
     $page->add(new admin_setting_markdown('format_grid/formatsupport', '', '', 'Support.md'));
+
+    // Changes.md.
+    $page->add(new admin_setting_markdown('format_grid/formatchanges',
+        get_string('informationchanges', 'format_grid'), '', 'Changes.md'));
 }
 $ADMIN->add('format_grid', $page);
 
@@ -63,10 +67,25 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultpopup', 'format_grid');
     $description = get_string('defaultpopup_desc', 'format_grid');
     $default = 1;
-    $choices = array(
+    $choices = [
         1 => new lang_string('no'),
-        2 => new lang_string('yes')
-    );
+        2 => new lang_string('yes'),
+    ];
+    $page->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Justification.
+    $name = 'format_grid/defaultgridjustification';
+    $title = get_string('defaultgridjustification', 'format_grid');
+    $description = get_string('defaultgridjustification_desc', 'format_grid');
+    $default = 'space-between';
+    $choices = [
+        'start' => new lang_string('start', 'format_grid'),
+        'center' => new lang_string('centre', 'format_grid'),
+        'end' => new lang_string('end', 'format_grid'),
+        'space-around' => new lang_string('spacearound', 'format_grid'),
+        'space-between' => new lang_string('spacebetween', 'format_grid'),
+        'space-evenly' => new lang_string('spaceevenly', 'format_grid'),
+    ];
     $page->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Icon width.
@@ -94,10 +113,10 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultimageresizemethod', 'format_grid');
     $description = get_string('defaultimageresizemethod_desc', 'format_grid');
     $default = 1; // Scale.
-    $choices = array(
+    $choices = [
         1 => new lang_string('scale', 'format_grid'),
-        2 => new lang_string('crop', 'format_grid')
-    );
+        2 => new lang_string('crop', 'format_grid'),
+    ];
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('format_grid::update_displayed_images_callback');
     $page->add($setting);
@@ -107,25 +126,36 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultdisplayedimagefiletype', 'format_grid');
     $description = get_string('defaultdisplayedimagefiletype_desc', 'format_grid');
     $default = 1; // Original.
-    $choices = array(
+    $choices = [
         1 => new lang_string('original', 'format_grid'),
-        2 => new lang_string('webp', 'format_grid')
-    );
+        2 => new lang_string('webp', 'format_grid'),
+    ];
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('format_grid::update_displayed_images_callback');
     $page->add($setting);
+
+    // Completion.
+    $name = 'format_grid/defaultshowcompletion';
+    $title = get_string('defaultshowcompletion', 'format_grid');
+    $description = get_string('defaultshowcompletion_desc', 'format_grid');
+    $default = 1;
+    $choices = [
+        1 => new lang_string('no'),
+        2 => new lang_string('yes'),
+    ];
+    $page->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Show the grid image in the section summary on a single page.
     $name = 'format_grid/defaultsinglepagesummaryimage';
     $title = get_string('defaultsinglepagesummaryimage', 'format_grid');
     $description = get_string('defaultsinglepagesummaryimage_desc', 'format_grid');
     $default = 1;
-    $choices = array(
+    $choices = [
         1 => new lang_string('off', 'format_grid'),
         2 => new lang_string('left', 'format_grid'),
         3 => new lang_string('centre', 'format_grid'),
-        4 => new lang_string('right', 'format_grid')
-    );
+        4 => new lang_string('right', 'format_grid'),
+    ];
     $page->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 }
 $ADMIN->add('format_grid', $page);

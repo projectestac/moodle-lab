@@ -32,11 +32,9 @@ ul.ctopics .content .section ul {
     margin: 0 0 10px 10px;
 }
 
-ul.ctopics :target::before {
-    height: auto;
-    margin-top: 0;
-    pointer-events: none;
-    width: 0;
+/* Half the navbar height */
+ul.ctopics :target {
+  scroll-margin-top: 30px;
 }
 
 .course-content ul.ctopics .current::before {
@@ -50,12 +48,12 @@ ul.ctopics :target::before {
 }
 
 /* Activity padding */
-.format-topcoll .ctopics.topics .activity-item:not(.activityinline) {
+.format-topcoll .ctopics .activity-item:not(.activityinline) {
     padding: 1rem 0.5rem;
 }
 
 @media (min-width: 768px) {
-    .format-topcoll .ctopics.topics .activity-item:not(.activityinline) {
+    .format-topcoll .ctopics .activity-item:not(.activityinline) {
         padding: 0.5rem 0.25rem;
     }
 }

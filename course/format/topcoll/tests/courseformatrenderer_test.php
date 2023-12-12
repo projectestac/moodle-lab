@@ -25,11 +25,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
+namespace format_topcoll;
+
 /**
  * Renderer unit tests for the Collapsed Topics course format.
  * @group format_topcoll
  */
-class format_topcoll_courseformatrenderer_test extends advanced_testcase {
+class courseformatrenderer_test extends \advanced_testcase {
 
     protected $outputus;
     protected $ouroutput;
@@ -135,7 +137,7 @@ class format_topcoll_courseformatrenderer_test extends advanced_testcase {
         $this->init();
         $theclass = self::call_method($this->outputus, 'start_toggle_section_list',
             array());
-        $thevalue = '<ul class="ctopics topics row">';
+        $thevalue = '<ul class="ctopics ctoggled topics row">';
 
         $this->assertEquals($thevalue, $theclass);
     }
@@ -320,7 +322,8 @@ class format_topcoll_courseformatrenderer_test extends advanced_testcase {
             'rightcontent' => self::call_method($this->outputus, 'section_right_content', array($section, $this->course, false)),
             'rtl' => false,
             'sectionid' => $section->id,
-            'sectionno' => $section->section
+            'sectionno' => $section->section,
+            'sectionvisibility' => true
         );
 
         $thevalue = self::call_method($this->outputus, 'render_from_template', array('format_topcoll/stealthsection',
@@ -345,16 +348,37 @@ class format_topcoll_courseformatrenderer_test extends advanced_testcase {
             'maincoursepageicon' => $this->ouroutput->pix_icon('t/less', $maincoursepage),
             'maincoursepagestr' =>  $maincoursepage,
             'maincoursepageurl' => new moodle_url('/course/view.php', array('id' => $course->id)),
-            'sectionnavselection' => self::call_method($this->outputus, 'section_nav_selection', array($course, null, $displaysection)),
+            'sectionnavselection' => self::call_method(
+                $this->outputus,
+                'section_nav_selection',
+                array($course, null, $displaysection)
+            ),
             'sectiontitle' => '<h3 class="sectionname">Section 1</h3>',
-            'sectionzero' => self::call_method($this->outputus, 'topcoll_section', array($sectionzero, $course, true, $displaysection, array('sr' => $displaysection))),
-            'thissection' => self::call_method($this->outputus, 'topcoll_section', array($thissection, $course, true, $displaysection, array('sr' => $displaysection)))
+            'sectionzero' => self::call_method(
+                $this->outputus, 'topcoll_section',
+                array($sectionzero, $course, true, $displaysection, array('sr' => $displaysection))
+            ),
+            'thissection' => self::call_method(
+                $this->outputus,
+                'topcoll_section',
+                array($thissection, $course, true, $displaysection, array('sr' => $displaysection))
+            )
         );
-        $sectionnavlinks = self::call_method($this->outputus, 'get_nav_links', array($this->course, $modinfo->get_section_info_all(), $displaysection));
+        $sectionnavlinks = self::call_method(
+            $this->outputus,
+            'get_nav_links',
+            array($this->course,
+            $modinfo->get_section_info_all(),
+            $displaysection)
+        );
         $singlesectioncontext['sectionnavlinksprevious'] = $sectionnavlinks['previous'];
         $singlesectioncontext['sectionnavlinksnext'] = $sectionnavlinks['next'];
 
-        $theoutput = self::call_method($this->outputus, 'render_from_template', array('format_topcoll/singlesection', $singlesectioncontext));
+        $theoutput = self::call_method(
+            $this->outputus,
+            'render_from_template',
+            array('format_topcoll/singlesection', $singlesectioncontext)
+        );
 
         $this->expectOutputString($theoutput);
     }
@@ -376,7 +400,7 @@ class format_topcoll_courseformatrenderer_test extends advanced_testcase {
         $theoutput = file_get_contents($CFG->dirroot.'/course/format/topcoll/tests/phpu_data/test_multiple_section_page_css.txt');
         $theoutput .= '<ul class="ctopics">';
         $theoutput .= self::call_method($this->outputus, 'topcoll_section', array($section0, $this->course, false, 0));
-        $theoutput .= '</ul><ul class="ctopics topics row">';
+        $theoutput .= '</ul><ul class="ctopics ctoggled topics row">';
         $theoutput .= self::call_method($this->outputus, 'topcoll_section', array($section1, $this->course, false));
         $theoutput .= '</ul>';
 
@@ -401,7 +425,7 @@ class format_topcoll_courseformatrenderer_test extends advanced_testcase {
         $theoutput .= '<ul class="ctopics">';
         $theoutput .= self::call_method($this->outputus, 'topcoll_section', array($section0, $this->course, false, 0));
         $theoutput .= '</ul><div class="row">';
-        $theoutput .= '<ul class="ctopics topics col-sm-12">';
+        $theoutput .= '<ul class="ctopics ctoggled topics col-sm-12">';
         $theoutput .= self::call_method($this->outputus, 'topcoll_section', array($section1, $this->course, false));
         $theoutput .= '</ul></div>';
 

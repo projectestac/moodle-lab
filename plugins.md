@@ -50,7 +50,7 @@
 |question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20|d4c26cfce425075ad91221ad740b1514baedd57b|
 |question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2023111700|2023/12/12|--- Baixat de Moodle plugins -----------|
 |question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2023/12/12|--- Baixat de Moodle plugins -----------|
-|course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022041701|2022/05/17|6462808adfee21329c0dcaf29473744d37c9a05a|
+|course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022112602|2023/12/12|--- Baixat de Moodle plugins -----------|
 |course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022113000|2023/01/08|36e5799341819cefdf6978ba9f74a3f9d1a11fcb|
 |course format    |trail               |https://github.com/JotaDF/moodle-format_trail                   |2022070201|2023/01/26|aeee8cff724b61ea3353b2db7baa2bf756365091|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|

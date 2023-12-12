@@ -58,7 +58,7 @@ $string['hidegeneralsectionwhenempty_help'] = 'When general section does not hav
 // Section.
 $string['sectionname'] = 'Section';
 $string['sectionnamecaps'] = 'SECTION';
-$string['section0name'] = 'General';
+$string['section0name'] = 'Introduction';
 $string['hidefromothers'] = 'Hide section';
 $string['showfromothers'] = 'Show section';
 $string['viewtopic'] = 'View';
@@ -92,8 +92,8 @@ $string['remuicourseformat'] = 'Choose layout';
 $string['remuicourseformat_card'] = 'Card Layout';
 $string['remuicourseformat_list'] = 'List Layout';
 $string['remuicourseformat_help'] = 'Choose a course layout';
-$string['remuicourseimage_filemanager'] = 'Course format image';
-$string['remuicourseimage_filemanager_help'] = 'This image will be displayed in General section card in card layout and as a background of General section in list layout. <strong>Recommended image size 16:9.<strong>';
+$string['remuicourseimage_filemanager'] = 'Course Header Image';
+$string['remuicourseimage_filemanager_help'] = 'This image will be displayed in General section card in card layout and as a background of General section in list layout. <strong>Recommended image size 1272x288.<strong>';
 $string['addsections'] = 'Add sections';
 $string['teacher'] = 'Teacher';
 $string['teachers'] = 'Teachers';
@@ -145,7 +145,9 @@ $string['showallsectionperpage'] = 'Show all sections per page';
 
 // Card format general section.
 $string['showfullsummary'] = '+ Show full summary';
-$string['showless'] = 'Show less';
+$string['showless'] = 'Show Less';
+$string['showmore'] = 'Show More';
+$string['Complete'] = 'complete';
 
 // Usage tracking.
 $string['enableusagetracking'] = "Enable Usage Tracking";
@@ -160,3 +162,24 @@ $string['enableusagetrackingdesc'] = "<strong>USAGE TRACKING NOTICE</strong>
 <p>Having said that we don't gather your personal data or of your students during this process. You can disable this from the plugin whenever you wish to opt out of this service.</p>
 
 <p>An overview of the data collected is available <strong><a href='https://forums.edwiser.org/topic/67/anonymously-tracking-the-usage-of-edwiser-products' target='_blank'>here</a></strong>.</p>";
+
+
+$string['edw_format_hd_bgpos'] = "Course header background image position";
+$string['bottom'] = "bottom";
+$string['center'] = "center";
+$string['top'] = "top";
+$string['left'] = "left";
+$string['right'] = "right";
+$string["edw_format_hd_bgpos_help"] = "Choose background image position";
+
+
+$string['edw_format_hd_bgsize'] = "Course header background image size";
+$string['cover'] = "cover";
+$string['contain'] = "contain";
+$string['auto'] = "auto";
+$string['edw_format_hd_bgsize_help'] = "Select Course header background image size ";
+$string['courseinformation'] = "Course information ";
+$string["defaultheader"] = 'Default ';
+$string["remuiheader"] = 'Header';
+$string["headereditingbutton"] = "Select editing button positon";
+$string['headereditingbutton_help'] = "Select editing button positon This setting will not work in remui, check course setting";

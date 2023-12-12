@@ -30,7 +30,7 @@ use templatable;
 use stdClass;
 use html_writer;
 use context_course;
-
+use core_completion\progress;
 require_once($CFG->dirroot.'/course/format/renderer.php');
 require_once($CFG->dirroot.'/course/format/remuiformat/classes/mod_stats.php');
 require_once($CFG->dirroot.'/course/format/remuiformat/lib.php');
@@ -156,6 +156,13 @@ class format_remuiformat_list_one_section implements renderable, templatable {
             $export->optionmenu = $this->courseformatdatacommontrait->course_section_controlmenu($this->course, $section);
         }
 
+        $singlepageurl = $this->courseformat->get_view_url($sectioninfo->section)->out(true);
+
+        // New menu option.
+        $export->optionmenu = $this->courseformatdatacommontrait->course_section_controlmenu($this->course, $section);
+        $extradetails = $this->courseformatdatacommontrait->get_section_module_info($section, $this->course, null, $singlepageurl);
+        $export->progressinfo = $extradetails['progressinfo'];
+
         // Title with section navigation links.
         $sectionnavlinks = $renderer->get_nav_links($this->course, $modinfo->get_section_info_all(), $this->displaysection);
         $export->leftnav = $sectionnavlinks['previous'];
@@ -187,6 +194,22 @@ class format_remuiformat_list_one_section implements renderable, templatable {
             $section->name = $this->courseformat->get_section_name($section->index);
             $export->sections[] = $section;
         }
+                 // Get course image if added.
+                 $coursecontext = context_course::instance($this->course->id);
+                 $imgurl = $this->courseformatdatacommontrait->display_file(
+                 $coursecontext,
+                 $this->settings['remuicourseimage_filemanager']
+                 );
+        if (empty($imgurl)) {
+            $imgurl = $this->courseformatdatacommontrait->get_dummy_image_for_id($this->course->id);
+        }
+        $export->resumeactivityurl = $this->courseformatdatacommontrait->get_activity_to_resume($this->course);
+        $export->headerdata = get_extra_header_context(
+            $export,
+            $this->course,
+            progress::get_course_progress_percentage($this->course),
+            $imgurl
+        );
         $PAGE->requires->js_call_amd('format_remuiformat/format_list', 'init');
         return $export;
     }

@@ -29,9 +29,6 @@ use renderer_base;
 use templatable;
 use stdClass;
 use context_course;
-use html_writer;
-use moodle_url;
-use core_completion\progress;
 
 require_once($CFG->dirroot.'/course/format/renderer.php');
 require_once($CFG->dirroot.'/course/renderer.php');
@@ -126,6 +123,7 @@ class format_remuiformat_list_all_sections_summary implements renderable, templa
         return  $export;
     }
 
+
     /**
      * Get list layout context
      * @param  object      $export  Object in which context will be stored
@@ -137,8 +135,7 @@ class format_remuiformat_list_all_sections_summary implements renderable, templa
         global $DB, $OUTPUT, $USER;
         $coursecontext = context_course::instance($this->course->id);
         $modinfo = get_fast_modinfo($this->course);
-        $hidegeneralsection = $this->courseformat->hide_general_section_when_empty($this->course, $modinfo);
-
+        $sections = $modinfo->get_section_info_all();
         // Default view for all sections.
         $defaultview = $this->settings['remuidefaultsectionview'];
         $export->defaultview = $defaultview;
@@ -152,105 +149,14 @@ class format_remuiformat_list_all_sections_summary implements renderable, templa
         $export->user_id = $USER->id;
         // Course Information.
         $export->courseid = $this->course->id;
-
-        if (!$hidegeneralsection) {
-            $imgurl = $this->courseformatdatacommontrait->display_file($coursecontext, $this->settings['remuicourseimage_filemanager']);
-
-            // General Section Details.
-            $generalsection = $modinfo->get_section_info(0);
-            if ($editing) {
-                $export->generalsection['generalsectiontitlename'] = $this->courseformat->get_section_name($generalsection);
-                $export->generalsection['generalsectiontitle'] = $renderer->section_title($generalsection, $this->course);
-            } else {
-                $export->generalsection['generalsectiontitle'] = $this->courseformat->get_section_name($generalsection);
-            }
-            $generalsectionsummary = $renderer->format_summary_text($generalsection);
-            $export->generalsectionsummary = $generalsectionsummary;
-            $export->generalsection['remuicourseimage'] = $imgurl;
-            // For Completion percentage.
-            $export->generalsection['activities'] = $this->courseformatdatacommontrait->get_list_activities_details(
-                $generalsection,
-                $this->course,
-                $this->courserenderer,
-                $this->settings
-            );
-            $completion = new \completion_info($this->course);
-            $percentage = progress::get_course_progress_percentage($this->course);
-            if (!is_null($percentage)) {
-                $percentage = floor($percentage);
-                $export->generalsection['percentage'] = $percentage;
-            } else {
-                $export->generalsection['percentage'] = 0;
-            }
-
-            // For right side.
-            $export->generalsection['rightside'] = $this->courseformatdatacommontrait->course_section_controlmenu($this->course, $generalsection);
-            $displayteacher = $this->settings['remuiteacherdisplay'];
-            if ($displayteacher == 1) {
-                $role = $DB->get_record('role', array('shortname' => 'editingteacher'));
-                $teachers = null;
-                if (!empty($role)) {
-                    $teachers = get_role_users($role->id, $coursecontext);
-                }
-                // For displaying teachers.
-                if (!empty($teachers)) {
-                    $count = 1;
-                    $export->generalsection['teachers'] = $teachers;
-                    $export->generalsection['teachers']['teacherimg'] =
-                    '<div class="teacher-label"><span>'
-                    .get_string(count($teachers) > 1 ? 'teachers' : 'teacher', 'format_remuiformat').
-                    '</span></div>'
-                    . '<div class="carousel slide" data-ride="carousel" id="teachers-carousel">'
-                    . '<div class="carousel-inner text-center">';
-
-                    foreach ($teachers as $teacher) {
-                        if ($count % 2 == 0) {
-                            // Skip even members.
-                            $count += 1;
-                            next($teachers);
-                            continue;
-                        }
-                        $teacher->imagealt = $teacher->firstname . ' ' . $teacher->lastname;
-                        if ($count == 1) {
-                            $export->generalsection['teachers']['teacherimg'] .=
-                            '<div class="carousel-item active"><div class="teacher-img-container">'
-                            . $OUTPUT->user_picture($teacher);
-
-                        } else {
-                            $export->generalsection['teachers']['teacherimg'] .=
-                            '<div class="carousel-item"><div class="teacher-img-container">'. $OUTPUT->user_picture($teacher);
-                        }
-                        $nextteacher = next($teachers);
-                        if (false != $nextteacher) {
-                            $nextteacher->imagealt = $nextteacher->firstname . ' ' . $nextteacher->lastname;
-                            $export->generalsection['teachers']['teacherimg'] .= $OUTPUT->user_picture($nextteacher);
-                        }
-                        $export->generalsection['teachers']['teacherimg'] .= '</div></div>';
-                        $count += 1;
-                    }
-                    if (count($teachers) > 2) {
-                        $export->generalsection['teachers']['teacherimg'] .=
-                        '</div><a class="carousel-control-prev" href="#teachers-carousel" role="button" data-slide="prev">'
-                                . '<i class="fa fa-chevron-left"></i>'
-                                . '<span class="sr-only">'
-                                . get_string('previous', 'format_remuiformat')
-                                . '</span>'
-                            . '</a>'
-                            . '<a class="carousel-control-next" href="#teachers-carousel" role="button" data-slide="next">'
-                                . '<i class="fa fa-chevron-right"></i>'
-                                . '<span class="sr-only">'
-                                . get_string('next', 'format_remuiformat')
-                                . '</span>'
-                            . '</a></div>';
-                    } else {
-                        $export->generalsection['teachers']['teacherimg'] .= '</div></div>';
-                    }
-                }
-            }
-
-            // Add new activity.
-            $export->generalsection['addnewactivity'] = $this->courserenderer->course_section_add_cm_control($this->course, 0, 0);
-        }
+        $this->courseformatdatacommontrait->add_generalsection_data(
+            $export,
+            $renderer,
+            $editing,
+            $this->course,
+            $this->courseformat,
+            $this->courserenderer
+        );
         $export->sections = $this->courseformatdatacommontrait->get_all_section_data(
             $renderer,
             $editing,

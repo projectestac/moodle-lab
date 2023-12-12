@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable valid-jsdoc */
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -28,7 +30,10 @@ define([
     'format_remuiformat/common',
     './format_card_ordering'
 ], function($, Ajax, Notification, common, ordering) {
-
+    /**
+     * Init method
+     *
+     */
     function init() {
 
         /**
@@ -42,6 +47,7 @@ define([
              * @param {integer} courseid   Current course id
              * @param {integer} sectionid  Current Section id
              * @param {integer} activityid Selected activity id
+             * @return
              */
             SHOW_ACTIVITY_IN_ROW: function(courseid, sectionid, activityid) {
                 return Ajax.call([{
@@ -53,7 +59,7 @@ define([
                     }
                 }])[0];
             }
-        }
+        };
 
         var cardminHeight = 200;
         $(document).ready(function() {
@@ -71,19 +77,13 @@ define([
             PROMISES.SHOW_ACTIVITY_IN_ROW(courseid, section, activity)
             .done(function(response) {
                 if (response.type == 'row') {
-                    $(selector).closest('.col-activity').removeClass('col-activity').addClass('row-activity');
+                    $(selector).closest('.col-activity').removeClass('col-activity').addClass('row-activity fullwidth-grid-item');
                 } else {
-                    $(selector).closest('.row-activity').addClass('col-activity').removeClass('row-activity');
+                    $(selector).closest('.row-activity').addClass('col-activity').removeClass('row-activity fullwidth-grid-item');
                 }
             })
             .fail(Notification.exception);
         });
-
-        // ... + Show full summary label show conditionally.
-        var summaryheight = $('.read-more-target .no-overflow').height();
-        if (summaryheight < 110) {
-            $('.read-more-trigger, .fadeout-summary').hide();
-        }
 
         common.init();
     }

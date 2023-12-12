@@ -1,6 +1,7 @@
 Formulas question type for Moodle
 ---------------------------------
-[![Automated code checks](https://github.com/FormulasQuestion/moodle-qtype_formulas/workflows/Automated%20code%20checks/badge.svg?branch=master)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions?query=workflow%3A%22Automated+code+checks%22+branch%3Amaster) [![Automated acceptance tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/workflows/Automated%20acceptance%20tests/badge.svg?branch=master)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions?query=workflow%3A%22Automated+acceptance+tests%22+branch%3Amaster)  [![Automated unit tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/workflows/Automated%20unit%20tests/badge.svg?branch=master)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions?query=workflow%3A%22Automated+unit+tests%22+branch%3Amaster) [![GitHub
+
+[![Automated code checks](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/checks.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/checks.yml) [![Automated acceptance tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behat.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behat.yml) [![Automated mobile acceptance tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behatmobile.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behatmobile.yml) [![Automated unit tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/testing.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/testing.yml) [![GitHub
 Release](https://img.shields.io/github/release/FormulasQuestion/moodle-qtype_formulas.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/releases)
 
 This is a question type plugin for Moodle with random values and multiple answer fields.
@@ -16,8 +17,13 @@ still available at the [original author's website](https://code.google.com/p/moo
 at the date of this writing. It was then upgraded to the new question engine introduced in Moodle 2.1 by
 Jean-Michel Védrine.
 
-This version is compatible with Moodle 3.9 and newer. It has been tested with Moodle
-versions 3.11, 4.0 and 4.1. It has also been tested with PHP versions 7.4 and 8.0.
+This version is compatible with Moodle 3.9 and newer. It has been tested with:
+- Moodle 3.9 using PHP 7.4
+- Moodle 3.11 using PHP 7.4 and PHP 8.0
+- Moodle 4.0 using PHP 7.4 and PHP 8.0
+- Moodle 4.1 using PHP 7.4, PHP 8.0 and PHP 8.1
+- Moodle 4.2 using PHP 8.0, PHP 8.1 and PHP 8.2
+- Moodle 4.3 using PHP 8.0, PHP 8.1 and PHP 8.2
 
 
 ### Requirements

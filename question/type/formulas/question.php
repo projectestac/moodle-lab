@@ -41,6 +41,45 @@ require_once($CFG->dirroot . '/question/behaviour/adaptivemultipart/behaviour.ph
  */
 class qtype_formulas_question extends question_graded_automatically_with_countback
         implements question_automatically_gradable_with_multiple_parts {
+
+    // Definition of properties used in legacy code or tests, for compatibility with PHP 8.2.
+    // This will be cleaner with the new parser code.
+    public $correctfeedback;
+    public $correctfeedbackformat;
+    public $partiallycorrectfeedback;
+    public $partiallycorrectfeedbackformat;
+    public $incorrectfeedback;
+    public $incorrectfeedbackformat;
+    public $answernumbering;
+    public $globalvars;
+    public $noanswers;
+    public $answermark;
+    public $numbox;
+    public $placeholder;
+    public $subqtext;
+    public $answertype;
+    public $answer;
+    public $postunit;
+    public $correctness;
+    public $vars1;
+    public $vars2;
+    public $otherrule;
+    public $feedback;
+    public $partcorrectfb;
+    public $partpartiallycorrectfb;
+    public $partincorrectfb;
+    public $globalunitpenalty;
+    public $globalruleid;
+    public $numhints;
+    public $hint;
+    public $hintclearwrong;
+    public $hintshownumcorrect;
+    public $ruleid;
+    public $options;
+    public $unitpenalty;
+    public $shuffleanswers;
+
+
     /**
      * @var int: number of formulas_parts for the question.
      */
@@ -57,6 +96,7 @@ class qtype_formulas_question extends question_graded_automatically_with_countba
     /** These array may be used some day to store results ? */
     public $evaluatedanswer = array();
     public $fractions = array();
+    public $raw_grades = array();
     public $anscorrs = array();
     public $unitcorrs = array();
 
@@ -467,23 +507,29 @@ class qtype_formulas_question extends question_graded_automatically_with_countba
      * @return array (number, integer) the fraction, and the state.
      */
     public function grade_response(array $response) {
+        global $OUTPUT;
+
         // We cant' rely on question defaultmark for restored questions.
         $totalvalue = 0;
-        try {
-            $this->rationalize_responses($response);      // May throw if subqtext have changed.
-            $checkunit = new answer_unit_conversion; // Defined here for the possibility of reusing parsed default set.
-            foreach ($this->parts as $part) {
+        $this->rationalize_responses($response);
+        $checkunit = new answer_unit_conversion(); // Defined here for the possibility of reusing parsed default set.
+        foreach ($this->parts as $part) {
+            try {
                 list($this->anscorrs[$part->partindex], $this->unitcorrs[$part->partindex])
                         = $this->grade_responses_individually($part, $response, $checkunit);
-                $this->fractions[$part->partindex] = $this->anscorrs[$part->partindex] * ($this->unitcorrs[$part->partindex]
-                                                     ? 1
-                                                     : (1 - $part->unitpenalty));
-                $this->raw_grades[$part->partindex] = $part->answermark * $this->fractions[$part->partindex];
-                $totalvalue += $part->answermark;
+            } catch (Exception $e) {
+                // There should normally be no error, but if there is, we display it here.
+                // This will not terminate the script, so the attempt should be in a valid state.
+                $OUTPUT->notification(get_string('error_grading_error', 'qtype_formulas'), 'error');
+                // We consider this part as wrong.
+                $this->anscorrs[$part->partindex] = 0;
+                $this->unitcorrs[$part->partindex] = 0;
             }
-        } catch (Exception $e) {
-            notify('Grading error! Probably result of incorrect import file or database corruption.');
-            return false; // It should have no error when grading students question.
+            $this->fractions[$part->partindex] = $this->anscorrs[$part->partindex] * ($this->unitcorrs[$part->partindex]
+                                                    ? 1
+                                                    : (1 - $part->unitpenalty));
+            $this->raw_grades[$part->partindex] = $part->answermark * $this->fractions[$part->partindex];
+            $totalvalue += $part->answermark;
         }
 
         $fraction = array_sum($this->raw_grades) / $totalvalue;
@@ -605,14 +651,14 @@ class qtype_formulas_question extends question_graded_automatically_with_countba
     }
 
     // Grade response for part, and return a list with answer correctness and unit correctness.
-    public function grade_responses_individually($part, $response, &$checkunit) {
+    public function grade_responses_individually($part, $response, &$checkunit, $forvalidation = false) {
         // Step 1: Split the student's responses to the part into coordinates and unit.
         $coordinates = array();
         $i = $part->partindex;
         foreach (range(0, $part->numbox - 1) as $j) {
-            $coordinates[$j] = trim($response["${i}_$j"]);
+            $coordinates[$j] = trim($response["{$i}_$j"]);
         }
-        $postunit = trim($response["${i}_{$part->numbox}"]);
+        $postunit = trim($response["{$i}_{$part->numbox}"]);
 
         // Step 2: Use the unit system to check whether the unit in student responses is *convertible* to the true unit.
         $conversionrules = new unit_conversion_rules;
@@ -662,10 +708,23 @@ class qtype_formulas_question extends question_graded_automatically_with_countba
         $this->add_special_correctness_variables($vars, $modelanswers, $coordinates, $dres->diff, $dres->is_number);
 
         // Step 7: Evaluate the grading variables and grading criteria to determine whether the answer is correct.
-        $vars = $this->qv->evaluate_assignments($vars, $part->vars2);
-        $correctness = $this->qv->evaluate_general_expression($vars, $part->correctness);
-        if ($correctness->type != 'n') {
-            throw new Exception(get_string('error_criterion', 'qtype_formulas'));
+        // Both steps can be in the same try-catch block, because upon validation, the grading vars
+        // are checked by another method and *before* the grading criterion. If they are invalid,
+        // the form validation stops therefore stops before validation the grading criterion and
+        // the error will not be linked to the wrong field.
+        try {
+            $vars = $this->qv->evaluate_assignments($vars, $part->vars2);
+            $correctness = $this->qv->evaluate_general_expression($vars, $part->correctness);
+        } catch (Throwable $t) {
+            // If the criterion cannot be evaluated (possible e.g. if the teacher uses part of the student's
+            // response in a denominator), we consider the answer to be wrong. We store the error message in
+            // case it is needed for the form validation.
+            $correctness = (object)['type' => 'n', 'value' => 0, 'error' => $t->getMessage()];
+        }
+        // If this has been called for validation, we need to throw the exception again, in order
+        // for the error message to be shown in the edit form.
+        if (isset($correctness->error) && $forvalidation) {
+            throw new Exception($correctness->error);
         }
 
         // Step 8: Restrict the correctness value within 0 and 1 (inclusive). Also, all non-finite numbers are incorrect.
@@ -874,6 +933,10 @@ class qtype_formulas_question extends question_graded_automatically_with_countba
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_formulas_part {
+    // Definition of properties used in legacy code or tests, for compatibility with PHP 8.2.
+    // This will be cleaner with the new parser code.
+    public $questionid;
+
     /** @var integer the answer id. */
     public $id;
     public $partindex;
@@ -884,6 +947,7 @@ class qtype_formulas_part {
     public $vars1;
     public $vars2;
     public $answer;
+    public $answernotunique;
     public $correctness;
     public $unitpenalty;
     public $postunit;
@@ -947,13 +1011,13 @@ class qtype_formulas_part {
         $expected = array();
         $i = $this->partindex;
         if ($this->part_has_combined_unit_field()) {
-                $expected["${i}_"] = PARAM_RAW;
+                $expected["{$i}_"] = PARAM_RAW;
         } else {
             foreach (range(0, $this->numbox - 1) as $j) {
-                $expected["${i}_$j"] = PARAM_RAW;
+                $expected["{$i}_$j"] = PARAM_RAW;
             }
             if ($this->part_has_separate_unit_field()) {
-                $expected["${i}_{$this->numbox}"] = PARAM_RAW;
+                $expected["{$i}_{$this->numbox}"] = PARAM_RAW;
             }
         }
         return $expected;
@@ -1029,11 +1093,11 @@ class qtype_formulas_part {
 
     public function part_is_unanswered(array$response) {
         $i = $this->partindex;
-        if (array_key_exists("${i}_", $response) && $response["${i}_"] != '') {
+        if (array_key_exists("{$i}_", $response) && $response["{$i}_"] != '') {
             return false;
         }
         foreach (range(0, $this->numbox) as $j) {
-            if (array_key_exists("${i}_$j", $response) && $response["${i}_$j"] != '') {
+            if (array_key_exists("{$i}_$j", $response) && $response["{$i}_$j"] != '') {
                     return false;
             }
         }

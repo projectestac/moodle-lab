@@ -29,13 +29,16 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/webservice/tests/helpers.php');
-require_once($CFG->dirroot . '/question/type/formulas/classes/external/instantiation.php');
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 class externallib_test extends \externallib_advanced_testcase {
+    public function setUp(): void {
+        global $CFG;
+        require_once($CFG->dirroot . '/question/type/formulas/classes/external/instantiation.php');
+    }
 
-    /**
-     * Test
-     */
     public function test_check_random_global_vars() {
         $this->resetAfterTest(true);
 
@@ -248,6 +251,58 @@ class externallib_test extends \externallib_advanced_testcase {
         $this->resetAfterTest(true);
 
         $testcases = array(
+            array(
+                'n' => 1,
+                'randomvars' => '',
+                'globalvars' => 'a=3; b=2; c=a*b',
+                'localvars' => array(''),
+                'answers' => array('a*b'),
+                'return' => array(
+                    'status' => 'ok',
+                    'data' => array(
+                        array(
+                            'randomvars' => array(),
+                            'globalvars' => array(
+                                array('name' => 'a', 'value' => '3'),
+                                array('name' => 'b', 'value' => '2'),
+                                array('name' => 'c', 'value' => '6')
+                            ),
+                            'parts' => array(
+                                array(
+                                    array('name' => '_0', 'value' => '6'),
+                                )
+                            ),
+                        )
+                    )
+                )
+            ),
+            array(
+                'n' => 1,
+                'randomvars' => '',
+                'globalvars' => 'a=3; b=2; c=a*b',
+                'localvars' => array(''),
+                'answers' => array('[a*b,c,6]'),
+                'return' => array(
+                    'status' => 'ok',
+                    'data' => array(
+                        array(
+                            'randomvars' => array(),
+                            'globalvars' => array(
+                                array('name' => 'a', 'value' => '3'),
+                                array('name' => 'b', 'value' => '2'),
+                                array('name' => 'c', 'value' => '6')
+                            ),
+                            'parts' => array(
+                                array(
+                                    array('name' => '_0', 'value' => '6'),
+                                    array('name' => '_1', 'value' => '6'),
+                                    array('name' => '_2', 'value' => '6'),
+                                )
+                            ),
+                        )
+                    )
+                )
+            ),
             array(
                 'n' => 1,
                 'randomvars' => '',

@@ -22,6 +22,16 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace qtype_ordering;
+
+use qtype_ordering;
+use test_question_maker;
+use qtype_ordering_edit_form;
+use qtype_ordering_test_helper;
+use question_bank;
+use question_possible_response;
+use qtype_ordering_question;
+use core_question_generator;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -36,8 +46,9 @@ require_once($CFG->dirroot . '/question/type/ordering/edit_ordering_form.php');
  *
  * @copyright 20018 The Open University
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers    \qtype_ordering
  */
-class qtype_ordering_test extends advanced_testcase {
+class questiontype_test extends \advanced_testcase {
     /** @var qtype_ordering instance of the question type class to test. */
     protected $qtype;
 
@@ -82,13 +93,15 @@ class qtype_ordering_test extends advanced_testcase {
 
         foreach ($questiondata as $property => $value) {
             if (!in_array($property, array('id', 'version', 'timemodified', 'timecreated', 'options', 'stamp'))) {
-                $this->assertAttributeEquals($value, $property, $actualquestiondata);
+                $this->assertContainsEquals($value, (array)$actualquestiondata);
+                $this->assertContainsEquals($property, array_keys((array)$actualquestiondata));
             }
         }
 
         foreach ($questiondata->options as $optionname => $value) {
             if ($optionname != 'answers') {
-                $this->assertAttributeEquals($value, $optionname, $actualquestiondata->options);
+                $this->assertContainsEquals($value, (array)$actualquestiondata->options);
+                $this->assertContainsEquals($optionname, array_keys((array)$actualquestiondata->options));
             }
         }
 
@@ -96,9 +109,11 @@ class qtype_ordering_test extends advanced_testcase {
             $actualanswer = array_shift($actualquestiondata->options->answers);
             foreach ($answer as $ansproperty => $ansvalue) {
                 if ($ansproperty === 'question') {
-                    $this->assertAttributeEquals($returnedfromsave->id, $ansproperty, $actualanswer);
+                    $this->assertContainsEquals($returnedfromsave->id, (array)$actualanswer);
+                    $this->assertContainsEquals($ansproperty, array_keys((array)$actualanswer));
                 } else if ($ansproperty !== 'id') {
-                    $this->assertAttributeEquals($ansvalue, $ansproperty, $actualanswer);
+                    $this->assertContainsEquals($ansvalue, (array)$actualanswer);
+                    $this->assertContainsEquals($ansproperty, array_keys((array)$actualanswer));
                 }
             }
         }
@@ -157,7 +172,16 @@ class qtype_ordering_test extends advanced_testcase {
                     6 => new question_possible_response('Position 6', 0.1666667),
             ),
         );
-        $this->assertEquals($expectedresponseclasses, $possibleresponses, '', 0.0000005);
+        $this->assertEqualsWithDelta($expectedresponseclasses, $possibleresponses, 0.0000005, '');
+    }
+
+    public function test_get_possible_responses_very_long() {
+        $questiondata = test_question_maker::get_question_data('ordering');
+        $onehundredchars = str_repeat('1234567890', 9) . '123456789碁';
+        // Set one of the answers to over 100 chars, with a multi-byte UTF-8 character at position 100.
+        $questiondata->options->answers[13]->answer = $onehundredchars . 'and some more';
+        $possibleresponses = $this->qtype->get_possible_responses($questiondata);
+        $this->assertArrayHasKey($onehundredchars, $possibleresponses);
     }
 
     public function test_get_numberingstyle() {

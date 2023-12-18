@@ -16,8 +16,9 @@
 
 namespace theme_xtecboost\output;
 
-use get_string;
 use cache;
+use get_string;
+use single_select;
 
 defined('MOODLE_INTERNAL') || die;
 

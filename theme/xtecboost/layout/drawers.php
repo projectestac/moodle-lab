@@ -117,7 +117,7 @@ if ($PAGE->pagetype === 'site-index') {
 }
 
 $templatecontext = [
-    'sitename' => format_string($SITE->fullname, true, ['context' => context_course::instance(SITEID), 'escape' => false]),
+    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), 'escape' => false]),
     'output' => $OUTPUT,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
@@ -139,6 +139,8 @@ $templatecontext = [
     'logodepartamenteducacio' => $CFG->wwwroot . '/theme/xtecboost/pix/departament.png',
     'logocentre' => $logocentre,
     'showheader' => $showheader,
+    'footnote' => $PAGE->theme->settings->footnote,
+    'importcss' => $PAGE->theme->settings->importcss,
 ];
 
 echo $OUTPUT->render_from_template('theme_xtecboost/drawers', $templatecontext);

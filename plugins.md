@@ -39,7 +39,7 @@
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
 |mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020107|2023/07/07|b2a37f33989fcd77e5e949e192d016420fbc6aa3|
 |assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|--- Baixat de Moodle plugins -----------|
-|theme            |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023071400|2023/07/14|c444d58fb5649860ba06fdb34bc8638937f04bb9|
+|theme            |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18|26022c78e30977390f6f0c564c3bce8f20e830de|
 
 ## Plugins added for testing purposes
 

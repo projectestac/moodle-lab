@@ -1,6 +1,8 @@
 ### 4.1.7+ (Build: 20231215)
 - Updated Moodle core
 - Updated `local/oauth`
+- Updated `mod/jclic`
+- Upfated `mod/geogebra`
 
 ### 4.1.7 (Build: 20231211)
 - Updated Moodle core

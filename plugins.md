@@ -2,7 +2,7 @@
 
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2022092200|2022/10/20|528f3b32bea1e47456f43578b5ed03c7fa370d01|
+|mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2023071300|2023/12/23|9aa73ddef6ef2cad1fe05cb7dcf7c25ce84f4403|
 |mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2023110900|2023/12/12|--- Baixat de Moodle plugins -----------|
 |mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2022060900|2022/10/10|f58a23efddde11b99bf7a43e1a7cc4ea8059c7c9|
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|786e979b51ad8bee0500f2e067506e69826b4ecf|

@@ -24,7 +24,7 @@
 |atto             |fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|ad87cd2a5bee9f087d5f3026043c9d62dcaaed97|
 |atto             |fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2023/12/12|--- Baixat de Moodle plugins -----------|
 |local            |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021600|2020/06/16|d8eb0e05d5deeef13a9c574fd5c5da8cecf81b06|
-|local            |oauth               |https://github.com/projectestac/moodle-local_oauth              |2016021600|2020/06/16|b1c71e53e99e1708bb1dc728c7c31699e14ab01b|
+|local            |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|b1c71e53e99e1708bb1dc728c7c31699e14ab01b|
 |local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|06805f201af99b9f65df171331619c82fdb94f56|
 |question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12|--- Baixat de Moodle plugins -----------|
 |report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|

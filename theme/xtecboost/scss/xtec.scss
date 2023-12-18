@@ -3,7 +3,6 @@ $colorcontrast: white !default;
 $fontcolor: #007377 !default; //color4
 $linkscolor: #910048 !default; //color5
 $headerbg: #f8f8f8 !default;
-$fontsize: 1rem !default;
 $fontfamily: null !default;
 $texttransform: null !default;
 
@@ -708,4 +707,18 @@ div#alexandria_restore div.tab-content #accordion .accordion-group .container-fl
 div#alexandria_restore div.tab-content #accordion .accordion-group .container-fluid div.text-right {
     float: right;
     padding-bottom: 5px;
+}
+
+.activity-item:not(.activityinline) {
+    padding: 0.4rem;
+}
+
+/* Fix for menu of report builder */
+#page-admin-reportbuilder-edit .fixed-top {
+    position: unset!important;
+}
+
+/* Fix for logo being cropped in top bar */
+.navbar.fixed-top .navbar-brand .logo {
+    max-height: calc(60px - (0.25rem * 5));
 }

@@ -6,6 +6,7 @@
 - Updated `mod/questionnaire`
 - Updated `local/rcommon`
 - Updated `mod/rcontent`
+- Updated `mod/rgrade`
 
 ### 4.1.7 (Build: 20231211)
 - Updated Moodle core

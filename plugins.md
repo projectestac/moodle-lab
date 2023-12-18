@@ -10,9 +10,9 @@
 |mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2023/12/12|--- Baixat de Moodle plugins -----------|
 |mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121600|2023/12/18|e8607f80de6273a9d228e576f0c6c2d62c7e9fda|
 |mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|97620971e6171c7ad89d980072ce4263b1dc349b|
-|mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2021/01/12|fa142b21a2ac6b8a6636d15548260912adc4535c|
-|local            |rcommon             |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
-|block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090500|2020/06/16|c18e2da59601367ed473f500cac73d899d1c25da|
+|mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2023/12/18|446d794fb41ff27da7382a9b2ddeb7cf60ef6e85|
+|local            |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18|446d794fb41ff27da7382a9b2ddeb7cf60ef6e85|
+|block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18|5cae928303b1fe30361f40e360465882571a29dd|
 |block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
 |block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2023063000|2023/07/18|--- Baixat de Moodle plugins -----------|
 |block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|7d5426b504f72055549d599b3595e6778d183f92|

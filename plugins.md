@@ -2,9 +2,9 @@
 
 |Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
 |-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2023071300|2023/12/23|9aa73ddef6ef2cad1fe05cb7dcf7c25ce84f4403|
+|mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2023071300|2023/12/18|9aa73ddef6ef2cad1fe05cb7dcf7c25ce84f4403|
 |mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2023110900|2023/12/12|--- Baixat de Moodle plugins -----------|
-|mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2022060900|2022/10/10|f58a23efddde11b99bf7a43e1a7cc4ea8059c7c9|
+|mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2023032100|2023/12/18|13b10ed9a54ea920c3e9d2280727a3d2240a4d9f|
 |mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|786e979b51ad8bee0500f2e067506e69826b4ecf|
 |question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102625|2023/01/27|e85aad9d45c69e6fc0237dad99880a284ed450a3|
 |mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2023/12/12|--- Baixat de Moodle plugins -----------|

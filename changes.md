@@ -1,3 +1,7 @@
+### 4.1.10+ (Build: 20240503)
+- Added `mod/exescorm`
+- Added `mod/exeweb`
+
 ### 4.1.7+ (Build: 20231215)
 - Updated Moodle core
 - Updated `local/oauth`

@@ -59,3 +59,5 @@
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2023030500|2023/12/12|--- Baixat de Moodle plugins -----------|
 |filter           |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|92013a25fb5b59cf188412b6ef1b5a15736115cf|
 |mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040105|2023/07/18|3c4d47052aabf58bb21cd24ccbdcaa70e1488b66|
+|mod              |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|6ce919941e8343675acb5c3e7d454f67924b82bf|
+|mod              |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|4ea66879ec8b1f8ff31c703a97d23bdc4b423edc|

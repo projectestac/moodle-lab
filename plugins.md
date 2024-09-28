@@ -1,63 +1,63 @@
 ## Plugins currently included in Àgora/Eix
 
-|Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
-|-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2023071300|2023/12/23|9aa73ddef6ef2cad1fe05cb7dcf7c25ce84f4403|
-|mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2023110900|2023/12/12|--- Baixat de Moodle plugins -----------|
-|mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2023032100|2023/12/18|13b10ed9a54ea920c3e9d2280727a3d2240a4d9f|
-|mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|786e979b51ad8bee0500f2e067506e69826b4ecf|
-|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102625|2023/01/27|e85aad9d45c69e6fc0237dad99880a284ed450a3|
-|mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2023/12/12|--- Baixat de Moodle plugins -----------|
-|mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121600|2023/12/18|e8607f80de6273a9d228e576f0c6c2d62c7e9fda|
-|mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|97620971e6171c7ad89d980072ce4263b1dc349b|
-|mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2023/12/18|446d794fb41ff27da7382a9b2ddeb7cf60ef6e85|
-|local            |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18|446d794fb41ff27da7382a9b2ddeb7cf60ef6e85|
-|block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18|5cae928303b1fe30361f40e360465882571a29dd|
-|block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|21e7ae04c46819310c37e6307b07fc18354894a7|
-|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2023063000|2023/07/18|--- Baixat de Moodle plugins -----------|
-|block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|7d5426b504f72055549d599b3595e6778d183f92|
-|block            |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|a5966e64dbf803af49ab1794f88b3e94f0bfc664|
-|local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|d709bbda0baf127ce56faf7269d2b2517d6a92fe|
-|course format    |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|c5a15da6a15d159740d3664f24399e5023bc8aa6|
-|course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|e7246fecfbd50e7d13ac93b38e1801508d82a108|
-|atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072804|2023/01/08|543f62bdefa5fa9a987a52689b111122a6b18797|
-|atto             |fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|ad87cd2a5bee9f087d5f3026043c9d62dcaaed97|
-|atto             |fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2023/12/12|--- Baixat de Moodle plugins -----------|
-|local            |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021601|2023/12/18|aa4e68715ea1d8ff9f263e0251413fa0b46b59ed|
-|local            |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|b1c71e53e99e1708bb1dc728c7c31699e14ab01b|
-|local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|06805f201af99b9f65df171331619c82fdb94f56|
-|question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12|--- Baixat de Moodle plugins -----------|
-|report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|d1e029092f5d5cddd603ab4972209759817ea3ef|
-|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2023101000|2022/12/12|--- Baixat de Moodle plugins -----------|
-|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2023101000|2022/08/08|--- Baixat de Moodle plugins -----------|
-|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
-|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
-|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
-|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
-|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
-|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
-|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023092203|2023/12/12|--- Baixat de Moodle plugins -----------|
-|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020107|2023/07/07|b2a37f33989fcd77e5e949e192d016420fbc6aa3|
-|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|--- Baixat de Moodle plugins -----------|
-|theme            |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18|26022c78e30977390f6f0c564c3bce8f20e830de|
+|Type             |Name                |Source                                                          |Version   |Date      |
+|-----------------|--------------------|----------------------------------------------------------------|----------|----------|
+|mod              |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2023071300|2023/12/23|
+|mod              |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2023110900|2023/12/12|
+|mod              |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2023032100|2023/12/18|
+|mod              |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2022091548|2022/10/10|
+|question format  |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102625|2023/01/27|
+|mod              |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2023/12/12|
+|mod              |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121600|2023/12/18|
+|mod              |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|
+|mod              |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2023/12/18|
+|local            |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18|
+|block            |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18|
+|block            |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|
+|block            |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2023063000|2023/07/18|
+|block            |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|
+|block            |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|
+|local            |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|
+|course format    |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|
+|course format    |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|
+|atto             |cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072804|2023/01/08|
+|atto             |fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|
+|atto             |fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2023/12/12|
+|local            |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021601|2023/12/18|
+|local            |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|
+|local            |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|
+|question type    |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12|
+|report           |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|
+|filter           |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2023101000|2022/12/12|
+|atto             |wiris               |https://github.com/wiris/moodle-atto_wiris                      |2023101000|2022/08/08|
+|question type    |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2023092203|2023/12/12|
+|question type    |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2023092203|2023/12/12|
+|question type    |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2023092203|2023/12/12|
+|question type    |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2023092203|2023/12/12|
+|question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2023092203|2023/12/12|
+|question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2023092203|2023/12/12|
+|question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023092203|2023/12/12|
+|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020107|2023/07/07|
+|assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|
+|theme            |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18|
 
 ## Plugins added for testing purposes
 
-|Type             |Name                |Source                                                          |Version   |Date      | Commit                                 |
-|-----------------|--------------------|----------------------------------------------------------------|----------|----------|----------------------------------------|
-|course format    |grid                |https://github.com/gjb2048/moodle-format_grid                   |2022112607|2023/12/12|--- Baixat de Moodle plugins -----------|
-|mod              |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2021021401|2021/09/10|f7fb12407e476272b107941eddda880f860db3e4|
-|question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20|d4c26cfce425075ad91221ad740b1514baedd57b|
-|question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2023111700|2023/12/12|--- Baixat de Moodle plugins -----------|
-|question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2023/12/12|--- Baixat de Moodle plugins -----------|
-|course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022112602|2023/12/12|--- Baixat de Moodle plugins -----------|
-|course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022113000|2023/01/08|36e5799341819cefdf6978ba9f74a3f9d1a11fcb|
-|course format    |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12|--- Baixat de Moodle plugins -----------|
-|mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|--- Versió 2.6 -------------------------|
-|course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2023101700|2023/12/12|--- Baixat de Moodle plugins -----------|
-|mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2023070702|2023/12/12|--- Baixat de Moodle plugins -----------|
-|course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2023030500|2023/12/12|--- Baixat de Moodle plugins -----------|
-|filter           |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|92013a25fb5b59cf188412b6ef1b5a15736115cf|
-|mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040105|2023/07/18|3c4d47052aabf58bb21cd24ccbdcaa70e1488b66|
-|mod              |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|6ce919941e8343675acb5c3e7d454f67924b82bf|
-|mod              |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|4ea66879ec8b1f8ff31c703a97d23bdc4b423edc|
+|Type             |Name                |Source                                                          |Version   |Date      |
+|-----------------|--------------------|----------------------------------------------------------------|----------|----------|
+|course format    |grid                |https://github.com/gjb2048/moodle-format_grid                   |2022112607|2023/12/12|
+|mod              |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2021021401|2021/09/10|
+|question behavior|adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20|
+|question type    |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2023111700|2023/12/12|
+|question type    |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2023/12/12|
+|course format    |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022112602|2023/12/12|
+|course format    |etask               |https://gitlab.com/drlikm/format_etask                          |2022113000|2023/01/08|
+|course format    |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12|
+|mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|
+|course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2023101700|2023/12/12|
+|mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2023070702|2023/12/12|
+|course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2023030500|2023/12/12|
+|filter           |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|
+|mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040105|2023/07/18|
+|mod              |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|
+|mod              |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|

@@ -61,3 +61,4 @@
 |mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040105|2023/07/18|
 |mod              |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|
 |mod              |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|
+|mod              |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024091201|2024/09/29|

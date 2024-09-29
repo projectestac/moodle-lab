@@ -1,5 +1,6 @@
 ### 4.1.13+ (Build: 20240927)
 - Updated Moodle core
+- Added `mod/kialo`
 
 ### 4.1.10+ (Build: 20240503)
 - Added `mod/exescorm`

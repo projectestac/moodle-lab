@@ -37,7 +37,7 @@
 |question type    |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2023092203|2023/12/12|
 |question type    |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2023092203|2023/12/12|
 |question type    |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2023092203|2023/12/12|
-|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020107|2023/07/07|
+|mod              |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020108|2024/09/29|
 |assign submission|snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|
 |theme            |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18|
 
@@ -58,7 +58,7 @@
 |mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2023070702|2023/12/12|
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2023030500|2023/12/12|
 |filter           |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|
-|mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040105|2023/07/18|
+|mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040112|2024/09/29|
 |mod              |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|
 |mod              |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|
 |mod              |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024091201|2024/09/29|

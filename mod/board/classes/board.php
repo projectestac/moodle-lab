@@ -25,9 +25,6 @@ namespace mod_board;
  */
 class board {
 
-    /** @var string String of accepted file types. */
-    const ACCEPTED_FILE_EXTENSIONS = 'jpg,jpeg,png,bmp,gif';
-
     /** @var int Minumum file size of 100 bytes. */
     const ACCEPTED_FILE_MIN_SIZE = 100;
 
@@ -87,6 +84,61 @@ class board {
     }
 
     /**
+     * Gets the configuration for this board.
+     * @param int $id The board id.
+     * @param int $ownerid The user board to get notes from.
+     */
+    public static function get_configuration($id, $ownerid) {
+        global $DB, $USER;
+
+        $board = $DB->get_record('board', array('id' => $id));
+        $contextid = \context_module::instance(self::coursemodule_for_board($board)->id)->id;
+        $config = get_config('mod_board');
+
+        $conf = [
+            'board' => $board,
+            'contextid' => $contextid,
+            'isEditor' => self::board_is_editor($board->id),
+            'usersCanEdit' => self::board_users_can_edit($board->id),
+            'userId' => $USER->id,
+            'ownerId' => $ownerid,
+            'readonly' => (self::board_readonly($board->id) || !self::can_post($board->id, $USER->id, $ownerid)),
+            'columnicon' => $config->new_column_icon,
+            'noteicon' => $config->new_note_icon,
+            'mediaselection' => $config->media_selection,
+            'post_max_length' => $config->post_max_length,
+            'history_refresh' => $config->history_refresh,
+            'file' => [
+                'extensions' => self::get_accepted_file_extensions(),
+                'size_min' => self::ACCEPTED_FILE_MIN_SIZE,
+                'size_max' => self::ACCEPTED_FILE_MAX_SIZE
+            ],
+            'ratingenabled' => self::board_rating_enabled($board->id),
+            'hideheaders' => self::board_hide_headers($board->id),
+            'sortby' => $board->sortby,
+            'colours' => self::get_column_colours(),
+            'enableblanktarget' => $board->enableblanktarget
+        ];
+
+        return $conf;
+    }
+
+    /**
+     * Get the supported filetype extensions
+     *
+     * @return array of strings of supported file extensions.
+     */
+    public static function get_accepted_file_extensions() {
+        $config = get_config('mod_board');
+        if (isset($config->acceptedfiletypeforcontent)) {
+            $extensions = explode(',', $config->acceptedfiletypeforcontent);
+        } else {
+            $extensions = [];
+        }
+        return $extensions;
+    }
+
+    /**
      * Retrieves a record of the selected board.
      *
      * @param int $id
@@ -116,7 +168,7 @@ class board {
      */
     public static function get_note($id) {
         global $DB;
-        return $DB->get_record('board_notes', array('id' => $id));
+        return $DB->get_record('board_notes', array('id' => $id, 'deleted' => 0));
     }
 
     /**
@@ -262,7 +314,8 @@ class board {
         global $DB;
         $sql = "SELECT COUNT(*) FROM {board_notes}
             LEFT JOIN {board_columns} ON {board_notes}.columnid = {board_columns}.id
-            WHERE {board_columns}.boardid = :boardid";
+            WHERE {board_columns}.boardid = :boardid
+            AND {board_notes}.deleted = 0";
         return $DB->count_records_sql($sql, ['boardid' => $boardid]) > 0;
     }
 
@@ -308,7 +361,7 @@ class board {
             if ($hideheaders) {
                 $column->name = ++$columnindex;
             }
-            $params = array('columnid' => $columnid);
+            $params = array('columnid' => $columnid, 'deleted' => 0);
             if (!empty($groupid)) {
                 $params['groupid'] = $groupid;
             }
@@ -333,10 +386,10 @@ class board {
      *
      * @param int $boardid
      * @param int $ownerid
-     * @param int $since
+     * @param int|null $since
      * @return array
      */
-    public static function board_history(int $boardid, int $ownerid, int $since): array {
+    public static function board_history(int $boardid, int $ownerid, ?int $since): array {
         global $DB;
 
         static::require_capability_for_board_view($boardid);
@@ -349,15 +402,20 @@ class board {
 
         static::clear_history();
 
-        $condition = "boardid=:boardid AND id > :since";
-        $params = array('boardid' => $boardid, 'since' => $since);
+        $condition = "boardid = :boardid";
+        $params = array('boardid' => $boardid);
+
+        if ($since !== null) {
+            $condition .= " AND id > :since";
+            $params['since'] = $since;
+        }
         if (!empty($groupid)) {
             $condition .= " AND groupid=:groupid";
             $params['groupid'] = $groupid;
         }
         if ($board->singleusermode == self::SINGLEUSER_PUBLIC || $board->singleusermode == self::SINGLEUSER_PRIVATE) {
             if (self::can_view_user($boardid, $ownerid)) {
-                $condition .= " AND (ownerid=:ownerid OR ownerid=0)";
+                $condition .= " AND (ownerid=:ownerid OR ownerid=null)";
                 $params['ownerid'] = $ownerid;
             }
         }
@@ -482,9 +540,9 @@ class board {
             $notes = $DB->get_records('board_notes', array('columnid' => $id));
             foreach ($notes as $noteid => $note) {
                 $DB->delete_records('board_note_ratings', array('noteid' => $note->id));
+                $DB->update_record('board_notes', array('id' => $note->id, 'deleted' => 1));
                 static::delete_note_file($note->id);
             }
-            $DB->delete_records('board_notes', array('columnid' => $id));
             $delete = $DB->delete_records('board_columns', array('id' => $id));
             $historyid = $DB->insert_record('board_history', array('boardid' => $boardid, 'action' => 'delete_column',
                 'ownerid' => 0, 'content' => json_encode(array('id' => $id)),
@@ -704,7 +762,7 @@ class board {
 
         $boardid = $column->boardid;
         // Get the count of notes in the column to add to bottom of sort order.
-        $countnotes = $DB->count_records('board_notes', ['columnid' => $columnid]);
+        $countnotes = $DB->count_records('board_notes', ['columnid' => $columnid, 'deleted' => 0]);
 
         if ($boardid) {
             $cm = static::coursemodule_for_board(static::get_board($boardid));
@@ -726,7 +784,7 @@ class board {
             $noteid = $DB->insert_record('board_notes', array('groupid' => $groupid, 'columnid' => $columnid, 'ownerid' => $ownerid,
                 'heading' => $heading, 'content' => $content, 'type' => $type, 'info' => $info,
                 'url' => $url, 'userid' => $USER->id, 'timecreated' => $notecreated,
-                'sortorder' => $countnotes));
+                'sortorder' => $countnotes, 'deleted' => 0));
 
             $attachment = static::board_note_update_attachment($noteid, $attachment);
             $url = $attachment['url'];
@@ -899,8 +957,15 @@ class board {
             $deleteratings = $DB->delete_records('board_note_ratings', array('noteid' => $note->id));
             static::delete_note_file($note->id);
 
+            // Delete all note comments.
+            $commentrecords = $DB->get_records('board_comments', array('noteid' => $note->id));
+            foreach ($commentrecords as $commentrecord) {
+                $comment = new \mod_board\comment(['commentid' => $commentrecord->id]);
+                $comment->delete();
+            }
+
             $transaction = $DB->start_delegated_transaction();
-            $delete = $DB->delete_records('board_notes', array('id' => $id));
+            $delete = $DB->update_record('board_notes', array('id' => $id, 'deleted' => 1));
             $historyid = $DB->insert_record('board_history', array('boardid' => $boardid, 'action' => 'delete_note',
                 'ownerid' => 0, 'content' => json_encode(array('id' => $id, 'columnid' => $columnid)),
                 'userid' => $USER->id, 'timecreated' => time()));
@@ -1091,50 +1156,54 @@ class board {
      * Checks to see if the user can rate the note.
      *
      * @param int $noteid
-     * @return bool
+     * @return array [canrate, hasrated]
      */
-    public static function board_can_rate_note(int $noteid): bool {
+    public static function board_can_rate_note(int $noteid): array {
         global $DB, $USER;
+
+        $hasrated = $DB->record_exists('board_note_ratings', array('userid' => $USER->id, 'noteid' => $noteid));
+
+        $result = ['canrate' => false, 'hasrated' => $hasrated];
 
         $note = static::get_note($noteid);
         if (!$note) {
-            return false;
+            return $result;
         }
 
         $column = static::get_column($note->columnid);
         if (!$column) {
-            return false;
+            return $result;
         }
 
         $board = static::get_board($column->boardid);
         if (!$board) {
-            return false;
+            return $result;
         }
 
         if (!static::board_rating_enabled($board->id)) {
-            return false;
+            return $result;
         }
 
         if (static::board_readonly($board->id)) {
-            return false;
+            return $result;
         }
 
         $context = static::context_for_board($board->id);
         if (!has_capability('mod/board:view', $context)) {
-            return false;
+            return $result;
         }
 
         $iseditor = has_capability('mod/board:manageboard', $context);
 
         if ($board->addrating == self::RATINGBYSTUDENTS && $iseditor) {
-            return false;
+            return $result;
         }
 
         if ($board->addrating == self::RATINGBYTEACHERS && !$iseditor) {
-            return false;
+            return $result;
         }
 
-        return !$DB->record_exists('board_note_ratings', array('userid' => $USER->id, 'noteid' => $noteid));
+        return ['canrate' => true, 'hasrated' => $hasrated];
     }
 
     /**
@@ -1173,7 +1242,7 @@ class board {
         }
 
         $boardid = $column->boardid;
-        if (!static::board_can_rate_note($noteid)) {
+        if (!static::board_can_rate_note($noteid)['canrate']) {
             return $return;
         }
         if (static::board_readonly($boardid)) {
@@ -1182,11 +1251,17 @@ class board {
 
         if ($note) {
             $transaction = $DB->start_delegated_transaction();
-
-            $DB->insert_record('board_note_ratings', array('userid' => $USER->id, 'noteid' => $noteid, 'timecreated' => time()));
+            $hasrating = $DB->record_exists('board_note_ratings', array('userid' => $USER->id, 'noteid' => $noteid));
+            $action = $hasrating ? 'delete_note_rating' : 'add_note_rating';
+            if ($hasrating) {
+                $DB->delete_records('board_note_ratings', array('userid' => $USER->id, 'noteid' => $noteid));
+            } else {
+                $DB->insert_record('board_note_ratings', array('userid' => $USER->id, 'noteid' => $noteid,
+                    'timecreated' => time()));
+            }
             $rate = true;
             $rating = static::get_note_rating($noteid);
-            $historyid = $DB->insert_record('board_history', array('boardid' => $boardid, 'action' => 'rate_note',
+            $historyid = $DB->insert_record('board_history', array('boardid' => $boardid, 'action' => $action,
                                             'content' => json_encode(array('id' => $note->id, 'rating' => $rating)),
                                             'userid' => $USER->id, 'timecreated' => time()));
 
@@ -1338,7 +1413,8 @@ class board {
      * @return array
      */
     public static function get_image_picker_options() {
-        $extensions = explode(',', self::ACCEPTED_FILE_EXTENSIONS);
+        $extensions = self::get_accepted_file_extensions();
+
         $extensions = array_map(function($extension) {
             return '.' . $extension;
         }, $extensions);

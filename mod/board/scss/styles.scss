@@ -210,7 +210,9 @@
 }
 
 .path-mod-board {
-
+    .mod_board_note_text {
+        word-break: break-word;
+    }
     .comment {
         .comment-input {
             font-size: 0.8rem;
@@ -327,6 +329,13 @@
     .modal-content .stretched-link::after {
         content: unset;
     }
+    .modal-footer [data-action="cancel"] {
+        order: 1;
+    }
+    .cell {
+        max-width: 300px;
+        word-break: break-word;
+    }
 }
 .modtype_board div.flex-fill {
     width: 100%;
@@ -340,4 +349,10 @@
 
 iframe.mod_board-iframe {
     overflow-x: auto;
+}
+
+.pagelayout-embedded.path-mod-board {
+    .activity-header {
+        display: none;
+    }
 }

@@ -190,5 +190,50 @@ function xmldb_board_upgrade(int $oldversion) {
         upgrade_mod_savepoint(true, 2022040105, 'board');
     }
 
+    if ($oldversion < 2022040109) {
+
+        // Changing the default of field historyid on table board to 0.
+        $table = new xmldb_table('board');
+        $field = new xmldb_field('historyid', XMLDB_TYPE_INTEGER, '10', null, null, null, '0', 'introformat');
+
+        // Launch change of default for field historyid.
+        $dbman->change_field_default($table, $field);
+
+        // Update all existing boards to have a 0 historyid in case they were created before this change.
+        $DB->set_field(
+            'board',
+            'historyid',
+            0,
+            ['historyid' => null]
+        );
+
+        // Board savepoint reached.
+        upgrade_mod_savepoint(true, 2022040109, 'board');
+    }
+
+    if ($oldversion < 2022040110) {
+
+        // Define field deleted to be added to board_notes.
+        $table = new xmldb_table('board_notes');
+        $field = new xmldb_field('deleted', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'sortorder');
+
+        // Conditionally launch add field deleted.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field deleted to be added to board_comments.
+        $table = new xmldb_table('board_comments');
+        $field = new xmldb_field('deleted', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'timecreated');
+
+        // Conditionally launch add field deleted.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Board savepoint reached.
+        upgrade_mod_savepoint(true, 2022040110, 'board');
+    }
+
     return true;
 }

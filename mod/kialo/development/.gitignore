@@ -1,0 +1,6 @@
+moodle/
+.env
+
+## Bundle
+mod_kialo/
+mod_kialo.zip

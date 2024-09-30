@@ -94,15 +94,11 @@
         {{> format_tiles/local/content/section/header }}
     {{/ format_tiles/local/content/section/header }}
 {{/header}}
-{{#restrictionlock}}
-    <div class="align-self-center ml-2 restriction-lock">
-        {{#pix}}t/unlock, core{{/pix}}
-    </div>
-{{/restrictionlock}}
 <div data-region="sectionbadges" class="sectionbadges d-flex align-items-center">
     {{$ core_courseformat/local/content/section/badges }}
         {{> core_courseformat/local/content/section/badges }}
     {{/ core_courseformat/local/content/section/badges }}
+    {{#restrictionlock}}<i class="icon fa fa-lock fa-fw " aria-hidden="true"></i>{{/restrictionlock}}
 </div>
 {{#collapsemenu}}
 <div class="flex-fill d-flex justify-content-end mr-2 align-self-start mt-2">
@@ -124,9 +120,12 @@
         {{> core_courseformat/local/content/section/controlmenu }}
     {{/ core_courseformat/local/content/section/controlmenu }}
 {{/controlmenu}}
+{{! the next closing div tag seems to match nothing but that is the same in the core file and error results if remove it }}
 </div>
 <div id="coursecontentcollapse{{num}}"
-    class="content {{^sitehome}}course-content-item-content collapse {{^contentcollapsed}}show{{/contentcollapsed}}{{/sitehome}}">
+    class="content {{^iscoursedisplaymultipage}}
+        {{^sitehome}}course-content-item-content collapse {{^contentcollapsed}}show{{/contentcollapsed}}{{/sitehome}}
+    {{/iscoursedisplaymultipage}}">
     <div class="{{#hasavailability}}description{{/hasavailability}} my-3" data-for="sectioninfo">
     {{#summary}}
         {{$ core_courseformat/local/content/section/summary }}
@@ -145,9 +144,9 @@
     {{/ core_courseformat/local/content/section/cmsummary }}
 {{/cmsummary}}
 {{#cmlist}}
-    {{$ core_courseformat/local/content/section/cmlist }}
-        {{> core_courseformat/local/content/section/cmlist }}
-    {{/ core_courseformat/local/content/section/cmlist }}
+    {{$ format_tiles/local/content/section/cmlist }}
+        {{> format_tiles/local/content/section/cmlist }}
+    {{/ format_tiles/local/content/section/cmlist }}
 {{/cmlist}}
 {{{cmcontrols}}}
 {{#insertafter}}

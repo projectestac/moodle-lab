@@ -64,7 +64,7 @@ function format_tiles_upgrade_remove_numsections() {
         }
 
         // For this course (i.e. each course in this format), check if sec zero is hidden and unhide it if so.
-        if ($section = $DB->get_record("course_sections", array("course" => $courseid, "section" => 0))) {
+        if ($section = $DB->get_record("course_sections", ["course" => $courseid, "section" => 0])) {
             if (!$section->visible) {
                 // Set section zero to visible if it is hidden.
                 // (It should never be hidden see https://moodle.org/mod/forum/discuss.php?d=356850 and MDL-37256).
@@ -136,7 +136,7 @@ function format_tiles_upgrade_hide_extra_sections($courseid, $numsections) {
  */
 function format_tiles_remove_unused_format_options() {
     global $DB;
-    $DB->delete_records('course_format_options', array('format' => 'tiles', 'name' => 'showachladderbutton'));
-    $DB->delete_records('course_format_options', array('format' => 'tiles', 'name' => 'prefixtitlewithnumber'));
-    $DB->delete_records('course_format_options', array('format' => 'tiles', 'name' => 'showgradesbutton'));
+    $DB->delete_records('course_format_options', ['format' => 'tiles', 'name' => 'showachladderbutton']);
+    $DB->delete_records('course_format_options', ['format' => 'tiles', 'name' => 'prefixtitlewithnumber']);
+    $DB->delete_records('course_format_options', ['format' => 'tiles', 'name' => 'showgradesbutton']);
 }

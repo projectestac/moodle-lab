@@ -29,22 +29,30 @@
         "editing": 0
     }
 }}
+{{^ismoodle41minus}}
+    {{#sectionbulk}}
+        {{$ core_courseformat/local/content/section/bulkselect }}
+            {{> core_courseformat/local/content/section/bulkselect }}
+        {{/ core_courseformat/local/content/section/bulkselect }}
+    {{/sectionbulk}}
+{{/ismoodle41minus}}
 {{#sitehome}}
-    <h2 class="sectionid-{{id}}-title sectionname">
+        <h2 id="sectionid-{{id}}-title" class="sectionname">
         {{{title}}}
     </h2>
 {{/sitehome}}
 {{^sitehome}}
-    <div class="d-flex align-items-start position-relative w-100">
-        <a role="button" data-toggle="collapse"
+        <div class="d-flex align-items-start position-relative">
+            <a role="button"
+                data-toggle="collapse"
+                data-for="sectiontoggler"
            href="#coursecontentcollapse{{num}}"
            id="collapssesection{{num}}"
            aria-expanded="{{^contentcollapsed}}true{{/contentcollapsed}}{{#contentcollapsed}}false{{/contentcollapsed}}"
-           aria-controls="coursecontentcollapse{{num}}"
-           class="btn btn-icon mr-1 mt-1 icons-collapse-expand justify-content-center
+                class="btn btn-icon mr-1 icons-collapse-expand justify-content-center
                {{^editing}} stretched-link {{/editing}}
                {{#contentcollapsed}} collapsed {{/contentcollapsed}}"
-           aria-label="{{title}}">
+                aria-label="{{name}}">
         <span class="expanded-icon icon-no-margin p-2" title="{{#str}} collapse, core {{/str}}">
             {{#pix}} t/expandedchevron, core {{/pix}}
         </span>
@@ -53,12 +61,12 @@
             <span class="dir-ltr-hide">{{#pix}} t/collapsedchevron_rtl, core {{/pix}}</span>
         </span>
         </a>
-        <h3 class="sectionid-{{id}}-title sectionname course-content-item d-flex align-self-stretch align-items-center mb-0"
-            id="coursecontentsection{{num}}" data-for="section_title" data-id="{{id}}" data-number="{{num}}">
-            {{^issectionzero}}
-                {{>format_tiles/local/content/section-tiles-image}}
-            {{/issectionzero}}
-            <span>{{{title}}}</span>
+            <h3 class="sectionname course-content-item d-flex align-self-stretch align-items-center mb-0"
+                id="sectionid-{{id}}-title" data-for="section_title" data-id="{{id}}" data-number="{{num}}">
+                {{^issectionzero}}
+                    {{>format_tiles/local/content/section-tiles-image}}
+                {{/issectionzero}}
+                <span>{{{title}}}</span>
         </h3>
     </div>
 {{/sitehome}}

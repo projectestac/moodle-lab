@@ -19,8 +19,8 @@
  *
  * @package format_tiles
  * @copyright  2019 David Watson {@link http://evolutioncode.uk}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
- **/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace format_tiles\form;
 defined('MOODLE_INTERNAL') || die();
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 use moodleform;
 
 global $CFG;
-require_once("{$CFG->libdir}/formslib.php");
+require_once("$CFG->libdir/formslib.php");
 
 /**
  * Class registration_form
@@ -53,13 +53,13 @@ class registration_form extends moodleform {
         $site = get_site();
 
         $mform->addElement('text', 'sitename', get_string('sitename', 'format_tiles'),
-            array('class' => 'registration_textfield'));
+            ['class' => 'registration_textfield']);
         $mform->setType('sitename', PARAM_TEXT);
         $mform->setDefault('sitename', $site->fullname);
         $mform->freeze('sitename');
 
         $mform->addElement('text', 'url', get_string('siteurl', 'core_hub'),
-            array('class' => 'registration_textfield'));
+            ['class' => 'registration_textfield']);
         $mform->setType('url', PARAM_TEXT);
         $mform->setDefault('url', $CFG->wwwroot);
         $mform->freeze('url');
@@ -69,7 +69,7 @@ class registration_form extends moodleform {
             $moodlerelease = $matches[1];
         }
         $mform->addElement('text', 'moodleversion', get_string('moodleversion'),
-            array('class' => 'registration_textfield'));
+            ['class' => 'registration_textfield']);
         $mform->setType('moodleversion', PARAM_TEXT);
         $mform->setDefault('moodleversion', $moodlerelease);
         $mform->freeze('moodleversion');
@@ -86,19 +86,19 @@ class registration_form extends moodleform {
         $mform->setDefault('language', explode('_', current_language())[0]);
 
         $mform->addElement('text', 'nameuser', get_string('name', 'core_hub') . $stroptional,
-            array('class' => 'registration_textfield'));
+            ['class' => 'registration_textfield']);
         $mform->setType('nameuser', PARAM_TEXT);
         $mform->setDefault('nameuser', $USER->firstname . ' ' . $USER->lastname);
 
         $mform->addElement('text', 'contactemail', get_string('email') . $stroptional,
-            array('class' => 'registration_textfield'));
+            ['class' => 'registration_textfield']);
         $mform->setType('contactemail', PARAM_EMAIL);
         $mform->setDefault('contactemail', $USER->email);
 
         $options = [
             '' => '---' . get_string('registerpickemailpref', 'format_tiles') . '---',
             1 => get_string('registeremailyes', 'format_tiles'),
-            0 => get_string('registeremailno', 'format_tiles')
+            0 => get_string('registeremailno', 'format_tiles'),
         ];
         $mform->addElement('select', 'emailpref', get_string('registerpickemailpref', 'format_tiles'), $options);
         $mform->addRule('emailpref', $strrequired, 'required', null, 'client');
@@ -111,7 +111,7 @@ class registration_form extends moodleform {
             'checkbox',
             'policyagreed',
             get_string('registerpolicyagreedlinktext', 'format_tiles'),
-            get_string('registeragreeprivacy', 'format_tiles', array('privacypolicylink' => $privacypolicylink))
+            get_string('registeragreeprivacy', 'format_tiles', ['privacypolicylink' => $privacypolicylink])
         );
         $mform->addRule('policyagreed', $strrequired, 'required', null, 'client');
         $buttonlabel = get_string('register', 'format_tiles');

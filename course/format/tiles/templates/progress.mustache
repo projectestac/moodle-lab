@@ -75,14 +75,14 @@
                     <div class="progress-indic-label">
                       {{#isOverall}}{{#str}}overallprogressshort, format_tiles{{/str}}{{/isOverall}}{{^isOverall}}{{#str}}progress, format_tiles{{/str}}{{/isOverall}} %
                     </div>
-                    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         {{! two circles, one showing complete and one showing the user's progress }}
                         <circle class="whole" cx="20" cy="20" r="17" fill="none" stroke="#e6e6e6" stroke-width="5"></circle>
                         <circle id="percent-circle-{{tileid}}" class="partial" transform="rotate(-90,20,20)" cx="20"
                                 cy="20" r="17" fill="none" stroke="none" stroke-width="5" stroke-dasharray="{{percentCircumf}}"
                                 stroke-dashoffset="{{percentOffset}}"></circle>
                         {{! the numeric percentage in centre of circle }}
-                        <text x="{{#isSingleDigit}}15{{/isSingleDigit}}{{^isSingleDigit}}10{{/isSingleDigit}}" y="27" font-family="inherit" font-size="20" id="percent-text-{{tileid}}">
+                        <text x="{{^is-rtl}}{{#isSingleDigit}}15{{/isSingleDigit}}{{^isSingleDigit}}10{{/isSingleDigit}}{{/is-rtl}}{{#is-rtl}}{{#isSingleDigit}}25{{/isSingleDigit}}{{^isSingleDigit}}30{{/isSingleDigit}}{{/is-rtl}}" y="27" font-family="inherit" font-size="20" id="percent-text-{{tileid}}">
                             {{percent}}
                         </text>
                     </svg>
@@ -108,8 +108,15 @@
     {{/isComplete}}
     {{#isComplete}}
         <div class="progress-indic{{#showAsPercent}} percent{{/showAsPercent}}" id="tileprogress-{{tileid}}"
-             data-numcomplete="{{numComplete}}" data-numoutof="{{numOutOf}}" style="display:none;">
-            {{! placeholder progress indicator for possible JS replacement}}
+             data-numcomplete="{{numComplete}}" data-numoutof="{{numOutOf}}" {{^isOverall}}style="display:none;"{{/isOverall}}>
+            {{#isOverall}}
+                <div class="progress-indic progress-indic-label" id="tileallcomplete-{{tileid}}" data-numcomplete="{{numComplete}}"
+                     data-numoutof="{{numOutOf}}" title="{{#str}}allcomplete, format_tiles{{/str}}"{{#usetooltips}} data-toggle="tooltip"{{/usetooltips}}>
+                    {{#pix}}completion-check, format_tiles, {{#str}}allcomplete, format_tiles{{/str}}{{/pix}}
+                    {{#str}}allcomplete, format_tiles{{/str}}
+                </div>
+            {{/isOverall}}
+            {{! If not overall, this is just a placeholder progress indicator for possible JS replacement}}
         </div>
     {{/isComplete}}
 {{/hastilephoto}}
@@ -149,7 +156,7 @@
     {{^numOutOf}}
         <div class="progress-indic{{#showAsPercent}} percent{{/showAsPercent}} placeholder"
              id="tileprogress-{{tileid}}" data-numcomplete="-1" data-numoutof="0" style="display: none;">
-            {{! placeholder progress indicator for possible JS replacement}}
+            {{! If not overall, this is just a placeholder progress indicator for possible JS replacement}}
         </div>
     {{/numOutOf}}
 {{/hastilephoto}}

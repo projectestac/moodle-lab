@@ -19,8 +19,8 @@
  *
  * @package format_tiles
  * @copyright  2019 David Watson {@link http://evolutioncode.uk}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
- **/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -29,8 +29,9 @@ require_once($CFG->dirroot . '/course/format/tiles/lib.php');
 if ($ADMIN->fulltree) {
     $settings = null; // We add our own settings pages and do not want the standard settings link.
 
-    $settingscategory = new \format_tiles\admin_settingspage_tabs('formatsettingtiles', get_string('pluginname', 'format_tiles'));
-
+    $settingscategory = new \format_tiles\local\admin_settingspage_tabs(
+        'formatsettingtiles', get_string('pluginname', 'format_tiles')
+    );
 
     // Colour settings.
     $page = new admin_settingpage('format_tiles/tab-colours', get_string('colours', 'format_tiles'));
@@ -45,14 +46,14 @@ if ($ADMIN->fulltree) {
     $default = 0;
     $page->add(new admin_setting_configcheckbox($name, $title, '', $default));
 
-    $brandcolourdefaults = array(
+    $brandcolourdefaults = [
         '#1670CC' => get_string('colourblue', 'format_tiles'),
         '#00A9CE' => get_string('colourlightblue', 'format_tiles'),
         '#7A9A01' => get_string('colourgreen', 'format_tiles'),
         '#009681' => get_string('colourdarkgreen', 'format_tiles'),
         '#D13C3C' => get_string('colourred', 'format_tiles'),
         '#772583' => get_string('colourpurple', 'format_tiles'),
-    );
+    ];
     $colournumber = 1;
     foreach ($brandcolourdefaults as $hex => $displayname) {
         $title = get_string('brandcolour', 'format_tiles') . ' ' . $colournumber;
@@ -94,18 +95,13 @@ if ($ADMIN->fulltree) {
         $colournumber++;
     }
 
-    $page->add(new admin_setting_heading('hovercolourheading', get_string('hovercolour', 'format_tiles'), ''));
-    // Hover colour for all tiles (in hexadecimal RGB with preceding '#').
-    $name = 'format_tiles/hovercolour';
-    $title = get_string('hovercolour', 'format_tiles');
-    $description = get_string('hovercolour_descr', 'format_tiles');
-    $default = '#ED8B00';
-    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
-    $page->add($setting);
     $settingscategory->add($page);
 
     // Modal activities / resources.
     $page = new admin_settingpage('format_tiles/tab-modalwindows', get_string('modalwindows', 'format_tiles'));
+    $cachecallback = function() {
+        \cache_helper::purge_by_event('format_tiles/modaladminsettingchanged');
+    };
 
     // Modal windows for course modules.
     $allowedmodtypes = ['page' => 1]; // Number is default to on or off.
@@ -126,6 +122,7 @@ if ($ADMIN->fulltree) {
         $allowedmodtypes,
         $options
     );
+    $setting->set_updatedcallback($cachecallback);
     $page->add($setting);
 
     // Modal windows for resources.
@@ -134,22 +131,23 @@ if ($ADMIN->fulltree) {
         "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options",
         "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
     );
-    $allowedresourcetypes = array(
+    $allowedresourcetypes = [
         'pdf' => get_string('displaytitle_mod_pdf', 'format_tiles') . " (pdf)",
         'url' => get_string('url') . ' (' . $displayembed . ')',
-        'html' => get_string('displaytitle_mod_html', 'format_tiles') . " (HTML " . get_string('file') . ")"
-    );
+        'html' => get_string('displaytitle_mod_html', 'format_tiles') . " (HTML " . get_string('file') . ")",
+    ];
     $name = 'format_tiles/modalresources';
     $title = get_string('modalresources', 'format_tiles');
-    $description = get_string('modalresources_desc', 'format_tiles', array('displayembed' => $displayembed, 'link' => $link));
+    $description = get_string('modalresources_desc', 'format_tiles', ['displayembed' => $displayembed, 'link' => $link]);
     $setting = new admin_setting_configmulticheckbox(
         $name,
         $title,
         $description,
-        array('pdf' => 1, 'url' => 1, 'html' => 1),
+        ['pdf' => 1, 'url' => 1, 'html' => 1],
         $allowedresourcetypes
     );
     $page->add($setting);
+    $setting->set_updatedcallback($cachecallback);
     $settingscategory->add($page);
 
     // Photo tile settings.
@@ -161,11 +159,19 @@ if ($ADMIN->fulltree) {
     $default = 1;
     $page->add(new admin_setting_configcheckbox($name, $title, $description, $default));
 
-    $name = 'format_tiles/phototilesaltstyle';
-    $title = get_string('phototilesaltstyle', 'format_tiles');
-    $description = get_string('phototilesaltstyle_desc', 'format_tiles');
-    $default = 0;
-    $page->add(new admin_setting_configcheckbox($name, $title, $description, $default));
+    $choices = [];
+    $stylestr = get_string('style', 'format_tiles');
+    for ($i = 1; $i <= 2; $i++) {
+        $choices[(string)$i] = $stylestr . ' ' . $i;
+    }
+
+    $setting = new admin_setting_configselect(
+        'format_tiles/tilestyle',
+        get_string('tilestyle', 'format_tiles'),
+        get_string('tilestyle_desc', 'format_tiles'),
+        "1",
+        $choices);
+    $page->add($setting);
 
     $name = 'format_tiles/showprogresssphototiles';
     $title = get_string('courseshowtileprogress', 'format_tiles');
@@ -195,7 +201,7 @@ if ($ADMIN->fulltree) {
     // Tile title line height.
     $choices = [];
     for ($x = 30.0; $x <= 33.0; $x += 0.1) {
-        $choices[$x * 10] = $x;
+        $choices[(int)($x * 10)] = $x;
     }
     $setting = new admin_setting_configselect(
         'format_tiles/phototitletitlelineheight',
@@ -208,7 +214,7 @@ if ($ADMIN->fulltree) {
     // Tile title line line padding.
     $choices = [];
     for ($x = 0.0; $x <= 6.0; $x += 0.5) {
-        $choices[$x * 10] = $x;
+        $choices[(int)($x * 10)] = $x;
     }
     $setting = new admin_setting_configselect(
         'format_tiles/phototitletitlepadding',
@@ -256,7 +262,7 @@ if ($ADMIN->fulltree) {
             'problemcourses',
             get_string('problemcourses', 'format_tiles'),
             html_writer::link(
-                \format_tiles\course_section_manager::get_list_problem_courses_url(),
+                \format_tiles\local\course_section_manager::get_list_problem_courses_url(),
                 get_string('checkforproblemcourses', 'format_tiles'),
                 ['class' => 'btn btn-primary', 'target' => '_blank']
             )
@@ -320,6 +326,12 @@ if ($ADMIN->fulltree) {
     $name = 'format_tiles/assumedatastoreconsent';
     $title = get_string('assumedatastoreconsent', 'format_tiles');
     $description = get_string('assumedatastoreconsent_desc', 'format_tiles');
+    $default = 1;
+    $page->add(new admin_setting_configcheckbox($name, $title, $description, $default));
+
+    $name = 'format_tiles/usecourseindex';
+    $title = get_string('usecourseindex', 'format_tiles');
+    $description = get_string('usecourseindex_desc', 'format_tiles');
     $default = 1;
     $page->add(new admin_setting_configcheckbox($name, $title, $description, $default));
 

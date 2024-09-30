@@ -41,28 +41,23 @@ class header extends \core_courseformat\output\local\content\section\header {
      */
     public function export_for_template(\renderer_base $output): \stdClass {
 
-        // TODO optimise this.
         $format = $this->format;
         $course = $format->get_course();
 
         $section = $this->section;
-        $data = (object)[
-            'num' => $section->section,
-            'id' => $section->id,
-            'issectionzero' => $section->section == 0
-        ];
+        $data = (object)['num' => $section->section, 'id' => $section->id, 'issectionzero' => $section->section == 0];
 
-        $data->title = $format->get_section_name($this->section);
+        $data->title = $output->section_title_without_link($section, $course);
 
         $data->editing = $format->show_editor();
         $coursedisplay = $format->get_course_display();
         $data->headerdisplaymultipage = false;
-        if ($coursedisplay == COURSE_DISPLAY_MULTIPAGE && $data->editing) {
+        if ($coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
             $data->headerdisplaymultipage = true;
-            $data->title = $output->render(course_get_format($course)->inplace_editable_render_section_name($this->section));
+            $data->title = $output->section_title($section, $course);
         }
 
-        if ($this->section->section > $format->get_last_section_number()) {
+        if ($section->section > $format->get_last_section_number()) {
             // Stealth sections (orphaned) has special title.
             $data->title = get_string('orphanedactivitiesinsectionno', '', $section->section);
         }
@@ -75,11 +70,27 @@ class header extends \core_courseformat\output\local\content\section\header {
             $data->sitehome = true;
         }
 
+        $data->editing = $format->show_editor();
+
         if (!$format->show_editor() && $coursedisplay == COURSE_DISPLAY_MULTIPAGE && empty($data->issinglesection)) {
             if ($section->uservisible) {
                 $data->url = course_get_url($course, $section->section);
             }
         }
+        $data->name = get_section_name($course, $section);
+        $moodlerelease = \format_tiles\local\util::get_moodle_release();
+
+        if ($moodlerelease > 4.1) {
+            $data->selecttext = $format->get_format_string('selectsection', $data->name);
+        }
+
+        if (!$format->get_section_number()) {
+            $data->sectionbulk = true;
+        }
+
+        $data->ismoodle42minus = $moodlerelease <= 4.2;
+        $data->ismoodle41minus = $moodlerelease <= 4.1;
+
         return $data;
     }
 }

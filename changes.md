@@ -11,6 +11,7 @@
 - Updated `blocks/completion_progress`
 - Updated `question/type/formulas`
 - Updated `course/format/remuiformat`
+- Updated `course/format/tiles`
 - Updated Wiris plugins
 
 ### 4.1.10+ (Build: 20240503)

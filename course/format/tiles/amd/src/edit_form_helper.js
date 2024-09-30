@@ -32,7 +32,7 @@ define(["jquery", "core/notification", "core/str", "core/templates"],
     function ($, Notification, str, Templates) {
         "use strict";
         return {
-            init: function (pageType, courseDefaultIcon, courseId, sectionId, section, userId, allowphototiles, documentationUrl) {
+            init: function (pageType, courseDefaultIcon, courseId, allowphototiles, documentationUrl) {
                 $(document).ready(function () {
                     const useSubTilesCheckBox = $("input#id_courseusesubtiles");
                     const useSubTilesSecZeroCheckBox = $("input#id_usesubtilesseczero");
@@ -111,7 +111,7 @@ define(["jquery", "core/notification", "core/str", "core/templates"],
                             var clicked = $(e.currentTarget);
                             circles.removeClass("selected");
                             clicked.addClass("selected");
-                            colourSelectMenu.val(clicked.attr("data-colour"));
+                            colourSelectMenu.val(clicked.data("colour"));
                             $("#colourselectnotify").fadeIn(200).fadeOut(1200);
                         });
 
@@ -137,11 +137,6 @@ define(["jquery", "core/notification", "core/str", "core/templates"],
                     if (pageType === "course-edit") {
                         selectBox = $("#id_defaulttileicon");
                         selectedIconName = $("#id_defaulttileicon option:selected").text();
-                    } else if (pageType === "course-editsection") {
-                        selectBox = $("#id_tileicon");
-                        selectedIconName = $("#id_tileicon option:selected").text();
-                    }
-                    if (pageType === "course-edit" || (pageType === "course-editsection" && section !== "0")) {
                         var currentIcon;
                         if (selectBox.val() === "") {
                             currentIcon = courseDefaultIcon;
@@ -151,19 +146,17 @@ define(["jquery", "core/notification", "core/str", "core/templates"],
                         Templates.render("format_tiles/icon_picker_launch_btn", {
                             initialicon: currentIcon,
                             initialname: selectedIconName,
-                            sectionId: sectionId,
-                            allowphototiles: allowphototiles
+                            sectionId: 0,
+                            allowphototiles: false // We do not allow a photo to be set as the default at course level.
                         }).done(function (html) {
                             $(html).insertAfter(selectBox);
 
                             // We can hide the original select box now as users will use the button instead.
                             selectBox.hide();
                             require(["format_tiles/edit_icon_picker"], function(iconPicker) {
-                                iconPicker.init(courseId, pageType, allowphototiles, documentationUrl);
+                                iconPicker.init(courseId, pageType, false, documentationUrl);
                             });
                         });
-                    } else if (pageType === "course-editsection" && section === "0") {
-                        selectBox.closest(".row").hide(); // Don't have an icon for section zero.
                     }
 
                     // Add a row to the page with link to plugin documentation.

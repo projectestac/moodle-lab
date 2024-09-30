@@ -61,7 +61,7 @@
                 "sesskey": "12345678",
                 "courseid": 99,
                 "useSubtiles": 0,
-                "coursemodules": [],
+                "course_modules": [],
                 "single_sec_add_cm_control_html": "",
                 "single_sec_content_is_long": 0,
                 "alt": "",
@@ -75,9 +75,6 @@
         {{> format_tiles/above_tiles}}
     {{/from_ajax}}
     <ul id="single_section_tiles">
-        {{^from_ajax}}
-            {{> format_tiles/section_zero}}
-        {{/from_ajax}}
         {{! single_section is a separate template as it is also called directly from JS without this other stuff}}
         {{>format_tiles/single_section}}
 

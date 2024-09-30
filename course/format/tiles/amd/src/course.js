@@ -27,20 +27,20 @@
  */
 
 define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
-        "core/notification", "core/str", "format_tiles/tile_fitter"],
-    function ($, Templates, ajax, browserStorage, Notification, str, tileFitter) {
+        "core/notification", "core/str", "format_tiles/tile_fitter", 'core/fragment'],
+    function ($, Templates, ajax, browserStorage, Notification, str, tileFitter, Fragment) {
         "use strict";
 
         var isMobile;
         var loadingIconHtml;
         var stringStore = [];
-        var scrollFuncLock = false;
-        var sectionIsOpen = false;
         var HEADER_BAR_HEIGHT = 60; // This varies by theme and version so will be reset once pages loads below.
         var reopenLastVisitedSection = false;
         var courseId;
-        var resizeLocked = false;
+        var courseContextId;
+        let resizeTimeout;
         var enableCompletion;
+        var reorgSectionsDisabledUntil = 0;
 
          // Keep a record of which tile is currently open.
         var openTile = 0;
@@ -59,18 +59,19 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             TILES: "ul.tiles",
             ACTIVITY: ".activity",
             ACTIVITY_NAME: ".activityname",
+            ABOVE_TILES: "#abovetiles",
+            FOCUSABLE_ELEMS: 'button, a, input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])',
             INSTANCE_NAME: ".instancename",
             SPACER: ".spacer",
-            SECTION_MOVEABLE: ".moveablesection",
             SECTION_ID: "#section-",
             SECTION_TITLE: ".sectiontitle",
             SECTION_MAIN: ".section.main",
             SECTION_BUTTONS: ".sectionbuttons",
             CLOSE_SEC_BTN: ".closesectionbtn",
-            HIDE_SEC0_BTN: "#buttonhidesec0",
+            HIDE_SEC0_BTN: ".buttonhidesec0",
             SECTION_ZERO: "#section-0",
             MOODLE_VIDEO: ".mediaplugin.mediaplugin_videojs",
-            LAUNCH_STANDARD: '[data-action="launch-tiles-standard"]',
+            MOODLE_DIALOGUE: ".moodle-dialogue-confirm", // E.g. glossary entry.
             MANUAL_COMPLETION: '[data-action="toggle-manual-completion"]',
             TOOLTIP: "[data-toggle=tooltip]",
             MATHJAX_EQUATION: ".filter_mathjaxloader_equation"
@@ -79,15 +80,14 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             SELECTED: "selected",
             OPEN: "open",
             CLOSED: "closed",
-            LAUNCH_CM_MODAL: "launch-tiles-cm-modal",
             STATE_VISIBLE: 'state-visible', // This is a Snap theme class. Was added to make this format cooperate better with it.
-            HAS_OPEN_TILE: 'format-tiles-tile-open'
+            HAS_OPEN_TILE: 'format-tiles-tile-open',
+            ON_TILE_CONTROL: 'on-tile-control' // Tiles may have controls on them which do not open the section when clicked.
         };
 
         var Event = {
             CLICK: "click",
             KEYDOWN: "keydown",
-            SCROLL: "scroll"
         };
 
         var CSS = {
@@ -97,9 +97,8 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             BG_COLOUR: "background-color"
         };
         var Keyboard = {
-            ESCAPE: 27,
             TAB: 9,
-            RETURN: 13
+            ENTER: 13
         };
 
         const OVERLAY_ID = 'format_tiles_overlay';
@@ -107,9 +106,10 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
         /**
          * If we have embedded video in section, stop it.
          * Runs when section is closed.
-         * @param {number} section where the video is.
+         * @param {number} section sec number where the video is.
+         * @param {number} sectionId sec ID where the video is.
          */
-        var stopVideoPlaying = function(section) {
+        var stopVideoPlaying = function(section, sectionId) {
             var contentSection = $(Selector.SECTION_ID + section);
 
             // First iframes (e.g. embedded YouTube).
@@ -117,7 +117,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                 iframe = $(iframe);
                 // Remove the src from the iframe but keep it in case the section is re-opened.
                 if (iframe.attr('src')) {
-                    iframe.attr('data-src', iframe.attr("src"));
+                    iframe.data('src', iframe.attr("src"));
                     iframe.attr('src', "");
                 }
             });
@@ -126,6 +126,9 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             var mediaPlayers = contentSection.find(Selector.MOODLE_VIDEO);
             if (mediaPlayers.length > 0) {
                 contentSection.html("");
+                getSectionContentFromServer(courseContextId, sectionId).done(function (html, js) {
+                    setCourseContentHTML(contentSection, html, js);
+                });
             }
         };
 
@@ -137,7 +140,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             $(Selector.MOVEABLE_SECTION).each(function (index, sec) {
                 sec = $(sec);
                 if (sec.is(":visible")) {
-                    stopVideoPlaying(sec.attr("data-section"));
+                    stopVideoPlaying(sec.data("section"), sec.data("sectionid"));
                     sec.slideUp().removeClass(ClassNames.STATE_VISIBLE); // Excludes section 0.
                 }
             });
@@ -150,13 +153,16 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             $(Selector.TILE_LOADING_ICON).fadeOut(300, function () {
                 $(Selector.TILE_LOADING_ICON).html("");
             });
-            sectionIsOpen = false;
             openTile = 0;
             $(Selector.BODY).removeClass(ClassNames.HAS_OPEN_TILE);
             overlay.fadeOut(300);
+
+            // If any moodle dialogues are open, close them (e.g. glossary auto links).
+            $(Selector.MOODLE_DIALOGUE).remove();
         };
 
         const overlay = $('#' + OVERLAY_ID);
+        overlay.attr('aria-hidden', true);
 
         /**
          * Used where the user clicks the window overlay but we want the active click to be behind the
@@ -187,13 +193,12 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
         /**
          * Set the HTML for a course section to the correct div in the page
          * @param {Object} contentArea the jquery object for the content area
-         * @param {String} content the HTML
+         * @param {String} html the HTML
          * @param {String} js Any additional JS for the new HTML.
-         * @returns {boolean} success
          */
-        var setCourseContentHTML = function (contentArea, content, js) {
-            if (content) {
-                contentArea.html(content);
+        var setCourseContentHTML = function (contentArea, html, js) {
+            if (html) {
+                contentArea.html(html);
                 $(Selector.TILE_LOADING_ICON).fadeOut(300, function () {
                     $(Selector.TILE_LOADING_ICON).html("");
                 });
@@ -204,48 +209,40 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                     // When user reaches last item, send them back to first.
                     // And vice versa if going backwards.
 
-                    var activities = contentArea.find(Selector.ACTIVITY).not(Selector.SPACER);
-                    contentArea.on(Event.KEYDOWN, function (e) {
-                        if (e.keyCode === Keyboard.ESCAPE) {
-                            // Close open tile, and return focus to closed tile, for screen reader user.
-                            browserStorage.setLastVisitedSection(0);
-                            cancelTileSelections(0);
-                            $(Selector.TILEID + contentArea.attr('data-section')).focus();
-                        }
-                    });
-                    activities.on(Event.KEYDOWN, function (e) {
-                        if (e.keyCode === Keyboard.RETURN) {
+                    const activityLinks = contentArea.find(Selector.ACTIVITY).not(Selector.SPACER).find('a');
+                    activityLinks.on(Event.KEYDOWN, function (e) {
+                        if (e.keyCode === Keyboard.ENTER) {
                             var toClick = $(e.currentTarget).find("a");
-                            if (toClick.hasClass(ClassNames.LAUNCH_CM_MODAL)) {
-                                toClick.click();
-                            } else if (toClick.attr("href") !== undefined) {
-                                window.location = toClick.attr("href");
-                            }
+                            window.location.href = toClick.attr("href");
                         }
                     });
+
                     if (!isMobile) {
-                        activities.last().on(Event.KEYDOWN, function (e) {
+                        const focusableElements = contentArea.find(Selector.FOCUSABLE_ELEMS);
+                        const firstFocusableElement = focusableElements.eq(0);
+                        const lastFocusableElement = focusableElements.eq(focusableElements.length - 1);
+                        lastFocusableElement.on(Event.KEYDOWN, function (e) {
                             if (e.keyCode === Keyboard.TAB && !e.shiftKey
-                                    && $(e.relatedTarget).closest(Selector.SECTION_MAIN).attr("id") !== contentArea.attr("id")) {
+                                && $(e.relatedTarget).closest(Selector.SECTION_MAIN).attr("id") !== contentArea.attr("id")) {
                                 // RelatedTarget is the item we tabbed to.
                                 // If we reached here, the item we are on is not a member of the section we were in.
-                                // (I.e. we are trying to tab out of the bottom of section) so move tab back to first item instead.
+                                // (I.e. we are trying to tab out of bottom of section) so move tab to first item instead.
                                 setTimeout(function () {
-                                    // Allow very short delay so we dont skip forward on the basis of our last key press.
-                                    contentArea.find(Selector.SECTION_TITLE).focus();
+                                    // Allow very short delay so we don't skip forward on the basis of our last key press.
+                                    firstFocusableElement.focus();
                                     contentArea.find(Selector.SECTION_BUTTONS).css("top", "");
-                                }, 200);
+                                }, 100);
                             }
                         });
-                        contentArea.find(Selector.SECTION_TITLE).on(Event.KEYDOWN, function (e) {
+                        firstFocusableElement.on(Event.KEYDOWN, function (e) {
                             if (e.keyCode === Keyboard.TAB && e.shiftKey
-                                    && $(e.relatedTarget).closest(Selector.SECTION_MAIN).attr("id") !== contentArea.attr("id")) {
+                                && $(e.relatedTarget).closest(Selector.SECTION_MAIN).attr("id") !== contentArea.attr("id")) {
                                 // See explanation previous block.
                                 // Here we are trying to tab backwards out of the top of our section.
                                 // So take us to last item instead.
                                 setTimeout(function () {
-                                    activities.last().focus();
-                                }, 200);
+                                    lastFocusableElement.focus();
+                                }, 100);
                             }
                         });
                     }
@@ -267,17 +264,6 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         }
                     }, 500);
                 }
-                // As we have just loaded new content, ensure that we initialise videoJS media player if required.
-                if (contentArea.find(Selector.MOODLE_VIDEO).length !== 0) {
-                    require(["media_videojs/loader"], function(videoJS) {
-                        videoJS.setUp();
-                    });
-                }
-
-                // Some modules e.g. mod_unilabel need JS initialising when added to the page.
-                if (js && js.length) {
-                    contentArea.append(js);
-                }
 
                 setTimeout(() => {
                     // If subtile title is long, it overlaps background image.
@@ -292,11 +278,46 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         }
                     });
                 }, 100);
+            }
+            setTimeout(() => {
+                if (js) {
+                    // User may be opening same section multiple times so avoid adding same script again.
+                    const head = $('head');
+                    const existingScripts = head.find('script').filter(
+                        (index, script) => {
+                            return $(script).html() === js;
+                        }
+                    );
+                    if (existingScripts.length === 0) {
+                        Templates.runTemplateJS(js);
+                    }
+                }
 
                 applyMathJax(contentArea);
-                return true;
-            }
-            return false;
+
+                const moodleVideos = contentArea.find(Selector.MOODLE_VIDEO);
+                if (moodleVideos.length > 0) {
+                    // This already happens once on page load, but we repeat since reloaded HTML containing lazy load videos.
+                    require(["media_videojs/loader"], function (videoJS) {
+                        videoJS.setUp();
+                    });
+
+                    // Issue 87 - If video fullscreen button is pressed, temporarily disable tile re-orgs on screen resize.
+                    const fsEvents = ['fullscreenchange', 'webkitfullscreenchang', 'mozfullscreenchange', 'msfullscreenchange'];
+                    fsEvents.forEach(function (ev) {
+                        document.addEventListener(ev, function () {
+                            const disableDurationMilliSeconds = 1000;
+                            reorgSectionsDisabledUntil = Date.now() + disableDurationMilliSeconds;
+                        });
+                    });
+                }
+            }, 1000);
+
+            $(document).trigger('format-tiles-section-content-changed', {
+                courseId: parseInt(courseId),
+                section: contentArea.data('section'),
+                sectionid: contentArea.data('sectionid')
+            });
         };
 
         /**
@@ -313,7 +334,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         });
                     }
                 } catch (err) {
-                    require(["core/log"], function(log) {
+                    require(["core/log"], function (log) {
                         log.debug(err);
                     });
                 }
@@ -323,23 +344,23 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
         /**
          * Expand a content containing section (e.g. on tile click)
          * @param {object} contentArea
-         * @param {number} tileId to expand
+         * @param {number} sectionNumber to expand
          */
-        var expandSection = function (contentArea, tileId) {
-            const tile = $("#tile-" + tileId);
+        var expandSection = function (contentArea, sectionNumber) {
+            const tile = $("#tile-" + sectionNumber);
             var expandAndScroll = function () {
                 // Scroll to the top of content bearing section
                 // we have to wait until possible reOrg and slide down totally before calling this, else co-ords are wrong.
-                var scrollTo = (tile.offset().top) - $(Selector.TILES).offset().top + HEADER_BAR_HEIGHT;
+                var scrollTo = (tile.offset().top) - $('#section-zero-container').offset().top + HEADER_BAR_HEIGHT;
                 if (scrollTo === $(window).scrollTop) {
                     // Scroll by at least one pixel otherwise z-index on selected tile is not changed.
                     // Until mouse moves.
                     scrollTo += 1;
                 }
-                contentArea.find(Selector.SECTION_TITLE).focus();
+
                 // If user tries to scroll during animation, stop animation.
                 var events = "mousedown wheel DOMMouseScroll mousewheel keyup touchmove";
-                const page = $(Selector.PAGE);
+                const page = $("html, body");
                 page.on(events, function () {
                     page.stop();
                 });
@@ -349,12 +370,18 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                     page.off(events, function () {
                         page.stop();
                     });
+                    // For users with screen readers, move focus to the first item within the tile.
+                    contentArea.find(Selector.FOCUSABLE_ELEMS).eq(0).focus();
                 });
-                sectionIsOpen = true;
-                openTile = tileId;
 
                 // For users with screen readers, move focus to the first item within the tile.
-                contentArea.find(Selector.ACTIVITY).first().focus();
+                // Short timeout for this to allow for animation to finish.
+                // (Not relying on the animation callback alone for the delay as it's slightly too slow.)
+                setTimeout(() => {
+                    contentArea.find(Selector.FOCUSABLE_ELEMS).eq(0).focus();
+                }, 300);
+
+                openTile = sectionNumber;
 
                 // If we have any iframes in the section which were previous emptied out, re-populate.
                 // This will happen if we have previously closed a section with videos in, and they were muted.
@@ -363,8 +390,8 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                     iframes.each(function (index, iframe) {
                         iframe = $(iframe);
                         // If iframe has no src, add it from data-src.
-                        if (iframe.attr('src') === '' && iframe.attr('data-src') !== undefined) {
-                            iframe.attr('src', iframe.attr("data-src"));
+                        if (iframe.attr('src') === '' && iframe.data('src') !== undefined) {
+                            iframe.attr('src', iframe.data("src"));
                         }
                     });
 
@@ -373,46 +400,12 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         // So maybe need to update tile completion info. E.g. applies with H5P filter.
                         setTimeout(() => {
                             $(document).trigger('format-tiles-completion-changed', {
-                                section: tileId
+                                courseid: courseId,
+                                section: sectionNumber
                             });
                         }, 1000);
                     }
                 }
-            };
-
-            /**
-             * Make sure that the section close and edit buttons always appear at the top of the section on scroll
-             */
-            var holdSectionButtonPosition = function () {
-                var buttons = contentArea.find(Selector.SECTION_BUTTONS);
-                $(window).on(Event.SCROLL, function () {
-                    if (!scrollFuncLock && sectionIsOpen) {
-                        scrollFuncLock = true;
-                        buttons.fadeOut(300);
-                        setTimeout(function () {
-                            var windowTop = $(window).scrollTop();
-                            var desiredNewPositionInSection = (windowTop - contentArea.offset().top + 50);
-                            if (desiredNewPositionInSection > 0
-                                    && desiredNewPositionInSection < contentArea.outerHeight() - 100) {
-                                desiredNewPositionInSection = (windowTop - contentArea.offset().top + 50);
-                                buttons.css("top", desiredNewPositionInSection);
-                            } else if (desiredNewPositionInSection < 0) {
-                                buttons.css("top", 0);
-                            }
-                            if (windowTop > contentArea.offset().top + contentArea.outerHeight() - 50) {
-                                // We have scrolled down and content bottom has gone out of the top of window.
-                                buttons.css("top", 0);
-                            } else if (contentArea.offset().top > windowTop + $(window).outerHeight()) {
-                                // We have scrolled up and  content bottom has gone out of the bottom of window.
-                                buttons.css("top", 0);
-                            }
-                            buttons.fadeIn(300, function () {
-                                // Release lock on this function.
-                                scrollFuncLock = false;
-                            });
-                        }, 500);
-                    }
-                });
             };
 
             contentArea.addClass(ClassNames.STATE_VISIBLE);
@@ -422,9 +415,8 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
             contentArea.slideDown(350, function () {
                 // Wait until we have finished sliding down before we work out where the top is for scroll.
                 expandAndScroll();
-                holdSectionButtonPosition();
             });
-            openTile = tileId;
+            openTile = sectionNumber;
         };
 
         /**
@@ -432,43 +424,34 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
          * Finally we re-open the section.
          * This is to ensure that the content bearing section is on the row under the tile clicked.
          * It is run at page load and again if window is re-sized etc.
-         * @param {boolean} delayBefore do we want a delay before we re-org.  This allows e.g. browser resizing to complete.
          * @param {boolean} fitTilesToScreenWidth whether we need to resize the tiles window while tiles are closed.
          * @returns {Promise}
          */
-        var reOrgSections = function (delayBefore, fitTilesToScreenWidth) {
+        var reOrgSections = function (fitTilesToScreenWidth) {
             var dfd = new $.Deferred();
-            var openedSection = $(".moveablesection:visible");
-            var openedSectionNum = 0;
-            if (openedSection.length > 0) {
-                openedSectionNum = openedSection.attr("data-section");
-                cancelTileSelections(0);
+            if (reorgSectionsDisabledUntil > Date.now()) {
+                dfd.resolve();
             }
-            var reOrgFunc = function(delayBefore) {
-                tileFitter.runReOrg(delayBefore)
+            const disableDurationMilliSeconds = 1000;
+            reorgSectionsDisabledUntil = Date.now() + disableDurationMilliSeconds;
+
+            var reOrgFunc = function() {
+                tileFitter.runReOrg()
                     .done(function(result) {
-                        if (openedSectionNum !== 0) {
-                            expandSection(openedSection, openedSectionNum);
-                        }
                         dfd.resolve(result);
                     })
                     .fail(function(result) {
-                        if (openedSectionNum !== 0) {
-                            expandSection(openedSection, openedSectionNum);
-                        }
                         dfd.reject(result);
                     });
             };
 
             if (fitTilesToScreenWidth) {
-                setTimeout(function() {
-                    tileFitter.resizeTilesDivWidth(courseId).done(function() {
-                        reOrgFunc(false);
-                    }, delayBefore);
+                tileFitter.resizeTilesDivWidth(courseId).done(() => {
+                    // Wait until resize is done to start re-org to allow tiles to settle.
+                    reOrgFunc();
                 });
-
             } else {
-                reOrgFunc(delayBefore);
+                reOrgFunc();
             }
             return dfd.promise();
         };
@@ -504,19 +487,20 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
 
         /**
          * For a given section, get the content from the server, add it to the store and maybe UI and maybe show it
-         * @param {number} courseId the id for the affected course
-         * @param {number} sectionNum the section number we are wanting to populate
+         * @param {number} courseContextId the id for the affected course context
+         * @param {number} sectionId the section ID we are wanting to populate
          * @return {Promise} promise to resolve when the ajax call returns.
          */
-        var getSectionContentFromServer = function (courseId, sectionNum) {
-            return ajax.call([{
-                methodname: "format_tiles_get_single_section_page_html",
-                args: {
-                    courseid: courseId,
-                    sectionid: sectionNum,
-                    setjsusedsession: true
-                }
-            }])[0];
+        var getSectionContentFromServer = function (courseContextId, sectionId) {
+            if (!courseContextId || !sectionId) {
+                require(["core/log"], function(log) {
+                    log.debug(`No course context ID '${courseContextId.toString()}' or section ID '${sectionId.toString()}'`);
+                });
+            }
+            // This gets the fragment from format_tiles_output_fragment_get_cm_list().
+            return Fragment.loadFragment(
+                'format_tiles', 'get_cm_list', courseContextId, {sectionid: sectionId}
+            );
         };
 
         /**
@@ -530,64 +514,77 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                 if (browserStorage.getSecZeroCollapseStatus() === true) {
                     sectionZero.slideUp(0);
                     buttonHideSecZero.addClass(ClassNames.CLOSED).removeClass(ClassNames.OPEN); // Button image.
+                    $(Selector.ABOVE_TILES).addClass('sec-zero-closed');
                 } else {
                     sectionZero.slideDown(300);
                     buttonHideSecZero.addClass(ClassNames.OPEN).removeClass(ClassNames.CLOSED); // Button image.
+                    $(Selector.ABOVE_TILES).removeClass('sec-zero-closed');
                 }
             } else {
                 // Storage not available so we dont know if sec zero was previously collapsed - expand it.
                 buttonHideSecZero.addClass(ClassNames.OPEN).removeClass(ClassNames.CLOSED);
                 sectionZero.slideDown(300);
+                $(Selector.ABOVE_TILES).removeClass('sec-zero-closed');
             }
         };
 
         /**
          * To be called when a tile is clicked. Get content from server or storage and display or store it.
-         * @param {number} courseId courseId the id of this course.
-         * @param {object} thisTile jquery the tile object clicked.
-         * @param {number} dataSection the id number of the tile.
+         * @param {number} courseContextId course context id of this course.
+         * @param {number} sectionId section Id for the clicked section.
+         * @param {number} sectionNumber the section number of the tile.
          */
-        var populateAndExpandSection = function(courseId, thisTile, dataSection) {
+        var populateAndExpandSection = function(courseContextId, sectionId, sectionNumber) {
             $(Selector.TILE).removeClass(ClassNames.SELECTED);
-            openTile = dataSection;
+            openTile = sectionNumber;
             // Then close all open secs.
             // Timed to finish in 200 so that it completes well before the opening next.
             $(Selector.MOVEABLE_SECTION).each(function (index, sec) {
                 sec = $(sec);
                 if (sec.is(":visible")) {
-                    stopVideoPlaying(sec.attr("data-section"));
+                    stopVideoPlaying(sec.data("section"), sec.data("sectionid"));
                     sec.slideUp(200).removeClass(ClassNames.STATE_VISIBLE); // Excludes section 0.
                 }
             });
             // Log the fact we viewed the section.
             ajax.call([{
                 methodname: "format_tiles_log_tile_click", args: {
-                    courseid: courseId,
-                    sectionid: dataSection
+                    coursecontextid: courseContextId,
+                    sectionnumber: sectionNumber,
+                    sectionid: sectionId
                 }
             }])[0].fail(Notification.exception);
             // Get the content - use locally stored content first if available.
-            var relatedContentArea = $(Selector.SECTION_ID + dataSection);
+            var relatedContentArea = $(Selector.SECTION_ID + sectionNumber);
             if (relatedContentArea.find(Selector.ACTIVITY).length > 0) {
                 // There is already some content on the screen so display immediately.
-                expandSection(relatedContentArea, dataSection);
+                expandSection(relatedContentArea, sectionNumber);
 
                 // Still contact the server in case content has changed (e.g. restrictions now satisfied).
-                getSectionContentFromServer(courseId, dataSection).done(function (response) {
-                    setCourseContentHTML(relatedContentArea, $(response.html).html(), response.js);
+                getSectionContentFromServer(courseContextId, sectionId).done(function (html, js) {
+                    setCourseContentHTML(relatedContentArea, html, js);
                 });
             } else {
                 relatedContentArea.html(loadingIconHtml);
                 // Get from server.
-                getSectionContentFromServer(courseId, dataSection).done(function (response) {
-                    setCourseContentHTML(relatedContentArea, $(response.html).html(), response.js);
-                    expandSection(relatedContentArea, dataSection);
+                getSectionContentFromServer(courseContextId, sectionId).done(function (html, js) {
+                    setCourseContentHTML(relatedContentArea, html, js);
+                    expandSection(relatedContentArea, sectionNumber);
                 }).fail(function (failResult) {
-                    failedLoadSectionNotify(dataSection, failResult, relatedContentArea);
-                    cancelTileSelections(dataSection);
+                    failedLoadSectionNotify(sectionNumber, failResult, relatedContentArea);
+                    cancelTileSelections(sectionNumber);
                 });
             }
-            browserStorage.setLastVisitedSection(dataSection);
+            browserStorage.setLastVisitedSection(sectionNumber);
+
+            // If any moodle dialogues are open, close them (e.g. glossary auto links).
+            $(Selector.MOODLE_DIALOGUE).remove();
+        };
+
+        const removeUrlParam = function (pattern) {
+            if ((window.location.href).match(pattern)) {
+                history.pushState(null, null, (window.location.href).replace(pattern, ''));
+            }
         };
 
         return {
@@ -596,18 +593,20 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                 useJavascriptNav, // Set by site admin see settings.php.
                 isMobileInit,
                 sectionNum,
-                useFilterButtons,
+                useFilterButtons, // If > 0 then are using filters (value depends on filter type).
                 assumeDataStoreConsent, // Set by site admin see settings.php.
                 reopenLastSectionInit, // Set by site admin see settings.php.
                 userId,
                 fitTilesToWidth,
-                enableCompletionInit
+                enableCompletionInit,
+                useSubTiles,
+                courseContextIdInit
             ) {
-                courseId = courseIdInit;
+                courseId = parseInt(courseIdInit);
+                courseContextId = courseContextIdInit;
                 isMobile = isMobileInit;
                 // Some args are strings or ints but we prefer bool.  Change to bool now as they are passed on elsewhere.
                 reopenLastVisitedSection = reopenLastSectionInit === "1";
-                useFilterButtons = useFilterButtons === 1;
                 assumeDataStoreConsent = assumeDataStoreConsent === "1";
                 enableCompletion = enableCompletionInit === "1";
                  // We want to initialise the browser storage JS module for storing user settings.
@@ -619,6 +618,12 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                     userId
                 );
                 $(document).ready(function () {
+                    const isMultiSectionPage = $(Selector.TILES).length === 1;
+
+                    if (useSubTiles) {
+                        // We need to be able to style tooltips outside of ul.tiles element.
+                        $(Selector.BODY).addClass('format-tiles-subtiles');
+                    }
                     var pageContent = $("#page-content");
                     if (pageContent.length === 0) {
                         // Some themes e.g. RemUI do not have a #page-content div, so use #region-main.
@@ -636,14 +641,41 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                             // And click it.
                         }
                     }
+
+                    // If there is an anchor e.g. #module-123 then open relevant section.
+                    const anchorMatches = (window.location.href).match(/#module-(\d+)$/gi);
+                    if (anchorMatches && anchorMatches.length) {
+                        const anchorCmId = parseInt(anchorMatches[0].split('-')[1]);
+                        if (anchorCmId) {
+                            // Set openTile to null for now so that null is passed to tile fitter before AJAX below returns.
+                            openTile = null;
+                            ajax.call([{
+                                methodname: "format_tiles_get_course_mod_info", args: {cmid: anchorCmId}
+                            }])[0].done(function (data) {
+                                if (data && data.courseid === courseId) {
+                                    openTile = data.sectionnumber;
+                                    if (useJavascriptNav) {
+                                        populateAndExpandSection(
+                                            data.coursecontextid, data.sectionid, data.sectionnumber
+                                        );
+                                    }
+                                }
+                            });
+                        }
+                    }
+
                     if (openTile !== 0) {
                         tileFitter.init(courseId, openTile, fitTilesToWidth, false);
                     } else {
-                        // Set focus to the first tile (not section zero).
-                        $(Selector.TILEID + "1").focus();
                         tileFitter.init(courseId, null, fitTilesToWidth, false);
                     }
-                    var windowWidth = $(window).outerWidth();
+
+                    // We are going to watch for changes to size of main tiles window.
+                    // This allows us to call the tile fitter to re-org tiles if needed.
+                    const pageContentElem = $('#page-content');
+                    // In case some themes don't have a page content div, use window as alternative.
+                    const widthObservedElement = pageContentElem.length ? pageContentElem : $(window);
+                    var observedElementWidth = widthObservedElement.outerWidth();
 
                     if (useJavascriptNav) {
                         // User is not editing but is usingJS nav to view.
@@ -655,20 +687,25 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                             if (!useJavascriptNav) {
                                 return;
                             }
+                            const target = $(e.target);
+                            if (target.hasClass(ClassNames.ON_TILE_CONTROL)) {
+                                // The user has clicked a control on the tile so we don't expand it.
+                                return;
+                            }
                             e.preventDefault();
                             // If other tiles have loading icons, fade them out (on the tile not the content sec).
                             $(Selector.TILE_LOADING_ICON).fadeOut(300, function () {
                                 $(Selector.TILE_LOADING_ICON).html();
                             });
                             var thisTile = $(e.currentTarget).closest(Selector.TILE);
-                            var dataSection = parseInt(thisTile.attr("data-section"));
+                            var dataSection = parseInt(thisTile.data("section"));
                             if (thisTile.hasClass(ClassNames.SELECTED)) {
                                 // This tile is already expanded so collapse it.
                                 cancelTileSelections(dataSection);
                                 browserStorage.setLastVisitedSection(0);
                                 overlay.fadeOut(300);
                             } else {
-                                populateAndExpandSection(courseId, thisTile, dataSection);
+                                populateAndExpandSection(courseContextId, thisTile.data('true-sectionid'), dataSection);
                             }
                         });
 
@@ -682,17 +719,24 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         // So remove them and re-initialise them.
                         // Collapse the selected section before doing this.
                         // Otherwise the re-organisation won't work as the tiles' flow will be out when they are analysed.
-                        $(window).on("resize", function () {
+                        // We use the multi_section_tiles element to capture left and right drawer opening/closing.
+                        const resizeObserver = new ResizeObserver(() => {
                             // On iOS resize events are triggered often on scroll because the address bar hides itself.
-                            // Avoid this using windowWidth here.
-                            if (resizeLocked || windowWidth === $(window).outerWidth()) {
+                            // Avoid this using observedElementWidth here.
+                            if (observedElementWidth === widthObservedElement.outerWidth()) {
                                 return;
                             }
-                            resizeLocked = true;
 
                             // We wait for a short time before doing anything, as user may still be dragging window size change.
                             // We don't want to react to say 20 resize events happening over a single drag.
-                            setTimeout(function() {
+                            clearTimeout(resizeTimeout);
+                            resizeTimeout = setTimeout(function() {
+
+                                if (reorgSectionsDisabledUntil > Date.now()) {
+                                    // We wait until inside our timeout for this as we may be responding to a fullscreen event.
+                                    return;
+                                }
+
                                 // First assume that we are going to resize, but we have checks to make below.
                                 var resizeRequired = true;
 
@@ -714,41 +758,65 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                                 }
                                 if (resizeRequired) {
                                     // Set global for comparison next time.
-                                    windowWidth = $(window).outerWidth();
-                                    reOrgSections(true, fitTilesToWidth);
+                                    observedElementWidth = widthObservedElement.outerWidth();
+                                    reOrgSections(fitTilesToWidth);
                                 }
-                                resizeLocked = false;
-                            }, 600);
+                            }, 100);
                         });
+
+                        resizeObserver.observe(document.getElementById('page-content'));
 
                         // When user clicks to close a section using cross at top right in section.
                         pageContent.on(Event.CLICK, Selector.CLOSE_SEC_BTN, function (e) {
-                            cancelTileSelections($(e.currentTarget).attr("data-section"));
+                            const currentSectionNumber = $(e.currentTarget).data("section");
+                            cancelTileSelections(currentSectionNumber);
+                            // For screen readers, move focus back to tile just closed so they can advance from there.
+                            $('#sectionlink-' + currentSectionNumber).focus();
                         });
 
                         setSectionZeroFromUserPref();
                         // Most filter button related JS is in filter_buttons.js module which is required below.
 
+                        if (isMultiSectionPage) {
+                            // Remove section and cmid URL params if present as we are using JS nav and showing all tiles.
+                            removeUrlParam(/(&|\\?)cmid=\d+/gi);
+                            removeUrlParam(/(&|\\?)section=\d+/gi);
+                        }
+                    } else if (fitTilesToWidth) {
+                        tileFitter.resizeTilesDivWidth(courseId);
                     }
 
                     // If this event is triggered, user has updated a completion check box.
                     // We need to retrieve section content from server in case availability of items has changed.
+                    // Will also be triggered on focus change e.g. user has returned to this tab from a new window.
                     $(document).on('format-tiles-completion-changed', function(e, data) {
-                        const allSectionNums = $(Selector.TILE).not(Selector.SPACER).map((i, t) => {
-                            return parseInt($(t).attr('data-section'));
+                        if (data.courseid && parseInt(courseId) !== parseInt(data.courseid)) {
+                            return;
+                        }
+                        const allSectionNums = $(Selector.TILE).not(Selector.SPACER).map((i, tile) => {
+                            return parseInt($(tile).data('section'));
                         }).toArray();
                         // Need to include sec zero as may have completion tracked items.
                         allSectionNums.push(0);
-                        const isSingleSectionPage = $('ul#single_section_tiles').length > 0;
-                        const requests = ajax.call([
-                            {
-                                methodname: "format_tiles_get_single_section_page_html",
-                                args: {
-                                    courseid: courseId,
-                                    sectionid: data.section,
-                                    setjsusedsession: !isSingleSectionPage
-                                }
-                            },
+
+                        // Get the section ID from section number.
+                        const contentArea = $(Selector.SECTION_ID + data.section);
+                        const sectionId = contentArea.data('sectionid')
+                            ?? contentArea.data('section-id');
+                        // This gets the fragment from format_tiles_output_fragment_get_cm_list().
+                        Fragment.loadFragment(
+                            'format_tiles', 'get_cm_list', courseContextId, {sectionid: sectionId}
+                        )
+                        .done((html, js) => {
+                            setCourseContentHTML(contentArea, html, js);
+                        })
+                        .catch(err => {
+                            require(["core/log"], function(log) {
+                                log.debug(err);
+                            });
+                        });
+
+                        ajax.call([
                             {
                                 methodname: "format_tiles_get_section_information",
                                 args: {
@@ -756,39 +824,30 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                                     sectionnums: allSectionNums
                                 }
                             }
-                        ]);
-                        requests[0]
-                            .done((response) => {
-                                setCourseContentHTML($(Selector.SECTION_ID + data.section), $(response.html).html(), response.js);
-                            })
-                            .catch(err => {
-                                require(["core/log"], function(log) {
-                                    log.debug(err);
-                                });
+                        ])[0]
+                        .done((response) => {
+                            require(["format_tiles/completion"], function (completion) {
+                                completion.updateSectionsInfo(
+                                    response.sections, response.overall.complete, response.overall.outof
+                                );
                             });
-                        requests[1]
-                            .done((response) => {
-                                require(["format_tiles/completion"], function (completion) {
-                                    completion.updateSectionsInfo(
-                                        response.sections, response.overall.complete, response.overall.outof
-                                    );
-                                });
 
-                            })
-                            .catch(err => {
-                                require(["core/log"], function(log) {
-                                    log.debug(err);
-                                });
+                        })
+                        .catch(err => {
+                            require(["core/log"], function(log) {
+                                log.debug(err);
                             });
+                        });
                     });
 
                     if (enableCompletion) {
                         // We use pageContent for listener here, as completion button is replaced by core JS when it's clicked.
+                        // This is for non-subtiles only.
                         // We wait half a second to enable the completion change to be registered first.
                         pageContent.on(Event.CLICK, Selector.MANUAL_COMPLETION, function(e) {
                             const currentTarget = $(e.currentTarget);
-                            const sectionNum = currentTarget.closest(Selector.SECTION_MAIN).attr("data-section");
-                            const cmid = currentTarget.attr("data-cmid");
+                            const sectionNum = currentTarget.closest(Selector.SECTION_MAIN).data("section");
+                            const cmid = currentTarget.data("cmid");
                             require(["format_tiles/completion"], function (completion) {
                                 setTimeout(() => {
                                     completion.triggerCompletionChangedEvent(
@@ -807,11 +866,13 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         if (sectionZero.css(CSS.DISPLAY) === "none") {
                             // Sec zero is collapsed so expand it on user click.
                             sectionZero.slideDown(250);
+                            $(Selector.ABOVE_TILES).removeClass('sec-zero-closed');
                             $(e.currentTarget).addClass(ClassNames.OPEN).removeClass(ClassNames.CLOSED);
                             browserStorage.setSecZeroCollapseStatus("collapsed");
                         } else {
                             // Sec zero is expanded so collapse it on user click.
                             sectionZero.slideUp(250);
+                            $(Selector.ABOVE_TILES).addClass('sec-zero-closed');
                             $(e.currentTarget).addClass(ClassNames.CLOSED).removeClass(ClassNames.OPEN);
                             browserStorage.setSecZeroCollapseStatus("expanded");
                         }
@@ -824,7 +885,7 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         if (useJavascriptNav) {
                             pageContent.on(Event.CLICK, Selector.FILTER_BUTTON, function () {
                                 cancelTileSelections(0);
-                                reOrgSections(true, false);
+                                reOrgSections(false);
                             });
                         }
 
@@ -871,44 +932,54 @@ define(["jquery", "core/templates", "core/ajax", "format_tiles/browser_storage",
                         });
                     });
 
-                    // If a mobile user clicks an embedded video activity, we don't show them a modal.
-                    // It won't work well. Instead we direct them to the original site e.g. YouTube.
-                    if (isMobile) {
-                        pageContent.on(Event.CLICK, Selector.ACTIVITY + ".video a", function(e) {
-                            var target = $(e.currentTarget);
-                            var url = target.closest(Selector.ACTIVITY).attr("data-url-secondary");
-                            if (url !== undefined) {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                var cm = target.closest(Selector.ACTIVITY);
-                                ajax.call([{
-                                    methodname: "format_tiles_log_mod_view", args: {
-                                        courseid: courseId,
-                                        cmid: cm.attr("data-cmid")
-                                    }
-                                }])[0].done(function () {
-                                    window.location = url;
+                    // When a section is open, fix close/edit buttons to top of screen (else hidden on scroll).
+                    let fixButtonsDisabled = false;
+                    $(window).scroll(function() {
+                        if (!fixButtonsDisabled) {
+                            try {
+                                if ($(window).scrollTop() >= 300) {
+                                    $('.moveablesection.state-visible').each((i, s) => {
+                                        s = $(s);
+                                        const section = document.getElementById('section-' + s.data('section'));
+                                        const sectionRect = section.getBoundingClientRect();
+                                        const right = document.body.clientWidth - sectionRect.right + 30;
+                                        const sectionButtons = s.find('.sectionbuttons');
+                                        const topMargin = $("#page").offset().top;
+                                        if (sectionRect.top + topMargin < 0 && sectionRect.bottom - topMargin > 0) {
+                                            sectionButtons.addClass('position-fixed');
+                                            sectionButtons.css({'top': topMargin + 10, 'right': right});
+                                        } else {
+                                            sectionButtons.removeClass('position-fixed');
+                                            sectionButtons.css({'top': 'unset', 'right': 'unset'});
+                                        }
+                                    });
+                                }
+                            } catch (err) {
+                                require(["core/log"], function(log) {
+                                    log.debug(err);
                                 });
+                                fixButtonsDisabled = true;
                             }
-                        });
-                    } else {
-                        // If user is NOT on mobile device.
+                        }
+                    });
 
-                        // If return is pressed while an item is in focus, click the item.
-                        // This is to make the tiles keyboard navigable for users using screen readers.
-                        // User tabbing between tiles is handled by tabindex in the HTML.
-                        // Once the tile is clicked, the expand tile function will move focus to the first content item.
-                        // On escape key, we clear all selections and collapse tiles (handled above not here).
-                        $(Selector.TILE).on(Event.KEYDOWN, function (e) {
-                            if (e.keyCode === Keyboard.RETURN) { // Return key pressed.
-                                $(e.currentTarget).click();
-                            }
-                        });
-
-                        // Move focus to the first tile in the course (not sec zero contents if present).
-                        // $("ul.tiles .tile").first().focus();
+                    // The URL may include a section ID in the form "#sectionid-xx-title" where xx is section ID.
+                    // This would be from a section "permalink".
+                    // We cannot get that value in PHP so try redirect from here instead.
+                    // This is not needed from Moodle 4.4+ as then the section.php URL is used for permalinks.
+                    const urlPattern = /.*\/course\/view\.php\?id=([\d]+)#sectionid-([\d+]+)-title/;
+                    const urlMatches = window.location.href.match(urlPattern);
+                    if (urlMatches && urlMatches.length === 3) {
+                        const sectionId = urlMatches[2];
+                        const redirectUrl = urlMatches[0].replace(
+                            `#sectionid-${sectionId}-title`, `&sectionid=${sectionId}`
+                        );
+                        window.location.replace(redirectUrl);
                     }
                 });
+            },
+            populateAndExpandSection(courseContextId, sectionId, sectionNumber) {
+                populateAndExpandSection(courseContextId, sectionId, sectionNumber);
             }
         };
     }

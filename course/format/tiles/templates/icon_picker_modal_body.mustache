@@ -15,7 +15,6 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 
-
 {{!
     @template format_tiles/icon_picker_modal_body
 
@@ -42,42 +41,48 @@
     {
         "icon_picker_icons": [],
         "icon_picker_photos": [],
-        "show_photo_button": 1,
+        "showicons": 1,
+        "showphotos": 1,
         "documentationurl": "https://mydocumentationurl.com"
     }
 }}
-{{#photosallowed}}
+<div id="icon-picker-modal-body" data-extra="0">
     <ul class="nav nav-pills" role="tablist">
-        <!-- First the top most node and immediate children -->
+    {{#showicons}}
         <li class="nav-item">
-            <a class="nav-link active" href="#tileicons" data-toggle="tab" role="tab">{{#str}}tileicons, format_tiles{{/str}}</a>
+            <a class="nav-link active" id="show-icons-tab" href="#tileicons" data-toggle="tab" role="tab">{{#str}}tileicons, format_tiles{{/str}}</a>
         </li>
+    {{/showicons}}
+    {{#showphotos}}
         <li class="nav-item">
             <a class="nav-link" id="launch-photo-library" href="#photolibrary" data-toggle="tab" role="tab">{{#pix}}camera, format_tiles{{/pix}} {{#str}}photolibrary, format_tiles{{/str}}</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="phototilebtn" href="#">{{#pix}}cloud-upload, format_tiles{{/pix}}{{#str}}uploadnewphoto, format_tiles{{/str}}</a>
         </li>
+    {{/showphotos}}
     </ul>
 
 
-    <div class="tab-content mt-5" id="myTabContent">
-        <div class="tab-pane show active" id="tileicons" role="tabpanel" aria-labelledby="tileicons-tab">
+    <div class="tab-content mt-5" id="icon-tab-content">
+    {{#showicons}}
+        <div class="tab-pane show active" id="tileicons" role="tabpanel">
             <div class="iconpickerheader">
-                {{#str}}search{{/str}}
-                {{#pix}}a/search, core, {{#str}}search{{/str}}{{/pix}}
-                <input name="{{#str}}search{{/str}}" type="text" class="iconsearch inline" style="width: 20em;">
+                <label for="icon-search">
+                    {{#str}}search{{/str}}
+                    {{#pix}}a/search, core, {{#str}}search{{/str}}{{/pix}}
+                </label>
+                <input name="search" id="icon-search" type="text" class="iconsearch inline" style="width: 20em;">
             </div>
-
             <div class="iconpickericons" id="iconpickericons">
                 {{#icon_picker_icons}}
                     {{> format_tiles/icon_picker_icon}}
                 {{/icon_picker_icons}}
             </div>
-
         </div>
-
-        <div class="tab-pane fade" id="photolibrary" role="tabpanel" aria-labelledby="photolibrary-tab">
+    {{/showicons}}
+    {{#showphotos}}
+        <div class="tab-pane fade" id="photolibrary" role="tabpanel">
             {{!Leave blank for now will lazy load from JS if needed}}
             <h3>{{#str}}photolibrary, format_tiles{{/str}}</h3>
             <div>{{#str}}photolibrary_desc, format_tiles{{/str}}</div>
@@ -85,35 +90,16 @@
                 <div class="alert alert-warning">{{#str}}none{{/str}}</div>
             </div>
         </div>
-    </div>
-{{/photosallowed}}
-
-{{^photosallowed}}
-    <div class="iconpickerheader">
-        {{#str}}search{{/str}}
-        {{#pix}}a/search, core, {{#str}}search{{/str}}{{/pix}}
-        <input name="{{#str}}search{{/str}}" type="text" class="iconsearch inline" style="width: 20em;">
-
-        {{#show_photo_button}}
-        {{/show_photo_button}}
+    {{/showphotos}}
     </div>
 
-    <div class="iconpickericons" id="iconpickericons">
-        {{#icon_picker_icons}}
-            {{> format_tiles/icon_picker_icon}}
-        {{/icon_picker_icons}}
-    </div>
-{{/photosallowed}}
-{{#documentationurl}}
     <div>
-        <a href="{{{documentationurl}}}" target="_blank">
-            {{#pix}}help, core, {{#str}}documentation, format_tiles{{/str}}{{/pix}}{{#str}}documentation, format_tiles{{/str}}
-        </a>
+        <span>
+            {{#documentationurl}}
+                <a href="{{{documentationurl}}}" target="_blank">
+                        {{#pix}}help, core, {{#str}}documentation, format_tiles{{/str}}{{/pix}}{{#str}}documentation, format_tiles{{/str}}
+                    </a>
+            {{/documentationurl}}
+        </span>
     </div>
-{{/documentationurl}}
-
-
-
-
-
-
+</div>

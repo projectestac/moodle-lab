@@ -57,6 +57,7 @@ Feature: Progress indicators can be used to change progress status and changes a
       | assumedatastoreconsent | 1        | format_tiles |
       | reopenlastsection      | 0        | format_tiles |
       | usejavascriptnav       | 1        | format_tiles |
+      | tilestyle              | 1        | format_tiles |
 
   @javascript
   Scenario: Log in as student and check/uncheck activities - results correctly reach database

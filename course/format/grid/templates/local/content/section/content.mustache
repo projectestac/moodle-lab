@@ -136,6 +136,11 @@
         <div class="grid-generatedimage card-img text-center" style="background-image: url('{{generatedimageuri}}');">
         </div>
         {{/generatedimageuri}}
+        {{#imageerror}}
+        <div class="grid-image-error card-img text-center">
+            <p><small>{{imageerror}}</small></p>
+        </div>
+        {{/imageerror}}
         {{#image}}
         <div class="grid-image-name card-footer">
             {{image}}

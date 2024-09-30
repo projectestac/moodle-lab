@@ -39,17 +39,17 @@
 }}
 <li
     class="activity activity-wrapper {{module}} modtype_{{module}} {{#hasinfo}}hasinfo{{/hasinfo}}
-        {{^clickable}} unclickable {{/clickable}} modtype_{{modname}} {{modResourceType}}{{extraclasses}}"
-    id="{{anchor}}"
+        {{^clickable}} unclickable {{/clickable}} mod_{{modname}} {{#modresourceicon}}modtype_{{modresourceicon}}{{/modresourceicon}}{{extraclasses}}  {{#indent}}indented{{/indent}}"
+    {{#anchor}}id="{{anchor}}"{{/anchor}}
     data-for="cmitem"
     data-id="{{id}}"
     data-cmid="{{cmid}}"
+    data-contextid="{{modcontextid}}"
     data-modinstance="{{modinstance}}"
-    data-modtype="{{modname}}{{#modResourceType}}_{{{modResourceType}}}{{/modResourceType}}"
-    {{#pluginfileUrl}}data-url="{{{pluginfileUrl}}}"{{/pluginfileUrl}}
-    {{#secondaryurl}}data-url-secondary="{{{secondaryurl}}}"{{/secondaryurl}}
+    data-modtype="{{modname}}{{#modresourceicon}}_{{{modresourceicon}}}{{/modresourceicon}}"
     data-title="{{{activityname}}}"
-    {{#hascompletion}}data-completion-state="{{completionstate}}"{{/hascompletion}}
+    {{#modalType}}data-modal="{{modalType}}" {{/modalType}}
+    {{#hascompletion}}data-completion-state="{{completionstate}}"{{/hascompletion}} data-completion="{{completion}}"
 >
 {{#cmformat}}
     {{$ format_tiles/local/content/cm}}

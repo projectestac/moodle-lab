@@ -29,8 +29,8 @@ class com_wiris_plugin_impl_RenderImplIntegratedServices extends com_wiris_plugi
 					throw new HException("Unexpected image format.");
 				}
 			}
-		}catch(Exception $»e) {
-			$_ex_ = ($»e instanceof HException) ? $»e->e : $»e;
+		}catch(Exception $Â»e) {
+			$_ex_ = ($Â»e instanceof HException) ? $Â»e->e : $Â»e;
 			$e = $_ex_;
 			{
 				throw new HException($e->getMessage());

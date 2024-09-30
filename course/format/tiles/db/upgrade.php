@@ -58,11 +58,11 @@ function xmldb_format_tiles_upgrade($oldversion) {
         // Rename the field "tiletopleftthistile" to "tileicon".
         // The latter is much simpler and the former was only used for legacy reasons.
         $DB->set_field('course_format_options', 'name', 'tileicon',
-            array('format' => 'tiles', 'name' => 'tiletopleftthistile'));
+            ['format' => 'tiles', 'name' => 'tiletopleftthistile']);
 
         // Same for "defaulttiletopleftdisplay".
         $DB->set_field('course_format_options', 'name', 'defaulttileicon',
-            array('format' => 'tiles', 'name' => 'defaulttiletopleftdisplay'));
+            ['format' => 'tiles', 'name' => 'defaulttiletopleftdisplay']);
 
         // Delete any 'course default' records for tile icons as these are no longer used.
         $DB->delete_records_select(
@@ -94,10 +94,10 @@ function xmldb_format_tiles_upgrade($oldversion) {
         // Which filter button a user previously had pressed is now stored in browser session storage.
         // Same for whether sec zero is collapsed, so delete from database.
         $DB->delete_records_select(
-            'user_preferences', $DB->sql_like("name", "?", false), array("format_tiles_filterbutton_%")
+            'user_preferences', $DB->sql_like("name", "?", false), ["format_tiles_filterbutton_%"]
         );
         $DB->delete_records_select(
-            'user_preferences', $DB->sql_like("name", "?", false), array("format_tiles_collapseseczero_%")
+            'user_preferences', $DB->sql_like("name", "?", false), ["format_tiles_collapseseczero_%"]
         );
 
         $DB->set_field_select(
@@ -138,7 +138,7 @@ function xmldb_format_tiles_upgrade($oldversion) {
 
         // Store the sample photo tile image in the database.
         $fs = get_file_storage();
-        $filerecord = format_tiles\tile_photo::file_api_params();
+        $filerecord = format_tiles\local\tile_photo::file_api_params();
         $filerecord['contextid'] = \context_system::instance()->id;
         $filerecord['itemid'] = 0;
         $filerecord['mimetype'] = 'image/jpeg';
@@ -165,5 +165,57 @@ function xmldb_format_tiles_upgrade($oldversion) {
         }
         upgrade_plugin_savepoint(true, 2020080629, 'format', 'tiles');
     }
+
+    if ($oldversion < 2024020200) {
+
+        // New way of storing tile images, using a new format_tiles_tile_options table instead of core course_format_options.
+
+        // Define table format_tiles_tile_options to be created.
+        $table = new xmldb_table('format_tiles_tile_options');
+
+        // Adding fields to table format_tiles_tile_options.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('optiontype', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('elementid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('optionvalue', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null);
+
+        // Adding keys to table format_tiles_tile_options.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+        $table->add_key('fk_courseid', XMLDB_KEY_FOREIGN, ['courseid'], 'course', ['id']);
+
+        // Adding indexes to table format_tiles_tile_options.
+        $table->add_index('elementid-optiontype', XMLDB_INDEX_NOTUNIQUE, ['elementid', 'optiontype']);
+        $table->add_index('courseid-elementid-optiontype', XMLDB_INDEX_UNIQUE, ['courseid', 'elementid', 'optiontype']);
+
+        // Conditionally launch create table for format_tiles_tile_options.
+        $dbman = $DB->get_manager();
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+
+            // If we have courses using the course_format_options table to store tilephoto choices, change them to use new table.
+            // We use an adhoc task to pass this to cron as it may take a long time during the upgrade if lots of courses/data.
+            $legacycourses = $DB->get_fieldset_sql(
+                "SELECT DISTINCT courseid from {course_format_options}
+                WHERE format = 'tiles' AND name = 'tilephoto' OR name = 'tileicon' ORDER BY courseid"
+            );
+            foreach ($legacycourses as $courseid) {
+                $task = new \format_tiles\task\migrate_legacy_data();
+                $task->set_custom_data(['courseid' => $courseid]);
+                \core\task\manager::queue_adhoc_task($task);
+            }
+        }
+
+        // Tiles savepoint reached.
+        upgrade_plugin_savepoint(true, 2024020200, 'format', 'tiles');
+    }
+
+    if ($oldversion < 2024061800) {
+        // Course index in Tiles is no longer an experimental feature so activate it.
+        // Site admin can de-activate if they wish via plugin settings.
+        set_config('usecourseindex', 1, 'format_tiles');
+        upgrade_plugin_savepoint(true, 2024061800, 'format', 'tiles');
+    }
+
     return true;
 }

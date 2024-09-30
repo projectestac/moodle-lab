@@ -25,13 +25,33 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array (
-    array(
+$observers = [
+    [
     'eventname' => '\core\event\course_deleted',
     'callback' => 'format_tiles\observer::course_deleted',
-    ),
-    array(
+    ],
+    [
         'eventname' => '\core\event\course_section_deleted',
         'callback' => 'format_tiles\observer::course_section_deleted',
-    ),
-);
+    ],
+    [
+        'eventname' => '\core\event\course_module_deleted',
+        'callback'  => 'format_tiles\observer::course_module_deleted',
+    ],
+    [
+        'eventname' => '\core\event\course_module_updated',
+        'callback'  => 'format_tiles\observer::course_module_updated',
+    ],
+    [
+        'eventname' => '\core\event\course_module_created',
+        'callback'  => 'format_tiles\observer::course_module_created',
+    ],
+    [
+        'eventname' => '\core\event\course_backup_created',
+        'callback'  => 'format_tiles\observer::course_backup_created',
+    ],
+    [
+        'eventname' => '\core\event\course_restored',
+        'callback'  => 'format_tiles\observer::course_restored',
+    ],
+];

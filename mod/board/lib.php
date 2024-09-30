@@ -197,25 +197,17 @@ function board_delete_instance($id) {
 
 /**
  * Extend navigation.
- * @param object $settings
- * @param object $boardnode
+ * @param settings_navigation $settings
+ * @param navigation_node $boardnode
  */
-function board_extend_settings_navigation($settings, $boardnode) {
+function board_extend_settings_navigation(settings_navigation $settings, navigation_node $boardnode) {
     global $PAGE;
+    $context = context_module::instance($settings->get_page()->cm->id);
+    if (has_capability('mod/board:manageboard', $context)) {
+        $params = ['id' => $settings->get_page()->cm->id];
 
-    if (has_capability('mod/board:manageboard', $PAGE->cm->context)) {
-        $params = ['id' => $PAGE->cm->id];
-        if ($ownerid = $PAGE->url->get_param('ownerid')) {
-            $params['ownerid'] = $ownerid;
-        }
-        $node = navigation_node::create(get_string('export_board', 'board'),
-                new moodle_url('/mod/board/download_board.php', $params),
-                navigation_node::TYPE_SETTING, null, null,
-                new pix_icon('i/export', ''));
-        $boardnode->add_node($node);
-
-        $node = navigation_node::create(get_string('export_submissions', 'board'),
-                new moodle_url('/mod/board/download_submissions.php', $params),
+        $node = navigation_node::create(get_string('export', 'board'),
+                new moodle_url('/mod/board/export.php', $params),
                 navigation_node::TYPE_SETTING, null, null,
                 new pix_icon('i/export', ''));
         $boardnode->add_node($node);
@@ -507,7 +499,9 @@ function board_cm_info_view(cm_info $cm) {
     if ($board->embed) {
         $width = get_config('mod_board', 'embed_width');
         $height = get_config('mod_board', 'embed_height');
-        $output = html_writer::start_tag('iframe', [
+        $output = html_writer::start_tag('div', ['class' => 'mod_board_embed_container']);
+        $output .= html_writer::tag('h3', $board->name);
+        $output .= html_writer::start_tag('iframe', [
             'src' => new moodle_url('/mod/board/view.php', ['id' => $cm->id, 'embed' => 1]),
             'width' => $width,
             'height' => $height,
@@ -515,6 +509,9 @@ function board_cm_info_view(cm_info $cm) {
             'allowfullscreen' => true,
         ]);
         $output .= html_writer::end_tag('iframe');
+        $output .= html_writer::link(new moodle_url('/mod/board/view.php', ['id' => $cm->id]),
+            get_string('viewboard', 'board'));
+        $output .= html_writer::end_tag('div');
         $cm->set_content($output, true);
     }
 }

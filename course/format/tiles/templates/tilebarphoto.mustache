@@ -43,7 +43,5 @@
         "title": "Introduction"
     }
 }}
-<a class="tilebarphoto"
-    {{#editing}} data-section="{{num}}" data-true-sectionid="{{id}}" data-action="launch-tiles-icon-picker" role="button"{{/editing}} id="tileicon_{{num}}"
-   data-imagetype="{{#isdraftfile}}draftfile{{/isdraftfile}}{{^isdraftfile}}tilephoto{{/isdraftfile}}"
+<a class="tilebarphoto" role="button" data-imagetype="{{#isdraftfile}}draftfile{{/isdraftfile}}{{^isdraftfile}}tilephoto{{/isdraftfile}}"
    href="{{{phototileediturl}}}" style="background-image: url({{{phototileurl}}});"></a>

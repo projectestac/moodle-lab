@@ -26,6 +26,7 @@ namespace mod_subcourse\output;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/subcourse/locallib.php');
+require_once($CFG->libdir . '/externallib.php');
 
 /**
  * Controls the display of the plugin in the Mobile App.
@@ -47,7 +48,6 @@ class mobile {
         global $OUTPUT, $USER, $DB;
 
         $args = (object) $args;
-        $versionname = $args->appversioncode >= 3950 ? 'latest' : 'ionic3';
         $cm = get_coursemodule_from_id('subcourse', $args->cmid);
         $context = \context_module::instance($cm->id);
 
@@ -71,7 +71,7 @@ class mobile {
         }
 
         if ($refcourse) {
-            $refcourse->fullname = external_format_string($refcourse->fullname, $context);
+            $refcourse->fullname = \external_format_string($refcourse->fullname, $context);
             $refcourse->url = new \moodle_url('/course/view.php', ['id' => $refcourse->id]);
             $progress = \core_completion\progress::get_course_progress_percentage($refcourse);
         }
@@ -79,7 +79,7 @@ class mobile {
         $currentgrade = subcourse_get_current_grade($subcourse, $USER->id);
 
         // Pre-format some of the texts for the mobile app.
-        $subcourse->name = external_format_string($subcourse->name, $context);
+        $subcourse->name = \external_format_string($subcourse->name, $context);
         [$subcourse->intro, $subcourse->introformat] = external_format_text($subcourse->intro, $subcourse->introformat, $context,
             'mod_subcourse', 'intro');
 
@@ -92,13 +92,14 @@ class mobile {
             'currentgrade' => $currentgrade,
             'hasgrade' => isset($currentgrade),
             'warning' => $warning,
+            'canusemoduleinfo' => $args->appversioncode >= 44000,
         ];
 
         return [
             'templates' => [
                 [
                     'id' => 'main',
-                    'html' => $OUTPUT->render_from_template("mod_subcourse/mobile_view_$versionname", $data),
+                    'html' => $OUTPUT->render_from_template('mod_subcourse/mobile_view_latest', $data),
                 ],
             ],
             'javascript' => '',

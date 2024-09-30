@@ -21,10 +21,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-global $CFG;
-require_once($CFG->libdir . '/externallib.php');
+namespace mod_subcourse;
 
 /**
  * Unit tests for the methods provided by the {@see \mod_subcourse\output\mobile} class.
@@ -34,10 +31,12 @@ require_once($CFG->libdir . '/externallib.php');
  * @copyright 2020 David Mudrák <david@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_subcourse_output_mobile_testcase extends advanced_testcase {
+class output_mobile_test extends \advanced_testcase {
 
     /**
      * Test the return value of the main_view() method.
+     *
+     * @covers ::main_view
      */
     public function test_main_view() {
 
@@ -54,7 +53,7 @@ class mod_subcourse_output_mobile_testcase extends advanced_testcase {
         $generator->enrol_user($student->id, $refcourse->id, 'student');
 
         // Give some grades in the referenced course.
-        $gi = new grade_item($generator->create_grade_item(['courseid' => $refcourse->id]), false);
+        $gi = new \grade_item($generator->create_grade_item(['courseid' => $refcourse->id]), false);
         $gi->update_final_grade($student->id, 90, 'test');
         $gi->force_regrading();
         grade_regrade_final_grades($refcourse->id);
@@ -80,15 +79,5 @@ class mod_subcourse_output_mobile_testcase extends advanced_testcase {
 
         $this->assertEquals('main', $mainview3950['templates'][0]['id']);
         $this->assertStringContainsString('plugin.mod_subcourse.currentgrade', $mainview3950['templates'][0]['html']);
-
-        // Ionic3 compatible view for the app version 3.9.4.
-        $mainview3940 = \mod_subcourse\output\mobile::main_view([
-            'cmid' => $subcourse->cmid,
-            'courseid' => $metacourse->id,
-            'appversioncode' => 3940,
-        ]);
-
-        $this->assertEquals('main', $mainview3940['templates'][0]['id']);
-        $this->assertStringContainsString('plugin.mod_subcourse.currentgrade', $mainview3940['templates'][0]['html']);
     }
 }

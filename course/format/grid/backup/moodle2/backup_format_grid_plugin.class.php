@@ -18,19 +18,16 @@
  * Grid format.
  *
  * @package    format_grid
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2012 G J Barnard in respect to modifications of standard topics format.
- * @author     G J Barnard - {@link http://about.me/gjbarnard} and
- *                           {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU Public License
- *
+ * @author     G J Barnard - {@link https://about.me/gjbarnard} and
+ *                           {@link https://moodle.org/user/profile.php?id=442195}
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
  * Provides the information to backup grid course format
  */
 class backup_format_grid_plugin extends backup_format_plugin {
-
     /**
      * Returns the format information to attach to course element
      */
@@ -38,6 +35,16 @@ class backup_format_grid_plugin extends backup_format_plugin {
 
         // Define the virtual plugin element with the condition to fulfill.
         $plugin = $this->get_plugin_element(null, '/course/format', 'grid');
+
+        // This is so that we know the value of 'gnumsections' before its changed by the restore process and lost
+        // before it is needed.
+        $pluginwrapper = new backup_nested_element($this->get_recommended_name(), null, ['name', 'value']);
+
+        // Connect the visible container ASAP.
+        $plugin->add_child($pluginwrapper);
+
+        // Set source to populate the data.
+        $pluginwrapper->set_source_table('course_format_options', ['courseid' => backup::VAR_PARENTID]);
 
         // Don't need to annotate ids nor files.
         return $plugin;

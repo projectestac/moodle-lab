@@ -96,32 +96,68 @@ define(["jquery"], function ($) {
          */
         unCollapseAllTiles: function () {
             setTimeout(function () {
+                $(Selector.FILTER_BUTTON).removeClass(ClassNames.SELECTED);
                 $(Selector.COLLAPSED).addClass(ClassNames.COLLAPSING).removeClass(ClassNames.COLLAPSED);
                 setTimeout(function () {
                     $(Selector.COLLAPSING).removeClass(ClassNames.COLLAPSING);
                 }, 250);
+                $("#filterbutton-all").addClass(ClassNames.SELECTED);
             }, 250);
         }
     };
     return {
         init: function (courseId, storageEnabledLocal) {
             $(document).ready(function () {
+                const getSectionsForButtons = function (buttons) {
+                    let sections = [];
+                    buttons.forEach(button => {
+                        button = $(button);
+                        if (button.attr('data-sections')) {
+                            const dataSections = JSON.parse(button.attr('data-sections'));
+                            dataSections.forEach(s => {
+                                if (!sections.includes(s)) {
+                                    sections.push(s);
+                                }
+                            });
+                        } else {
+                            // We don't have a data sections attribute so find out which tiles have filter-{x} classes instead.
+                            const newSections = $("li.tile.filter-" + button.attr('data-buttonid')).map(
+                                (index, tile) => {
+                                    return $(tile).attr('data-section');
+                                }
+                            ).toArray();
+                            newSections.forEach(s => {
+                                if (!sections.includes(s)) {
+                                    sections.push(s);
+                                }
+                            });
+                        }
+                    });
+                    return sections;
+                };
+
                 // On page load, if a filter button is already pressed according to user's local storage, press it now.
                 var buttonAlreadyPressed = Module.getPressedFilterButton(courseId, storageEnabledLocal);
                 if (buttonAlreadyPressed) {
                     var pressedButton = $("#filterbutton" + buttonAlreadyPressed);
                     if (!pressedButton) {
-                        Module.setPressedFilterButton(courseId, buttonAlreadyPressed, 0);
+                        Module.setPressedFilterButton(courseId, 0);
                     }
                     $(Selector.FILTER_BUTTON).removeClass(ClassNames.SELECTED);
+                    const sections = getSectionsForButtons([pressedButton]);
+                    if (sections.length) {
                     pressedButton.addClass(ClassNames.SELECTED);
                     Module.collapseAllTiles();
                     setTimeout(function () {
-                        Module.unCollapseTiles(JSON.parse(pressedButton.attr("data-sections")));
+                            Module.unCollapseTiles(sections);
                     }, 250);
                     Module.setPressedFilterButton(courseId, buttonAlreadyPressed, storageEnabledLocal);
+                    } else {
+                        Module.unCollapseAllTiles();
+                    }
+                } else {
+                    $('#filterbutton-all').addClass(ClassNames.SELECTED);
                 }
-
                 var pageContent = $(Selector.PAGE_CONTENT);
                 if (pageContent.length === 0) {
                     // Some themes e.g. RemUI do not have a #page-content div, so use #region-main.
@@ -132,8 +168,8 @@ define(["jquery"], function ($) {
                 pageContent.on("click", Selector.FILTER_BUTTON, function (e) {
                     var button = $(e.target);
                     var buttonId = button.attr("data-buttonid");
-                    if (buttonId === "all" || Module.getPressedFilterButton(courseId, storageEnabledLocal) === buttonId) {
-                        // If "All" button is pressed, or a pressed button is pressed again, un-collapse all tiles.
+                    if (buttonId === "all") {
+                        // If "All" button is pressed, un-collapse all tiles.
                         Module.collapseAllTiles();
                         setTimeout(function () {
                             Module.unCollapseAllTiles();
@@ -142,14 +178,33 @@ define(["jquery"], function ($) {
                         Module.setPressedFilterButton(courseId, 0, storageEnabledLocal);
                         $("#filterbutton-all").addClass(ClassNames.SELECTED);
                     } else {
-                        // A numbered button has been pressed, so collapse all tiles then just reveal the ones we want.
+                        // A button except 'All' has been pressed, so collapse all tiles then just reveal the ones we want.
+                        const pressedButtons =
+                            $(Selector.FILTER_BUTTON
+                                + '.' + ClassNames.SELECTED + ':not("#filterbutton-all"):not("#filterbutton' + buttonId + '")');
+                        const pressedButtonsArr = pressedButtons.toArray();
+                        const areUnPressing = button.hasClass(ClassNames.SELECTED);
+                        if (!areUnPressing) {
+                            // We are not 'un-pressing' an already pressed button, so add it in.
+                            pressedButtonsArr.push(button);
+                        }
                         $(Selector.FILTER_BUTTON).removeClass(ClassNames.SELECTED);
-                        button.addClass(ClassNames.SELECTED);
+                        if (!areUnPressing) {
+                            button.addClass(ClassNames.SELECTED);
+                        } else {
+                            button.removeClass(ClassNames.SELECTED);
+                        }
+                        const sections = getSectionsForButtons(pressedButtonsArr);
+                        if (sections.length) {
+                            pressedButtons.addClass(ClassNames.SELECTED);
                         Module.collapseAllTiles();
                         setTimeout(function () {
-                            Module.unCollapseTiles(JSON.parse(button.attr("data-sections")));
+                                Module.unCollapseTiles(sections);
                         }, 250);
                         Module.setPressedFilterButton(courseId, buttonId, storageEnabledLocal);
+                        } else {
+                            Module.unCollapseAllTiles();
+                        }
                     }
                 });
             });

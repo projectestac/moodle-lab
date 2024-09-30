@@ -18,7 +18,6 @@
  * Grid Format.
  *
  * @package    format_grid
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2012 G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://about.me/gjbarnard} and
  *                           {@link http://moodle.org/user/profile.php?id=442195}
@@ -26,6 +25,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Upgrade processes.
+ *
+ * @return bool Success.
+ */
 function xmldb_format_grid_upgrade($oldversion = 0) {
     global $DB;
 
@@ -184,6 +188,19 @@ function xmldb_format_grid_upgrade($oldversion = 0) {
 
         // Grid savepoint reached.
         upgrade_plugin_savepoint(true, 2022112605, 'format', 'grid');
+    }
+
+    if ($oldversion < 2022112612) {
+        // Has the upgrade already happened?  Thus in versions for Moodle 4.1+ ?
+        $codebase = get_config('format_grid', 'codebase');
+        if ((empty($codebase)) || ((!empty($codebase)) && ($codebase < 2024092900))) {
+            // No!
+            \format_grid\task\update_displayed_images_task::update_displayed_images_imageresizemethod();
+            set_config('codebase', 2024092900, 'format_grid');
+        }
+
+        // Grid savepoint reached.
+        upgrade_plugin_savepoint(true, 2022112612, 'format', 'grid');
     }
 
     // Automatic 'Purge all caches'....

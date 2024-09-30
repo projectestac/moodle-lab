@@ -18,19 +18,19 @@
     @template format_tiles/course_modules
 
     Example context (json):
-    {"coursemodules": [
+    {"course_modules": [
         {
             "cmid": 123456,
             "modname": "label",
             "modnameDisplay": "",
             "activityname": "",
             "modtitle_inplaceeditable": "",
-            "modResourceType": "",
+            "modresourceicon": "",
             "is_label": 1,
             "hasSpacersBefore": 0,
             "previouswaslabel": 0,
             "useSubtiles": 1,
-            "isEmbeddedResource": 0,
+            "modalType": "pdf",
             "clickable": 1,
             "extraclasses": "",
             "editing": 1,
@@ -49,6 +49,16 @@
             }
         ]}
 }}
-{{#coursemodules}}
+
+{{#course_modules}}
     {{>format_tiles/course_module}}
-{{/coursemodules}}
+{{/course_modules}}
+{{#useSubtiles}}
+    <li class="activity subtile spacer" aria-hidden="true"></li>
+    <li class="activity subtile spacer" aria-hidden="true"></li>
+    <li class="activity subtile spacer" aria-hidden="true"></li>
+    <li class="activity subtile spacer" aria-hidden="true"></li>
+    <li class="activity subtile spacer" aria-hidden="true"></li>
+    <li class="activity subtile spacer" aria-hidden="true"></li>
+    <li class="activity subtile spacer" aria-hidden="true"></li>
+{{/useSubtiles}}

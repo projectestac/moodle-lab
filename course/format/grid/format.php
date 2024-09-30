@@ -18,15 +18,14 @@
  * Grid Format.
  *
  * @package    format_grid
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2012 G J Barnard in respect to modifications of standard topics format.
- * @author     G J Barnard - {@link http://about.me/gjbarnard} and
- *                           {@link http://moodle.org/user/profile.php?id=442195}
+ * @author     G J Barnard - {@link https://about.me/gjbarnard} and
+ *                           {@link https://moodle.org/user/profile.php?id=442195}
  * @copyright  2006 The Open University
  * @author     N.D.Freear@open.ac.uk, and others.
  * @author     Based on code originally written by Paul Krix and Julian Ridden.
  *
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
@@ -52,6 +51,13 @@ $context = context_course::instance($course->id);
 if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
     $course->marker = $marker;
     course_set_marker($course->id, $marker);
+}
+
+if ($courseformatoptions['gnumsections'] < 0) {
+    // Repair if number of sections is unknown on a restore.
+    $numberofsections = $format->get_last_section_number();
+    $format->restore_gnumsections($numberofsections);
+    $courseformatoptions['gnumsections'] = $numberofsections;
 }
 
 // Make sure all sections are created.

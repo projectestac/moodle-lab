@@ -21,6 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace format_tiles;
+use format_tiles\local\modal_helper;
 
 /**
  * Event observers supported by this format.
@@ -38,7 +39,10 @@ class observer {
     public static function course_deleted(\core\event\course_deleted $event) {
         global $DB;
         $courseid = $event->objectid;
-        $DB->delete_records("user_preferences", array("name" => 'format_tiles_stopjsnav_' . $courseid));
+        $DB->delete_records("user_preferences", ["name" => 'format_tiles_stopjsnav_' . $courseid]);
+        \format_tiles\local\tile_photo::delete_files_from_ids($courseid, -1);
+        \format_tiles\local\format_option::unset_all_course($courseid);
+        modal_helper::clear_cache_modal_cmids($courseid);
     }
 
     /**
@@ -46,6 +50,66 @@ class observer {
      * @param \core\event\course_section_deleted $event
      */
     public static function course_section_deleted(\core\event\course_section_deleted $event) {
-        \format_tiles\tile_photo::delete_file_from_ids($event->courseid, $event->objectid);
+        \format_tiles\local\tile_photo::delete_files_from_ids($event->courseid, $event->objectid);
+        \format_tiles\local\format_option::unset_multiple_types(
+            $event->courseid,
+            $event->objectid,
+            [\format_tiles\local\format_option::OPTION_SECTION_PHOTO, \format_tiles\local\format_option::OPTION_SECTION_ICON]
+        );
     }
+
+    /**
+     * When a course module is deleted, invalidate modalcmids cache for course.
+     * @param \core\event\course_module_deleted $event
+     */
+    public static function course_module_deleted(\core\event\course_module_deleted $event) {
+        if (modal_helper::mod_uses_cm_modal_cache($event->other['modulename'])) {
+            modal_helper::clear_cache_modal_cmids($event->courseid, $event->other['modulename']);
+        }
+
+    }
+
+    /**
+     * When a course module is added, invalidate modalcmids cache for course.
+     * @param \core\event\course_module_created $event
+     */
+    public static function course_module_created(\core\event\course_module_created $event) {
+        if (modal_helper::mod_uses_cm_modal_cache($event->other['modulename'])) {
+            modal_helper::clear_cache_modal_cmids($event->courseid, $event->other['modulename']);
+        }
+    }
+
+    /**
+     * When a course module is updated, invalidate modalcmids cache for course.
+     * @param \core\event\course_module_updated $event
+     */
+    public static function course_module_updated(\core\event\course_module_updated $event) {
+        if (modal_helper::mod_uses_cm_modal_cache($event->other['modulename'])) {
+            modal_helper::clear_cache_modal_cmids($event->courseid, $event->other['modulename']);
+        }
+    }
+
+    /**
+     * When a course backup is created, the process creates temporary legacy course format options.
+     * @param \core\event\course_backup_created $event
+     */
+    public static function course_backup_created(\core\event\course_backup_created $event) {
+        global $DB;
+        if ($event->other['type'] == 'course') {
+            $istilescourse = $DB->record_exists('course', ['id' => $event->objectid, 'format' => 'tiles']);
+            if ($istilescourse) {
+                \format_tiles\local\format_option::delete_legacy_format_options($event->objectid);
+            }
+        }
+    }
+
+    /**
+     * When a course is restored, the existing course content may be selected to be deleted.
+     * @param \core\event\course_restored $event
+     * @return void
+     */
+    public static function course_restored(\core\event\course_restored $event) {
+        modal_helper::clear_cache_modal_cmids($event->courseid);
+    }
+
 }

@@ -1,7 +1,7 @@
 Formulas question type for Moodle
 ---------------------------------
 
-[![Automated code checks](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/checks.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/checks.yml) [![Automated acceptance tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behat.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behat.yml) [![Automated mobile acceptance tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behatmobile.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behatmobile.yml) [![Automated unit tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/testing.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/testing.yml) [![GitHub
+[![Automated code checks](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/checks.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/checks.yml) [![Automated acceptance tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behat.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/behat.yml) [![Automated unit tests](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/testing.yml/badge.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/actions/workflows/testing.yml) [![Coverage Status](https://coveralls.io/repos/github/FormulasQuestion/moodle-qtype_formulas/badge.svg)](https://coveralls.io/github/FormulasQuestion/moodle-qtype_formulas) [![GitHub
 Release](https://img.shields.io/github/release/FormulasQuestion/moodle-qtype_formulas.svg)](https://github.com/FormulasQuestion/moodle-qtype_formulas/releases)
 
 This is a question type plugin for Moodle with random values and multiple answer fields.
@@ -24,6 +24,7 @@ This version is compatible with Moodle 3.9 and newer. It has been tested with:
 - Moodle 4.1 using PHP 7.4, PHP 8.0 and PHP 8.1
 - Moodle 4.2 using PHP 8.0, PHP 8.1 and PHP 8.2
 - Moodle 4.3 using PHP 8.0, PHP 8.1 and PHP 8.2
+- Moodle 4.4 using PHP 8.1, PHP 8.2 and PHP 8.3
 
 
 ### Requirements

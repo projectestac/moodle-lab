@@ -33,20 +33,25 @@ Feature: Teacher can add a page to a course and open it with subtiles off
     When I am on "Course 1" course homepage with editing mode on
     And format_tiles subtiles are off for course "Course 1"
     And I wait until the page is ready
-    And I follow "Collapse all"
+    #  We used to say "And I follow "Collapse all"" but course index includes that too we have to use element ID now.
+    And I follow "collapsesections"
     And I wait until the page is ready
-    And I expand section "1" for edit
+    And I wait "2" seconds
+    And I toggle expand or collapse section "1" for edit
     And I wait until the page is ready
     And I wait "3" seconds
     And I add a "page" to section "1"
     And I wait until the page is ready
     And I wait "2" seconds
     And I set the following fields to these values:
-      | Name                | Test page 2                                          |
-      | Page content        | Test page 2 content                                  |
-      | Completion tracking | Students can manually mark the activity as completed |
+      | Name                  | Test page 2                                          |
+      | Page content          | Test page 2 content                                  |
+    And I expand all fieldsets
+    And I wait until the page is ready
+    And I set activity completion tracking form field to manual
+
     And I wait "2" seconds
-    And I click on "Save and display" "button"
+    And I click on "Save and return to course" "button"
 
     And I am on "Course 1" course homepage
     And I turn editing mode off
@@ -77,18 +82,24 @@ Feature: Teacher can add a page to a course and open it with subtiles off
     When I am on "Course 1" course homepage with editing mode on
     And format_tiles subtiles are on for course "Course 1"
     And I wait until the page is ready
-    And I follow "Collapse all"
+    And I wait "2" seconds
+    #  We used to say "And I follow "Collapse all"" but course index includes that too we have to use element ID now.
+    And I follow "collapsesections"
     And I wait until the page is ready
     And I wait "2" seconds
-    And I expand section "1" for edit
+    And I toggle expand or collapse section "1" for edit
     And I wait until the page is ready
+    And I wait "3" seconds
     And I add a "page" to section "1"
     And I wait until the page is ready
     And I wait "2" seconds
     And I set the following fields to these values:
       | Name                | Test page 2                                          |
       | Page content        | Test page 2 content                                  |
-      | Completion tracking | Students can manually mark the activity as completed |
+    And I expand all fieldsets
+    And I wait until the page is ready
+    And I set activity completion tracking form field to manual
+
     And I click on "Save and display" "button"
 
     And I am on "Course 1" course homepage

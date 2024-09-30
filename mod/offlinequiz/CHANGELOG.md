@@ -1,5 +1,27 @@
 CHANGELOG
 =========
+4.1.7
+-----------------
+* [Bug] Fixed another version upgrade confusion bug which lead to offlinequiz not working anymore
+
+4.1.6
+-----------------
+* [Bug] Fixed a version upgrade confusion bug which lead to offlinequiz not working anymore
+
+4.1.5
+-----------------
+* [Feature] It is now possible to add own offlinequiz report plugins
+* [Bug] Fixed that some data was not deleted correctly when deleting a course/offlinequiz activity [github #230]
+* [Bug] Fixed deleting offlinequizzes resulted in questions still in use [github #165]
+
+4.1.4
+-----------------
+* [Bug] Grades and Gradebook update now correctly after question version is changed
+
+4.1.3
+-----------------
+* [Bug] Fixed a bug where changing the version in offlinequiz break other quiz instances
+
 4.1.1/4.1.2
 -----------------
 **WARNING:** THIS UPDATE MAY TAKE SOME TIME ON BIGGER INSTANCES! For more information see https://github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/issues/220

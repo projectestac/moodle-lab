@@ -45,10 +45,10 @@ class mod_board_external extends external_api {
      * Function board_history,
      * @param int $id
      * @param int $ownerid
-     * @param int $since
+     * @param int|null $since
      * @return array
      */
-    public static function board_history(int $id, int $ownerid, int $since): array {
+    public static function board_history(int $id, int $ownerid, ?int $since): array {
         // Validate recieved parameters.
         $params = self::validate_parameters(self::board_history_parameters(), [
             'id' => $id,
@@ -347,6 +347,7 @@ class mod_board_external extends external_api {
         $serialiseddata = json_decode($params['jsonformdata']);
         $data = array();
         parse_str($serialiseddata, $data);
+        $data = str_replace(["\r", "\n"], '', $data);
 
         // Make the form with the ajax data to validate.
         $form = new note_form(null, null, 'post', '', null, true, $data);
@@ -381,6 +382,26 @@ class mod_board_external extends external_api {
                     $attachment['info'] = $data->linktitle ?? '';
                     $attachment['url'] = $data->linkurl ?? '';
                     break;
+            }
+            // Check if heading and content and attachment are empty.
+            if (empty($data->heading) && empty($data->content) && empty($data->imagefile) && empty($attachment['url'])) {
+                $result = [
+                    'status' => false,
+                    'action' => 'none',
+                    'note' => [
+                        'id' => 0,
+                        'userid' => 0,
+                        'heading' => '',
+                        'content' => '',
+                        'type' => 0,
+                        'info' => '',
+                        'url' => '',
+                        'timecreated' => 0,
+                        'rating' => 0
+                    ],
+                    'historyid' => 0
+                ];
+                return $result;
             }
 
             // Process either as an update or insert.
@@ -572,7 +593,7 @@ class mod_board_external extends external_api {
      * @param int $id
      * @return bool
      */
-    public static function can_rate_note(int $id): bool {
+    public static function can_rate_note(int $id): array {
         // Validate recieved parameters.
         $params = self::validate_parameters(self::can_rate_note_parameters(), [
             'id' => $id,
@@ -589,10 +610,13 @@ class mod_board_external extends external_api {
 
     /**
      * Function can_rate_note_returns.
-     * @return external_value
+     * @return external_single_structure
      */
-    public static function can_rate_note_returns(): external_value {
-        return new external_value(PARAM_BOOL, 'Can rate status');
+    public static function can_rate_note_returns(): external_single_structure {
+        return new external_single_structure([
+            'canrate' => new external_value(PARAM_BOOL, 'The user can rate the note'),
+            'hasrated' => new external_value(PARAM_BOOL, 'The user has rated the note'),
+        ]);
     }
 
     /**
@@ -678,7 +702,7 @@ class mod_board_external extends external_api {
         $canpost = has_capability('mod/board:postcomment', $context);
         $candeleteall = has_capability('mod/board:deleteallcomments', $context);
 
-        $notes = $DB->get_records('board_comments', ['noteid' => $params['noteid']], 'timecreated DESC');
+        $notes = $DB->get_records('board_comments', ['noteid' => $params['noteid'], 'deleted' => 0], 'timecreated DESC');
         $comments = [];
         foreach ($notes as $note) {
             $comment = (object)[];
@@ -833,15 +857,13 @@ class mod_board_external extends external_api {
         $context = $comment->get_context();
         self::validate_context($context);
 
-        if (!$comment->can_delete($context)) {
-            $results = array(
-                'id' => 0,
-                'warnings' => $warnings
-            );
-            return $results;
+        if (!$comment->delete()) {
+            $warnings[] = [
+                'item' => $comment->id,
+                'warningcode' => 'errorcommentnotdeleted',
+                'message' => 'The comment could not be deleted.'
+            ];
         }
-
-        $DB->delete_records('board_comments', ['id' => $comment->id]);
 
         $results = array(
             'id' => $comment->id,
@@ -861,4 +883,54 @@ class mod_board_external extends external_api {
             ]
         );
     }
+
+    /**
+     * Get the board configuration
+     * @return external_function_parameters
+     */
+    public static function get_configuration_parameters() {
+        return new external_function_parameters([
+            'id' => new external_value(PARAM_INT, 'The board id', VALUE_REQUIRED),
+            'ownerid' => new external_value(PARAM_INT, 'The ownerid', VALUE_DEFAULT, 0),
+        ]);
+    }
+
+    /**
+     * Get the board configuration
+     * @param int $id
+     * @param int $ownerid
+     * @return array
+     */
+    public static function get_configuration(int $id, int $ownerid): array {
+        // Validate recieved parameters.
+        $params = self::validate_parameters(self::get_configuration_parameters(), [
+            'id' => $id,
+            'ownerid' => $ownerid,
+        ]);
+
+        // Request and permission validation.
+        $context = board::context_for_board($params['id']);
+        self::validate_context($context);
+
+        $settings = board::get_configuration($params['id'], $params['ownerid']);
+
+        $result['settings'] = json_encode($settings);
+
+        $result['warnings'] = [];
+        return $result;
+    }
+
+    /**
+     * Get the board configuration
+     * @return external_single_structure
+     */
+    public static function get_configuration_returns(): external_single_structure {
+        return new external_single_structure(
+            array(
+                'settings' => new external_value(PARAM_RAW, 'The board settings'),
+                'warnings' => new external_warnings(),
+            )
+        );
+    }
+
 }

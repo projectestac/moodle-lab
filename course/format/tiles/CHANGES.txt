@@ -365,3 +365,153 @@ Other
 4.1.0.2 (2023030500)
 ====================
 - Fix issue 145 Return to current tile after editing
+
+4.2.0.0 (2023053100)
+====================
+- Minor adjustments to styles/tests for Moodle 4.2 incl completion icons.
+- Avoid PHP 8.1 warning (issue #154).
+
+4.2.0.1 (2023060200)
+====================
+- Fixes issue #152 filter buttons
+- Fixes issue #153 glossary multiple windows
+
+4.3.0.1 - 4.3.0.24 (202403xxxx and preceding 4.3.0.x betas)
+================================================
+(Versions 4.1.1.2 and 4.2.1.1 also implement almost all of the below changes for their respective Moodle versions).
+- Moodle 4.3 compatibility (including completion control and editing mode fixes)
+- Add new database table mdl_format_tiles_tile_options to store photo/icon information
+- Migrate tile icon and tile photo data from mdl_course_format_options into new table (upgrade script uses cron)
+- Tile icons and images are now retained (in new table) if course is temporarily switched to another format
+- Course index (core) implemented for Tiles format
+- Bulk editing tool (core) implemented for Tiles format
+- New styling for sub tiles using Moodle core icons
+- Fragment API implemented for section content and cm content
+- Photo library image improved
+- Improve handling of course specific CSS (for course tile colours)
+- Fix issue 35: Unable to close tile detail with keyboard only
+- Fix issue 87: Full screen video failed
+- Fix issue 94: URL Resource pop-up also opens new tab/window
+- Fix issue 122: Option to enable course index drawer in Moodle 4
+- Fix issue 149: Tiles does not show 0-section heading
+- Fix issue 153: Glossary opens multiple windows
+- Fix issue 155: course scroll bar issue in Moodle 41
+- Fix issue 160: bullets disappear
+- Fix issue 162: Can't drag page from scrollbar in Edge when a tile is opened.
+- Fix issue 165: referencefileid backup/restore repository issue
+- Fix issue 166: bullet points disappear in edit mode
+- Fix issue 175: url params
+- Fix issue 184: RTL activity edit menu inaccessible
+- Fix issue 186: Icons for external plugins not displayed
+- Fix issue 187: blocks drawer
+- Fix issue 189: show more
+- Fix issue 192: Beta issue with duplicated section 0 content on the top of individual weeks
+
+4.1.1.5 (2024051400)
+====================
+- Fix issue 204 upgrade path error
+- Fix issue 205 Embedded URL activity video stop
+- Fix issue 206 overall progress missing if JS nav disabled
+- Improve overall progress indicator
+- Various PHPUnit fixes, PHP docs typos
+- YouTube embedded in label max width fix
+- Simplify function to get modal allowed CM IDs
+
+4.1.1.6 (2024060200)
+====================
+- Fix issue #208 overlap on tile when using style 2
+- Registration bug and other minor bug fixes
+
+4.1.1.9 (2024060704)
+====================
+- Fix issue 210 progress indicator contrast
+- Fix issue 203 drawer scroll (Moodle 4.0 - 4.2)
+- Refactor move tiles local classes to \format_tiles\local\
+- Refactor dynamic styles to use CSS vars and less inline CSS
+- Other minor changes: tile fitter JS, registration, book icon & Adaptable theme CSS
+
+4.1.1.10 (2024062101)
+====================
+- Respect section permalinks https://docs.moodle.org/403/en/Course_homepage#Get_a_permalink_to_a_course_section
+- Remove CSS error
+- Dynamic styles improve
+- Non JS mode - fix Moodle 4.4 section.php page incl colours, fix dimmed nav arrow colour.
+- Refactor JS init and remove some redundant editor JS
+- Avoid imprecision warning on image upload
+- Support for section.php on Moodle 4.4
+- Move some helper methods and minor refactor
+- Fix modals non JS navigation mode
+- Course index admin setting defaults to on for Tiles
+- After save an activity, return to course main page, with # scroll to section edited
+- Remove set icon menu control for section zero
+- Avoid footer cache issue when course is restored deleting existing content.
+- Fix URL activity modal when launched from course index.
+- Add a quick behat test that course edit settings page still works when Tiles in use.
+
+4.1.1.11 (2024062500)
+=====================
+- Correct behat test feature name (avoid dupe of core)
+
+4.1.1.12 (2024071104)
+=====================
+- Fix issue #131 image overwrite
+- Fix issue #207 course modules indent (non-subtiles only)
+- Fix issue #211 icon fallbacks
+- Fix issue with course_sections error when trying to upload an image to a tile which already has one
+- Possible fix for intermittent issue #213 (Class "format_tiles\output\courseformat\content\cm\controlmenu" not found)
+- Section expanded when editor returns
+- Remove duplicate lock icon
+- Add test to check course/edit.php works when tiles is on
+- Debugging messages set to DEBUG_DEVELOPER
+- Remove photo options from icon picker modal when user is on course edit form (avoid course_sections error)
+- Add tip to section edit form for how to edit tile icon/photo
+
+4.1.1.13 (2024073110)
+=====================
+- Delete unused tile photos files when they are unset
+- Fix issue #211 icon fallbacks (previous fix incomplete)
+- Remove tile 1 focus on page load
+- Fix issue #214 Tile misalignment after 4.3 update
+- Accessibility improvements
+- Code simplification (modals incl pluginfile URLs)
+- Allow tile fitter to work without JS nav being on
+
+4.1.1.14 (2024080913)
+=====================
+- Minor style adjustments including chrome long tile title padding
+- Course index - click on label opens section
+- Fix scroll on tile open
+- Dismiss dialogues (e.g. glossary entries) when tile is closed or changed
+- Avoid double glossary dialogue when autolink in page modal is clicked
+- Avoid double non sub-tile activity icon in Moodle 4.0.2-
+- Fix modal bug where resource activity has multiple files
+
+4.1.1.15 (2024080914)
+=====================
+- Resolve PHP7.3 compatibility issue
+
+4.1.1.16 (2024082410)
+=====================
+- Fix modal bug where resource activity has multiple files
+- Icon background colour is course colour for activities which don't support "purpose"
+- Add branch description to readme
+- Refactor modal handling for reliability
+- Show description in PDF modal if set to display in course
+- When JS navigation is deactivated by user, alert no longer persists
+- Fix issue #217 cm list padding
+
+4.1.1.17 (2024082411)
+=====================
+- In Moodle 4.0, reinstate missing editing activity icon.
+
+4.1.1.18 (2024090510)
+=====================
+- Fix issue #219 filters not applying to non-subtile headings
+- Fix issue #221 unit test provider bug
+- Fix issue #222 safari PDF modal not displaying
+- Add behat test for filtering for tile names, activity names and content
+
+4.1.1.19 (2024091110)
+=====================
+- Fix issue with ampersand display on sub-tile title
+- Change format name to "Tiles" not "Tiles format" (consistent with core)

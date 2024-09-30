@@ -40,12 +40,21 @@
         "initialicon": "puzzle-piece"
     }
 }}
-{{#initialicon}}
-    <span id="selectedicon" title="{{initialname}}">{{#pix}}tileicon/{{initialicon}}, format_tiles, {{initialname}}{{/pix}}</span>
-{{/initialicon}}
-<div class="btn btn-secondary" data-action="launch-tiles-icon-picker" role="button" data-true-sectionid="{{sectionId}}">
+{{#photourl}}
+    <span class="tilebarphoto" id="selectedicon">
+         <img src="{{photourl}}" title="{{photoname}}" alt="{{photoname}}" style="height: 60px;">
+    </span>
+{{/photourl}}
+{{^photourl}}
+    {{#initialicon}}
+        <span id="selectedicon" title="{{initialname}}">
+            {{#pix}}tileicon/{{initialicon}}, format_tiles, {{initialname}}{{/pix}}
+        </span>
+    {{/initialicon}}
+{{/photourl}}
+<button id="launchiconpicker" class="btn btn-secondary cursorpointer" data-tiles-action="launch-tiles-icon-picker" data-true-sectionid="{{sectionId}}">
     <span>
         {{^allowphototiles}}{{#str}}picknewicon, format_tiles{{/str}}{{/allowphototiles}}
         {{#allowphototiles}}{{#str}}picknewiconphoto, format_tiles{{/str}}{{/allowphototiles}}
     </span>
-</div>
+</button>

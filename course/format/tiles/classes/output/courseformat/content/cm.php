@@ -24,8 +24,8 @@
 
 namespace format_tiles\output\courseformat\content;
 
-use core_courseformat\base as course_format;
 use core_courseformat\output\local\content\cm as core_cm;
+use format_tiles\local\util;
 
 /**
  * Class to render a course module inside a Tiles course format.
@@ -37,13 +37,29 @@ use core_courseformat\output\local\content\cm as core_cm;
 class cm extends core_cm {
 
     /**
-     * Constructor.
-     * @param course_format $format
-     * @param \section_info $section
-     * @param \cm_info $mod
-     * @param array $displayoptions
+     * Add activity information to the data structure.
+     *
+     * @param \stdClass $data the current cm data reference
+     * @param bool[] $haspartials the result of loading partial data elements
+     * @param \renderer_base $output typically, the renderer that's calling this function
+     * @return bool if the cm has format data
      */
-    public function __construct(course_format $format, \section_info $section, \cm_info $mod, array $displayoptions = []) {
-        parent::__construct($format, $section, $mod, $displayoptions);
+    protected function add_format_data(\stdClass &$data, array $haspartials, \renderer_base $output): bool {
+        $parentadded = parent::add_format_data($data, $haspartials, $output);
+        $data->cmtitle = $this->mod->get_formatted_name();
+
+        // See also the higher level section where moodle release info is added e.g. ismoodle42minus.
+        // I.e. format_tiles\output\courseformat\content\section.
+        // However we can't rely on that here.
+        // The cm templates inherit from that in edit view, but not when we use fragment API to get a cm list.
+        $moodlerelease = \format_tiles\local\util::get_moodle_release();
+        $data->ismoodle42minus = $moodlerelease <= 4.2;
+        $data->ismoodle41minus = $moodlerelease <= 4.1;
+        $data->ismoodle40 = $moodlerelease === 4.0;
+        $data->ismoodle402minus = $moodlerelease === 4.0 && util::is_moodle_402_minus();
+        $data->modcontextid = $this->mod->context->id;
+
+        $childadded = true; // We did add some data above.
+        return $parentadded || $childadded;
     }
 }

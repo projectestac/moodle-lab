@@ -33,9 +33,9 @@
         "phototileediturl": "https://url.com"
     }
     }}
-<span class="tiles-editor-image text-center" {{#editing}} data-section="{{num}}" data-true-sectionid="{{id}}" data-action="launch-tiles-icon-picker" role="button"{{/editing}} id="tileicon_{{num}}">
+<span class="tiles-editor-image text-center" {{#editing}} data-section="{{num}}" data-true-sectionid="{{id}}" data-tiles-action="launch-tiles-icon-picker"{{/editing}} id="tileicon_{{num}}">
     {{^hasphoto}}
-        <span class="tile-icon">
+        <span class="tile-icon" role="button">
             {{#tileicon}}
                 {{#pix}}tileicon/{{{tileicon}}}, format_tiles{{/pix}}
             {{/tileicon}}

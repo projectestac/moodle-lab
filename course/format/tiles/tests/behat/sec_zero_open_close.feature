@@ -1,4 +1,4 @@
-@format @format_tiles @sec_zero_open_close @javascript
+@format @format_tiles @format_tiles_sec_zero_open_close @javascript
 Feature: Section zero can be collapsed or expanded in tiles format
   In order to hide irrelevant material
   As a student
@@ -36,13 +36,11 @@ Feature: Section zero can be collapsed or expanded in tiles format
   @javascript
   Scenario: Collapse section zero then expand it again
     And I wait "2" seconds
-    When "#buttonhidesec0" "css_element" should be visible
-    And I click on "#buttonhidesec0" "css_element"
-    And I wait "1" seconds
+    And I click on ".d-sm-block .buttonhidesec0" "css_element"
+    And I wait "2" seconds
     And I should not see "Announcements Sec 0" in the "#section-0" "css_element"
 
-    And "#buttonhidesec0" "css_element" should be visible
-    And I click on "#buttonhidesec0" "css_element"
-    And I wait "1" seconds
+    And I click on ".d-sm-block .buttonhidesec0" "css_element"
+    And I wait "2" seconds
     And I should see "Announcements Sec 0" in the "#section-0" "css_element"
     And I log out tiles

@@ -34,14 +34,15 @@ Feature: Show/hide course sections in format_tiles
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I wait until the page is ready
-    And I follow "Collapse all"
+    #  We used to say "And I follow "Collapse all"" but course index includes that too we have to use element ID now.
+    And I follow "collapsesections"
     And I wait until the page is ready
-    And I expand section "1" for edit
+    And I toggle expand or collapse section "1" for edit
     And I wait until the page is ready
     And I add a "Forum" to section "1" and I fill the form with:
       | Forum name   | Test hidden forum 11 name        |
       | Description  | Test hidden forum 11 description |
-      | Availability | Hide from students               |
+      | Availability | Hide on course page              |
     And I wait until the page is ready
     And I wait "1" seconds
     And I add a "Forum" to section "1" and I fill the form with:
@@ -52,29 +53,31 @@ Feature: Show/hide course sections in format_tiles
 
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I follow "Collapse all"
+    #  We used to say "And I follow "Collapse all"" but course index includes that too we have to use element ID now.
+    And I follow "collapsesections"
     And I wait until the page is ready
-    And I expand section "2" for edit
+    And I toggle expand or collapse section "2" for edit
     And I wait until the page is ready
     And I wait "1" seconds
     And I add a "Forum" to section "2" and I fill the form with:
       | Forum name   | Test hidden forum 21 name        |
       | Description  | Test hidden forum 21 description |
-      | Availability | Hide from students               |
+      | Availability | Hide on course page              |
     And I wait until the page is ready
     And activity in format tiles is dimmed "Test hidden forum 21 name"
 
     And I am on "Course 1" course homepage
     And I wait until the page is ready
-    And I follow "Collapse all"
+    #  We used to say "And I follow "Collapse all"" but course index includes that too we have to use element ID now.
+    And I follow "collapsesections"
     And I wait until the page is ready
-    And I expand section "3" for edit
+    And I toggle expand or collapse section "3" for edit
     And I wait until the page is ready
     And I wait "1" seconds
     And I add a "Forum" to section "3" and I fill the form with:
       | Forum name   | Test hidden forum 31 name        |
       | Description  | Test hidden forum 31 description |
-      | Availability | Hide from students               |
+      | Availability | Hide on course page              |
     And I wait until the page is ready
     And I wait "1" seconds
     And activity in format tiles is dimmed "Test hidden forum 31 name"

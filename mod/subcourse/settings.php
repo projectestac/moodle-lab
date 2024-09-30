@@ -46,5 +46,12 @@ if ($hassiteconfig) {
             get_string('settings:coursepageprintgrade_desc', 'mod_subcourse'),
             1
         ));
+
+        $settings->add(new admin_setting_configcheckbox(
+            'mod_subcourse/displayhiddencourses',
+            get_string('settings:displayhiddencourses', 'mod_subcourse'),
+            get_string('settings:displayhiddencourses_desc', 'mod_subcourse'),
+            1
+        ));
     }
 }

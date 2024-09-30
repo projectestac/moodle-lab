@@ -22,8 +22,6 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Returns the information if the module supports a feature
  *
@@ -32,6 +30,13 @@ defined('MOODLE_INTERNAL') || die();
  * @return mixed true if the feature is supported, null if unknown
  */
 function subcourse_supports($feature) {
+
+    if (defined('FEATURE_MOD_PURPOSE')) {
+        if ($feature === FEATURE_MOD_PURPOSE) {
+            return MOD_PURPOSE_CONTENT;
+        }
+    }
+
     switch($feature) {
         case FEATURE_GRADE_HAS_GRADE:
             return true;
@@ -311,7 +316,7 @@ function mod_subcourse_cm_info_view(cm_info $cm) {
         $grades = grade_get_grades($cm->course, 'mod', 'subcourse', $cm->instance, $USER->id);
         $currentgrade = (empty($grades->items[0]->grades)) ? null : reset($grades->items[0]->grades);
 
-        if (($currentgrade !== null) and isset($currentgrade->grade) and !($currentgrade->hidden)) {
+        if (($currentgrade !== null) && isset($currentgrade->grade) && !($currentgrade->hidden)) {
             $strgrade = $currentgrade->str_grade;
             $html .= html_writer::tag('div', get_string('currentgrade', 'subcourse', $strgrade),
                 ['class' => 'contentafterlink']);
@@ -321,37 +326,6 @@ function mod_subcourse_cm_info_view(cm_info $cm) {
     if ($html !== '') {
         $cm->set_after_link($html);
     }
-}
-
-/**
- * Obtains the automatic completion state for this subcourse.
- *
- * @param object $course Course
- * @param object $cm Course-module
- * @param int $userid User ID
- * @param bool $type Type of comparison (or/and; can be used as return value if no conditions)
- * @return bool True if completed, false if not, $type if conditions not set.
- */
-function subcourse_get_completion_state($course, $cm, $userid, $type) {
-    global $CFG, $DB;
-    require_once($CFG->dirroot.'/completion/completion_completion.php');
-
-    $subcourse = $DB->get_record('subcourse', ['id' => $cm->instance], 'id,refcourse,completioncourse', MUST_EXIST);
-
-    if (empty($subcourse->completioncourse)) {
-        // The rule not enabled, return early.
-        return $type;
-    }
-
-    if (empty($subcourse->refcourse)) {
-        // Misconfigured subcourse instance, behave as if was not enabled.
-        return $type;
-    }
-
-    // Check if the referenced course is completed.
-    $coursecompletion = new completion_completion(['userid' => $userid, 'course' => $subcourse->refcourse]);
-
-    return $coursecompletion->is_complete();
 }
 
 /**
@@ -414,4 +388,54 @@ function subcourse_get_coursemodule_info($coursemodule) {
     }
 
     return $info;
+}
+
+
+/**
+ * Create or update the grade item for given subcourse
+ *
+ * @category grade
+ * @param object $subcourse object
+ * @param mixed $grades optional array/object of grade(s); 'reset' means reset grades in gradebook
+ * @return int 0 if ok, error code otherwise
+ */
+function subcourse_grade_item_update($subcourse, $grades = null) {
+    global $CFG;
+    require_once($CFG->dirroot . '/mod/subcourse/locallib.php');
+
+    $reset = false;
+    if ($grades === 'reset') {
+        $reset = true;
+    }
+    $gradeitemonly = true;
+    if (!empty($grades)) {
+        $gradeitemonly = false;
+    }
+    return subcourse_grades_update($subcourse->course, $subcourse->id, $subcourse->refcourse,
+        $subcourse->name, $gradeitemonly, $reset);
+}
+
+/**
+ * Update activity grades.
+ *
+ * @param stdClass $subcourse subcourse record
+ * @param int $userid specific user only, 0 means all
+ * @param bool $nullifnone - not used
+ */
+function subcourse_update_grades($subcourse, $userid=0, $nullifnone=true) {
+    global $CFG;
+    require_once($CFG->dirroot . '/mod/subcourse/locallib.php');
+    require_once($CFG->libdir.'/gradelib.php');
+
+    $refgrades = subcourse_fetch_refgrades($subcourse->id, $subcourse->refcourse, false, $userid, false);
+
+    if ($refgrades && $refgrades->grades) {
+        if (!empty($refgrades->localremotescale)) {
+            // Unable to fetch remote grades - local scale is used in the remote course.
+            return GRADE_UPDATE_FAILED;
+        }
+        return subcourse_grade_item_update($subcourse, $refgrades->grades);
+    } else {
+        return subcourse_grade_item_update($subcourse);
+    }
 }

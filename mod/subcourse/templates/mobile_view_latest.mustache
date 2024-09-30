@@ -60,11 +60,22 @@
 
 {{=<% %>=}}
 <div>
-    <core-course-module-description
-        description="<% subcourse.intro %>"
-        component="mod_subcourse"
-        componentId="<% cmid %>">
-    </core-course-module-description>
+    <%#canusemoduleinfo%>
+        <core-course-module-info
+            [module]="module"
+            description="<% subcourse.intro %>"
+            component="mod_subcourse"
+            componentId="<% cmid %>"
+            [courseId]="courseId">
+        </core-course-module-info>
+    <%/canusemoduleinfo%>
+    <%^canusemoduleinfo%>
+        <core-course-module-description
+            description="<% subcourse.intro %>"
+            component="mod_subcourse"
+            componentId="<% cmid %>">
+        </core-course-module-description>
+    <%/canusemoduleinfo%>
 
     <%# warning %>
     <ion-card class="ion-text-wrap core-warning-card">
@@ -93,7 +104,7 @@
         <%/ hasgrade %>
 
         <%# refcourse %>
-        <ion-button expand="block" class="ion-margin" core-link capture="true" href="<% refcourse.url %>">
+        <ion-button expand="block" class="ion-margin ion-text-wrap" core-link capture="true" href="<% refcourse.url %>">
             {{ 'plugin.mod_subcourse.gotorefcourse' | translate: {$a: '<% refcourse.fullname %>'} }}
         </ion-button>
         <%/ refcourse %>

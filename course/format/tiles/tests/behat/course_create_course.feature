@@ -25,7 +25,7 @@ Feature: Create course in format tiles
       | Course short name | C1 |
       | Number of announcements | 5 |
       | Enable completion tracking | Yes |
-      | Format | Tiles format |
+      | Format | Tiles |
       | Number of sections | 10 |
       | Use sub tiles for activities | Yes |
       | Progress on each tile | Show as % in circle |

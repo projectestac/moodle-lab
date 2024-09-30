@@ -217,6 +217,10 @@
     background: #fff;
 }
 
+.path-mod-board .mod_board_note_text {
+    word-break: break-word;
+}
+
 .path-mod-board .comment .comment-input {
     font-size: 0.8rem;
     align-self: center;
@@ -333,6 +337,15 @@
     content: unset;
 }
 
+.path-mod-board .modal-footer [data-action="cancel"] {
+    order: 1;
+}
+
+.path-mod-board .cell {
+    max-width: 300px;
+    word-break: break-word;
+}
+
 .modtype_board div.flex-fill {
     width: 100%;
 }
@@ -345,4 +358,12 @@
 
 iframe.mod_board-iframe {
     overflow-x: auto;
+}
+
+.pagelayout-embedded.path-mod-board .activity-header {
+    display: none;
+}
+
+.mod_board_embed_container {
+    width: 100%;
 }

@@ -7,8 +7,8 @@ Feature: Teacher can allocate icons to tiles
       | student1 | Student   | 1        | student1@example.com |
       | teacher1 | Teacher   | 1        | teacher1@example.com |
     And the following "courses" exist:
-      | fullname     | shortname | format | coursedisplay | numsections | enablecompletion |
-      | Business Law | BL        | tiles  | 0             | 5           | 1                |
+      | fullname     | shortname | format | coursedisplay | numsections | enablecompletion | defaulttileicon |
+      | Business Law | BL        | tiles  | 0             | 6           | 1                |  asterisk       |
     And the following "activities" exist:
       | activity | name         | intro                  | course | idnumber | section | visible |
       | quiz     | Test quiz V  | Test quiz description  | BL     | quiz1    | 1       | 1       |
@@ -33,6 +33,8 @@ Feature: Teacher can allocate icons to tiles
   Scenario: Teacher can use icon picker to pick icons, and can rename section afterwards
     When I log in as "teacher1"
     And I am on "Business Law" course homepage with editing mode on
+    And I wait until the page is ready
+    And I wait "1" seconds
     And I click on "#tileicon_1" "css_element"
     And I wait until the page is ready
     And I wait "3" seconds
@@ -58,7 +60,7 @@ Feature: Teacher can allocate icons to tiles
 
 #    // one title edit just to check we can after the above (this is also done elsewhere)
     When I click on "Edit tile name" "link" in the "li#section-1" "css_element"
-    And I set the field "New name for topic Tile 1" to "Setting up in business"
+    And I set the field "New name for section Tile 1" to "Setting up in business"
     And I press the enter key
     Then I should not see "Tile 1" in the "region-main" "region"
     And I should see "Setting up in business" in the "li#section-1" "css_element"
@@ -66,7 +68,7 @@ Feature: Teacher can allocate icons to tiles
     And I should not see "Tile 1" in the "region-main" "region"
 
     When I click on "Edit tile name" "link" in the "li#section-2" "css_element"
-    And I set the field "New name for topic Tile 2" to "Directors' Duties"
+    And I set the field "New name for section Tile 2" to "Directors' Duties"
     And I press the enter key
     Then I should not see "Tile 2" in the "region-main" "region"
     And I should see "Directors' Duties" in the "li#section-2" "css_element"
@@ -74,11 +76,14 @@ Feature: Teacher can allocate icons to tiles
 
     And I turn editing mode off
     And I wait until the page is ready
-    And ".icon.fa-map-o" "css_element" should exist in the "#tileicon_1" "css_element"
-    And ".icon.fa-refresh" "css_element" should exist in the "#tileicon_2" "css_element"
-    And ".icon.fa-star" "css_element" should exist in the "#tileicon_3" "css_element"
-    And ".icon.fa-tasks" "css_element" should exist in the "#tileicon_4" "css_element"
-    And ".icon.fa-gbp" "css_element" should exist in the "#tileicon_5" "css_element"
+    And I wait "2" seconds
+    And Tile "1" should have icon "map-o"
+    And Tile "2" should have icon "refresh"
+    And Tile "3" should have icon "star"
+    And Tile "4" should have icon "tasks"
+    And Tile "5" should have icon "gbp"
+    And Tile "6" should have icon "asterisk"
+
     And I should see "Setting up in business" in the "li#tile-1" "css_element"
     And I should see "Directors' Duties" in the "li#tile-2" "css_element"
 

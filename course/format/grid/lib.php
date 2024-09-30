@@ -18,22 +18,25 @@
  * Grid Format.
  *
  * @package    format_grid
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2012+ G J Barnard in respect to modifications of standard topics format.
- * @author     G J Barnard - {@link http://about.me/gjbarnard} and
- *                           {@link http://moodle.org/user/profile.php?id=442195}
+ * @author     G J Barnard - {@link https://about.me/gjbarnard} and
+ *                           {@link https://moodle.org/user/profile.php?id=442195}
  * @author     Based on code originally written by Paul Krix and Julian Ridden.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/course/format/lib.php'); // For format_base.
 
+/**
+ * Grid Format class.
+ */
 class format_grid extends core_courseformat\base {
-    // Used to determine the type of view URL to generate - parameter or anchor.
+    /** @var int $coursedisplay Used to determine the type of view URL to generate - parameter or anchor. */
     private $coursedisplay = COURSE_DISPLAY_MULTIPAGE;
 
+    /** @var array $settings Settings. */
     private $settings = null;
 
     /**
@@ -53,10 +56,16 @@ class format_grid extends core_courseformat\base {
         parent::__construct($format, $courseid);
 
         if ($courseid != 1) {
-            $currentsettings = $this->get_settings();
-            if (!empty($currentsettings['popup'])) {
-                if ($currentsettings['popup'] == 2) {
-                    $this->coursedisplay = COURSE_DISPLAY_SINGLEPAGE;
+            global $USER;
+            $context = context_course::instance($courseid);
+            if (!empty($USER->editing) && has_capability('moodle/course:update', $context)) {
+                $this->coursedisplay = COURSE_DISPLAY_SINGLEPAGE;
+            } else {
+                $currentsettings = $this->get_settings();
+                if (!empty($currentsettings['popup'])) {
+                    if ($currentsettings['popup'] == 2) {
+                        $this->coursedisplay = COURSE_DISPLAY_SINGLEPAGE;
+                    }
                 }
             }
         }
@@ -98,6 +107,29 @@ class format_grid extends core_courseformat\base {
     }
 
     /**
+     * Method used in the rendered and during backup instead of legacy 'numsections'
+     *
+     * Default renderer will treat sections with sectionnumber greater that the value returned by this
+     * method as "orphaned" and not display them on the course page unless in editing mode.
+     * Backup will store this value as 'numsections'.
+     *
+     * This method ensures that 3rd party course format plugins that still use 'numsections' continue to
+     * work but at the same time we no longer expect formats to have 'numsections' property.
+     *
+     * @return int The last section number, or -1 if sections are entirely missing
+     */
+    public function get_last_section_number() {
+        $course = $this->get_course();
+        if (isset($course->gnumsections)) {
+            if ($course->gnumsections >= 0) {
+                return $course->gnumsections;
+            }
+        }
+
+        return parent::get_last_section_number();
+    }
+
+    /**
      * Returns true if this course format uses sections.
      *
      * @return bool
@@ -106,10 +138,20 @@ class format_grid extends core_courseformat\base {
         return true;
     }
 
+    /**
+     * Returns true if this course format uses the course index.
+     *
+     * @return bool
+     */
     public function uses_course_index() {
         return true;
     }
 
+    /**
+     * Returns true if this course format uses indentation.
+     *
+     * @return bool
+     */
     public function uses_indentation(): bool {
         return false;
     }
@@ -149,6 +191,30 @@ class format_grid extends core_courseformat\base {
             // Use course_format::get_default_section_name implementation which will display the section name in "Topic n" format.
             return parent::get_default_section_name($section);
         }
+    }
+
+    /**
+     * Returns if an specific section is visible to the current user.
+     *
+     * Formats can overrride this method to implement any special section logic.
+     *
+     * @param section_info $section the section modinfo
+     * @return bool;
+     */
+    public function is_section_visible(section_info $section): bool {
+        if ($section->section > $this->get_last_section_number()) {
+            // Stealth section.
+            global $PAGE;
+            $context = context_course::instance($this->course->id);
+            if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
+                $modinfo = get_fast_modinfo($this->course);
+                // If the stealth section has modules then is visible.
+                return (!empty($modinfo->sections[$section->section]));
+            }
+            // Don't show.
+            return false;
+        }
+        return parent::is_section_visible($section);
     }
 
     /**
@@ -198,9 +264,6 @@ class format_grid extends core_courseformat\base {
             if ($sectionno != 0 && $usercoursedisplay == COURSE_DISPLAY_MULTIPAGE) {
                 $url->param('section', $sectionno);
             } else {
-                if (empty($CFG->linkcoursesections) && !empty($options['navigation'])) {
-                    return null;
-                }
                 $url->set_anchor('section-'.$sectionno);
             }
         }
@@ -222,6 +285,11 @@ class format_grid extends core_courseformat\base {
         return $ajaxsupport;
     }
 
+    /**
+     * Returns true if this course format supports components.
+     *
+     * @return bool
+     */
     public function supports_components() {
         return true;
     }
@@ -382,7 +450,7 @@ class format_grid extends core_courseformat\base {
                 ],
             ];
 
-            // TODO - Use capabilities?
+            // Todo - Use capabilities?
             $popupvalues = $this->generate_default_entry(
                 'popup',
                 0,
@@ -540,6 +608,14 @@ class format_grid extends core_courseformat\base {
             $maxsections = get_config('moodlecourse', 'maxsections');
             $numsections = $mform->getElementValue('gnumsections');
             $numsections = $numsections[0];
+            if ($numsections < 0) {
+                $numsections = $this->get_last_section_number();
+                /* Instead of setValue on the element as the default gets reused when the form is re-arranged by
+                   'definition_after_data' in '/course/edit_form.php', specifically the calls to 'insertElementBefore'
+                   after this method was called. */
+                $mform->setDefault('gnumsections', $numsections);
+                $this->restore_gnumsections($numsections);
+            }
             if ($numsections > $maxsections) {
                 $element = $mform->getElement('gnumsections');
                 for ($i = $maxsections + 1; $i <= $numsections; $i++) {
@@ -637,6 +713,31 @@ class format_grid extends core_courseformat\base {
         return $changes;
     }
 
+    /**
+     * Definitions of the additional options that this course format uses for section
+     *
+     * See course_format::course_format_options() for return array definition.
+     *
+     * Additionally section format options may have property 'cache' set to true
+     * if this option needs to be cached in get_fast_modinfo(). The 'cache' property
+     * is recommended to be set only for fields used in course_format::get_section_name(),
+     * course_format::extend_course_navigation() and course_format::get_view_url()
+     *
+     * For better performance cached options are recommended to have 'cachedefault' property
+     * Unlike 'default', 'cachedefault' should be static and not access get_config().
+     *
+     * Regardless of value of 'cache' all options are accessed in the code as
+     * $sectioninfo->OPTIONNAME
+     * where $sectioninfo is instance of section_info, returned by
+     * get_fast_modinfo($course)->get_section_info($sectionnum)
+     * or get_fast_modinfo($course)->get_section_info_all()
+     *
+     * All format options for particular section are returned by calling:
+     * $this->get_format_options($section);
+     *
+     * @param bool $foreditform
+     * @return array
+     */
     public function section_format_options($foreditform = false) {
         static $sectionformatoptions = false;
         if ($sectionformatoptions === false) {
@@ -794,6 +895,19 @@ class format_grid extends core_courseformat\base {
         return !$section->section || ($section->visible && $section->section <= $this->get_course()->gnumsections);
     }
 
+    /**
+     * Callback used in WS core_course_edit_section when teacher performs an AJAX action on a section (show/hide)
+     *
+     * Access to the course is already validated in the WS but the callback has to make sure
+     * that particular action is allowed by checking capabilities
+     *
+     * Course formats should register
+     *
+     * @param stdClass|section_info $section
+     * @param string $action
+     * @param int $sr the section return
+     * @return null|array|stdClass any data for the Javascript post-processor (must be json-encodeable)
+     */
     public function section_action($section, $action, $sr) {
         global $PAGE;
 
@@ -832,15 +946,28 @@ class format_grid extends core_courseformat\base {
      * A section has been added.  Should only be called from the state actions instance.
      */
     public function section_added() {
-        $data = ['gnumsections' => $this->settings['gnumsections'] + 1];
-        $this->update_format_options($data);
+        $this->change_gnumsections(true);
     }
 
     /**
      * A section has been deleted.  Should only be called from the state actions instance.
      */
     public function section_deleted() {
-        $data = ['gnumsections' => $this->settings['gnumsections'] - 1];
+        $this->change_gnumsections(false);
+    }
+
+    /**
+     * A section has been added or deleted.  Should only be called via the state actions instance.
+     *
+     * @param bool $add Add a section or delete if false.
+     */
+    protected function change_gnumsections($add) {
+        if ($add) {
+            $newgnumsetions = $this->settings['gnumsections'] + 1;
+        } else {
+            $newgnumsetions = $this->settings['gnumsections'] - 1;
+        }
+        $data = ['gnumsections' => $newgnumsetions];
         $this->update_format_options($data);
     }
 

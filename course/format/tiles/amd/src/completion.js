@@ -37,38 +37,33 @@ define(["jquery", "core/templates", "core/config", "core/ajax", "core/str", "cor
         };
 
         const Selector = {
-            launchModuleModal: '[data-action="launch-tiles-module-modal"]',
-            launchResourceModal: '[data-action="launch-tiles-resource-modal"]',
             pageContent: "#page-content",
             regionMain: "#region-main",
             resourceModule: '.activity.resource',
             completeonevent: ".completeonevent",
-            completeonview: ".completeonview",
             activity: "li.activity",
             section: "li.section.main",
-            togglecompletion: '[data-action="toggle-manual-completion"]',
-            tileId: "#tile-",
-            progressIndicatorId: '#tileprogress-',
+            toggleCompletionSubtile: '[data-action="tiles-toggle-manual-completion-subtile"]',
+            tileNumber: "#tile-",
+            progressIndicatorSecNumber: '#tileprogress-',
             tile: '.tile',
             spacer: '.spacer',
             availabilityinfo: '.availabilityinfo',
             sectionId: '#section-'
         };
 
-        var isBlurred = false;
-
         /**
          * When completion is changed it may be necessary to re-render a progress indicator.
          * This helps assemble the data.
-         * @param {number} tileId which tile is this for
+         * @param {number} tileNumber which tile is this for
          * @param {number} numComplete how many items has the user completed
          * @param {number} outOf how many items are there to complete
          * @param {boolean} asPercent should we show this as a percentage
          * @returns {{}}
          */
-        var progressTemplateData = function (tileId, numComplete, outOf, asPercent) {
+        var progressTemplateData = function (tileNumber, numComplete, outOf, asPercent) {
             var data = {
-                tileid: tileId,
+                tileid: tileNumber,
                 numComplete: numComplete,
                 numOutOf: outOf,
                 showAsPercent: asPercent,
@@ -77,10 +72,10 @@ define(["jquery", "core/templates", "core/config", "core/ajax", "core/str", "cor
                 percentOffset: outOf > 0 ? Math.round(((outOf - numComplete) / outOf) * 106.8) : 0,
                 isComplete: false,
                 isSingleDigit: false,
-                hastilephoto: $(Selector.tileId + tileId).hasClass("phototile"),
+                hastilephoto: $(Selector.tileNumber + tileNumber).hasClass("phototile"),
             };
-            if (tileId === 0) {
-                data.isOverall = 1;
+            if (tileNumber === 0) {
+               data.isOverall = 1;
             } else {
                 data.isOverall = 0;
             }
@@ -139,10 +134,13 @@ define(["jquery", "core/templates", "core/config", "core/ajax", "core/str", "cor
          * Used to refresh section contents when completion is checked.
          * Can also be used by other components e.g. blocks that show completion.
          * @param {number} sectionNum the number of the section where completion changed.
-         * @param {number} cmid the course module where completion changed.
+         * @param {number} cmId the course module where completion changed.
          */
-        const triggerCompletionChangedEvent = function (sectionNum, cmid) {
-            $(document).trigger('format-tiles-completion-changed', {section: sectionNum, cmid: cmid});
+        const triggerCompletionChangedEvent = function (sectionNum, cmId) {
+            if (sectionNum > 0 || cmId > 0) {
+                const data = {courseid: courseId, section: sectionNum, cmid: cmId};
+                $(document).trigger('format-tiles-completion-changed', data);
+            }
         };
 
         /**
@@ -153,50 +151,55 @@ define(["jquery", "core/templates", "core/config", "core/ajax", "core/str", "cor
          */
         const updateSectionsInfo = function(sections, overallcomplete, overalloutof) {
             sections.forEach(sec => {
-                const tile = $(Selector.tileId + sec.sectionnum);
-                // If this tile is now unrestricted / visible, give it the right classes.
-                if (sec.isavailable && tile.hasClass('tile-restricted')) {
-                    tile.removeClass('tile-restricted');
-                } else if (!sec.isavailable) {
-                    tile.addClass('tile-restricted');
-                }
-                if (sec.isclickable && !tile.hasClass('tile-clickable')) {
-                    tile.addClass('tile-clickable');
-                } else if (!sec.isclickable && tile.hasClass('tile-clickable')) {
-                    tile.removeClass('tile-clickable');
-                }
-                if (sec.iscomplete) {
-                    tile.addClass('is-complete');
-                } else {
-                    tile.removeClass('is-complete');
-                }
-                // Now re-render the progress indicator if necessary with correct data.
-                const progressIndicator = $(Selector.progressIndicatorId + sec.sectionnum);
-                changeProgressIndicatorSection(sec.sectionnum, progressIndicator, sec.numcomplete);
-                setOverallProgressIndicator(overallcomplete, overalloutof);
-
-                // Finally change or re-render the availability message if necessary.
-                const availabilityInfoDiv = tile.find(Selector.availabilityinfo);
-                if (availabilityInfoDiv.length > 0 && sec.isavailable && !sec.availabilitymessage) {
-                    // Display no message any more.
-                    availabilityInfoDiv.fadeOut();
-                } else if (!sec.isavailable && sec.availabilitymessage) {
-                    // Sec is not available and we have a message to display.
-                    if (availabilityInfoDiv.length > 0) {
-                        availabilityInfoDiv.html = 'NEW' + sec.availabilitymessage;
-                        availabilityInfoDiv.fadeIn();
+                if (sec.sectionnum > 0) {
+                    const tile = $(Selector.tileNumber + sec.sectionnum);
+                    // If this tile is now unrestricted / visible, give it the right classes.
+                    if (sec.isavailable && tile.hasClass('tile-restricted')) {
+                        tile.removeClass('tile-restricted');
+                    } else if (!sec.isavailable) {
+                        tile.addClass('tile-restricted');
+                    }
+                    if (sec.isclickable && !tile.hasClass('tile-clickable')) {
+                        tile.addClass('tile-clickable');
+                    } else if (!sec.isclickable && tile.hasClass('tile-clickable')) {
+                        tile.removeClass('tile-clickable');
+                    }
+                    if (sec.iscomplete) {
+                        tile.addClass('is-complete');
                     } else {
-                        Templates.render("format_tiles/availability_info", {
-                            availabilitymessage: sec.availabilitymessage,
-                            visible: true
-                        }).done(function (html) {
-                            // Need to repeat jquery selector as it is being replaced (replacwith).
-                            progressIndicator.replaceWith(html);
+                        tile.removeClass('is-complete');
+                    }
+                    // Now re-render the progress indicator if necessary with correct data.
+                    // There may not be a progress indicator e.g. if tile contains no trackable activities.
+                    const progressIndicator = $(Selector.progressIndicatorSecNumber + (sec.sectionnum).toString());
+                    if (progressIndicator.length) {
+                        changeProgressIndicatorSection(sec.sectionnum, progressIndicator, sec.numcomplete);
+                    }
 
-                        });
+                    // Finally change or re-render the availability message if necessary.
+                    const availabilityInfoDiv = tile.find(Selector.availabilityinfo);
+                    if (availabilityInfoDiv.length > 0 && sec.isavailable && !sec.availabilitymessage) {
+                        // Display no message any more.
+                        availabilityInfoDiv.fadeOut();
+                    } else if (!sec.isavailable && sec.availabilitymessage) {
+                        // Sec is not available and we have a message to display.
+                        if (availabilityInfoDiv.length > 0) {
+                            availabilityInfoDiv.html = 'NEW' + sec.availabilitymessage;
+                            availabilityInfoDiv.fadeIn();
+                        } else {
+                            Templates.render("format_tiles/availability_info", {
+                                availabilitymessage: sec.availabilitymessage,
+                                visible: true
+                            }).done(function (html) {
+                                // Need to repeat jquery selector as it is being replaced (replacwith).
+                                progressIndicator.replaceWith(html);
+
+                            });
+                        }
                     }
                 }
             });
+            setOverallProgressIndicator(overallcomplete, overalloutof);
         };
 
         /**
@@ -241,15 +244,34 @@ define(["jquery", "core/templates", "core/config", "core/ajax", "core/str", "cor
                         loadingString = s[0] + '  ...';
                     });
                     // Included like this so that later dynamically added boxes are covered.
-                    $("body").on("click", Selector.togglecompletion, function (e) {
+                    // We only need to handle this here for subtiles.
+                    // Regular course modules use data-action="toggle-manual-completion" instead which triggers core.
+                    $("body").on("click", Selector.toggleCompletionSubtile, function (e) {
                         // If this is a subtile, replace button with a spinner pending reload of activities over JS.
                         // Otherwise the core JS will replace with its own with different style.
                         // See core_course/manual_completion_toggle.
                         const currentTarget = $(e.currentTarget);
-                        if (currentTarget.closest('.section').hasClass('subtiles')) {
-                            currentTarget.replaceWith(
-                                '<div class="spinner-grow spinner-grow-sm text-secondary mt-2 mr-2 pull-right"'
-                                + ' role="status"><span class="sr-only">' + loadingString + '</span></div>'
+                        const section = currentTarget.closest('li.section');
+                        currentTarget.replaceWith(
+                            '<span class="completionspinner spinner-grow spinner-grow-sm text-secondary mt-2 mr-2"'
+                            + ' role="status"><span class="sr-only">' + loadingString + '</span></span>'
+                        );
+                        const cmId = parseInt(currentTarget.data('cmid'));
+                        ajax.call([{
+                            methodname: "core_completion_update_activity_completion_status_manually",
+                            args: {cmid: cmId, completed: currentTarget.data('complete') !== 1}
+                        }])[0].done((res) => {
+                            if (res.status === true) {
+                                triggerCompletionChangedEvent(parseInt(section.attr('data-section')), cmId);
+                            }
+                        });
+
+                        // If this is in a modal header, trigger refresh of the main window completion too.
+                        if (currentTarget.closest('.embed-module-buttons').length !== 0) {
+                            const cmId = currentTarget.data('cmid');
+                            const sectionNum = $('li#module-' + cmId).closest(Selector.section).attr(dataKeys.section);
+                            triggerCompletionChangedEvent(
+                                sectionNum ? parseInt(sectionNum) : 0, cmId ? parseInt(cmId) : 0
                             );
                         }
                     });
@@ -259,36 +281,30 @@ define(["jquery", "core/templates", "core/config", "core/ajax", "core/str", "cor
                         // Some themes e.g. RemUI do not have a #page-content div, so use #region-main.
                         pageContent = $("#region-main");
                     }
-                    pageContent
-                        .on("click", Selector.launchModuleModal + ", " + Selector.launchResourceModal, function (e) {
-                            var clickedActivity = $(e.currentTarget).closest(Selector.activity);
-                            if (clickedActivity.hasClass("completeonview")) {
-                                const sectionNum = clickedActivity.closest(Selector.section).attr(dataKeys.section);
-                                const cmid = clickedActivity.attr('data-cmid');
-                                triggerCompletionChangedEvent(
-                                    sectionNum ? parseInt(sectionNum) : 0, cmid ? parseInt(cmid) : 0
-                                );
-                            }
-                        });
 
-                    // When the user returns to the main tab/window, refresh completion data.
-                    // (Completion may have changed since the last focus, e.g. activity opened in new window).
-                    $(window).on('focus', function() {
-                        if (isBlurred) {
-                            // We are returning to current window.
-                            const openSection = $('li.section.state-visible').attr('data-section');
-                            isBlurred = false;
-                            triggerCompletionChangedEvent(openSection ? parseInt(openSection) : 0, 0);
+                    // If an activity with an "onclick" attribute is clicked, this means core is launching an activity pop up.
+                    $('li.section a').on('click', function(e) {
+                        const target = $(e.target);
+                        const isCorePopUp = target.attr('onclick')
+                            && target.attr('onclick').indexOf('window.open') === 0;
+                        if (isCorePopUp) {
+                            const cm = target.closest('li.activity');
+                            if (cm.hasClass('completion-view')) {
+                                const section = (target.closest('li.section')).data('section');
+                                triggerCompletionChangedEvent(section, cm.data('cmid'));
+                            }
                         }
-                    });
-                    $(window).on('blur', function() {
-                        isBlurred = true;
                     });
 
                     // When behat tests are running, for whatever reason core completion is not initialised, so we do it here.
                     coreManualCompletion.init();
                 });
             },
+            /**
+             *
+             * @param {number} sectionNum
+             * @param {number} cmid
+             */
             triggerCompletionChangedEvent: function(sectionNum, cmid) {
                 triggerCompletionChangedEvent(sectionNum, cmid);
             },

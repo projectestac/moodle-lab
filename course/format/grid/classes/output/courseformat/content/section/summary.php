@@ -19,7 +19,6 @@
  * Contains the default section summary (used for multipage format).
  *
  * @package    format_grid
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2022 G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://about.me/gjbarnard} and
  *                           {@link http://moodle.org/user/profile.php?id=442195}
@@ -61,8 +60,8 @@ class summary extends summary_base {
     /**
      * Export this data so it can be used as the context for a mustache template.
      *
-     * @param renderer_base $output typically, the renderer that's calling this function
-     * @return array data context for a mustache template
+     * @param renderer_base $output typically, the renderer that's calling this function.
+     * @return array data context for a mustache template.
      */
     public function export_for_template(\renderer_base $output): stdClass {
 

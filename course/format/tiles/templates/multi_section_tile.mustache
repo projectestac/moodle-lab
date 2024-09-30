@@ -46,50 +46,46 @@
         "restricted": 0
         }
 }}
-<li class="tile{{#hidden}} tile-hidden{{/hidden}}{{#restricted}} tile-restricted{{/restricted}}{{#isactive}} current{{/isactive}}{{#userclickable}} tile-clickable{{/userclickable}}{{#progress.isComplete}} is-complete{{/progress.isComplete}} {{extraclasses}}"
-    id="tile-{{tileid}}" data-section="{{tileid}}" data-true-sectionid="{{secid}}" tabindex="2" {{#hastilephoto}}{{{phototileinlinestyle}}}{{/hastilephoto}}>
+<li class="tile{{#hidden}} tile-hidden{{/hidden}}{{#restrictionlock}} tile-restricted{{/restrictionlock}}{{#isactive}} current{{/isactive}}{{#userclickable}} tile-clickable{{/userclickable}}{{#progress.isComplete}} is-complete{{/progress.isComplete}} {{extraclasses}}"
+    id="tile-{{tileid}}" data-section="{{tileid}}" data-true-sectionid="{{secid}}" {{#hastilephoto}}{{{phototileinlinestyle}}}{{/hastilephoto}}>
     {{^hastilephoto}}<div class="tile-bg"></div>{{/hastilephoto}}
     <a class="tile-link"{{#userclickable}} href="{{{config.wwwroot}}}/course/view.php?id={{courseid}}&section={{tileid}}"{{/userclickable}}
-       data-section="{{tileid}}" id="sectionlink-{{tileid}}">
+       data-section="{{tileid}}" id="sectionlink-{{tileid}}" aria-label="{{tilearialabel}}">
 
         {{^hastilephoto}}
-        <div class="tile-content" id="tilecontent-{{tileid}}">
-            <div class="tile-top" id="tileTop-{{tileid}}">
-                <div class="tileiconcontainer" id="tileicon_{{tileid}}"
-                    {{#editing}}data-toggle="tooltip" data-placement="left"
-                     data-original-title="{{^allowphototiles}}{{#str}}picknewicon, format_tiles{{/str}}{{/allowphototiles}}{{#allowphototiles}}{{#str}}picknewiconphoto, format_tiles{{/str}}{{/allowphototiles}}"
-                    {{/editing}}>
-                    {{>format_tiles/tileicon}}
+            <div class="tile-content" id="tilecontent-{{tileid}}">
+                <div class="tile-top" id="tileTop-{{tileid}}">
+                    <div class="tileiconcontainer" id="tileicon_{{tileid}}"
+                        {{#editing}}data-toggle="tooltip" data-placement="left"
+                         data-original-title="{{^allowphototiles}}{{#str}}picknewicon, format_tiles{{/str}}{{/allowphototiles}}{{#allowphototiles}}{{#str}}picknewiconphoto, format_tiles{{/str}}{{/allowphototiles}}"
+                        {{/editing}}>
+                        {{>format_tiles/tileicon}}
+                    </div>
+                    <div class="tiletopright" id="tiletopright-{{tileid}}" aria-hidden="true">
+                        {{>format_tiles/progress_spacer}}
+                        {{#progress}}{{^hidden}}
+                            {{> format_tiles/progress}}
+                        {{/hidden}}{{/progress}}
+                    </div>
                 </div>
-                <div class="tiletopright pull-right" id="tiletopright-{{tileid}}" aria-hidden="true">
-                    {{>format_tiles/progress_spacer}}
-                    {{#progress}}{{^hidden}}
-                        {{> format_tiles/progress}}
-                    {{/hidden}}{{/progress}}
+                <div class="tile-text" id="tileText-{{tileid}}"
+                    {{^ismobile}}{{#activity_summary}}{{#usetooltips}}
+                        data-toggle="tooltip" data-html="true" data-original-title="{{activity_summary}}"
+                    {{/usetooltips}}{{/activity_summary}}{{/ismobile}}>
+                    <div class="tile-textinner{{titleclass}}" id="tileTextin-{{tileid}}">
+                      {{#title}}<h3>{{{title}}}</h3>{{/title}}
+                    </div>
+                    {{#availabilitymessage}}
+                        {{>format_tiles/availability_info}}
+                    {{/availabilitymessage}}
                 </div>
             </div>
-            <div class="tile-text" id="tileText-{{tileid}}"
-                {{^ismobile}}{{#activity_summary}}{{#usetooltips}}
-                    data-toggle="tooltip" data-html="true" data-original-title="{{activity_summary}}"
-                {{/usetooltips}}{{/activity_summary}}{{/ismobile}}>
-                <div class="tile-textinner{{titleclass}}" id="tileTextin-{{tileid}}">
-                  {{#title}}<h3>{{{title}}}</h3>{{/title}}
-                </div>
-                {{#availabilitymessage}}
-                    {{>format_tiles/availability_info}}
-                {{/availabilitymessage}}
-            </div>
-        </div>
-
         {{/hastilephoto}}
 
         {{#hastilephoto}}
             {{#availabilitymessage}}
                 {{>format_tiles/availability_info}}
             {{/availabilitymessage}}
-            {{#restricted}}
-                {{>format_tiles/availability_info}}
-            {{/restricted}}
             <div id="tileText-{{tileid}}"
                  {{#activity_summary}}{{^ismobile}}{{#usetooltips}}
                     data-original-title="{{activity_summary}}" data-toggle="tooltip" data-html="true"

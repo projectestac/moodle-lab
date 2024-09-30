@@ -60,8 +60,9 @@ Feature: Teacher can restrict course modules to groups
     And I press "Save and return to course"
 
     And I wait until the page is ready
-    And I follow "Collapse all"
-    And I expand section "1" for edit
+    #  We used to say "And I follow "Collapse all"" but course index includes that too we have to use element ID now.
+    And I follow "collapsesections"
+    And I toggle expand or collapse section "1" for edit
 
     And I open "I am a restricted label" actions menu
     And I click on "Edit settings" "link" in the "I am a restricted label" activity
@@ -83,7 +84,7 @@ Feature: Teacher can restrict course modules to groups
 
     And I click on tile "1"
     And I wait until the page is ready
-
+    And I wait "1" seconds
     Then I should see "Visible page" in the "region-main" "region"
     And I should not see "Restricted page" in the "region-main" "region"
     And I should see "I am an unrestricted label" in the "region-main" "region"
@@ -100,7 +101,7 @@ Feature: Teacher can restrict course modules to groups
     And I am on "Course 1" course homepage
     And I click on tile "1"
     And I wait until the page is ready
-
+    And I wait "1" seconds
 #    Now student can see the restricted page too
     Then I should see "Visible page" in the "region-main" "region"
     And I should see "I am an unrestricted label" in the "region-main" "region"

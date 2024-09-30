@@ -56,80 +56,91 @@
         "modstealth": true
     }
 }}
-{{#moveicon}} {{{moveicon}}} {{/moveicon}}
-<div class="activity-basis d-flex align-items-center">
-    <div class="d-flex flex-column flex-md-row w-100 align-self-start">
-        {{^hasname}}
-            {{$ core_courseformat/local/content/cm/badges }}
-                {{> core_courseformat/local/content/cm/badges }}
-            {{/ core_courseformat/local/content/cm/badges }}
-        {{/hasname}}
-        <div class="tiles-activity-container"
-             {{#clickable}}data-cmid="{{cmid}}" data-modinstance="{{modinstance}}"
-             {{#pluginfileUrl}}data-url="{{{pluginfileUrl}}}"{{/pluginfileUrl}}
-            {{#secondaryurl}}data-url-secondary="{{{secondaryurl}}}"{{/secondaryurl}} data-title="{{{activityname}}}"
-            data-action="launch-tiles-{{launchtype}}"{{/clickable}}
-        >
+{{#ismoodle42minus}}
+    {{>format_tiles/local/content/cm/activity42}}
+{{/ismoodle42minus}}
+{{^ismoodle42minus}}
+    {{#moveicon}} {{{moveicon}}} {{/moveicon}}
+    <div class="activity-grid {{^hasname}}noname-grid{{/hasname}} tiles-activity-container"
+        {{#clickable}}data-cmid="{{cmid}}" data-modinstance="{{modinstance}}" data-title="{{{activityname}}}"{{/clickable}}>
+        {{! Icon, Name & Badge }}
+        {{#hasname}}
             {{#cmname}}
-                {{$ core_courseformat/local/content/cm/cmname }}
-                    {{> core_courseformat/local/content/cm/cmname }}
-                {{/ core_courseformat/local/content/cm/cmname }}
+                {{$ format_tiles/local/content/cm/cmname }}
+                    {{> format_tiles/local/content/cm/cmname }}
+                {{/ format_tiles/local/content/cm/cmname }}
             {{/cmname}}
-        </div>
+        {{/hasname}}
 
+        {{! Dates }}
+        {{#dates}}
+            {{#hasdates}}
+                <div data-region="activity-dates" class="activity-dates mr-sm-2">
+                    {{#activitydates}}
+                        {{$core_course/activity_date}}
+                            {{>core_course/activity_date}}
+                        {{/core_course/activity_date}}
+                    {{/activitydates}}
+                </div>
+            {{/hasdates}}
+        {{/dates}}
+
+        {{! Visibility }}
+        {{$ core_courseformat/local/content/cm/badges }}
+            {{> core_courseformat/local/content/cm/badges }}
+        {{/ core_courseformat/local/content/cm/badges }}
+
+        {{! Group mode }}
+        {{#groupmodeinfo}}
+            <div
+                    class="activity-groupmode-info align-self-start ml-sm-2"
+                    data-region="groupmode"
+            >
+                {{$ core_courseformat/local/content/cm/groupmode}}
+                    {{> core_courseformat/local/content/cm/groupmode}}
+                {{/ core_courseformat/local/content/cm/groupmode}}
+            </div>
+        {{/groupmodeinfo}}
+
+        {{! Completion }}
+        {{#completion}}
+            {{#hascompletion}}
+                <div class="activity-completion align-self-start ml-sm-2">
+                    {{$ core_courseformat/local/content/cm/activity_info}}
+                        {{> core_courseformat/local/content/cm/activity_info}}
+                    {{/ core_courseformat/local/content/cm/activity_info}}
+                </div>
+            {{/hascompletion}}
+        {{/completion}}
+
+        {{! Action menu }}
+        {{#controlmenu}}
+            <div class="activity-actions bulk-hidden align-self-start ml-sm-2">
+                {{$ core_courseformat/local/content/cm/controlmenu }}
+                    {{> core_courseformat/local/content/cm/controlmenu }}
+                {{/ core_courseformat/local/content/cm/controlmenu }}
+            </div>
+        {{/controlmenu}}
+
+        {{! Description }}
+        {{#altcontent}}
+            <div class="activity-altcontent d-flex text-break {{#hasname}}activity-description{{/hasname}}">
+                {{{altcontent}}}
+            </div>
+        {{/altcontent}}
+
+        {{! Availability }}
+        {{#modavailability}}
+            {{$ core_courseformat/local/content/cm/availability }}
+                {{> core_courseformat/local/content/cm/availability }}
+            {{/ core_courseformat/local/content/cm/availability }}
+        {{/modavailability}}
+
+        {{! Afterlink }}
         {{#afterlink}}
-            <div class="afterlink">
+            <div class="activity-afterlink afterlink d-flex align-items-center">
                 {{{afterlink}}}
             </div>
         {{/afterlink}}
-
-        {{#activityinfo}}
-            <div class="activity-info mt-1 mt-md-0">
-                {{$ core_courseformat/local/content/cm/activity_info}}
-                    {{> core_courseformat/local/content/cm/activity_info}}
-                {{/ core_courseformat/local/content/cm/activity_info}}
-            </div>
-        {{/activityinfo}}
     </div>
-
-    {{#controlmenu}}
-        <div class="activity-actions align-self-start">
-            {{$ core_courseformat/local/content/cm/controlmenu }}
-                {{> core_courseformat/local/content/cm/controlmenu }}
-            {{/ core_courseformat/local/content/cm/controlmenu }}
-        </div>
-    {{/controlmenu}}
-</div>
-{{#hasname}}
-    {{$ core_courseformat/local/content/cm/badges }}
-        {{> core_courseformat/local/content/cm/badges }}
-    {{/ core_courseformat/local/content/cm/badges }}
-{{/hasname}}
-
-<div class="description">
-    {{#activityinfo}}
-        {{#hasdates}}
-        <div data-region="activity-dates" class="activity-dates small course-description-item">
-            <div class="description-inner">
-                {{#activitydates}}
-                    {{$core_course/activity_date}}
-                        {{>core_course/activity_date}}
-                    {{/core_course/activity_date}}
-                {{/activitydates}}
-            </div>
-        </div>
-        {{/hasdates}}
-    {{/activityinfo}}
-    {{#altcontent}}
-        <div class="activity-altcontent {{#hasname}}course-description-item small{{/hasname}}{{^hasname}}contentwithoutlink{{/hasname}} d-flex">
-            <div class="flex-fill description-inner">
-                {{{altcontent}}}
-            </div>
-        </div>
-    {{/altcontent}}
-    {{#modavailability}}
-        {{$ core_courseformat/local/content/cm/availability }}
-            {{> core_courseformat/local/content/cm/availability }}
-        {{/ core_courseformat/local/content/cm/availability }}
-    {{/modavailability}}
-</div>
+{{/ismoodle42minus}}

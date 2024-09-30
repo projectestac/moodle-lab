@@ -8,6 +8,7 @@
 - Updated `mod/offlinequiz`
 - Updated `mod/questionnaire`
 - Updated `mod/subcourse`
+- Updated `blocks/completion_progress`
 - Updated Wiris plugins
 
 ### 4.1.10+ (Build: 20240503)

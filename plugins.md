@@ -14,7 +14,7 @@
 |local                  |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18|
 |blocks                 |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18|
 |blocks                 |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|
-|blocks                 |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2023063000|2023/07/18|
+|blocks                 |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2023110100|2024/09/30|
 |blocks                 |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|
 |blocks                 |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|
 |local                  |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|

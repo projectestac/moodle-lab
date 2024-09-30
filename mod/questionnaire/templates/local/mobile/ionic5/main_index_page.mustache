@@ -92,16 +92,16 @@
     <ion-card>
         <ion-card-content>
             <%#resume%>
-            <button ion-button core-site-plugins-new-content component="mod_questionnaire" method="mobile_view_activity"
-                    [args]="{cmid: <%cmid%>, action: 'resume'}">
+            <ion-button expand="block" core-site-plugins-new-content component="mod_questionnaire"
+                    method="mobile_view_activity" [args]="{cmid: <%cmid%>, action: 'resume'}">
                 {{ 'plugin.mod_questionnaire.resumesurvey' | translate }}
-            </button>
+            </ion-button>
             <%/resume%>
             <%^resume%>
-            <button ion-button core-site-plugins-new-content component="mod_questionnaire" method="mobile_view_activity"
-                    [args]="{cmid: <%cmid%>, action: 'respond'}">
+            <ion-button expand="block" core-site-plugins-new-content component="mod_questionnaire"
+                    method="mobile_view_activity" [args]="{cmid: <%cmid%>, action: 'respond'}">
                 {{ 'plugin.mod_questionnaire.answerquestions' | translate }}
-            </button>
+            </ion-button>
             <%/resume%>
         </ion-card-content>
     </ion-card>
@@ -110,10 +110,12 @@
     <ion-card>
         <ion-card-content>
             <%#submissions%>
-            <a ion-item core-site-plugins-new-content component="mod_questionnaire" method="mobile_view_activity"
+            <ion-item button core-site-plugins-new-content component="mod_questionnaire" method="mobile_view_activity"
                 [args]="{cmid: <%cmid%>, action: 'review', submissionid: <%submissionid%>}">
-                {{ 'plugin.mod_questionnaire.submitted' | translate }} <%submissiondate%>
-            </a>
+                <ion-label>
+                    {{ 'plugin.mod_questionnaire.submitted' | translate }} <%submissiondate%>
+                </ion-label>
+            </ion-item>
             <%/submissions%>
         </ion-card-content>
     </ion-card>

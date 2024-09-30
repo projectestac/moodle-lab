@@ -15,27 +15,37 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template mod_questionnaire/mobile_text_question
+    @template mod_questionnaire/mobile_select_question
 
-    Template which defines a text question display in the mobile app.
+    Template which defines a select question display in the mobile app.
 
     Context variables required for this template:
     * fieldkey - integer: ID of the question.
-    * completed - boolean: True if question already completed.
+    * choices - array of objects: choice_id, content, completed and value of each question choice.
 
     Example context (json):
     {
         "fieldkey": 985,
-        "completed": 0
+        "choices": [
+            {
+                "content": "Red",
+                "completed": 0,
+                "value": 1
+            },
+            {
+                "content": "Blue",
+                "completed": 0,
+                "value": 0
+            }
+        ]
     }
 }}
 {{=<% %>=}}
 <ion-item>
-    <%^completed%>
-    <ion-textarea aria-multiline="true" [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>"
-                  core-auto-rows></ion-textarea>
-    <%/completed%>
-    <%#completed%>
-    <ion-note><core-format-text text="{{ CONTENT_OTHERDATA.<%fieldkey%> }}"></core-format-text></ion-note>
-    <%/completed%>
+    <ion-label></ion-label>
+    <ion-select [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>">
+        <%#choices%>
+        <ion-select-option<%#completed%> disabled="true"<%/completed%><%#value%> selected="true"<%/value%> value="<%id%>"><%content%></ion-select-option>
+        <%/choices%>
+    </ion-select>
 </ion-item>

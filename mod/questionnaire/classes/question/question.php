@@ -50,7 +50,7 @@ $idcounter = 0;
 
 require_once($CFG->dirroot.'/mod/questionnaire/locallib.php');
 
-
+#[\AllowDynamicProperties]
 /**
  * Class for describing a question
  *
@@ -495,6 +495,14 @@ abstract class question {
      */
     public function supports_feedback_scores() {
         return $this->supports_feedback();
+    }
+
+    /**
+     * Override and return false if a number should not be rendered for this question in any context.
+     * @return bool
+     */
+    public function is_numbered() {
+        return true;
     }
 
     /**

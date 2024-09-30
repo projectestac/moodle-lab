@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template mod_questionnaire/mobile_select_question
+    @template mod_questionnaire/mobile_radio_question
 
-    Template which defines a select question display in the mobile app.
+    Template which defines a radio question display in the mobile app.
 
     Context variables required for this template:
     * fieldkey - integer: ID of the question.
@@ -28,13 +28,13 @@
         "fieldkey": 985,
         "choices": [
             {
-                "id": 200,
+                "id": 5432,
                 "content": "Red",
                 "completed": 0,
                 "value": 1
             },
             {
-                "id": 201,
+                "id": 5433,
                 "content": "Blue",
                 "completed": 0,
                 "value": 0
@@ -43,8 +43,19 @@
     }
 }}
 {{=<% %>=}}
-<ion-select [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>">
+<ion-radio-group [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>">
     <%#choices%>
-    <ion-option<%#completed%> disabled="true"<%/completed%><%#value%> selected="true"<%/value%> value="<%id%>"><%content%></ion-option>
+        <ion-item class="ion-text-wrap">
+            <ion-label><core-format-text text="<%content%>"></core-format-text></ion-label>
+            <ion-radio<%#value%> checked="true"<%/value%>
+            value="<%id%>"
+            <%#completed%> disabled="true"<%/completed%>></ion-radio>
+        </ion-item>
+        <%#otherchoicekey%>
+            <ion-item class="ion-text-wrap">
+                <ion-input placeholder="Enter: " [(ngModel)]="CONTENT_OTHERDATA.<%otherchoicekey%>"
+                <%#completed%> disabled="true"<%/completed%>></ion-input>
+            </ion-item>
+        <%/otherchoicekey%>
     <%/choices%>
-</ion-select>
+</ion-radio-group>

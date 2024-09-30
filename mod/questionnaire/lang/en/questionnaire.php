@@ -146,8 +146,8 @@ $string['displaymethod'] = 'Display method not defined for question.';
 $string['download'] = 'Download';
 $string['downloadpdf'] = 'Download PDF';
 $string['downloadtextformat'] = 'Download';
-$string['downloadtextformat_help'] = 'This feature enables you to save all the responses of a questionnaire to a selectable, supported file format.
- You can choose to include extra data items in the export, as well as choose to automatically send the file to selected users.';
+$string['downloadtextformat_help'] = 'This feature enables you to download questionnaire responses in a file format of your choice.
+ The file can then be opened in a spreadsheet program (e.g. MS Excel or Open Office Calc) or a statistical package for further processing.';
 $string['downloadtextformat_link'] = 'mod/questionnaire/report#Download_in_text_format';
 $string['downloadtypes'] = 'Report type';
 $string['dropdown'] = 'Dropdown Box';
@@ -216,7 +216,8 @@ $string['feedbacknotes'] = 'Feedback notes';
 $string['feedbacknotes_help'] = 'Text entered here will be displayed to the respondents at the end of their Feedback Report';
 $string['feedbackoptions'] = 'Feedback options';
 $string['feedbackoptions_help'] = 'Feedback options are available if your questionnaire contains the following question types and question settings:
-Radio buttons; Dropdown box; Yes/No; or Rate (normal or Osgood scale). Those questions must be set as Required, their Question Name field must NOT be empty and the Possible answers choices must contain a value.';
+Radio buttons; Dropdown box; Yes/No; Rate (normal or Osgood scale) or Slider. Those questions must be set as Required, their Question Name field must NOT be empty and the Possible answers choices must contain a value.
+Slider questions must NOT use a negative value for the Minimum slider range.';
 $string['feedbackoptions_link'] = 'mod/questionnaire/personality_test';
 $string['feedbackremovequestionfromsection'] = 'This question is part of feedback section [{$a}]';
 $string['feedbackremovesection'] = 'Removing this question will completely remove feedback section [{$a}]';

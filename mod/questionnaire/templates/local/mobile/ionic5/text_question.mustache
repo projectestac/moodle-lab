@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template mod_questionnaire/mobile_date_question
+    @template mod_questionnaire/mobile_text_question
 
-    Template which defines a date question display in the mobile app.
+    Template which defines a text question display in the mobile app.
 
     Context variables required for this template:
     * fieldkey - integer: ID of the question.
@@ -31,10 +31,13 @@
 }}
 {{=<% %>=}}
 <ion-item>
+    <ion-label>
+        <%#completed%>
+        <core-format-text text="{{ CONTENT_OTHERDATA.<%fieldkey%> }}"></core-format-text>
+        <%/completed%>
+    </ion-label>
     <%^completed%>
-    <ion-datetime displayFormat="DD/MM/YYYY" max="2100-12-31" [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>"></ion-datetime>
-    <%/completed%>
-    <%#completed%>
-    <ion-note><core-format-text text="{{ CONTENT_OTHERDATA.<%fieldkey%> }}"></core-format-text></ion-note>
+    <ion-textarea aria-multiline="true" [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>"
+                  core-auto-rows></ion-textarea>
     <%/completed%>
 </ion-item>

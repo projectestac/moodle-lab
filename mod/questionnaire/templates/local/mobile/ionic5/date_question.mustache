@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template mod_questionnaire/mobile_slider_question
+    @template mod_questionnaire/mobile_date_question
 
-    Template which defines a slider question display in the mobile app.
+    Template which defines a date question display in the mobile app.
 
     Context variables required for this template:
     * fieldkey - integer: ID of the question.
@@ -26,28 +26,17 @@
     Example context (json):
     {
         "fieldkey": 985,
-        "extradata": {
-            "minrange" : 1,
-            "maxrange" : 10,
-            "startingvalue" : 5,
-            "stepvalue" : 1,
-            "leftlabel" : "left label",
-            "rightlabel" :  "right label",
-            "centerlabel": "center label"
-        },
         "completed": 0
     }
 }}
 {{=<% %>=}}
-<%#extradata%>
-<ion-item class="mod_questionnaire_slider">
-    <ion-range <%#completed%> disabled="true"<%/completed%>
-            min="<%extradata.minrange%>" max="<%extradata.maxrange%>"
-            pin="true" step="<%extradata.stepvalue%>"
-            [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>">
-        <ion-label range-left><%extradata.leftlabel%></ion-label>
-        <ion-label range-right><%extradata.rightlabel%></ion-label>
-    </ion-range>
+<ion-item>
+    <ion-label>
+        <%#completed%>
+        <core-format-text text="{{ CONTENT_OTHERDATA.<%fieldkey%> }}"></core-format-text>
+        <%/completed%>
+    </ion-label>
+    <%^completed%>
+    <ion-datetime displayFormat="DD/MM/YYYY" max="2100-12-31" [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>"></ion-datetime>
+    <%/completed%>
 </ion-item>
-<ion-label text-center><%extradata.centerlabel%></ion-label>
-<%/extradata%>

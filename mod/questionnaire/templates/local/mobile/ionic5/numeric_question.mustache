@@ -31,10 +31,12 @@
 }}
 {{=<% %>=}}
 <ion-item>
+    <ion-label>
+        <%#completed%>
+        <core-format-text text="{{ CONTENT_OTHERDATA.<%fieldkey%> }}"></core-format-text>
+        <%/completed%>
+    </ion-label>
     <%^completed%>
     <ion-input type="number" [(ngModel)]="CONTENT_OTHERDATA.<%fieldkey%>"></ion-input>
-    <%/completed%>
-    <%#completed%>
-    <ion-note><core-format-text text="{{ CONTENT_OTHERDATA.<%fieldkey%> }}"></core-format-text></ion-note>
     <%/completed%>
 </ion-item>

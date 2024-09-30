@@ -1,11 +1,47 @@
 History
 =============
 
-Version 401.2.1b - 14/10/2023
+Version 401.2.5.5 - 28/09/2024
+------------------------------
+1. Fix 'Version 404.1.2 adhoc task fails' - #222.
+
+Version 401.2.5 - 23/09/2024
 ----------------------------
+1. Fix section zero showing after section on single section page.  This has caused the removal of 'sectionzeroingrid' setting.
+   If you want this functionality, please upgrade to the M4.4+ version.
+2. Update to 'Fix not using course image resize method' update task.
+
+Version 401.2.4 - 21/09/2024
+----------------------------
+1. Fix updating of course when adding or removing sections.  Note: Known issue of the section not looking as it should.
+2. Fix 'Unable to update defaultimageresizemethod setting' - #211.
+3. Use section anchors in links when editing.
+4. Add badges to grid - #215.
+5. Adjust section titles in grid and move 'title' attribute to cover whole grid box.
+6. Add 'sectionzeroingrid' course and 'defaultsectionzeroingrid' site settings to state if section zero should be in the grid.
+7. Fix not using course image resize method.
+
+Version 401.2.3 - 08/04/2024
+----------------------------
+1. Fix 'Orphaned Section still appear in Index Drawer'.
+2. Fix 'Restrict access can cause no content in other sections to be shown.' - #202.
+3. Fix 'Import quiz error + Number of topics reduced to 1' - #203.
+4. Improved solution to 'Problems with creating multiple courses from template via CSV in Grid Format' - #189, related to #203.
+5. Fix 'Html entities in section titles are not being decoded' - #205.
+
+Version 401.2.2 - 22/01/2024
+----------------------------
+1. Fix 'Import a format_grid course into a format_topics course fails and produces "undefined method"' - #193,
+   thanks to @Syxton(Matt Davidson).
+2. Fix 'Sections showing beyond the number set in the settings', related to #196.
+3. Improved backup and restore logic.
+4. Show warning if there is a stealth section with content, related to #196.
+
+Version 401.2.1b - 14/10/2023
+-----------------------------
 1. Fix 'Webp image causes an error and makes course unaccessible' - #190.
 2. Fix "Hidden sections are shown as not available" doesn't seem to work. - #192.
-3. Add 'Flex containers' justify-content property options' - #191.  Sponsored by AAU.
+3. Add 'Flex containers' justify-content property options' - #191.
 4. Fix 'Problems with creating multiple courses from template via CSV in Grid Format' - #189.
 5. Make 'Main content page' link on single section page more accessible.
 6. Fix 'Mouseover for shortened titles' - #187.

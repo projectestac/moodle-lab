@@ -18,13 +18,11 @@
  * Grid Format.
  *
  * @package    format_grid
- * @category   event
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2017-onwards G J Barnard based upon work done by Marina Glancy.
- * @author     G J Barnard - {@link http://about.me/gjbarnard} and
- *                           {@link http://moodle.org/user/profile.php?id=442195}
+ * @author     G J Barnard - {@link https://about.me/gjbarnard} and
+ *                           {@link https://moodle.org/user/profile.php?id=442195}
  * @author     Based on code originally written by Paul Krix and Julian Ridden.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
@@ -63,6 +61,11 @@ class format_grid_observer {
         }
     }
 
+    /**
+     * Deletes the images for the given course.
+     *
+     * @param int $courseid Course id.
+     */
     protected static function delete_images($courseid) {
         // Delete any images associated with the course.
         \format_grid\toolbox::delete_images($courseid);

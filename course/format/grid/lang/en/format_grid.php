@@ -18,13 +18,14 @@
  * Grid Format.
  *
  * @package    format_grid
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2012 G J Barnard in respect to modifications of standard topics format.
- * @author     G J Barnard - {@link http://about.me/gjbarnard} and
- *                           {@link http://moodle.org/user/profile.php?id=442195}
+ * @author     G J Barnard - {@link https://about.me/gjbarnard} and
+ *                           {@link https://moodle.org/user/profile.php?id=442195}
  * @author     Based on code originally written by Paul Krix and Julian Ridden.
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+// phpcs:disable moodle.Files.LangFilesOrdering
 
 $string['topic'] = 'Section';
 $string['topic0'] = 'General';
@@ -140,6 +141,7 @@ $string['informationchanges'] = 'Changes';
 $string['settings'] = 'Settings';
 $string['settingssettings'] = 'Settings settings';
 $string['settingssettingsdesc'] = 'Grid format settings';
+$string['stealthwarning'] = 'Warning: Course has {$a} orphaned section(s) with content.  Resolve as soon as possible.  Note: Importing into this course from another will turn orphaned sections into real ones - there is no current solution to this!';
 $string['love'] = 'love';
 $string['versioninfo'] = 'Release {$a->release}, version {$a->version} on Moodle {$a->moodle}.  Made with {$a->love} in Great Britain.';
 $string['versionalpha'] = 'Alpha version - Almost certainly contains bugs.  This is a development version for developers \'only\'!  Don\'t even think of installing on a production server!';
@@ -148,15 +150,16 @@ $string['versionrc'] = 'Release candidate version - May contain bugs.  Check com
 $string['versionstable'] = 'Stable version - Could contain bugs.  Check on a test server before installing on your production server.';
 
 // Exception messages.
-$string['cannotconvertuploadedimagetodisplayedimage'] = 'Cannot convert uploaded image to displayed image - {$a}.  Please report error details and the information contained in the php.log file to developer.';
+$string['cannotconvertuploadedimagetodisplayedimage'] = 'Cannot convert uploaded image to displayed image - {$a}.';
 $string['cannotgetmanagesectionimagelock'] = 'Cannot get manage section image lock.  This can happen if two people are editing the settinsg of the same section on the same course at the same time.';
-$string['formatnotsupported'] = 'Format is not supported at this server, please fix the system configuration to have the GD PHP extension installed - {$a}.';
-$string['functionfailed'] = 'Function failed on image - {$a}.';
-$string['mimetypenotsupported'] = 'Mime type is not supported as an image format in the Grid format - {$a}.';
-$string['originalheightempty'] = 'Original height is empty - {$a}.';
-$string['originalwidthempty'] = 'Original width is empty - {$a}.';
-$string['noimageinformation'] = 'Image information is empty - {$a}.';
-$string['reporterror'] = 'Please report error details and the information contained in the php.log file to developer';
+$string['formatnotsupported'] = 'Format is not supported at this server, please fix the system configuration to have the GD PHP extension installed - {$a}';
+$string['functionfailed'] = 'Function failed on image - {$a}';
+$string['imagemanagement'] = 'Image management: {$a}.';
+$string['mimetypenotsupported'] = 'Mime type is not supported as an image format in the Grid format - {$a}';
+$string['originalheightempty'] = 'Original height is empty - {$a}';
+$string['originalwidthempty'] = 'Original width is empty - {$a}';
+$string['noimageinformation'] = 'Image information is empty - {$a}';
+$string['reporterror'] = 'Please use the error information to understand the nature of why the uploaded image cannot be used';
 
 // Privacy.
 $string['privacy:nop'] = 'The Grid format stores lots of settings that pertain to its configuration.  None of the settings are related to a specific user.  It is your responsibilty to ensure that no user data is entered in any of the free text fields.  Setting a setting will result in that action being logged within the core Moodle logging system against the user whom changed it, this is outside of the formats control, please see the core logging system for privacy compliance for this.  When uploading images, you should avoid uploading images with embedded location data (EXIF GPS) included or other such personal data.  It would be possible to extract any location / personal data from the images.  Please examine the code carefully to be sure that it complies with your interpretation of your privacy laws.  I am not a lawyer and my analysis is based on my interpretation.  If you have any doubt then remove the format forthwith.';

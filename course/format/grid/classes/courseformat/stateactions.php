@@ -50,9 +50,9 @@ class stateactions extends stateactions_base {
         ?int $targetsectionid = null,
         ?int $targetcmid = null
     ): void {
-        parent::section_add($updates, $course, $ids, $targetsectionid, $targetcmid);
         $format = course_get_format($course);
         $format->section_added();
+        parent::section_add($updates, $course, $ids, $targetsectionid, $targetcmid);
     }
 
     /**
@@ -73,8 +73,8 @@ class stateactions extends stateactions_base {
         ?int $targetsectionid = null,
         ?int $targetcmid = null
     ): void {
-        parent::section_delete($updates, $course, $ids, $targetsectionid, $targetcmid);
         $format = course_get_format($course);
         $format->section_deleted();
+        parent::section_delete($updates, $course, $ids, $targetsectionid, $targetcmid);
     }
 }

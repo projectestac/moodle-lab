@@ -12,6 +12,7 @@
 - Updated `question/type/formulas`
 - Updated `course/format/remuiformat`
 - Updated `course/format/tiles`
+- Updated `course/format/grid`
 - Updated Wiris plugins
 
 ### 4.1.10+ (Build: 20240503)

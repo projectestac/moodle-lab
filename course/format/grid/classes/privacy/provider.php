@@ -19,7 +19,6 @@
  *
  * @package    format_grid
  * @category   privacy
- * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2018-onwards G J Barnard based upon work done by Marina Glancy.
  * @author     G J Barnard - {@link http://about.me/gjbarnard} and
  *                           {@link http://moodle.org/user/profile.php?id=442195}
@@ -40,7 +39,7 @@ class provider implements \core_privacy\local\metadata\null_provider {
      *
      * @return  string
      */
-    public static function get_reason() : string {
+    public static function get_reason(): string {
         return 'privacy:nop';
     }
 }

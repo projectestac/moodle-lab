@@ -7,8 +7,8 @@ Feature: Section break
       | username | firstname | lastname | email          |
       | daisy    | Daisy     | Grid     | daisy@grid.com |
     And the following "courses" exist:
-      | fullname | shortname | format  | numsections |
-      | Grid     | GD        | grid    | 10          |
+      | fullname | shortname | format  | gnumsections |
+      | Grid     | GD        | grid    | 10           |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | daisy    | GD     | editingteacher |

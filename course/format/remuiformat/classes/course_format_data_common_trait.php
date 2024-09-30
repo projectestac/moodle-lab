@@ -30,6 +30,8 @@ use core_courseformat\output\local\content\section;
 use core_completion\progress;
 use core\activity_dates;
 use core_course\output\activity_completion;
+use core_tag\reportbuilder\local\entities\instance;
+
 require_once($CFG->dirroot.'/course/format/remuiformat/classes/mod_stats.php');
 
 /**
@@ -234,7 +236,7 @@ class course_format_data_common_trait {
      * @return array                           Sections data
      */
     public function get_all_section_data($renderer, $editing, $rformat, $settings, $course, $courseformat, $courserenderer) {
-        global $USER;
+        global $USER , $OUTPUT, $CFG;
         $modinfo = get_fast_modinfo($course);
         $context = context_course::instance($course->id);
         $startfrom = 1;
@@ -249,7 +251,7 @@ class course_format_data_common_trait {
             $data->index = $sectionindex;
             $data->num = $section->section;
             $data->id = $section->id;
-            $data->sectionreturnid = course_get_format($course)->get_section_number();
+            $data->sectionreturnid = $this->edw_get_section_num(course_get_format($course));
             $data->insertafter = false;
 
             // Check if the user has permission to view this section or not.
@@ -300,6 +302,9 @@ class course_format_data_common_trait {
 
             $data->hiddenmessage = $this->course_section_availability($course, $section);
 
+            if(trim(strip_tags($data->hiddenmessage)) == ""){
+                $data->hiddenmessage = false;
+            }
             if ($courseformat->is_section_current($section)) {
                 $data->iscurrent = true;
                 $data->highlightedlabel = get_string('highlight');
@@ -308,6 +313,9 @@ class course_format_data_common_trait {
             if (!$section->visible) {
                 $data->ishidden = true;
                 $data->notavailable = true;
+                // $visibilityclass = $courseformat->get_output_classname('content\\section\\visibility');
+                // $visibility = new $visibilityclass($courseformat, $section);
+                // $data->visibility = $visibility->export_for_template($OUTPUT);
                 if (has_capability('moodle/course:viewhiddensections', $context, $USER)) {
                     $data->hiddenfromstudents = true;
                     $data->notavailable = false;
@@ -342,6 +350,9 @@ class course_format_data_common_trait {
 
                 $data->activityinfo = $extradetails['activityinfo'];
                 $data->progressinfo = $extradetails['progressinfo'];
+                if(!$course->enablecompletion){
+                    $data->progressinfo = false;
+                }
 
                 // Set Marker.
                 if ($course->marker == $sectionindex) {
@@ -360,6 +371,17 @@ class course_format_data_common_trait {
                 }
                 $data->activityinfostring = implode($extradetails['activityinfo']);
                 $data->progressinfo = $extradetails['progressinfo'];
+                $data->checkrightsidecontent = true;
+                if($CFG->backup_release > '4.3'){
+                    $data->sectionpageurl = $CFG->wwwroot."/course/section.php?id=".$section->id;
+                    $data->showsectionpageurlbtn = true;
+                }
+                if(!$course->enablecompletion){
+                    $data->progressinfo = false;
+                }
+                if(!$data->progressinfo && !$editing){
+                    $data->checkrightsidecontent = false;
+                }
                 $data->sectionactivities = $this->course_section_cm_list(
                     $course, $section
                 );
@@ -926,7 +948,7 @@ class course_format_data_common_trait {
      * @return array                  Output array
      */
     private function get_activities_details($section, $course, $courserenderer, $settings, $displayoptions = array()) {
-        global $PAGE, $USER;
+        global $PAGE, $USER, $CFG;
         $modinfo = get_fast_modinfo($course);
         $output = array();
 
@@ -952,6 +974,9 @@ class course_format_data_common_trait {
                     $courserenderer,
                     $displayoptions
                 );
+                if (!$mod->visible) {
+                    $activitydetails->modhiddenfromstudents = true;
+                }
                 $activitydetails->viewurl = $mod->url;
                 $activitydetails->title = $this->course_section_cm_name($mod, $displayoptions);
                 if (array_search($mod->modname, array('folder')) !== false) {
@@ -1022,6 +1047,7 @@ class course_format_data_common_trait {
             $export->generalsection['index'] = 0;
             $generalsectionsummary = $renderer->format_summary_text($generalsection);
         if (empty($generalsectionsummary)) {
+            $course->summary = file_rewrite_pluginfile_urls($course->summary, 'pluginfile.php', $coursecontext->id, 'course', 'summary', null) ;
             $generalsectionsummary = $course->summary;
         }
         if ($generalsection) {
@@ -1130,4 +1156,13 @@ class course_format_data_common_trait {
         }
     }
 
+    public function edw_get_section_num($obj){
+        global $CFG;
+        if($CFG->backup_release > '4.3'){
+            return $obj->get_sectionnum();
+        }else{
+            return $obj->get_section_number();
+        }
+
+    }
 }

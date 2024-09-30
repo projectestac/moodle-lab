@@ -31,7 +31,7 @@ use stdClass;
 use html_writer;
 use context_course;
 use core_completion\progress;
-require_once($CFG->dirroot.'/course/format/renderer.php');
+// require_once($CFG->dirroot.'/course/format/renderer.php');
 require_once($CFG->dirroot.'/course/format/remuiformat/classes/mod_stats.php');
 require_once($CFG->dirroot.'/course/format/remuiformat/classes/course_format_data_common_trait.php');
 require_once($CFG->dirroot.'/course/format/remuiformat/lib.php');
@@ -246,7 +246,9 @@ class format_remuiformat_card_one_section implements renderable, templatable {
 
                 $completiondata = $completioninfo->get_data($mod, true);
                 $activitydetails = new \stdClass();
-
+                if (!$mod->visible) {
+                    $activitydetails->modhiddenfromstudents = true;
+                }
                 if ($mod->visible == 0) {
                     $activitydetails->notavailable = true;
                     if (has_capability('moodle/course:viewhiddensections', $context, $USER)) {

@@ -281,7 +281,10 @@ class format_remuiformat extends core_courseformat\base {
                     'default' => "cover",
                     'type' => PARAM_RAW
                 ),
-
+                'headeroverlayopacity' => array(
+                    'default' => "100",
+                    'type' => PARAM_RAW
+                ),
             );
         }
 
@@ -406,7 +409,12 @@ class format_remuiformat extends core_courseformat\base {
                     'help' => 'edw_format_hd_bgsize',
                     'help_component' => 'format_remuiformat'
                 ),
-
+                'headeroverlayopacity' => array(
+                    'label' => new lang_string('headeroverlayopacity', 'format_remuiformat'),
+                    'element_type' => 'text',
+                    'help' => 'headeroverlayopacity',
+                    'help_component' => 'format_remuiformat'
+                ),
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
@@ -629,7 +637,7 @@ class format_remuiformat extends core_courseformat\base {
      * @return null|array|stdClass any data for the Javascript post-processor (must be json-encodeable)
      */
     public function section_action($section, $action, $sr) {
-        global $PAGE;
+        global $PAGE, $CFG;
 
         if ($action == 'deleteSection') {
             return null;
@@ -644,7 +652,13 @@ class format_remuiformat extends core_courseformat\base {
         // For show/hide actions call the parent method and return the new content for .section_availability element.
         $rv = parent::section_action($section, $action, $sr);
         $renderer = $PAGE->get_renderer('format_topics');
-        $rv['section_availability'] = $renderer->section_availability($this->get_section($section));
+        $format = course_get_format($this->courseid);
+        if($CFG->backup_release > '4.3'){
+            $rv['section_availability'] = new \core_courseformat\output\local\content\section\availability($format, $this->get_section($section));
+        }else{
+            $rv['section_availability'] = $renderer->section_availability($this->get_section($section));
+        }
+
         return $rv;
     }
 
@@ -814,21 +828,34 @@ function format_remuiformat_check_plugin_available($component) {
      * Get Enrolled Teachers Context
      */
 function get_enrolled_teachers_context_formate($courseid = null, $frontlineteacher = false) {
-    global $OUTPUT;
+    global $OUTPUT, $CFG;
     $coursecontext = \context_course::instance($courseid);
     $teachers = get_enrolled_users($coursecontext, 'mod/folder:managefiles', 0, '*', 'firstname');
+    $roles =   new stdClass();
+
+    $allroles = get_all_roles();
+    foreach($allroles as $singlerole){
+        if($singlerole->shortname == 'editingteacher'){
+            $roles = $singlerole;
+            break;
+        }
+    }
+    if(!isset($roles)){
+        $roles->id = "";
+    }
 
     $context = array();
 
     if ($teachers) {
-        $namescount = 2;
+        $namescount = 4;
         $profilecount = 0;
-
         foreach ($teachers as $key => $teacher) {
             if ($frontlineteacher && $profilecount < $namescount) {
                 $instructor = array();
+                $instructor['id'] = $teacher->id;
                 $instructor['name'] = fullname($teacher, true);
-                $instructor['avatars'][] = $OUTPUT->user_picture($teacher);
+                $instructor['avatars'] = $OUTPUT->user_picture($teacher);
+                $instructor['teacherprofileurl'] = $CFG->wwwroot.'/user/profile.php?id='.$teacher->id;
                 if ($profilecount != 0) {
                     $instructor['hasanother'] = true;
                 }
@@ -839,6 +866,7 @@ function get_enrolled_teachers_context_formate($courseid = null, $frontlineteach
         if ($profilecount > $namescount) {
             $context['teachercount'] = $profilecount - $namescount;
         }
+        $context['participantspageurl'] = $CFG->wwwroot.'/user/index.php?id='.$courseid.'&roleid='.$roles->id;
         $context['hasteachers'] = true;
     }
     return $context;
@@ -908,6 +936,13 @@ function get_extra_header_context(&$export, $course, $percentage, $imgurl) {
         $export->generalsection['courseheaderdesign'] = get_config('theme_remui', 'courseheaderdesign') == 0 ? false : true;
         $export->turneditingonswitch = "";
     }
-
+    $headeroverlayopacity = $coursesettings['headeroverlayopacity'];
+    if(is_numeric($headeroverlayopacity) && ($headeroverlayopacity <= 100)){
+        $headeroverlayopacity = $headeroverlayopacity / 100;
+        $export->generalsection['overlayopacity'] = $headeroverlayopacity;
+    }else{
+        $export->generalsection['overlayopacity'] = 1;
+    }
+    $export->generalsection['coursecompletionstatus'] =  $course->enablecompletion;
     return $export->generalsection;
 }

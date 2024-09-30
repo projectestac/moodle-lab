@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Last release of this plugin is 8.6.0 (october, 9th 2023).
+The latest release of this plugin is v8.7.0 (23 apr. 2024).
+
+## v8.7.1 - 27 aug. 2024
+- test: Improve and add test coverage.
+- refactor: Moodle test page. #KB-43810
+- fix: Fetch notification when load setting page. #KB-44423
+  
+## v8.7.0 - 23 apr. 2024
+- feat: Add compatibility with Moodle 4.4.
+
+## v8.6.3 - 26 mar. 2024
+- chore: Update filter dependency
+
+## v8.6.2 - 13 dec. 2023
+- chore: Update Telemeter to 1.1.3
 
 ## v8.6.1 - 10 oct. 2023
 - fix: revert to old Viewer

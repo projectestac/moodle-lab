@@ -16,7 +16,7 @@
 
 /**
  * Methods related to the interaction with the MathType.
- * @package    filter
+ * @package    filter_wiris
  * @subpackage wiris
  * @copyright  WIRIS Europe (Maths for more S.L)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,7 +28,19 @@ require_once(__DIR__ . '/behat_wiris_base.php');
 
 use Behat\Mink\Exception\ExpectationException;
 
+/**
+ * Class behat_wiris_page
+ *
+ * This class represents a Behat WIRIS page and is used for testing purposes.
+ *
+ * @package    filter_wiris
+ * @subpackage wiris
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class behat_wiris_editor extends behat_wiris_base {
+
+
+
 
     /**
      * Once the editor has been opened and focused, set the MathType formula to the specified value.
@@ -40,11 +52,11 @@ class behat_wiris_editor extends behat_wiris_base {
     public function i_set_mathtype_formula_to($value) {
         $exception = new ExpectationException('MathType editor container not found.', $this->getSession());
         $this->spin(
-            function($context, $args) {
+            function ($context, $args) {
                 return $context->getSession()->getPage()->find('xpath', '//div[contains(@class,\'wrs_editor\')]
                 //span[@class=\'wrs_container\']');
             },
-            array(),
+            [],
             self::get_extended_timeout(),
             $exception,
             true
@@ -53,20 +65,24 @@ class behat_wiris_editor extends behat_wiris_base {
         if (strpos($value, 'math') == false) {
             $component = $session->getPage()->find('xpath', "//input[@class='wrs_focusElement']");
             if (empty($component)) {
-                throw new \ElementNotFoundException($this->getSession(), get_string('wirisbehaterroreditornotfound'
-                , 'filter_wiris'));
+                throw new \ElementNotFoundException($this->getSession(), get_string(
+                    'wirisbehaterroreditornotfound',
+                    'filter_wiris'
+                ));
             }
             $component->setValue($value);
         } else {
             $script = 'return document.getElementById(\'wrs_content_container[0]\')';
             $container = $session->evaluateScript($script);
             if (empty($container)) {
-                throw new \ElementNotFoundException($this->getSession(), get_string('wirisbehaterroreditornotfound'
-                , 'filter_wiris'));
+                throw new \ElementNotFoundException($this->getSession(), get_string(
+                    'wirisbehaterroreditornotfound',
+                    'filter_wiris'
+                ));
             }
-            $script = 'const container = document.getElementById(\'wrs_content_container[0]\');'.
-                'const editor = window.com.wiris.jsEditor.JsEditor.getInstance(container);'.
-                'editor.setMathML(\''.$value.'\');';
+            $script = 'const container = document.getElementById(\'wrs_content_container[0]\');' .
+                'const editor = window.com.wiris.jsEditor.JsEditor.getInstance(container);' .
+                'editor.setMathML(\'' . $value . '\');';
             $session->executeScript($script);
         }
     }
@@ -80,7 +96,7 @@ class behat_wiris_editor extends behat_wiris_base {
     public function i_press_accept_button_in_mathtype_editor() {
         $exception = new ExpectationException('Accept button not found.', $this->getSession());
         $this->spin(
-            function($context) {
+            function ($context) {
                 $toolbar = $context->getSession()->getPage()->find('xpath', '//div[@id=\'wrs_modal_dialogContainer[0]\' and
                 @class=\'wrs_modal_dialogContainer wrs_modal_desktop wrs_stack\']//div[@class=\'wrs_panelContainer\']');
                 $container = $context->getSession()->getPage()->find('xpath', '//div[@id=\'wrs_modal_dialogContainer[0]\' and
@@ -88,7 +104,7 @@ class behat_wiris_editor extends behat_wiris_base {
                 $button = $context->getSession()->getPage()->find('xpath', '//button[@id=\'wrs_modal_button_accept[0]\']');
                 return !empty($toolbar) && !empty($container);
             },
-            array(),
+            [],
             self::get_extended_timeout(),
             $exception,
             true
@@ -107,7 +123,7 @@ class behat_wiris_editor extends behat_wiris_base {
     public function i_press_cancel_button_in_mathtype_editor() {
         $exception = new ExpectationException('Cancel button not found.', $this->getSession());
         $this->spin(
-            function($context) {
+            function ($context) {
                 $toolbar = $context->getSession()->getPage()->find('xpath', '//div[@id=\'wrs_modal_dialogContainer[0]\' and
                 @class=\'wrs_modal_dialogContainer wrs_modal_desktop wrs_stack\']//div[@class=\'wrs_panelContainer\']');
                 $container = $context->getSession()->getPage()->find('xpath', '//div[@id=\'wrs_modal_dialogContainer[0]\' and
@@ -115,13 +131,36 @@ class behat_wiris_editor extends behat_wiris_base {
                 $button = $context->getSession()->getPage()->find('xpath', '//button[@id=\'wrs_modal_button_accept[0]\']');
                 return !empty($toolbar) && !empty($container);
             },
-            array(),
+            [],
             self::get_extended_timeout(),
             $exception,
             true
         );
         $session = $this->getSession();
         $component = $session->getPage()->find('xpath', '//button[@id=\'wrs_modal_button_accept[0]\']');
+        $component->click();
+    }
+
+    /**
+     * Press on minimize button in MathType Editor
+     *
+     * @Given I press minimize button in MathType Editor
+     * @throws ExpectationException If minimize button is not found, it will throw an exception.
+     */
+    public function i_press_minimize_button_in_mathtype_editor() {
+        $exception = new ExpectationException('Minimize button not found.', $this->getSession());
+        $this->spin(
+            function ($context) {
+                $button = $context->getSession()->getPage()->find('xpath', '//a[@id=\'wrs_modal_minimize_button[0]\']');
+                return !empty($button);
+            },
+            [],
+            self::get_extended_timeout(),
+            $exception,
+            true
+        );
+        $session = $this->getSession();
+        $component = $session->getPage()->find('xpath', '//a[@id=\'wrs_modal_minimize_button[0]\']');
         $component->click();
     }
 
@@ -140,4 +179,140 @@ class behat_wiris_editor extends behat_wiris_base {
         $component->click();
     }
 
+    /**
+     * Check if Mathtype button is in full-screen mode
+     *
+     * @Then I check editor is in full-screen mode
+     * @throws ExpectationException If the full screen button is not found, it will throw an exception.
+     */
+    public function i_check_editor_is_in_full_screen_mode() {
+        $session = $this->getSession();
+        $component = $session->getPage()->find('xpath', '//a[@title=\'Exit full-screen\']');
+        if (empty($component)) {
+            throw new ExpectationException('Exit full-screen button not found.', $this->getSession());
+        }
+        $component->click();
+    }
+
+    /**
+     * Click on MathType right to left screen button
+     *
+     * @Given I click on MathType right to left button
+     * @throws ExpectationException If the full screen button is not found, it will throw an exception.
+     */
+    public function i_click_on_mathtype_right_to_left_button() {
+        $session = $this->getSession();
+        $component = $session->getPage()->find('xpath', '//button[@title=\'Right to left editing\']');
+        if (empty($component)) {
+            throw new ExpectationException('Right to Left button not found.', $this->getSession());
+        }
+        $component->click();
+    }
+
+    /**
+     * Follows the page redirection. Use this step after clicking the editor's maximize button
+     *
+     * @Then full screen modal window is opened
+     * @param  string $seconds time to wait
+     */
+    public function full_screen_modal_window_is_opened() {
+        $session = $this->getSession();
+        $component = $session->getPage()->find('xpath', '//div[contains(@class, "wrs_modal_overlay wrs_modal_desktop wrs_maximized")]');
+        if (empty($component) || !$component->isVisible()) {
+            throw new ExpectationException("Full-screen modal window is opened.", $this->getSession());
+        }
+    }
+
+    /**
+     * Look whether MathType editor exist
+     *
+     * @Then MathType editor should exist
+     * @throws ExpectationException If MathType editor not found, it will throw an exception.
+     */
+    public function mathtype_editor_should_exist() {
+        $session = $this->getSession();
+        $formula = $session->getPage()->find('xpath', '//div[contains(@id, \'wrs_modal_wrapper\')]');
+        if (empty($formula)) {
+            throw new ExpectationException('MathType editor not found.', $this->getSession());
+        }
+    }
+
+    /**
+     * Waits the excution until the MathType editor displays
+     *
+     * @Then i wait until MathType editor is displayed
+     */
+    public function i_wait_until_mathtype_editor_is_displayed() {
+        // Looks for a math formula in the page.
+        $formula = '//div[contains(@id, \'wrs_modal_wrapper\')]';
+        $this->ensure_element_exists($formula, 'xpath_element');
+        // Then re-validate to throw error otherwise (?).
+        $this->mathtype_editor_should_exist();
+    }
+
+    /**
+     * Waits the excution until the MathType editor displays
+     *
+     * @Then text should exist
+     */
+    public function text_should_exist() {
+        $session = $this->getSession();
+        $text = $session->getPage()->find('xpath', '//div[@id="id_introeditoreditable"]/text()');
+        if (empty($text)) {
+            throw new ExpectationException('MathType editor not found.', $this->getSession());
+        }
+    }
+    /**
+     * Enters the div inside the specified editor
+     * @Given I switch to div with locator :locator
+     * @param String $locator
+     */
+    public function iswitchtodivwithlocator($locator) {
+
+        $javascript = "(function(){
+        var divs = document.getElementsByTagName('div');
+        for (var i = 0; i < divs.length; i++) {
+            divs[i].name = 'div_number_' + (i + 1) ;
+        }
+        })()";
+
+        $this->getSession()->executeScript($javascript);
+        $div = $this->getSession()->getPage()->find('xpath', '//div[@id="'.$locator.'"]');
+        if (empty($div)) {
+            throw new ExpectationException('div with locator \''.$locator.'\' not found', $this->getSession());
+        }
+        $divname = $div->getAttribute("name");
+        $this->getSession()->getDriver()->switchToDiv($divname);
+    }
+    /**
+     * Enters the inframe inside the specified tinymce editor
+     * @Given I switch to iframe with locator :locator
+     * @param String $locator
+     */
+    public function iswitchtoiframewithlocator($locator) {
+
+        $javascript = "(function(){
+        var iframes = document.getElementsByTagName('iframe');
+        for (var i = 0; i < iframes.length; i++) {
+            iframes[i].name = 'iframe_number_' + (i + 1) ;
+        }
+        })()";
+
+        $this->getSession()->executeScript($javascript);
+        $iframe = $this->getSession()->getPage()->find('xpath', '//iframe[@id="'.$locator.'"]');
+        if (empty($iframe)) {
+            throw new ExpectationException('Iframe with locator \''.$locator.'\' not found', $this->getSession());
+        }
+        $iframename = $iframe->getAttribute("name");
+        $this->getSession()->getDriver()->switchToIFrame($iframename);
+    }
+
+    /**
+     * Exits the current iframe and return to the default frame
+     * @Given I return to default frame
+     * @param String $locator
+     */
+    public function i_return_to_default_frame() {
+        $this->getSession()->getDriver()->switchToIFrame(null);
+    }
 }

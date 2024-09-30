@@ -848,11 +848,12 @@ class com_wiris_quizzes_impl_QuestionInstanceImpl extends com_wiris_util_xml_Ser
 		$j = null;
 		$correct = true;
 		{
-			$_g1 = 0; $_g = $checks->length;
-			while($_g1 < $_g) {
-				$j1 = $_g1++;
-				$correct = $correct && _hx_array_get($checks, $j1)->value === 1.0;
-				unset($j1);
+			$_g = 0;
+			while($_g < $checks->length) {
+				$check = $checks[$_g];
+				++$_g;
+				$correct = $correct && $check->value > 0.999999;
+				unset($check);
 			}
 		}
 		return $correct;
@@ -1160,7 +1161,17 @@ class com_wiris_quizzes_impl_QuestionInstanceImpl extends com_wiris_util_xml_Ser
 				$strs = _hx_explode("_", $c->getCorrectAnswer());
 				$correctAnswer = $strs[0];
 				$elemCount = _hx_substr($strs[1], 2, null);
-				$elemId = $strs[2];
+				$elemIdParts = new _hx_array(array());
+				{
+					$_g2 = 2; $_g1 = $strs->length;
+					while($_g2 < $_g1) {
+						$i = $_g2++;
+						$elemIdParts->push($strs[$i]);
+						unset($i);
+					}
+					unset($_g2,$_g1);
+				}
+				$elemId = $elemIdParts->join("_");
 				$answer = $c->getAnswer();
 				if(!$assertionsInfo->exists($c->assertion . "_" . $correctAnswer . "_" . $answer)) {
 					$assertionsInfo->set($c->assertion . "_" . $correctAnswer . "_" . $answer, new _hx_array(array()));
@@ -1172,7 +1183,7 @@ class com_wiris_quizzes_impl_QuestionInstanceImpl extends com_wiris_util_xml_Ser
 				$piece->set("correctAnswer", $correctAnswer);
 				$piece->set("answer", $answer);
 				$assertionsInfo->get($c->assertion . "_" . $correctAnswer . "_" . $answer)->push($piece);
-				unset($strs,$piece,$elemId,$elemCount,$correctAnswer,$c,$answer);
+				unset($strs,$piece,$elemIdParts,$elemId,$elemCount,$correctAnswer,$c,$answer);
 			}
 		}
 		$it = $assertionsInfo->keys();

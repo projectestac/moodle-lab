@@ -3,6 +3,7 @@
 - Added `mod/kialo`
 - Updated `mod/attendance`
 - Updated `mod/board`
+- Updated `mod/geogebra`
 
 ### 4.1.10+ (Build: 20240503)
 - Added `mod/exescorm`

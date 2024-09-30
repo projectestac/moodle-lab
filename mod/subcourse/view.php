@@ -51,7 +51,7 @@ if (empty($subcourse->refcourse)) {
     $refcourse = $DB->get_record('course', ['id' => $subcourse->refcourse], '*', IGNORE_MISSING);
 }
 
-if ($fetchnow and $refcourse) {
+if ($fetchnow && $refcourse) {
     require_sesskey();
     require_capability('mod/subcourse:fetchgrades', $context);
 
@@ -80,16 +80,13 @@ if ($fetchnow and $refcourse) {
 
 subcourse_set_module_viewed($subcourse, $context, $course, $cm);
 
-if ($refcourse and !empty($subcourse->instantredirect)) {
+if ($refcourse && !empty($subcourse->instantredirect)) {
     if (!has_capability('mod/subcourse:fetchgrades', $context)) {
         redirect(new moodle_url('/course/view.php', ['id' => $refcourse->id]));
     }
 }
 
 echo $OUTPUT->header();
-
-echo $OUTPUT->heading(format_string($subcourse->name));
-echo $OUTPUT->box(format_module_intro('subcourse', $subcourse, $cm->id));
 
 if ($refcourse) {
     $percentage = \core_completion\progress::get_course_progress_percentage($refcourse);
@@ -98,7 +95,7 @@ if ($refcourse) {
     echo $OUTPUT->render_from_template('mod_subcourse/subcourseinfo', [
         'haspercentage' => ($percentage !== null),
         'hasstrgrade' => ($strgrade !== null),
-        'percentage' => floor($percentage),
+        'percentage' => floor((float)$percentage),
         'strgrade' => $strgrade,
     ]);
 

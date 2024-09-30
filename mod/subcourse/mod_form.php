@@ -95,7 +95,7 @@ class mod_subcourse_mod_form extends moodleform_mod {
             }
         }
 
-        if (!empty($currentrefcourseid) and !$currentrefcourseavailable) {
+        if (!empty($currentrefcourseid) && !$currentrefcourseavailable) {
             // Currently referring to a course that is not available for us.
             // E.g. the admin has set up this Subcourse for the teacher or the teacher lost his role in the referred course etc.
             // Give them a chance to just keep such a reference.
@@ -121,10 +121,13 @@ class mod_subcourse_mod_form extends moodleform_mod {
 
             foreach ($mycourses as $mycourse) {
                 $courselabel = $catlist[$mycourse->category] . ' / ' . $mycourse->fullname.' ('.$mycourse->shortname.')';
-                $options[$mycourse->id] = $courselabel;
                 if (empty($mycourse->visible)) {
-                    $hiddenlabel = ' '.get_string('hiddencourse', 'subcourse');
-                    $options[$mycourse->id] .= $hiddenlabel;
+                    if ($config->displayhiddencourses || $mycourse->id == $currentrefcourseid) {
+                        $hiddenlabel = ' '.get_string('hiddencourse', 'subcourse');
+                        $options[$mycourse->id] = $courselabel.$hiddenlabel;
+                    }
+                } else {
+                    $options[$mycourse->id] = $courselabel;
                 }
             }
 

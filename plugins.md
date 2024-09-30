@@ -55,7 +55,7 @@
 |course format    |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12|
 |mod              |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|
 |course format    |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2023101700|2023/12/12|
-|mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2023070702|2023/12/12|
+|mod              |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2024012207|2024/09/30|
 |course format    |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2023030500|2023/12/12|
 |filter           |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|
 |mod              |board               |https://github.com/brickfield/moodle-mod_board                  |2022040112|2024/09/29|

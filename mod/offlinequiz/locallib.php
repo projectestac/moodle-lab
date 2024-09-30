@@ -59,7 +59,8 @@ define("OFFLINEQUIZ_PART_USER_ERROR", "23");
 define("OFFLINEQUIZ_PART_LIST_ERROR", "24");
 define("OFFLINEQUIZ_IMPORT_NUMUSERS", "50");
 
-define('OFFLINEQUIZ_USER_FORMULA_REGEXP', "/^([^\[]*)\[([\-]?[0-9]+)\]([^\=]*)=([a-z]+)$/");
+// Added support for a digit after the field name so "phone2" is supported.
+define('OFFLINEQUIZ_USER_FORMULA_REGEXP', "/^([^\[]*)\[([\-]?[0-9]+)\]([^\=]*)=([a-z]+[0-9]?)$/");
 
 define('OFFLINEQUIZ_GROUP_LETTERS', "ABCDEFGHIJKL");  // Letters for naming offlinequiz groups.
 
@@ -150,7 +151,7 @@ function offlinequiz_print_tabs($offlinequiz, $currenttab, $cm) {
     $options = [];
     foreach ($tabs as $tabname => $tabobject) {
         if ($tabobject['tab'] == $ct['tab']) {
-            $options[$tabobject['url']->out()] = get_string($tabname, 'offlinequiz');
+            $options[$tabobject['url']->out()] = isset($tabobject['title'])?$tabobject['title'] : get_string($tabname, 'offlinequiz');
         }
     }
     $selectobject = new \url_select($options);
@@ -217,7 +218,24 @@ function offlinequiz_get_tabs_object($offlinequiz, $cm) {
           'url' => new moodle_url('/mod/offlinequiz/participants.php',
                      ['q' => $offlinequiz->id, 'mode' => 'attendances'])],
      ];
-     return $tabs;
+    // Add tabs from subplugins.
+    $pluginmanager = core_plugin_manager::instance();
+    $subplugins = $pluginmanager->get_subplugins_of_plugin('mod_offlinequiz');
+    foreach ($subplugins as $subplugin) {
+        // Instantiate the subplugin.
+        $file = $subplugin->rootdir . '/report.php';
+        if (is_readable($file)) {
+            require_once($CFG->dirroot . '/mod/offlinequiz/report/default.php');
+            require_once($file);
+            $class = "offlinequiz_{$subplugin->name}_report";
+            $plugin = new $class();
+            if (method_exists($plugin, 'add_to_tabs')) {
+                $tabs = $plugin->add_to_tabs($tabs, $cm, $offlinequiz);
+            }
+        }
+    }
+    
+    return $tabs;
 }
 
 function offlinequiz_make_questions_usage_by_activity($component, $context) {
@@ -805,7 +823,7 @@ function offlinequiz_delete_result($resultid, $context) {
  * @param int $questionid  The id of the question
  * @param int grade    The maximal grade for the question
  */
-function offlinequiz_update_question_instance($offlinequiz, $questionid, $grade, $newquestionid = null) {
+function offlinequiz_update_question_instance($offlinequiz, $contextid, $questionid, $grade, $newquestionid = null) {
     global $DB;
     $transaction = $DB->start_delegated_transaction();
     $DB->set_field('offlinequiz_group_questions', 'maxmark', $grade,
@@ -813,14 +831,15 @@ function offlinequiz_update_question_instance($offlinequiz, $questionid, $grade,
     if ($newquestionid) {
         $newquestionversion = $DB->get_field('question_versions', 'version', ['questionid' => $newquestionid]);
 
-        $referenceids = $DB->get_records('offlinequiz_group_questions', ['questionid' => $questionid, 'offlinequizid' => $offlinequiz->id], 'id');
+        $groupquestions = $DB->get_records('offlinequiz_group_questions', ['questionid' => $questionid, 'offlinequizid' => $offlinequiz->id], 'id');
         $DB->set_field('offlinequiz_group_questions', 'questionid', $newquestionid,
             ['offlinequizid' => $offlinequiz->id, 'questionid' => $questionid]);
-        if ($referenceids && $newquestionversion) {
-            foreach ($referenceids as $referenceid) {
-                $DB->set_field('question_references', 'version', $newquestionversion, ['itemid' => $referenceid->id]);
-                if(!$referenceid->documentquestionid && $offlinequiz->docscreated) {
-                    $DB->set_field('offlinequiz_group_questions', 'documentquestionid', $questionid,['questionid' => $referenceid->questionid, 'offlinequizid' => $offlinequiz->id]);
+        if ($groupquestions && $newquestionversion) {
+            foreach ($groupquestions as $groupquestion) {
+                $DB->set_field('question_references', 'version', $newquestionversion, ['itemid' => $groupquestion->id, 'component' => 'mod_offlinequiz', 'usingcontextid' => $contextid]);
+                if (!$groupquestion->documentquestionid && $offlinequiz->docscreated) {
+                    $DB->set_field('offlinequiz_group_questions', 'documentquestionid', $questionid,
+                        ['questionid' => $groupquestion->questionid, 'offlinequizid' => $offlinequiz->id]);
                 }
             }
         }
@@ -842,13 +861,12 @@ function offlinequiz_update_question_instance($offlinequiz, $questionid, $grade,
         foreach ($results as $result) {
             if ($result->usageid > 0) {
                 $templateusage = question_engine::load_questions_usage_by_activity($result->usageid);
-                offlinequiz_update_quba($templateusage, $questionid, $newquestionid, $grade);
-                // Now set the new sumgrades also in the offline quiz result.
-                $DB->set_field('offlinequiz_results', 'sumgrades',  $templateusage->get_total_mark(),
-                    array('id' => $result->id));
+                $templateusage = offlinequiz_update_quba($templateusage, $questionid, $newquestionid, $grade);
             }
         }
     }
+    $DB->delete_records('offlinequiz_statistics', ['offlinequizid' => $offlinequiz->id]);
+    offlinequiz_update_grades($offlinequiz);
     $DB->commit_delegated_transaction($transaction);
 }
 

@@ -5,6 +5,7 @@
 - Updated `mod/board`
 - Updated `mod/geogebra`
 - Updated `mod/hotpot`
+- Updated `mod/offlinequiz`
 
 ### 4.1.10+ (Build: 20240503)
 - Added `mod/exescorm`

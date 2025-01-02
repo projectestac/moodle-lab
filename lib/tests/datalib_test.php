@@ -24,7 +24,7 @@ namespace core;
  * @copyright 2012 The Open University
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class datalib_test extends \advanced_testcase {
+final class datalib_test extends \advanced_testcase {
     protected function normalise_sql($sort) {
         return preg_replace('~\s+~', ' ', $sort);
     }
@@ -900,7 +900,7 @@ class datalib_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_safe_orderby_provider(): array {
+    public static function get_safe_orderby_provider(): array {
         $orderbymap = [
             'courseid' => 'c.id',
             'somecustomvalue' => 'c.startdate, c.shortname',
@@ -988,7 +988,7 @@ class datalib_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_safe_orderby_multiple_provider(): array {
+    public static function get_safe_orderby_multiple_provider(): array {
         $orderbymap = [
             'courseid' => 'c.id',
             'firstname' => 'u.firstname',

@@ -43,7 +43,7 @@ require_once($CFG->dirroot . '/grade/lib.php');
  * @copyright 2016 Jun Pataleta <jun@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lib_test extends \advanced_testcase {
+final class lib_test extends \advanced_testcase {
 
     /**
      * Test can_output_item.
@@ -527,7 +527,7 @@ class lib_test extends \advanced_testcase {
 
     /**
      * Tests for calculate_average.
-     * @dataProvider calculate_average_data()
+     * @dataProvider calculate_average_data
      * @param int $meanselection Whether to inlcude all grades or non-empty grades in aggregation.
      * @param array $expectedmeancount expected meancount value
      * @param array $expectedaverage expceted average value
@@ -619,7 +619,7 @@ class lib_test extends \advanced_testcase {
      *
      * @return array of testing scenarios
      */
-    public function calculate_average_data() : array {
+    public static function calculate_average_data(): array {
         return [
             'Non-empty grades' => [
                 'meanselection' => 1,

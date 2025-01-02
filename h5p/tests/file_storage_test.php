@@ -34,7 +34,7 @@ use zip_archive;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @runTestsInSeparateProcesses
  */
-class file_storage_test extends \advanced_testcase {
+final class file_storage_test extends \advanced_testcase {
 
     /** @var \core_h5p\file_storage H5P file storage instance */
     protected $h5p_file_storage;
@@ -598,7 +598,7 @@ class file_storage_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_icon_url_provider(): array {
+    public static function get_icon_url_provider(): array {
         return [
             'Icon included' => [
                 'filltheblanks.h5p',

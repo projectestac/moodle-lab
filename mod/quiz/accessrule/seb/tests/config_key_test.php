@@ -24,7 +24,7 @@ namespace quizaccess_seb;
  * @copyright 2020 Catalyst IT
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class config_key_test extends \advanced_testcase {
+final class config_key_test extends \advanced_testcase {
 
     /**
      * Test that trying to generate the hash key with bad xml will result in an error.
@@ -59,7 +59,7 @@ class config_key_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function real_ck_hash_provider() : array {
+    public static function real_ck_hash_provider(): array {
         return [
             'unencrypted_mac2.1.4' => ['unencrypted_mac_001.seb',
                     '4fa9af8ec8759eb7c680752ef4ee5eaf1a860628608fccae2715d519849f9292', ''],

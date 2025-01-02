@@ -29,14 +29,14 @@ require_once("$CFG->libdir/graphlib.php");
  * @copyright  2023 Meirza (meirza.arson@moodle.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class graphlib_test extends \basic_testcase {
+final class graphlib_test extends \basic_testcase {
 
     /**
      * Data provider for test_graphlib.
      *
      * @return array
      */
-    public function create_data(): array {
+    public static function create_data(): array {
         return [
             'data' =>
             [

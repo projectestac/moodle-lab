@@ -28,7 +28,7 @@ use advanced_testcase;
  * @copyright   2021 Paul Holden <paulh@moodle.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class user_test extends advanced_testcase {
+final class user_test extends advanced_testcase {
 
     /**
      * Test getting user identity column
@@ -71,7 +71,7 @@ class user_test extends advanced_testcase {
      *
      * @return array
      */
-    public function get_name_fields_select_provider(): array {
+    public static function get_name_fields_select_provider(): array {
         return [
             ['firstname lastname', ['firstname', 'lastname']],
             ['firstname middlename lastname', ['firstname', 'middlename', 'lastname']],

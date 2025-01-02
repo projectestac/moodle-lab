@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
  * @copyright 2010 The Open University
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class giftformat_test extends \question_testcase {
+final class giftformat_test extends \question_testcase {
     public function assert_same_gift($expectedtext, $text) {
         $this->assertEquals(str_replace("\r\n", "\n", $expectedtext),
                 str_replace("\r\n", "\n", $text));
@@ -366,7 +366,7 @@ class giftformat_test extends \question_testcase {
      *
      * @return array Array of 1-element arrays of qtype_multichoice numbering styles
      */
-    public function numberingstyle_provider() {
+    public static function numberingstyle_provider(): array {
         return [
             ['abc'],
             ['ABCD'],
@@ -1330,7 +1330,7 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
      *
      * @return array the test cases.
      */
-    public function extract_idnumber_and_tags_from_comment_testcases() {
+    public static function extract_idnumber_and_tags_from_comment_testcases(): array {
         return [
             'blank comment' => ['', [], ''],
             'nothing in comment' => ['', [], '// A basic comment.'],

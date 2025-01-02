@@ -40,7 +40,7 @@ require_once($CFG->dirroot.'/mod/lesson/locallib.php');
  * @copyright  2016 Adrian Greeve <adrian@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class locallib_test extends \advanced_testcase {
+final class locallib_test extends \advanced_testcase {
 
     /**
      * Test duplicating a lesson page element.
@@ -260,7 +260,7 @@ class locallib_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_last_attempt_dataprovider() {
+    public static function get_last_attempt_dataprovider(): array {
         return [
             [0, [(object)['id' => 1], (object)['id' => 2], (object)['id' => 3]], (object)['id' => 3]],
             [1, [(object)['id' => 1], (object)['id' => 2], (object)['id' => 3]], (object)['id' => 1]],

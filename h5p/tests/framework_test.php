@@ -33,7 +33,7 @@ use Moodle\H5PDisplayOptionBehaviour;
  * @covers     \core_h5p\framework
  * @runTestsInSeparateProcesses
  */
-class framework_test extends \advanced_testcase {
+final class framework_test extends \advanced_testcase {
 
     /** @var \core_h5p\framework */
     private $framework;
@@ -655,7 +655,7 @@ class framework_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function isPatchedLibrary_provider(): array {
+    public static function isPatchedLibrary_provider(): array {
         return [
             'Unpatched library. No different versioning' => [
                 [
@@ -1483,7 +1483,7 @@ class framework_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function loadLibrarySemantics_provider(): array {
+    public static function loadLibrarySemantics_provider(): array {
 
         $semantics = json_encode(
             [
@@ -2274,7 +2274,7 @@ class framework_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function libraryHasUpgrade_provider(): array {
+    public static function libraryHasUpgrade_provider(): array {
         return [
             'Lower major version; Identical lower version' => [
                 [

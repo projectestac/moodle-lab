@@ -28,7 +28,7 @@ require_once(__DIR__ . '/test_helper_trait.php');
  * @copyright 2020 Catalyst IT
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class settings_provider_test extends \advanced_testcase {
+final class settings_provider_test extends \advanced_testcase {
     use \quizaccess_seb_test_helper_trait;
 
     /**
@@ -93,7 +93,7 @@ class settings_provider_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function settings_capability_data_provider() {
+    public static function settings_capability_data_provider(): array {
         $data = [];
 
         // Build first level SEB config settings. Any of this setting let us use SEB manual config.

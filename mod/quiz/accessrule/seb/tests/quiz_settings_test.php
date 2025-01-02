@@ -28,7 +28,7 @@ require_once(__DIR__ . '/test_helper_trait.php');
  * @copyright 2020 Catalyst IT
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class quiz_settings_test extends \advanced_testcase {
+final class quiz_settings_test extends \advanced_testcase {
     use \quizaccess_seb_test_helper_trait;
 
     /** @var context_module $context Test context. */
@@ -528,7 +528,7 @@ class quiz_settings_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function bad_browser_exam_key_provider() : array {
+    public static function bad_browser_exam_key_provider(): array {
         return [
             'Short string' => ['fdsf434r',
                     'A key should be a 64-character hex string.'],
@@ -544,7 +544,7 @@ class quiz_settings_test extends \advanced_testcase {
      *
      * @return array Test data.
      */
-    public function filter_rules_provider() : array {
+    public static function filter_rules_provider(): array {
         return [
             'enabled simple expessions' => [
                 (object) [

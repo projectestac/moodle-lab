@@ -38,13 +38,13 @@ require_once($CFG->dirroot . '/filter/tex/lib.php');
  * @copyright 2021 Shamim Rezaie <shamim@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lib_test extends advanced_testcase {
+final class lib_test extends advanced_testcase {
     /**
      * Data provider for test_filter_tex_sanitize_formula.
      *
      * @return array
      */
-    public function filter_tex_sanitize_formula_provider() : array {
+    public static function filter_tex_sanitize_formula_provider(): array {
         return [
             ['x\ =\ \frac{\sqrt{144}}{2}\ \times\ (y\ +\ 12)', 'x\ =\ \frac{\sqrt{144}}{2}\ \times\ (y\ +\ 12)'],
             ['\usepackage[latin1]{inputenc}', '\usepackage[latin1]{inputenc}'],

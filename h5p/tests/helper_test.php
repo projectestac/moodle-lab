@@ -29,7 +29,7 @@ use core_h5p\local\library\autoloader;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers     \core_h5p\helper
  */
-class helper_test extends \advanced_testcase {
+final class helper_test extends \advanced_testcase {
 
     /**
      * Register the H5P autoloader
@@ -77,7 +77,7 @@ class helper_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function display_options_provider(): array {
+    public static function display_options_provider(): array {
         return [
             'All display options disabled' => [
                 false,
@@ -449,7 +449,7 @@ class helper_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function parse_js_array_provider(): array {
+    public static function parse_js_array_provider(): array {
         $lines = [
             "{",
             "  missingTranslation: '[Missing translation :key]',",

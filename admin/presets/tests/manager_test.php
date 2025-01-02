@@ -27,7 +27,7 @@ use stdClass;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @coversDefaultClass \core_adminpresets\manager
  */
-class manager_test extends \advanced_testcase {
+final class manager_test extends \advanced_testcase {
     /**
      * Test the behaviour of protected get_site_settings method.
      *
@@ -358,7 +358,7 @@ class manager_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function export_preset_provider(): array {
+    public static function export_preset_provider(): array {
         return [
             'Export settings and plugins, excluding sensible' => [
                 'includesensible' => false,
@@ -521,7 +521,7 @@ class manager_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function import_preset_provider(): array {
+    public static function import_preset_provider(): array {
         return [
             'Import settings from an empty file' => [
                 'filecontents' => '',

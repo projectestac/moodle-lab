@@ -28,8 +28,7 @@ require_once($CFG->libdir . '/formslib.php');
  * @copyright  2016 Andrew Nicols <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tour_test extends \advanced_testcase {
-
+final class tour_test extends \advanced_testcase {
     /**
      * @var moodle_database
      */
@@ -73,7 +72,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function dirty_value_provider() {
+    public static function dirty_value_provider(): array {
         return [
                 'name' => [
                         'name',
@@ -126,7 +125,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function getter_provider() {
+    public static function getter_provider(): array {
         return [
                 'id' => [
                         'id',
@@ -430,7 +429,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_config_provider() {
+    public static function get_config_provider(): array {
         $allvalues = (object) [
                 'some' => 'value',
                 'another' => 42,
@@ -624,7 +623,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function should_show_for_user_provider() {
+    public static function should_show_for_user_provider(): array {
         $time = time();
         return [
                 'Not seen by user at all' => [
@@ -715,7 +714,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_tour_key_provider() {
+    public static function get_tour_key_provider(): array {
         $id = rand(1, 100);
         $time = time();
 
@@ -723,7 +722,7 @@ class tour_test extends \advanced_testcase {
             'No initial values' => [
                     $id,
                     [null, $time],
-                    $this->greaterThanOrEqual($time),
+                    self::greaterThanOrEqual($time),
                     true,
                     null,
                     sprintf('tool_usertours_\d_%d_%s', $id, $time),
@@ -879,7 +878,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function sortorder_first_last_provider() {
+    public static function sortorder_first_last_provider(): array {
         $topcount = rand(10, 100);
         return [
                 'Only tour => first + last' => [
@@ -987,7 +986,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_filter_values_provider() {
+    public static function get_filter_values_provider(): array {
         $cheese = ['cheddar', 'boursin', 'mozzarella'];
         $horses = ['coolie', 'dakota', 'leo', 'twiggy'];
         return [
@@ -1046,7 +1045,7 @@ class tour_test extends \advanced_testcase {
      *
      * @return  array
      */
-    public function set_filter_values_provider() {
+    public static function set_filter_values_provider(): array {
         $cheese = ['cheddar', 'boursin', 'mozzarella'];
         $horses = ['coolie', 'dakota', 'leo', 'twiggy'];
 

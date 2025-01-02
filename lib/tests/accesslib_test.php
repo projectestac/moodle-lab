@@ -30,7 +30,18 @@ defined('MOODLE_INTERNAL') || die();
  *
  * Note: execution may take many minutes especially on slower servers.
  */
-class accesslib_test extends advanced_testcase {
+final class accesslib_test extends advanced_testcase {
+
+    /**
+     * Setup.
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->resetAfterTest();
+        // Turn off the course welcome message, so we can easily test other messages.
+        set_config('sendcoursewelcomemessage', 0, 'enrol_manual');
+    }
+
     /**
      * Verify comparison of context instances in phpunit asserts.
      */
@@ -2077,7 +2088,7 @@ class accesslib_test extends advanced_testcase {
      *
      * @return array
      */
-    public function deprecated_capabilities_use_cases() {
+    public static function deprecated_capabilities_use_cases(): array {
         return [
             'capability missing' => [
                 'fake/access:missingcapability',
@@ -2895,7 +2906,7 @@ class accesslib_test extends advanced_testcase {
         get_enrolled_users($systemcontext, '', USERSWITHOUTGROUP);
     }
 
-    public function get_enrolled_sql_provider() {
+    public static function get_enrolled_sql_provider(): array {
         return array(
             array(
                 // Two users who are enrolled.
@@ -4348,7 +4359,7 @@ class accesslib_test extends advanced_testcase {
      *
      * @return array
      */
-    public function get_get_with_capability_join_override_cases() {
+    public static function get_get_with_capability_join_override_cases(): array {
         return [
                 'no overrides' => [true, []],
                 'one override' => [true, ['moodle/course:viewscales']],
@@ -4550,7 +4561,7 @@ class accesslib_test extends advanced_testcase {
      *
      * @return  array
      */
-    public function is_parent_of_provider(): array {
+    public static function is_parent_of_provider(): array {
         $provideboth = function(string $desc, string $contextpath, string $testpath, bool $expected): array {
             return [
                 "includeself: true; {$desc}" => [
@@ -4653,7 +4664,7 @@ class accesslib_test extends advanced_testcase {
      *
      * @return  array
      */
-    public function is_child_of_provider(): array {
+    public static function is_child_of_provider(): array {
         $provideboth = function(string $desc, string $contextpath, string $testpath, bool $expected): array {
             return [
                 "includeself: true; {$desc}" => [

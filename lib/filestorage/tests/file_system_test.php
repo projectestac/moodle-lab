@@ -35,7 +35,7 @@ require_once($CFG->libdir . '/filestorage/file_system.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @coversDefaultClass \file_system
  */
-class file_system_test extends \advanced_testcase {
+final class file_system_test extends \advanced_testcase {
 
     public function setUp(): void {
         get_file_storage(true);
@@ -1219,7 +1219,7 @@ class file_system_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function is_image_from_storedfile_provider() {
+    public static function is_image_from_storedfile_provider(): array {
         return array(
             'Standard image'            => array('image/png', true),
             'Made up document/image'    => array('document/image', false),
@@ -1231,7 +1231,7 @@ class file_system_test extends \advanced_testcase {
      *
      * @return array
      */
-    public function get_local_path_from_storedfile_provider() {
+    public static function get_local_path_from_storedfile_provider(): array {
         return [
             'default args (nofetch)' => [
                 'args' => [],

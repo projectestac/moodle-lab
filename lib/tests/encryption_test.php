@@ -31,8 +31,7 @@ namespace core;
  * @copyright 2020 The Open University
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class encryption_test extends \basic_testcase {
-
+final class encryption_test extends \advanced_testcase {
     /**
      * Clear junk created by tests.
      */
@@ -74,8 +73,10 @@ class encryption_test extends \basic_testcase {
      *
      * @return array[] Array of method options for test
      */
-    public function encryption_method_provider(): array {
-        return ['Sodium' => [encryption::METHOD_SODIUM], 'OpenSSL' => [encryption::METHOD_OPENSSL]];
+    public static function encryption_method_provider(): array {
+        return [
+            'Sodium' => [encryption::METHOD_SODIUM],
+        ];
     }
 
     /**

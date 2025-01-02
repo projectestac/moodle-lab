@@ -1,3 +1,6 @@
+### 4.1.15+ (Build: 20241219)
+- Updated Moodle core
+
 ### 4.1.13+ (Build: 20240927)
 - Updated Moodle core
 - Added `mod/kialo`

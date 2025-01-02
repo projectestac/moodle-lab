@@ -1,0 +1,176 @@
+### 4.4.5+ (Build: 20241219)
+- Updated to Moodle 4.4
+
+### 4.1.15+ (Build: 20241219)
+- Updated Moodle core
+
+### 4.1.13+ (Build: 20240927)
+- Updated Moodle core
+- Added `mod/kialo`
+- Updated `mod/attendance`
+- Updated `mod/board`
+- Updated `mod/geogebra`
+- Updated `mod/hotpot`
+- Updated `mod/offlinequiz`
+- Updated `mod/questionnaire`
+- Updated `mod/subcourse`
+- Updated `blocks/completion_progress`
+- Updated `question/type/formulas`
+- Updated `course/format/remuiformat`
+- Updated `course/format/tiles`
+- Updated `course/format/grid`
+- Updated Wiris plugins
+
+### 4.1.10+ (Build: 20240503)
+- Added `mod/exescorm`
+- Added `mod/exeweb`
+- The "commit" column in `plugins.md` has been removed. It was unused and difficult to maintain.
+
+### 4.1.7+ (Build: 20231215)
+- Updated Moodle core
+- Updated `local/oauth`
+- Updated `mod/jclic`
+- Updated `mod/geogebra`
+- Updated `mod/questionnaire`
+- Updated `local/rcommon`
+- Updated `mod/rcontent`
+- Updated `mod/rgrade`
+- Updated `local/alexandriaimporter`
+- Updated `theme/xtecboost`
+
+### 4.1.7 (Build: 20231211)
+- Updated Moodle core
+- Updated Wiris plugins
+- Updated `mod/choicegroup`
+- Updated `mod/journal`
+- Updated `mod/offlinequiz`
+- Updated `qtype/drawing`
+- Updated `qtype/formulas`
+- Updated `qtype/ordering`
+- Updated `atto/fontsize`
+- Updated `course/format/grid`
+- Updated `course/format/remuiformat`
+- Updated `course/format/tiles`
+- Updated `course/format/topcoll`
+- Updated `course/format/trail`
+
+### 4.1.4+ (Build: 20230804)
+- Updated Moodle core
+- Updated Wiris plugins
+
+### 4.1.4+ (Build: 20230707)
+- Updated Moodle core
+- Updated `mod/attendance`
+- Updated `mod/choicegroup`
+- Updated `mod/questionnaire`
+- Added theme `xtecboost`
+- Added `mod/board`
+- Updated `mod/offlinequiz`
+- Updated `assign/submission`
+- Updated `block/completion_progress` 
+- Updated `question/type/drawing`
+
+### 4.1.1+ (Build: 20230126)
+- Updated Moodle core
+- Updated `mod/attendance`
+- Updated `question/type/wq`
+- Updated `question/type/multianswerwiris`
+- Updated `qtype/drawing`
+- Updated `question/format/hotpot`
+- Updated `course/format/grid`
+
+### 4.1+ (Build: 20230105)
+- Updated Moodle core
+- Update `mod/choicegroup`
+- Update `question/type/formulas`
+- Update `lib/editor/atto/pligins/cloze`
+- Update `course/format/etask`
+- Add `course/format/trail`
+
+### 4.1+ (Build: 20221222)
+- Updated Moodle core
+- Updated `block/completion_progress`
+- Updated Wiris plugins
+
+### 4.1+ (Build: 20221209)
+- Updated to Moodle 4.1
+- Updated `mod/attendance`
+
+### 4.0.5+ (Build: 20221209)
+- Updated Moodle core
+
+### 4.0.4+ (Build: 20221018)
+- Updated Moodle core
+- Updated `mod/choicegroup`
+- Updated `mod/journal`
+- Updated `question/type/wq`
+- Updated `question/behavior/adaptivemultipart`
+- Added `filter/syntaxhighlighter`
+
+### 4.0.4+ (Build: 20221007) 
+- Updated Moodle core
+- Updated `mod/hotpot`
+- Updated `mod/assign/submission/snap`
+- Updated `mod/attendance`
+
+### 4.0.3+ (Build: 20220826)
+- Updated Moodle core
+- Updated `mod/attendance`
+- Added `mod/assign/submission/snap`
+- Updated `mod/geogebra`
+
+### 4.0.2+ (Build: 20220805)
+- Updated Moodle core
+- Updated `mod/attendance`
+- Updated `question/type/essaywiris/`
+- Updated `question/type/matchwiris`
+- Updated `question/type/multianswerwiris`
+- Updated `question/type/multichoicewiris`
+- Updated `question/type/shortanswerwiris`
+- Updated `question/type/truefalsewiris`
+- Updated `question/type/wq`
+- Updated `atto/wiris`
+- Updated `format/etask`
+- Updated `mod/questionnaire`
+- Added `format/remuiformat`
+- Added `mod/offlinequiz`
+- Added `format/tiles`
+
+### 4.0.1+ (Build: 20220509)
+- Add mod/attendance
+
+### 4.0.1+ (Build: 20220512)
+- Updated to Moodle 4.0.1
+- Updated Moodle core
+- Updated 'completion progress' block to 2022042000
+- Updated 'etask' course format to 2022041901
+- Updated 'topcoll' course format to 2022041701
+
+### 4.0+ (Build: 20220429)
+- Initial checkout of Moodle 4.0.0
+- Add mod/JClic
+- Add mod/choicegroup
+- Add mod/geogebra
+- Add HotPotatoes plugins
+- Add mod/journal
+- Add mod/questionnaire
+- Add mod/qv
+- Add Marsupial components
+- Add block/completion_progress
+- Add Vicens Vives components
+- Add course format 'simple'
+- Add Atto plugin 'cloze editor' 
+- Add Atto font plugins
+- Add Alexandria importer
+- Add Oauth
+- Add 'ordering' question type
+- Add 'coursequotas' report type
+- Add Wiris plugins
+- Add 'grid' course format
+- Add 'subcourse'
+- Add 'adaptivemultipart' question behaviour
+- Add 'formulas' question type
+- Add 'drawing' question type
+- Add 'topcoll' course format
+- Add 'etask' course format
+

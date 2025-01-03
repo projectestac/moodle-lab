@@ -1,0 +1,63 @@
+<?php
+
+// Course quotas
+$string['pluginname'] = 'Ocupació del disc';
+$string['coursequotas'] = 'Ocupació del disc';
+$string['total_noquota_description'] = 'Ocupació del disc';
+$string['coursequotas:view'] = 'Veure el consum de quota dels cursos';
+$string['total_data'] = 'Total';
+$string['disk_used'] = 'Espai ocupat';
+$string['disk_used_other'] = 'Altres';
+$string['disk_used_course'] = 'Cursos';
+$string['disk_used_backup'] = 'Còpies de seguretat';
+$string['disk_used_temp'] = 'Fitxers temporals';
+$string['disk_used_trash'] = 'Paperera';
+$string['disk_used_repository'] = 'Repositori de fitxers';
+$string['disk_used_user'] = 'Fitxers d\'usuari';
+$string['disk_used_h5plib'] = 'Biblioteques H5P';
+$string['disk_free'] = 'Espai lliure';
+$string['category_data'] = 'Categories';
+$string['larger_courses'] = 'Cursos';
+$string['backups'] = 'Còpies de seguretat';
+$string['course_name'] = 'Nom del curs';
+$string['category_name'] = 'Nom de la categoria';
+$string['front_page'] = 'Pàgina inicial';
+$string['disk_consume_explain'] = 'Actualment s\'estan utilitzant <strong>{$a->consumed} MB</strong> dels <strong>{$a->space} MB</strong> disponibles, dels quals, aproximadament:';
+$string['disk_consume_repofiles'] = '<strong>{$a->number} {$a->unit}</strong> utilitzats en repositoris del sistema de fitxers';
+$string['disk_consume_courses'] = '<strong>{$a->number} {$a->unit}</strong> utilitzats als cursos (sense comptar les còpies de seguretat)';
+$string['disk_consume_backups'] = '<strong>{$a->number} {$a->unit}</strong> utilitzats a les còpies de seguretat, incloses les dels cursos i les dels usuaris';
+$string['disk_consume_user'] = '<strong>{$a->number} {$a->unit}</strong> utilitzats en fitxers d\'usuari';
+$string['disk_consume_h5plib'] = '<strong>{$a->number} {$a->unit}</strong> utilitzats en biblioteques de l\'H5P';
+$string['disk_consume_temp'] = '<strong>{$a->number} {$a->unit}</strong> utilitzats a la carpeta <em>temp</em> (fitxers temporals pendents de ser esborrats pel cron)';
+$string['disk_consume_trash'] = '<strong>{$a->number} {$a->unit}</strong> utilitzats a la carpeta <em>trashdir</em> (fitxers marcats com a esborrats i pendents de ser esborrats pel cron)';
+$string['total_description'] = 'Percentatge de disc ocupat en relació amb el total de la quota assignada';
+$string['category_description'] = 'Mida total de les categories i subcategories calculada a partir de la mida dels cursos que contenen';
+$string['courses_description'] = 'Llista de tots els cursos, ordenada de major a menor segons la mida dels seus fitxers';
+$string['manage_backup_files'] = 'Si voleu alliberar espai podeu esborrar les còpies de seguretat dels cursos des d\'<a href="{$a}">aquest apartat</a>';
+$string['quotas_updated'] = 'La informació d\'ús de la quota s\'ha actualitzat correctament';
+$string['lastest_update'] = 'Darrera actualització';
+$string['update_long_time'] = 'La informació mostrada pot no estar actualitzada. Podeu fer clic al botó següent per actualitzar-la. Si la vostra quota és molt gran és possible que doni error. En aquest cas, contacteu-nos al fòrum per demanar que us l\'actualitzin';
+$string['update_now'] = 'Actualitza ara';
+$string['disk_quota_missing'] = 'Hi ha {$a} MB que no estan localitzats';
+
+// File manager
+$string['filemanager'] = 'Gestor de fitxers';
+$string['manage'] = 'Gestiona els fitxers';
+$string['filearea'] = 'Àrea de fitxers';
+$string['component'] = 'Component';
+$string['owner'] = 'Propietari';
+$string['context'] = 'Context';
+$string['totalfilesize'] = 'Ocupació de tots els fitxers: {$a}';
+$string['realfilesize'] = 'Ús real de disc: {$a}';
+$string['nofilesfound'] = 'No s\'ha trobat cap fitxer';
+$string['showingfiles'] = 'Mostrant {$a->files} de {$a->total}';
+$string['addchildren'] = 'Afegeix els contextos fill';
+$string['allusers'] = 'Tots els usuaris';
+$string['allfileareas'] = 'Totes les àrees de fitxer';
+$string['allcomponents'] = 'Tots els components';
+$string['more_than'] = 'Més de';
+$string['less_than'] = 'Menys de';
+$string['showonlybackups'] = 'Mostra només els fitxers de còpia de seguretat';
+$string['hidesamehash'] = 'Amaga els fitxers amb el mateix <em>contenthash</em> (Mode expert)';
+$string['viewsimilarfiles'] = 'Mostra fitxers similars';
+$string['coursequotas:manage'] = 'Gestiona la quota';

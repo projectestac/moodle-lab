@@ -27,7 +27,6 @@ plugins=(
   "local/alexandriaimporter"
   "local/oauth"
   "local/clickedu"
-  "question/type/ordering"
   "report/coursequotas"
   "filter/wiris"
   "lib/editor/atto/plugins/wiris"

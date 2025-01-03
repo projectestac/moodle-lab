@@ -1,0 +1,117 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_etask/gradeitem_popover
+
+    This template renders the grade item popover.
+
+    Example context (json):
+    {
+        "itemname": "Understanding class definitions",
+        "timemodified": 1590760235,
+        "completed": 60,
+        "passed": 50,
+        "passedlabel": "Passed",
+        "duedate": 1590760235,
+        "gradepass": "80",
+        "grademax": "100",
+        "showprogressbars": false,
+        "itemmoduleicon": "<img src=\"...\" alt=\"...\">",
+        "settingsicon": "<img src=\"...\" alt=\"...\">",
+        "gradepassform": "<form><input /></form>",
+        "showsettings": true,
+        "editurl": "/course/mod.php?update=...",
+        "viewurl": "/course/mod.php?show=...",
+        "margintop": true
+    }
+}}
+
+<div class="block bg-white popover-container m-3 text-justify">
+    <div class="mb-3 text-black-50">
+        {{#str}}timemodified, format_etask, {{#userdate}} {{timemodified}}, {{#str}} strftimedaydate, core_langconfig {{/str}} {{/userdate}}{{/str}}
+    </div>
+
+    <div class="d-flex mt-3 align-items-start">
+        {{{itemmoduleicon}}}
+        <div class="d-flex flex-column w-100">
+            <a href="{{{viewurl}}}" class="text-decoration-none d-block">
+                <h6 class="d-inline font-weight-bold">{{itemname}}</h6>
+            </a>
+
+            <div {{#margintop}}class="mt-3"{{/margintop}}>
+                {{#duedate}}
+                    <div class="{{#gradepass}}mb-1{{/gradepass}}">
+                        <span class="text-black-50">{{#str}}duedate, assign{{/str}}</span> {{#userdate}} {{duedate}}, {{#str}} strftimedaydatetime, core_langconfig {{/str}} {{/userdate}}
+                    </div>
+                {{/duedate}}
+
+                {{#gradepass}}
+                    <div>
+                        <span class="text-black-50">{{#str}}gradepass, grades{{/str}}
+                            <span class="badge badge-pill badge-success">{{gradepass}}</span> / {{#str}}max, format_etask{{/str}} <span class="badge badge-pill badge-light">{{grademax}}</span>
+                        </span>
+                    </div>
+                {{/gradepass}}
+
+                {{#showprogressbars}}
+                    <div class="block-cards mt-3">
+                        <div class="progress-bar-completed pb-1">
+                            <div class="progress bg-white border">
+                                <div class="progress-bar bar bg-warning" role="progressbar" aria-valuenow="{{completed}}" style="width: {{completed}}%" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                            <div class="small">
+                                <div class="d-flex justify-content-between">
+                                    <div>{{#str}}gradeitemcompleted, format_etask{{/str}}</div>
+                                    <div>{{#str}}progresspercentage, format_etask, {{completed}} {{/str}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress-bar-passed">
+                            <div class="progress bg-white border">
+                                <div class="progress-bar bar bg-success" role="progressbar" aria-valuenow="{{passed}}" style="width: {{passed}}%" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                            <div class="small">
+                                <div class="d-flex justify-content-between">
+                                    <div>{{passedlabel}}</div>
+                                    <div>{{#str}}progresspercentage, format_etask, {{passed}} {{/str}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/showprogressbars}}
+            </div>
+        </div>
+    </div>
+
+    {{#showsettings}}
+        <div class="border-top mr-n3 ml-n3 mt-3 pt-3">
+            <div class="d-flex align-items-start pl-3 pr-3">
+                {{{settingsicon}}}
+                <div class="d-flex flex-column w-100">
+                    <h6 class="d-inline font-weight-bold">{{#str}}settings{{/str}}</h6>
+                    {{{gradepassform}}}
+                    <div class="position-relative">
+                        <a href="{{{editurl}}}" class="stretched-link">{{#str}}showmore, format_etask{{/str}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/showsettings}}
+</div>

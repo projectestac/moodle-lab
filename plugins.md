@@ -19,7 +19,7 @@
 |blocks                 |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2021072700|2025/01/03|! MANUAL |
 |local                  |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2021072700|2025/01/03|! MANUAL |
 |course/format          |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2021072700|2025/01/03|! MANUAL |
-|course/format          |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|         |
+|course/format          |simple              |https://github.com/projectestac/moodle-format_simple            |2023060100|2025/01/03|! MANUAL |
 |lib/editor/atto/plugins|cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072807|2025/01/03|✔️ MPD 4.4|
 |lib/editor/atto/plugins|fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2024110400|2025/01/03|✔️ MPD 4.4|
 |lib/editor/atto/plugins|fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2025/01/03|✔️ MPD 4.4|

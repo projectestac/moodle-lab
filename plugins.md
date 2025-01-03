@@ -1,29 +1,29 @@
 ## Plugins currently included in Àgora/Eix
 
-|Type                   |Name                |Source                                                          |Version   |Date      |
-|-----------------------|--------------------|----------------------------------------------------------------|----------|----------|
-|mod                    |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2024102800|2025/01/03|
-|mod                    |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2024111301|2025/01/03|
-|mod                    |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2024112500|2025/01/03|
-|mod                    |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2024021051|2024/09/30|
-|question/format        |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102625|2023/01/27|
-|mod                    |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2023/12/12|
-|mod                    |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121601|2024/09/30|
-|mod                    |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|
-|mod                    |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2023/12/18|
-|local                  |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18|
-|blocks                 |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18|
-|blocks                 |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|
-|blocks                 |completion_progress |https://github.com/deraadt/moodle-block_completion_progress     |2023110100|2024/09/30|
-|blocks                 |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|
-|blocks                 |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|
-|local                  |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|
-|course/format          |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|
-|course/format          |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|
-|lib/editor/atto/plugins|cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072804|2023/01/08|
-|lib/editor/atto/plugins|fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2020010600|2020/06/16|
-|lib/editor/atto/plugins|fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2023/12/12|
-|local                  |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021601|2023/12/18|
+|Type                   |Name                |Source                                                          |Version   |Date      |D|
+|-----------------------|--------------------|----------------------------------------------------------------|----------|----------|-|
+|mod                    |jclic               |https://github.com/projectestac/moodle-mod_jclic                |2024102800|2025/01/03|x|
+|mod                    |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2024111301|2025/01/03|x|
+|mod                    |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2024112500|2025/01/03|x|
+|mod                    |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2024021051|2024/09/30| |
+|question/format        |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102625|2023/01/27| |
+|mod                    |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2023/12/12| |
+|mod                    |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121601|2025/01/03|x|
+|mod                    |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16| |
+|mod                    |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2023/12/18| |
+|local                  |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18| |
+|blocks                 |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18| |
+|blocks                 |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16| |
+|blocks                 |completion_progress |https://github.com/jonof/moodle-block_completion_progress       |2024042200|2025/01/03|x|
+|blocks                 |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14| |
+|blocks                 |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14| |
+|local                  |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14| |
+|course/format          |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14| |
+|course/format          |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16| |
+|lib/editor/atto/plugins|cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072807|2025/01/03|x|
+|lib/editor/atto/plugins|fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2024110400|2025/01/03|x|
+|lib/editor/atto/plugins|fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2025/01/03|x|
+|local                  |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021601|2023/12/18| |
 |local                  |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|
 |local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|
 |question/type          |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12|

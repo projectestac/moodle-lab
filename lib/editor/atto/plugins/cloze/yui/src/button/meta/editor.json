@@ -1,0 +1,7 @@
+{
+  "moodle-atto_cloze-button": {
+    "requires": [
+        "escape"
+    ]
+  }
+}

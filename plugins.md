@@ -15,10 +15,10 @@
 |blocks                 |rgrade              |https://github.com/projectestac/Rgrade                          |2016090500|2025/01/03|! MANUAL |
 |blocks                 |my_books            |https://github.com/projectestac/marsupial                       |2014070300|2025/01/03|! MANUAL |
 |blocks                 |completion_progress |https://github.com/jonof/moodle-block_completion_progress       |2024042200|2025/01/03|✔️ MPD 4.4|
-|blocks                 |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|         |
-|blocks                 |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|         |
-|local                  |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2020090800|2020/09/14|         |
-|course/format          |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2020090800|2020/09/14|         |
+|blocks                 |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2021072700|2025/01/03|! MANUAL |
+|blocks                 |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2021072700|2025/01/03|! MANUAL |
+|local                  |wsvicensvives       |https://github.com/vicensvives/moodle-local_ws_vicensvives      |2021072700|2025/01/03|! MANUAL |
+|course/format          |vv                  |https://github.com/vicensvives/moodle-format_vicensvives        |2021072700|2025/01/03|! MANUAL |
 |course/format          |simple              |https://github.com/projectestac/moodle-format_simple            |2012121100|2020/06/16|         |
 |lib/editor/atto/plugins|cloze               |https://github.com/dthies/moodle-atto_cloze                     |2017072807|2025/01/03|✔️ MPD 4.4|
 |lib/editor/atto/plugins|fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2024110400|2025/01/03|✔️ MPD 4.4|

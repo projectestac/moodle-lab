@@ -38,28 +38,28 @@
 |question/type          |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2024121900|2025/01/03|x|
 |question/type          |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2024121900|2025/01/03|x|
 |question/type          |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2024121900|2025/01/03|x|
-|mod                    |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020108|2024/09/29|
-|mod/assign/submission  |snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|
-|theme                  |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18|
+|mod                    |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2024072400|2025/01/03|x|
+|mod/assign/submission  |snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18| |
+|theme                  |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18| |
 
 ## Plugins added for testing purposes
 
-|Type                   |Name                |Source                                                          |Version   |Date      |
-|-----------------------|--------------------|----------------------------------------------------------------|----------|----------|
-|course/format          |grid                |https://github.com/gjbarnard/moodle-format_grid                 |2022112612|2024/09/30|
-|mod                    |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2023103003|2024/09/30|
-|question/behavior      |adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20|
-|question/type          |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2024042000|2024/09/30|
-|question/type          |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2023/12/12|
-|course/format          |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022112602|2023/12/12|
-|course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2022113000|2023/01/08|
-|course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12|
-|mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|
-|course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024042500|2024/09/30|
-|mod                    |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2024012207|2024/09/30|
-|course/format          |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2024091110|2024/09/30|
-|filter                 |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|
-|mod                    |board               |https://github.com/brickfield/moodle-mod_board                  |2022040112|2024/09/29|
-|mod                    |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|
-|mod                    |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|
-|mod                    |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024091201|2024/09/29|
+|Type                   |Name                |Source                                                          |Version   |Date      |D|
+|-----------------------|--------------------|----------------------------------------------------------------|----------|----------|-|
+|course/format          |grid                |https://github.com/gjbarnard/moodle-format_grid                 |2022112612|2024/09/30| |
+|mod                    |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2023103003|2024/09/30| |
+|question/behavior      |adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20| |
+|question/type          |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2024042000|2024/09/30| |
+|question/type          |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2023/12/12| |
+|course/format          |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022112602|2023/12/12| |
+|course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2022113000|2023/01/08| |
+|course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12| |
+|mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03| |
+|course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024042500|2024/09/30| |
+|mod                    |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2024012207|2024/09/30| |
+|course/format          |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2024091110|2024/09/30| |
+|filter                 |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20| |
+|mod                    |board               |https://github.com/brickfield/moodle-mod_board                  |2022040112|2024/09/29| |
+|mod                    |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03| |
+|mod                    |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03| |
+|mod                    |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024091201|2024/09/29| |

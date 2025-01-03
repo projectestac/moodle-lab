@@ -24,7 +24,7 @@
 |lib/editor/atto/plugins|fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2024110400|2025/01/03|✔️ MPD 4.4|
 |lib/editor/atto/plugins|fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2025/01/03|✔️ MPD 4.4|
 |local                  |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2024102400|2025/01/03|! MANUAL |
-|local                  |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|         |
+|local                  |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2025/01/03|! MANUAL |
 |local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2020103100|2025/01/03|! MANUAL |
 |report                 |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2021062300|2025/01/03|! MANUAL |
 |filter                 |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2024110400|2025/01/03|✔️ MPD 4.4|

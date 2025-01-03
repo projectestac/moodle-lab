@@ -10,10 +10,10 @@
 |mod                    |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2025/01/03|! MPD 4.2|
 |mod                    |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121601|2025/01/03|✔️ MPD 4.4|
 |mod                    |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2025/01/03|! MANUAL |
-|mod                    |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2023/12/18|         |
-|local                  |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18|         |
+|mod                    |rcontent            |https://github.com/projectestac/marsupial                       |2014070300|2025/01/03|! MANUAL |
+|local                  |rcommon             |https://github.com/projectestac/marsupial                       |2014070300|2025/01/03|! MANUAL |
 |blocks                 |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18|         |
-|blocks                 |my_books            |https://github.com/projectestac/marsupial                       |2015111700|2020/06/16|         |
+|blocks                 |my_books            |https://github.com/projectestac/marsupial                       |2014070300|2025/01/03|! MANUAL |
 |blocks                 |completion_progress |https://github.com/jonof/moodle-block_completion_progress       |2024042200|2025/01/03|✔️ MPD 4.4|
 |blocks                 |licenses_vicensvives|https://github.com/vicensvives/moodle-block_licenses_vicensvives|2020090800|2020/09/14|         |
 |blocks                 |courses_vicensvives |https://github.com/vicensvives/moodle-block_courses_vicensvives |2020090800|2020/09/14|         |

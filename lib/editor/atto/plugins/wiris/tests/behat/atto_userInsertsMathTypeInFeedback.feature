@@ -5,10 +5,7 @@ Feature: Insert a MathType formula in an assignment's feedback
   I need to create a MathType formula on an assignment's feedback
 
   Background:
-    Given the following config values are set as admin:
-      | config  | value        | plugin      |
-      | toolbar | math = wiris | editor_atto |
-    And the following "users" exist:
+    Given the following "users" exist:
       | username | firstname | lastname | email                |
       | student1 | Student   | 1        | student1@example.com |
     And the following "courses" exist:
@@ -22,6 +19,22 @@ Feature: Insert a MathType formula in an assignment's feedback
     And the "mathjaxloader" filter is "off"
     And the "urltolink" filter is "off"
     And I log in as "admin"
+    And I navigate to "Plugins > Text editors > Atto toolbar settings" in site administration
+    And I set the field "Toolbar config" to multiline:
+    """
+    style1 = title, bold, italic
+    list = unorderedlist, orderedlist, indent
+    links = link
+    files = emojipicker, image, media, recordrtc, managefiles, h5p
+    accessibility = accessibilitychecker, accessibilityhelper
+    style2 = underline, strike, subscript, superscript
+    align = align
+    insert = equation, charmap, table, clear
+    undo = undo
+    other = html
+    math = wiris
+    """
+    And I press "Save changes"
 
   @javascript @4.x @4.x_atto
   Scenario: MTMOODLE-98 - Insert a MathType formula in an assignment's feedback
@@ -58,7 +71,7 @@ Feature: Insert a MathType formula in an assignment's feedback
   Scenario: MTMOODLE-98 - Insert a MathType formula in an assignment's feedback
     # 01. Create the assignment
     And I am on "Course 1" course homepage with editing mode on
-    And I add an "Assignment" to section "0"
+    And I add a "Assignment" to section "0"
     And I set the following fields to these values:
       | Assignment name | Test MathType for Atto on Moodle |
     And I click on "Online text" "checkbox"

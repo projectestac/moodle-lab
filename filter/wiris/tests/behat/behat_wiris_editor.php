@@ -128,7 +128,7 @@ class behat_wiris_editor extends behat_wiris_base {
                 @class=\'wrs_modal_dialogContainer wrs_modal_desktop wrs_stack\']//div[@class=\'wrs_panelContainer\']');
                 $container = $context->getSession()->getPage()->find('xpath', '//div[@id=\'wrs_modal_dialogContainer[0]\' and
                 @class=\'wrs_modal_dialogContainer wrs_modal_desktop wrs_stack\']//span[@class=\'wrs_container\']');
-                $button = $context->getSession()->getPage()->find('xpath', '//button[@id=\'wrs_modal_button_accept[0]\']');
+                $button = $context->getSession()->getPage()->find('xpath', '//button[@id=\'wrs_modal_button_cancel[0]\']');
                 return !empty($toolbar) && !empty($container);
             },
             [],
@@ -137,7 +137,7 @@ class behat_wiris_editor extends behat_wiris_base {
             true
         );
         $session = $this->getSession();
-        $component = $session->getPage()->find('xpath', '//button[@id=\'wrs_modal_button_accept[0]\']');
+        $component = $session->getPage()->find('xpath', '//button[@id=\'wrs_modal_button_cancel[0]\']');
         $component->click();
     }
 
@@ -177,6 +177,47 @@ class behat_wiris_editor extends behat_wiris_base {
             throw new ExpectationException('Editor title bar not found.', $this->getSession());
         }
         $component->click();
+    }
+
+    /**
+     * Move the MathType editor
+     *
+     * @Given I move the MathType editor
+     * @throws ExpectationException If the editor title bar is not found, it will throw an exception.
+     */
+    public function i_move_mathtype_editor_window() {
+        $session = $this->getSession();
+        $component = $session->getPage()->find('xpath', '//div[@class=\'wrs_modal_title\']');
+        if (empty($component)) {
+            throw new ExpectationException('Editor title bar not found.', $this->getSession());
+        }
+        // JavaScript to simulate drag and drop
+        $script = <<<JS
+        var element = document.evaluate("//div[@class='wrs_modal_title']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        var rect = element.getBoundingClientRect();
+        var startX = rect.left + rect.width / 2;
+        var startY = rect.top + rect.height / 2;
+        var endX = startX - 200;  // Move 200px to the left
+        var endY = startY - 100;   // Move 100px up
+        var dataTransfer = new DataTransfer();
+        element.dispatchEvent(new MouseEvent('mousedown', {
+            clientX: startX,
+            clientY: startY,
+            bubbles: true
+        }));
+        document.dispatchEvent(new MouseEvent('mousemove', {
+            clientX: endX,
+            clientY: endY,
+            bubbles: true
+        }));
+        document.dispatchEvent(new MouseEvent('mouseup', {
+            clientX: endX,
+            clientY: endY,
+            bubbles: true
+        }));
+    JS;
+        // Execute the script
+        $session->executeScript($script);
     }
 
     /**
@@ -243,11 +284,20 @@ class behat_wiris_editor extends behat_wiris_base {
      * @Then i wait until MathType editor is displayed
      */
     public function i_wait_until_mathtype_editor_is_displayed() {
-        // Looks for a math formula in the page.
-        $formula = '//div[contains(@id, \'wrs_modal_wrapper\')]';
-        $this->ensure_element_exists($formula, 'xpath_element');
-        // Then re-validate to throw error otherwise (?).
-        $this->mathtype_editor_should_exist();
+        // Looks for a the MT editor opened in the page.
+        $editor = '//div[contains(@id, \'wrs_modal_wrapper\')]';
+        $this->ensure_element_is_visible($editor, 'xpath_element');
+    }
+
+    /**
+     * Waits the excution until the ChemType editor displays
+     *
+     * @Then i wait until ChemType editor is displayed
+     */
+    public function i_wait_until_chemtype_editor_is_displayed() {
+        // Looks for a the CT editor opened in the page.
+        $chemtab = '//button[contains(@title, \'Chemistry tab\')]';
+        $this->ensure_element_is_visible($chemtab, 'xpath_element');
     }
 
     /**

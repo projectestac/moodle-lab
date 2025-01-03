@@ -16,11 +16,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2024032203;
+$plugin->version = 2024121900;
 $plugin->requires = 2015111600; // Moodle 3.0.
-$plugin->release = '4.11.3';
+$plugin->release = '4.12.0';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->component = 'qtype_multichoicewiris';
 $plugin->dependencies = array(
-     'qtype_wq' => 2024032203
+     'qtype_wq' => 2024121900
 );

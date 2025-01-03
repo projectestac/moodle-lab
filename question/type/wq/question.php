@@ -44,6 +44,12 @@ class qtype_wq_question extends question_graded_automatically {
      */
     public $auxiliartextfieldlines = 10;
 
+    /**
+     * @var bool
+     * Whether this question is corrupt and its wirisquestion was removed from the database.
+     */
+    public $corrupt = false;
+
     public function __construct(question_definition $base = null) {
         $this->base = $base;
     }
@@ -59,6 +65,13 @@ class qtype_wq_question extends question_graded_automatically {
      * **/
     public function start_attempt(question_attempt_step $step, $variant) {
         global $USER;
+
+        if ($this->corrupt) {
+            $a = new stdClass();
+            $a->questionname = $this->name;
+            throw new moodle_exception('corruptquestion_attempt', 'qtype_wq', '', $a);
+        }
+
         $this->base->start_attempt($step, $variant);
 
         // Get variables from Wiris Quizzes service.
@@ -172,6 +185,7 @@ class qtype_wq_question extends question_graded_automatically {
             $format = FORMAT_HTML;
         }
         $text = $this->expand_variables($text);
+
         return $this->base->format_text($text, $format, $qa, $component, $filearea, $itemid, $clean);
     }
 
@@ -357,6 +371,7 @@ class qtype_wq_question extends question_graded_automatically {
         $service = $builder->getQuizzesService();
 
         $isdebugmodeenabled = get_config('qtype_wq', 'debug_mode_enabled') == '1';
+        $islogmodeenabled = get_config('qtype_wq', 'log_server_errors') == '1';
 
         if ($isdebugmodeenabled) {
             // @codingStandardsIgnoreLine
@@ -382,6 +397,11 @@ class qtype_wq_question extends question_graded_automatically {
                 print_object($e);
             }
 
+            if ($islogmodeenabled) {
+                // @codingStandardsIgnoreLine
+                error_log('WIRISQUIZZES SERVER ERROR --- REQUEST: --- ' . $request->serialize());
+            }
+
             throw new moodle_exception('wirisquestionincorrect', 'qtype_wq', $link, $a, '');
         }
 
@@ -390,5 +410,17 @@ class qtype_wq_question extends question_graded_automatically {
             print_object($response->serialize());
         }
         return $response;
+    }
+
+
+    public function update_attempt_state_data_for_new_version(
+        question_attempt_step $oldstep,
+        question_definition $otherversion
+    ) {
+        return $this->base->update_attempt_state_data_for_new_version($oldstep, $otherversion->base);
+    }
+
+    public function validate_can_regrade_with_other_version(question_definition $otherversion): ?string {
+        return $this->base->validate_can_regrade_with_other_version($otherversion->base);
     }
 }

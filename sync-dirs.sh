@@ -31,6 +31,7 @@ plugins=(
   "report/coursequotas"
   "filter/wiris"
   "lib/editor/atto/plugins/wiris"
+  "local/wirisquizzes"
   "question/type/essaywiris"
   "question/type/matchwiris"
   "question/type/multianswerwiris"

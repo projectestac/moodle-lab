@@ -564,7 +564,7 @@ function attendance_update_status($status, $acronym, $description, $grade, $visi
  * @return string
  */
 function attendance_random_string($length=6) {
-    $randombytes = random_bytes_emulate($length);
+    $randombytes = random_bytes($length);
     $pool = 'abcdefghijklmnopqrstuvwxyz';
     $pool .= '0123456789';
     $poollen = strlen($pool);

@@ -15,6 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+namespace filter_wiris\subfilters;
+
+use filter_wiris_pluginwrapper;
+
 /**
  * This filter implements the default behaviour of the Wiris filter:
  * it uses the integration/ classes to make calls to the wiris.net services,
@@ -25,10 +29,7 @@
  * @copyright  WIRIS Europe (Maths for more S.L)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class filter_wiris_php extends moodle_text_filter {
-
-
-
+class filter_wiris_php extends \core_filters\text_filter {
 
     /**
      * Set any context-specific configuration for this filter.
@@ -55,7 +56,12 @@ class filter_wiris_php extends moodle_text_filter {
         $n1 = stripos($text, '<math');
         $n2 = mb_stripos($text, '«applet');
 
-        if ($n0 === false && $n1 === false && $n2 === false) {
+        // Find LateX.
+        $matches = [];
+        $latexpattern = '/\$\$(.*?)\$\$/';
+        preg_match_all($latexpattern, $text, $matches);
+
+        if ($n0 === false && $n1 === false && $n2 === false && count($matches[0]) == 0) {
             // Nothing to do.
             return $text;
         }
@@ -64,12 +70,6 @@ class filter_wiris_php extends moodle_text_filter {
 
         // Automatic class loading not avaliable for Moodle 2.4 and 2.5.
         wrs_loadclasses();
-
-        // MathJax and MathML
-        // Not filter if MathJax filter order < MathType filter order.
-        if ($n1 !== false && $this->mathjax_have_preference()) {
-            return $text;
-        }
 
         $wirispluginwrapper = new filter_wiris_pluginwrapper();
 
@@ -86,6 +86,20 @@ class filter_wiris_php extends moodle_text_filter {
         if (isset($COURSE->category)) {
             $query .= empty($query) ? '?' : '/';
             $query .= 'category=' . $COURSE->category;
+        }
+
+        // If MathJax doesn't have preference and wiriseditorparselatex = true, parse LateX into MathML.
+        if (!$this->mathjax_have_preference() && $wirispluginwrapper->wiris_editor_parse_latex()) {
+            foreach ($matches[0] as $latex) {
+                $response = $textservice->getMathML(null, $latex);
+
+                $decodedresponse = json_decode($response, true);
+                if (isset($decodedresponse['status']) && $decodedresponse['status'] === "ok") {
+                    $mathml = $decodedresponse['result']['text'];
+
+                    $text = str_replace($latex, $mathml, $text);
+                }
+            }
         }
 
         $prop['refererquery'] = $query;

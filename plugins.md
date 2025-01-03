@@ -9,7 +9,7 @@
 |question/format        |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102624|2025/01/03|! MPD 4.0|
 |mod                    |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2025/01/03|! MPD 4.2|
 |mod                    |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121601|2025/01/03|✔️ MPD 4.4|
-|mod                    |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2020/06/16|         |
+|mod                    |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2025/01/03|! MANUAL |
 |mod                    |rcontent            |https://github.com/projectestac/marsupial                       |2021011200|2023/12/18|         |
 |local                  |rcommon             |https://github.com/projectestac/marsupial                       |2017101000|2023/12/18|         |
 |blocks                 |rgrade              |https://github.com/projectestac/Rgrade                          |2016090501|2023/12/18|         |

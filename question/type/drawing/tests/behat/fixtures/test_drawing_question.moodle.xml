@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <!-- question: 502  -->
+  <question type="drawing">
+    <name>
+      <text>drawing-001</text>
+    </name>
+    <questiontext format="html">
+      <text>Enter the stem, a question or a part of a sentence, here.</text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <drawingmode>1</drawingmode>
+    <backgrounduploaded>0</backgrounduploaded>
+    <backgroundwidth>580</backgroundwidth>
+    <backgroundheight>400</backgroundheight>
+    <preservear>1</preservear>
+    <drawingoptions></drawingoptions>
+    <alloweraser>0</alloweraser>
+    <bgimage>
+      <filename></filename>
+      <dataURL><![CDATA[]]></dataURL>
+      <imagetype></imagetype>
+    </bgimage>
+  </question>
+
+</quiz>

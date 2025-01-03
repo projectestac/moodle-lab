@@ -25,7 +25,7 @@
 |lib/editor/atto/plugins|fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2025/01/03|✔️ MPD 4.4|
 |local                  |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2024102400|2025/01/03|! MANUAL |
 |local                  |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|         |
-|local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|         |
+|local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2020103100|2020/06/16|! MANUAL |
 |question/type          |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12|         |
 |report                 |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|         |
 |filter                 |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2024110400|2025/01/03|✔️ MPD 4.4|

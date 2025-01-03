@@ -55,7 +55,7 @@
 |course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2024100900|2025/01/03|✔️ MPD 4.4|
 |course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2024091721|2025/01/03|✔️ MPD 4.4|
 |mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|         |
-|course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024042500|2024/09/30|         |
+|course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024102300|2025/01/03|✔️ MPD 4.4|
 |mod                    |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2024012207|2024/09/30|         |
 |course/format          |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2024091110|2024/09/30|         |
 |filter                 |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2022/10/20|         |

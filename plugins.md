@@ -25,9 +25,8 @@
 |lib/editor/atto/plugins|fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2025/01/03|✔️ MPD 4.4|
 |local                  |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2024102400|2025/01/03|! MANUAL |
 |local                  |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|         |
-|local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2020103100|2020/06/16|! MANUAL |
-|question/type          |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12|         |
-|report                 |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|         |
+|local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2020103100|2025/01/03|! MANUAL |
+|report                 |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2021062300|2025/01/03|! MANUAL |
 |filter                 |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2024110400|2025/01/03|✔️ MPD 4.4|
 |lib/editor/atto/plugins|wiris               |https://github.com/wiris/moodle-atto_wiris                      |2024110400|2025/01/03|✔️ MPD 4.4|
 |local                  |wirisquizzes        |https://github.com/wiris/moodle-local_wirisquizzes              |2024121900|2025/01/03|✔️ MPD 4.4|
@@ -63,3 +62,10 @@
 |mod                    |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|         |
 |mod                    |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|         |
 |mod                    |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024091201|2024/09/29|         |
+
+## Plugins removed
+
+|Type                   |Name                |Source                                                          |Reason                         |
+|-----------------------|--------------------|----------------------------------------------------------------|-------------------------------|
+|question/type          |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |Already included in Moodle 4.4 |
+

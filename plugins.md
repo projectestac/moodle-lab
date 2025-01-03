@@ -51,8 +51,8 @@
 |question/behavior      |adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2025/01/03|✔️ MPD 4.4|
 |question/type          |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2024100701|2025/01/03|✔️ MPD 4.4|
 |question/type          |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2025/01/03|! MPD 4.3|
-|course/format          |topcoll             |https://github.com/gjb2048/moodle-format_topcoll                |2022112602|2023/12/12|         |
-|course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2022113000|2023/01/08|         |
+|course/format          |topcoll             |https://github.com/gjbarnard/moodle-format_topcoll              |2024032804|2025/01/03|✔️ MPD 4.4|
+|course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2024100900|2025/01/03|✔️ MPD 4.4|
 |course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12|         |
 |mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|         |
 |course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024042500|2024/09/30|         |

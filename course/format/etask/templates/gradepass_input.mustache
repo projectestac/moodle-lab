@@ -1,0 +1,51 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core/gradepass_input
+
+    This template renders the gradepass input form.
+
+    Example context (json):
+    {
+        "name": "gradepass",
+        "method": "get",
+        "action": "/course/mod.php?update=...",
+        "classes": "gradepass",
+        "label": "Grade to pass",
+        "formid": "randomid",
+        "id": "gradepass_input5833dd4f4b08d108",
+        "value": "80.5",
+        "labelattributes": []
+    }
+}}
+
+<div class="{{classes}} d-inline">
+    <form method="{{method}}" action="{{action}}" class="form-inline" id="{{formid}}">
+        <div class="d-flex justify-content-between align-items-center form-group">
+            {{#params}}
+                <input type="hidden" name="{{name}}" value="{{value}}">
+            {{/params}}
+            {{#label}}
+                <label for="{{id}}"{{#labelattributes}} {{name}}="{{value}}"{{/labelattributes}}>
+                    {{{label}}}
+                </label>
+            {{/label}}
+            <input {{#attributes}}{{name}}="{{value}}" {{/attributes}} id="{{id}}" size="8" class="form-control ml-2 mr-2" name="{{name}}" value="{{value}}" />
+            <button type="submit" class="btn btn-primary">{{#str}}save, admin{{/str}}</button>
+        </div>
+    </form>
+</div>

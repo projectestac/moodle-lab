@@ -1,0 +1,14 @@
+/* The grading table popover. */
+body.format-etask .popover.etask-popover {
+    min-width: 380px;
+    max-width: 380px;
+}
+
+body.format-etask .popover.etask-popover .popover-body {
+    padding: 0;
+}
+
+/* The grading table footer pagination. */
+.course-content li.section .etask-content nav ul.pagination {
+    list-style: none;
+}

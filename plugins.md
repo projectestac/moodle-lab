@@ -46,7 +46,7 @@
 
 |Type                   |Name                |Source                                                          |Version   |Date      |D|
 |-----------------------|--------------------|----------------------------------------------------------------|----------|----------|-|
-|course/format          |grid                |https://github.com/gjbarnard/moodle-format_grid                 |2022112612|2024/09/30| |
+|course/format          |grid                |https://github.com/gjbarnard/moodle-format_grid                 |2024032905|2025/01/03|x|
 |mod                    |subcourse           |https://github.com/mudrd8mz/moodle-mod_subcourse                |2023103003|2024/09/30| |
 |question/behavior      |adaptivemultipart   |https://github.com/maths/moodle-qbehaviour_adaptivemultipart    |2022092200|2022/10/20| |
 |question/type          |formulas            |https://github.com/dbauer-ets/moodle-qtype_formulas             |2024042000|2024/09/30| |

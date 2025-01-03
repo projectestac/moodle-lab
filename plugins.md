@@ -53,7 +53,7 @@
 |question/type          |drawing             |https://github.com/ethz-let/moodle-qtype_drawing                |2023111300|2025/01/03|! MPD 4.3|
 |course/format          |topcoll             |https://github.com/gjbarnard/moodle-format_topcoll              |2024032804|2025/01/03|✔️ MPD 4.4|
 |course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2024100900|2025/01/03|✔️ MPD 4.4|
-|course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2023053109|2023/12/12|         |
+|course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2024091721|2025/01/03|✔️ MPD 4.4|
 |mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|         |
 |course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024042500|2024/09/30|         |
 |mod                    |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2024012207|2024/09/30|         |

@@ -24,19 +24,20 @@
 |lib/editor/atto/plugins|fontfamily          |https://github.com/projectestac/moodle-atto_fontfamily          |2024110400|2025/01/03|x|
 |lib/editor/atto/plugins|fontsize            |https://github.com/andrewnicols/moodle-atto_fontsize            |2023091901|2025/01/03|x|
 |local                  |alexandriaimporter  |https://github.com/projectestac/moodle-local_alexandriaimporter |2016021601|2023/12/18| |
-|local                  |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18|
-|local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16|
-|question/type          |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12|
-|report                 |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16|
-|filter                 |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2024082700|2024/09/30|
-|lib/editor/atto/plugins|wiris               |https://github.com/wiris/moodle-atto_wiris                      |2024082700|2024/09/30|
-|question/type          |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2024032203|2024/09/30|
-|question/type          |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2024032203|2024/09/30|
-|question/type          |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2024032203|2024/09/30|
-|question/type          |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2024032203|2024/09/30|
-|question/type          |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2024032203|2024/09/30|
-|question/type          |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2024032203|2024/09/30|
-|question/type          |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2024032203|2024/09/30|
+|local                  |oauth               |https://github.com/projectestac/moodle-local_oauth              |2023091301|2023/12/18| |
+|local                  |clickedu            |https://github.com/clickedu/ClickeduMoodlePlugin                |2019072400|2020/06/16| |
+|question/type          |ordering            |https://github.com/gbateson/moodle-qtype_ordering               |2023092910|2023/12/12| |
+|report                 |coursequotas        |https://github.com/projectestac/moodle-report_coursequotas      |2016091400|2020/06/16| |
+|filter                 |wiris               |https://github.com/wiris/moodle-filter_wiris                    |2024110400|2025/01/03|x|
+|lib/editor/atto/plugins|wiris               |https://github.com/wiris/moodle-atto_wiris                      |2024110400|2025/01/03|x|
+|local                  |wirisquizzes        |https://github.com/wiris/moodle-local_wirisquizzes              |2024121900|2025/01/03|x|
+|question/type          |essaywiris          |https://github.com/wiris/moodle-qtype_essaywiris                |2024121900|2025/01/03|x|
+|question/type          |matchwiris          |https://github.com/wiris/moodle-qtype_matchwiris                |2024121900|2025/01/03|x|
+|question/type          |multianswerwiris    |https://github.com/wiris/moodle-qtype_multianswerwiris          |2024121900|2025/01/03|x|
+|question/type          |multichoicewiris    |https://github.com/wiris/moodle-qtype_multichoicewiris          |2024121900|2025/01/03|x|
+|question/type          |shortanswerwiris    |https://github.com/wiris/moodle-qtype_shortanswerwiris          |2024121900|2025/01/03|x|
+|question/type          |truefalsewiris      |https://github.com/wiris/moodle-qtype_truefalsewiris            |2024121900|2025/01/03|x|
+|question/type          |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2024121900|2025/01/03|x|
 |mod                    |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2023020108|2024/09/29|
 |mod/assign/submission  |snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2023/07/18|
 |theme                  |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18|

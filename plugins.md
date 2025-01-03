@@ -39,7 +39,7 @@
 |question/type          |wq                  |https://github.com/wiris/moodle-qtype_wq                        |2024121900|2025/01/03|✔️ MPD 4.4|
 |mod                    |attendance          |https://github.com/danmarsden/moodle-mod_attendance             |2024072400|2025/01/03|✔️ MPD 4.4|
 |mod/assign/submission  |snap                |https://github.com/jguille2/moodle-assignsubmission_snap        |2023032201|2025/01/03|! MPD 4.1|
-|theme                  |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2023/12/18|         |
+|theme                  |xtecboost           |https://github.com/projectestac/moodle-theme_xtecboost          |2023120400|2025/01/03|! MANUAL |
 
 ## Plugins added for testing purposes
 

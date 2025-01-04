@@ -53,7 +53,7 @@
 |course/format          |topcoll             |https://github.com/gjbarnard/moodle-format_topcoll              |2024032804|2025/01/03|✔️ MPD 4.4|
 |course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2024100900|2025/01/03|✔️ MPD 4.4|
 |course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2024091721|2025/01/03|✔️ MPD 4.4|
-|mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|         |
+|mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020128|2025/01/04|! MANUAL |
 |course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024102300|2025/01/03|✔️ MPD 4.4|
 |mod                    |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2024071000|2025/01/03|✔️ MPD 4.4|
 |course/format          |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2024121240|2025/01/03|✔️ MPD 4.4|

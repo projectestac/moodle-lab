@@ -59,9 +59,9 @@
 |course/format          |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2024121240|2025/01/03|✔️ MPD 4.4|
 |filter                 |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2025/01/03|! MPD 4.1|
 |mod                    |board               |https://github.com/brickfield/moodle-mod_board                  |2024102001|2025/01/04|✔️ MPD 4.4|
-|mod                    |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|         |
-|mod                    |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|         |
-|mod                    |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024091201|2024/09/29|         |
+|mod                    |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2025/01/04|! MANUAL |
+|mod                    |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2025/01/04|! MANUAL |
+|mod                    |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024101601|2025/01/04|✔️ MPD 4.4|
 
 ## Plugins removed
 

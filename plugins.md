@@ -6,7 +6,7 @@
 |mod                    |choicegroup         |https://github.com/ndunand/moodle-mod_choicegroup               |2024111301|2025/01/03|✔️ MPD 4.4|
 |mod                    |geogebra            |https://github.com/projectestac/moodle-mod_geogebra             |2024112500|2025/01/03|✔️ MPD 4.4|
 |mod                    |hotpot              |https://github.com/gbateson/moodle-mod_hotpot                   |2024021051|2025/01/03|! MPD 4.3|
-|question/format        |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2022102624|2025/01/03|! MPD 4.0|
+|question/format        |hotpot              |https://github.com/gbateson/moodle-qformat_hotpot               |2024021527|2025/01/05|! MANUAL |
 |mod                    |journal             |https://github.com/elearningsoftware/moodle-mod_journal         |2023091500|2025/01/03|! MPD 4.2|
 |mod                    |questionnaire       |https://github.com/PoetOS/moodle-mod_questionnaire              |2022121601|2025/01/03|✔️ MPD 4.4|
 |mod                    |qv                  |https://github.com/projectestac/moodle-mod_qv                   |2019010700|2025/01/03|! MANUAL |

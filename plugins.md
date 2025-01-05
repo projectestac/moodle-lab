@@ -53,15 +53,15 @@
 |course/format          |topcoll             |https://github.com/gjbarnard/moodle-format_topcoll              |2024032804|2025/01/03|✔️ MPD 4.4|
 |course/format          |etask               |https://gitlab.com/drlikm/format_etask                          |2024100900|2025/01/03|✔️ MPD 4.4|
 |course/format          |trail               |https://github.com/JotaDF/moodle-format_trail                   |2024091721|2025/01/03|✔️ MPD 4.4|
-|mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020126|2021/05/03|         |
+|mod                    |msociograma         |https://sourceforge.net/projects/msociograma/                   |2020020128|2025/01/04|! MANUAL |
 |course/format          |remuiformat         |https://github.com/WisdmLabs/moodle-format_remuiformat          |2024102300|2025/01/03|✔️ MPD 4.4|
 |mod                    |offlinequiz         |github.com/academic-moodle-cooperation/moodle-mod_offlinequiz/  |2024071000|2025/01/03|✔️ MPD 4.4|
 |course/format          |tiles               |https://bitbucket.org/dw8/moodle-format_tiles                   |2024121240|2025/01/03|✔️ MPD 4.4|
 |filter                 |syntaxhighlighter   |https://github.com/sharpchi/moodle-filter_syntaxhighlighter     |2021052101|2025/01/03|! MPD 4.1|
-|mod                    |board               |https://github.com/brickfield/moodle-mod_board                  |2022040112|2024/09/29|         |
-|mod                    |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2024/05/03|         |
-|mod                    |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2024/05/03|         |
-|mod                    |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024091201|2024/09/29|         |
+|mod                    |board               |https://github.com/brickfield/moodle-mod_board                  |2024102001|2025/01/04|✔️ MPD 4.4|
+|mod                    |exescorm            |https://github.com/exelearning/mod_exescorm                     |2023120400|2025/01/04|! MANUAL |
+|mod                    |exeweb              |https://github.com/exelearning/mod_exeweb                       |2023122100|2025/01/04|! MANUAL |
+|mod                    |kialo               |https://github.com/kialo/moodle-mod_kialo                       |2024101601|2025/01/04|✔️ MPD 4.4|
 
 ## Plugins removed
 

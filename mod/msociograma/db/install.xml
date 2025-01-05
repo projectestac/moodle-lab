@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/msociograma/db" VERSION="201701210" COMMENT="XMLDB file for Moodle mod/msociograma"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="msociograma" COMMENT="Default comment for msociograma, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Course msociograma activity belongs to"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="name field for moodle instances"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="General introduction of the msociograma activity"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)"/>
+        <FIELD NAME="revision" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false"/>
+       	<FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false"/>
+        <FIELD NAME="logintype" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="msociograma_diagram" COMMENT="Cell position">
+	 <FIELDS>
+         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"/>
+         <FIELD NAME="id_stu" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Referent to student"/>
+         <FIELD NAME="posx" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="x position valor for bloc position"/>
+		 <FIELD NAME="posy" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="y position valor for bloc position"/>
+         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="course id"/>
+         <FIELD NAME="activity" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="activity id"/>
+		 <FIELD NAME="group_class" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="group name"/>
+		 <FIELD NAME="question" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="number of question"/>
+
+	</FIELDS>
+	    <KEYS>
+		<KEY NAME="primary" TYPE="primary" FIELDS="id" />
+	    </KEYS>
+    </TABLE>
+    <TABLE NAME="msociograma_answers" COMMENT="Stundent basic data">
+		  <FIELDS>
+			  <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false"/>
+			  <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Course msociograma activity belongs to"/>
+			  <FIELD NAME="activity" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"/>
+			  <FIELD NAME="id_stu" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"/>
+			  <FIELD NAME="grup" TYPE="text" LENGTH="medium" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"/>
+			  <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"/>
+			  <FIELD NAME="order_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"/>
+			  <FIELD NAME="stu_ans" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"/>
+		  </FIELDS>
+		  <KEYS>
+			  <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+		  </KEYS>
+    </TABLE>
+          
+	  <TABLE NAME="msociograma_questions" COMMENT="Stundent basic data">
+		  <FIELDS>
+			  <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false"/>
+			  <FIELD NAME="question" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="group"/>
+			  <FIELD NAME="value" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="students"/>
+		  </FIELDS>
+		  <KEYS>
+			  <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+		  </KEYS>
+	  </TABLE>
+	  <TABLE NAME="msociograma_sheet" COMMENT="Stundent basic data">
+		  <FIELDS>
+			  <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false"/>
+			  <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="activity"/>
+			  <FIELD NAME="activity" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="activity"/>
+			  <FIELD NAME="groupclass" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Group"/>
+			  <FIELD NAME="student" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="student name"/>
+			  <FIELD NAME="pass" TYPE="text" LENGTH="medium" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  COMMENT="Password"/>
+			  <FIELD NAME="alias" TYPE="text" LENGTH="medium" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  COMMENT="alias name"/>
+			  <FIELD NAME="sexo" TYPE="text" LENGTH="medium" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  COMMENT="sex"/>
+		  </FIELDS>
+		  <KEYS>
+			  <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+		  </KEYS>
+	  </TABLE>
+          <TABLE NAME="msociograma_groups" COMMENT="enable disable groups">
+		  <FIELDS>
+			  <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false"/>
+			  <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="activity"/>
+			  <FIELD NAME="activity" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="activity"/>
+			  <FIELD NAME="groupclass" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Group"/>
+              <FIELD NAME="enabled" TYPE="text" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="enabled"/>
+			  <FIELD NAME="date_time_start" TYPE="datetime" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="date time start"/>
+			  <FIELD NAME="date_time_end" TYPE="datetime"  NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="date time end"/>
+		  </FIELDS>
+		  <KEYS>
+			  <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+		  </KEYS>
+	  </TABLE>
+	  <TABLE NAME="msociograma_tutoring" COMMENT="capabilities for teachers">
+		  <FIELDS>
+			  <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false"/>
+			  <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="course"/>
+			  <FIELD NAME="username" TYPE="text" LENGTH="40" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="username"/>
+			  <FIELD NAME="name" TYPE="text" LENGTH="200" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="name"/>
+			  <FIELD NAME="tutoring" TYPE="text" LENGTH="40" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="tutoring"/>
+			  <FIELD NAME="syncro" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="syncro"/>
+		  </FIELDS>
+		  <KEYS>
+			  <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+		  </KEYS>
+	  </TABLE>
+  </TABLES>
+</XMLDB>

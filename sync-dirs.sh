@@ -78,4 +78,9 @@ do
   mkdir -p $dest/$dir
   cp -a $src/$p $dest/$dir/
 done
+
+# Copiem el fitxer 'plugins.md'
+echo "Updating 'plugins.md'"
+cp $src/plugins.md $dest/
+
 echo "Done!"
